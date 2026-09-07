@@ -191,13 +191,13 @@
       <div class="card">
         <div class="tag">Free recall &middot; 193 items</div>
         <h3>Countries of the World</h3>
-        <div class="meta">20 minutes</div>
+        <div class="meta" id="countries-meta"></div>
         <button class="btn-primary" onclick="showScreen('countries')">Play</button>
       </div>
       <div class="card">
         <div class="tag">Prompted quiz &middot; 193 items</div>
         <h3>Capital Idea: World</h3>
-        <div class="meta">15 minutes</div>
+        <div class="meta" id="worldcap-meta"></div>
         <button class="btn-primary" onclick="showScreen('worldcap')">Play</button>
       </div>
     </div>
@@ -208,13 +208,13 @@
       <div class="card">
         <div class="tag">Free recall &middot; 13 items</div>
         <h3>Canadian Provinces</h3>
-        <div class="meta">5 minutes</div>
+        <div class="meta" id="provinces-meta"></div>
         <button class="btn-primary" onclick="showScreen('provinces')">Play</button>
       </div>
       <div class="card">
         <div class="tag">Prompted quiz &middot; 13 items</div>
         <h3>Capital Idea: Canada</h3>
-        <div class="meta">5 minutes</div>
+        <div class="meta" id="provincecap-meta"></div>
         <button class="btn-primary" onclick="showScreen('provincecap')">Play</button>
       </div>
       <div class="card">
@@ -231,19 +231,19 @@
       <div class="card">
         <div class="tag">Free recall &middot; 50 items</div>
         <h3>US States</h3>
-        <div class="meta">10 minutes</div>
+        <div class="meta" id="states-meta"></div>
         <button class="btn-primary" onclick="showScreen('states')">Play</button>
       </div>
       <div class="card">
         <div class="tag">Prompted quiz &middot; 50 items</div>
         <h3>State Codes</h3>
-        <div class="meta">8 minutes</div>
+        <div class="meta" id="abbr-meta"></div>
         <button class="btn-primary" onclick="showScreen('abbr')">Play</button>
       </div>
       <div class="card">
         <div class="tag">Prompted quiz &middot; 50 items</div>
         <h3>Capital Idea: US States</h3>
-        <div class="meta">10 minutes</div>
+        <div class="meta" id="statecap-meta"></div>
         <button class="btn-primary" onclick="showScreen('statecap')">Play</button>
       </div>
       <div class="card">
@@ -373,6 +373,14 @@ function fmtTime(sec){
   const m = Math.max(0, Math.floor(sec/60));
   const s = Math.max(0, sec%60);
   return `${m}:${s.toString().padStart(2,"0")}`;
+}
+// Single source of truth for "X minutes" copy. Every place that needs to say
+// how long a timed game takes (home-page card blurb, in-game rules text)
+// should call this instead of hardcoding a number, so changing a game's
+// `duration` (in seconds) automatically updates all of the copy about it.
+function minutesLabel(seconds){
+  const mins = Math.round(seconds / 60);
+  return `${mins} minute${mins === 1 ? '' : 's'}`;
 }
 function shuffled(arr){
   const a = arr.slice();
@@ -684,8 +692,13 @@ class FreeRecallGame{
     this.running = false;
 
     document.getElementById(`${this.id}-mount`).innerHTML = freeRecallHTML(this.id);
-    document.getElementById(`${this.id}-rules`).innerHTML = this.rulesHTML;
+    document.getElementById(`${this.id}-rules`).innerHTML = `
+      &middot; ${minutesLabel(this.duration)} on the clock, starting when you hit begin<br>
+      ${this.rulesHTML}
+    `;
     document.getElementById(`${this.id}-finalTitle`).textContent = this.finalTitle;
+    const metaEl = document.getElementById(`${this.id}-meta`);
+    if (metaEl) metaEl.textContent = minutesLabel(this.duration);
 
     this.el = key => document.getElementById(`${this.id}-${key}`);
     this.el('startBtn').addEventListener('click', () => this.start());
@@ -869,8 +882,13 @@ class PromptQuiz{
     this.running = false;
 
     document.getElementById(`${this.id}-mount`).innerHTML = quizHTML(this.id, this.promptLabel, this.mode);
-    document.getElementById(`${this.id}-rules`).innerHTML = this.rulesHTML;
+    document.getElementById(`${this.id}-rules`).innerHTML = `
+      &middot; ${minutesLabel(this.duration)} on the clock, starting when you hit begin<br>
+      ${this.rulesHTML}
+    `;
     document.getElementById(`${this.id}-finalRollLabel`).textContent = this.finalRollLabel;
+    const metaEl = document.getElementById(`${this.id}-meta`);
+    if (metaEl) metaEl.textContent = minutesLabel(this.duration);
 
     this.el = key => document.getElementById(`${this.id}-${key}`);
     this.el('startBtn').addEventListener('click', () => this.start());
@@ -1306,7 +1324,6 @@ const countriesGame = new FreeRecallGame({
   duration: 20*60,
   finalTitle: 'Full roll — all 193 UN member states',
   rulesHTML: `
-    &middot; 20 minutes on the clock, starting when you hit begin<br>
     &middot; Every UN member state counts once — 193 total<br>
     &middot; Common nicknames and abbreviations are accepted<br>
     &middot; When time expires, the full roll is revealed with your hits marked
@@ -1320,7 +1337,6 @@ const statesGame = new FreeRecallGame({
   duration: 10*60,
   finalTitle: 'Full roll — all 50 US states',
   rulesHTML: `
-    &middot; 10 minutes on the clock, starting when you hit begin<br>
     &middot; Every US state counts once — 50 total<br>
     &middot; Type the full state name — abbreviations don't count here<br>
     &middot; When time expires, the full roll is revealed with your hits marked
@@ -1336,7 +1352,6 @@ const abbrQuiz = new PromptQuiz({
   promptLabel: "what's the abbreviation for",
   finalRollLabel: 'Full roll — all 50 states',
   rulesHTML: `
-    &middot; 8 minutes on the clock, starting when you hit begin<br>
     &middot; States appear one at a time in random order — 50 total<br>
     &middot; Type the two-letter postal abbreviation for each<br>
     &middot; Use Skip if you're stuck; the round ends when time runs out
@@ -1355,7 +1370,6 @@ const worldCapitalsQuiz = new PromptQuiz({
   promptLabel: "what's the capital of",
   finalRollLabel: 'Full roll — all 193 countries',
   rulesHTML: `
-    &middot; 15 minutes on the clock, starting when you hit begin<br>
     &middot; Countries appear one at a time in random order — 193 total<br>
     &middot; Type the capital city for each<br>
     &middot; Use Skip if you're stuck; the round ends when time runs out
@@ -1370,7 +1384,6 @@ const stateCapitalsQuiz = new PromptQuiz({
   promptLabel: "what's the capital of",
   finalRollLabel: 'Full roll — all 50 states',
   rulesHTML: `
-    &middot; 10 minutes on the clock, starting when you hit begin<br>
     &middot; States appear one at a time in random order — 50 total<br>
     &middot; Type the capital city for each<br>
     &middot; Use Skip if you're stuck; the round ends when you've been through all 50 or time runs out
@@ -1384,7 +1397,6 @@ const canadianProvincesGame = new FreeRecallGame({
   duration: 5*60,
   finalTitle: 'Full roll — all 10 provinces and 3 territories',
   rulesHTML: `
-    &middot; 5 minutes on the clock, starting when you hit begin<br>
     &middot; Every Canadian province and territory counts once — 13 total<br>
     &middot; Type the full name — common short forms are accepted<br>
     &middot; When time expires, the full roll is revealed with your hits marked
@@ -1403,7 +1415,6 @@ const provinceCapitalsQuiz = new PromptQuiz({
   promptLabel: "what's the capital of",
   finalRollLabel: 'Full roll — all 13 provinces and territories',
   rulesHTML: `
-    &middot; 5 minutes on the clock, starting when you hit begin<br>
     &middot; Provinces and territories appear one at a time in random order — 13 total<br>
     &middot; Type the capital city for each<br>
     &middot; Use Skip if you're stuck; the round ends when you've been through all 13 or time runs out
