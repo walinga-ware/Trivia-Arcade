@@ -716,6 +716,11 @@ class FreeRecallGame{
       fb.textContent = `${canonical} — correct!`;
       fb.className = 'feedback good';
       this.renderGuessed();
+
+      if (this.guessed.size >= this.items.length){
+        this.end();
+        return;
+      }
     }
     this.el('guess').focus();
   }
