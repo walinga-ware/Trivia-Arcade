@@ -244,35 +244,14 @@
     </div>
 
     <!-- ============ US STATES SHOWCASE ============ -->
+    <!-- Cards below are generated automatically from STATE_SHOWCASE_QUIZZES — see script at bottom of file. -->
     <h2 style="margin-top:36px; margin-bottom:12px; border-bottom:1px solid var(--line); padding-bottom:8px; color:var(--paper-dim); font-size:13px; text-transform:uppercase; letter-spacing:0.5px;">US States Showcase</h2>
     <p style="color:var(--paper-dim); font-size:13px; line-height:1.6; margin-bottom:16px;">Fun-sized quiz games for individual states. Each offers trivia, facts, and local knowledge.</p>
-    <div class="card-grid">
-      <div class="card">
-        <div class="tag">Trivia quiz &middot; 7 questions</div>
-        <h3>Alaska: Frontier Facts</h3>
-        <div class="meta">~3 minutes</div>
-        <button class="btn-primary" onclick="showScreen('alaska')">Play</button>
-      </div>
-      <div class="card">
-        <div class="tag">Trivia quiz &middot; 7 questions</div>
-        <h3>Maine: Pine Puzzler</h3>
-        <div class="meta">~3 minutes</div>
-        <button class="btn-primary" onclick="showScreen('maine')">Play</button>
-      </div>
-      <div class="card">
-        <div class="tag">Trivia quiz &middot; 7 questions</div>
-        <h3>Minnesota: Northstar Knowhow</h3>
-        <div class="meta">~3 minutes</div>
-        <button class="btn-primary" onclick="showScreen('minnesota')">Play</button>
-      </div>
-      <div class="card">
-        <div class="tag">Trivia quiz &middot; 7 questions</div>
-        <h3>New York: Empire Smart</h3>
-        <div class="meta">~3 minutes</div>
-        <button class="btn-primary" onclick="showScreen('newyork')">Play</button>
-      </div>
-    </div>
+    <div class="card-grid" id="showcase-card-grid"></div>
   </div>
+
+  <!-- ============ US STATES SHOWCASE — SCREENS (generated automatically) ============ -->
+  <div id="showcase-screens"></div>
 
   <!-- ============ COUNTRIES (free recall) ============ -->
   <div class="screen" id="screen-countries">
@@ -302,30 +281,6 @@
   <div class="screen" id="screen-statecap">
     <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
     <div id="statecap-mount"></div>
-  </div>
-
-  <!-- ============ ALASKA TRIVIA ============ -->
-  <div class="screen" id="screen-alaska">
-    <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
-    <div id="alaska-mount"></div>
-  </div>
-
-  <!-- ============ NEW YORK TRIVIA ============ -->
-  <div class="screen" id="screen-newyork">
-    <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
-    <div id="newyork-mount"></div>
-  </div>
-
-  <!-- ============ MINNESOTA TRIVIA ============ -->
-  <div class="screen" id="screen-minnesota">
-    <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
-    <div id="minnesota-mount"></div>
-  </div>
-
-  <!-- ============ MAINE TRIVIA ============ -->
-  <div class="screen" id="screen-maine">
-    <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
-    <div id="maine-mount"></div>
   </div>
 
   <!-- ============ POPULATION MINEFIELD ============ -->
@@ -1632,49 +1587,88 @@ class TriviaQuiz{
   }
 }
 
-const alaskaTrivia = new TriviaQuiz({
-  id: 'alaska',
-  questions: ALASKA_TRIVIA,
-  rulesHTML: `
-    &middot; 7 questions about Alaska, one at a time — no clock, just recall<br>
-    &middot; Type your answer and hit enter or submit<br>
-    &middot; You'll see the correct answer immediately after each question<br>
-    &middot; At the end, review your full scorecard
-  `
-});
+/* ============================================================
+   US STATES SHOWCASE — REGISTRY
+   ============================================================
+   To add a new state quiz:
+     1. Add a `const XYZ_TRIVIA = [ {q, accepted, display}, ... ]`
+        array above (or anywhere before this block) — same JSON-array
+        shape as the existing ones.
+     2. Add ONE entry to STATE_SHOWCASE_QUIZZES below.
+   That's it. The home-page card, its alphabetical position, the
+   screen markup, the mount point, the rules text, and the
+   TriviaQuiz instance are all generated automatically just below.
 
-const newYorkTrivia = new TriviaQuiz({
-  id: 'newyork',
-  questions: NEW_YORK_TRIVIA,
-  rulesHTML: `
-    &middot; 7 questions about New York, one at a time — no clock, just recall<br>
-    &middot; Type your answer and hit enter or submit<br>
-    &middot; You'll see the correct answer immediately after each question<br>
-    &middot; At the end, review your full scorecard
-  `
-});
+   Fields:
+     id        - unique, no spaces (used for URL-free screen id)
+     state     - state name, used for sorting + default rules text
+     subtitle  - short flavor text for the card title, e.g.
+                 state "Alaska" + subtitle "Frontier Facts"
+                 -> card reads "Alaska: Frontier Facts"
+     questions - the JSON question array (KEEP this format)
+   ============================================================ */
+const STATE_SHOWCASE_QUIZZES = [
+  { id: 'alaska',    state: 'Alaska',    subtitle: 'Frontier Facts',       questions: ALASKA_TRIVIA },
+  { id: 'maine',     state: 'Maine',     subtitle: 'Pine Puzzler',         questions: MAINE_TRIVIA },
+  { id: 'minnesota', state: 'Minnesota', subtitle: 'Northstar Knowhow',    questions: MINNESOTA_TRIVIA },
+  { id: 'newyork',   state: 'New York',  subtitle: 'Empire Smart',         questions: NEW_YORK_TRIVIA },
+];
 
-const minnesotaTrivia = new TriviaQuiz({
-  id: 'minnesota',
-  questions: MINNESOTA_TRIVIA,
-  rulesHTML: `
-    &middot; 7 questions about Minnesota, one at a time — no clock, just recall<br>
+/* ---- generator: turns the registry above into cards + screens + quizzes ---- */
+function stateTriviaRulesHTML(state, count){
+  return `
+    &middot; ${count} questions about ${state}, one at a time — no clock, just recall<br>
     &middot; Type your answer and hit enter or submit<br>
     &middot; You'll see the correct answer immediately after each question<br>
     &middot; At the end, review your full scorecard
-  `
-});
+  `;
+}
 
-const maineTrivia = new TriviaQuiz({
-  id: 'maine',
-  questions: MAINE_TRIVIA,
-  rulesHTML: `
-    &middot; 7 questions about Maine, one at a time — no clock, just recall<br>
-    &middot; Type your answer and hit enter or submit<br>
-    &middot; You'll see the correct answer immediately after each question<br>
-    &middot; At the end, review your full scorecard
-  `
-});
+function estMinutes(count){
+  return Math.max(1, Math.round(count * 0.4));
+}
+
+function initStateShowcase(quizzes){
+  const cardGrid = document.getElementById('showcase-card-grid');
+  const screenHost = document.getElementById('showcase-screens');
+  const instances = {};
+
+  // Alphabetize automatically — no manual ordering required in the registry above.
+  const sorted = [...quizzes].sort((a, b) => a.state.localeCompare(b.state));
+
+  sorted.forEach(quiz => {
+    const count = quiz.questions.length;
+
+    // Home page card
+    cardGrid.insertAdjacentHTML('beforeend', `
+      <div class="card">
+        <div class="tag">Trivia quiz &middot; ${count} questions</div>
+        <h3>${quiz.state}: ${quiz.subtitle}</h3>
+        <div class="meta">~${estMinutes(count)} minutes</div>
+        <button class="btn-primary" onclick="showScreen('${quiz.id}')">Play</button>
+      </div>
+    `);
+
+    // Screen + mount point
+    screenHost.insertAdjacentHTML('beforeend', `
+      <div class="screen" id="screen-${quiz.id}">
+        <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
+        <div id="${quiz.id}-mount"></div>
+      </div>
+    `);
+
+    // Quiz instance
+    instances[quiz.id] = new TriviaQuiz({
+      id: quiz.id,
+      questions: quiz.questions,
+      rulesHTML: quiz.rulesHTML || stateTriviaRulesHTML(quiz.state, count)
+    });
+  });
+
+  return instances;
+}
+
+const stateShowcaseQuizInstances = initStateShowcase(STATE_SHOWCASE_QUIZZES);
 
 /* ============================================================
    MINEFIELD ENGINE (guess items in strict descending order —
