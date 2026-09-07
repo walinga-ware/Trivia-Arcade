@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blank Slate</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#101c26;
+    --ink-2:#182634;
+    --paper:#eae6da;
+    --paper-dim:#c9c2ac;
+    --brass:#c99a52;
+    --sage:#7fa37a;
+    --rust:#b5624a;
+    --line: rgba(234,230,218,0.14);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--ink);
+    color:var(--paper);
+    font-family:'IBM Plex Mono', monospace;
+    min-height:100vh;
+    padding:32px 20px 60px;
+  }
+  .wrap{ max-width:900px; margin:0 auto; }
+  h1{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:clamp(28px,5vw,44px);
+    margin:0 0 4px;
+    color:var(--paper);
+  }
+  h2{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:clamp(22px,4vw,32px);
+    margin:0 0 4px;
+    color:var(--paper);
+  }
+  .subtitle{ color:var(--paper-dim); font-size:13px; margin:0 0 28px; line-height:1.6; }
+  .screen{ display:none; }
+  .screen.active{ display:block; }
+
+  /* ---- home ---- */
+  .card-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); gap:16px; margin-top:8px; }
+  .card{
+    background:var(--ink-2); border:1px solid var(--line); border-radius:6px;
+    padding:22px; display:flex; flex-direction:column; gap:14px;
+  }
+  .card .tag{ font-size:11px; color:var(--brass); letter-spacing:0.5px; text-transform:uppercase; }
+  .card h3{ font-family:'Fraunces', serif; font-size:20px; margin:0; color:var(--paper); }
+  .card .meta{ font-size:12px; color:var(--paper-dim); }
+
+  /* ---- shared controls ---- */
+  button{
+    font-family:'IBM Plex Mono', monospace; font-weight:600; font-size:14px; letter-spacing:0.3px;
+    border-radius:4px; border:1px solid var(--brass); background:transparent; color:var(--brass);
+    padding:12px 22px; cursor:pointer;
+  }
+  button:hover:not(:disabled){ background:var(--brass); color:var(--ink); }
+  button:disabled{ opacity:0.35; cursor:default; }
+  .btn-primary{ background:var(--brass); color:var(--ink); }
+  .back-link{
+    border:none; background:none; color:var(--paper-dim); padding:0; font-size:13px;
+    margin-bottom:18px; cursor:pointer; text-decoration:underline;
+  }
+  .back-link:hover{ color:var(--brass); background:none; }
+
+  .top-row{ display:flex; gap:16px; flex-wrap:wrap; align-items:stretch; margin-bottom:22px; }
+  .plate{ background:var(--ink-2); border:1px solid var(--line); border-radius:4px; padding:14px 20px; flex:1; min-width:140px; }
+  .plate .label{ font-size:11px; color:var(--paper-dim); margin-bottom:6px; }
+  .plate .value{ font-family:'Fraunces', serif; font-size:30px; font-weight:600; color:var(--paper); }
+  .plate.timer .value{ color:var(--brass); font-variant-numeric: tabular-nums; }
+  .plate.timer.low .value{ color:var(--rust); }
+
+  .entry{ display:flex; gap:10px; margin-bottom:10px; }
+  input[type="text"]{
+    flex:1; background:var(--ink-2); border:1px solid var(--paper-dim); color:var(--paper);
+    font-family:'IBM Plex Mono', monospace; font-size:17px; padding:14px 16px; border-radius:4px; outline:none;
+  }
+  input[type="text"]:focus{ border-color:var(--brass); }
+  input[type="text"]:disabled{ opacity:0.4; }
+
+  .feedback{ min-height:20px; font-size:13px; margin:2px 2px 20px; color:var(--paper-dim); }
+  .feedback.good{ color:var(--sage); }
+  .feedback.bad{ color:var(--rust); }
+
+  .section-title{
+    font-family:'Fraunces', serif; font-size:15px; color:var(--paper-dim); border-bottom:1px solid var(--line);
+    padding-bottom:8px; margin:26px 0 12px; display:flex; justify-content:space-between; align-items:baseline;
+  }
+  .guessed-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(180px,1fr)); gap:6px 14px; }
+  .guessed-grid div{ font-size:14px; padding:5px 0; border-bottom:1px dotted var(--line); color:var(--paper); }
+  .final-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(180px,1fr)); gap:6px 14px; }
+  .final-grid .item{ font-size:13.5px; padding:6px 8px; border-radius:3px; display:flex; justify-content:space-between; gap:8px; }
+  .final-grid .item.hit{ background:rgba(127,163,122,0.14); color:var(--sage); }
+  .final-grid .item.miss{ color:var(--paper-dim); }
+  .empty-note{ color:var(--paper-dim); font-size:13px; font-style:italic; }
+
+  .final-score{ font-family:'Fraunces', serif; font-size:20px; color:var(--brass); margin-bottom:4px; }
+  .final-score span{ color:var(--paper-dim); font-size:14px; font-family:'IBM Plex Mono', monospace; }
+
+  /* ---- quiz-specific ---- */
+  .quiz-prompt{
+    background:var(--ink-2); border:1px solid var(--line); border-radius:6px;
+    padding:34px 20px; text-align:center; margin-bottom:16px;
+  }
+  .quiz-prompt .prompt-label{ font-size:12px; color:var(--paper-dim); margin-bottom:10px; }
+  .quiz-prompt .prompt-value{ font-family:'Fraunces', serif; font-size:clamp(26px,6vw,38px); color:var(--paper); }
+  .quiz-input-row{ display:flex; gap:10px; justify-content:center; margin-bottom:8px; }
+  .quiz-input-row.short input{
+    text-align:center; text-transform:uppercase; max-width:140px; font-size:22px; letter-spacing:4px;
+  }
+  .quiz-input-row.text input{
+    text-align:center; max-width:320px; font-size:18px;
+  }
+  ::selection{ background:var(--brass); color:var(--ink); }
+
+  /* ---- trivia-specific ---- */
+  .trivia-progress{ font-size:12px; color:var(--paper-dim); margin-bottom:10px; }
+  .trivia-q{
+    background:var(--ink-2); border:1px solid var(--line); border-radius:6px;
+    padding:28px 22px; margin-bottom:16px;
+  }
+  .trivia-q .q-text{ font-family:'Fraunces', serif; font-size:clamp(18px,3.2vw,24px); color:var(--paper); line-height:1.4; }
+  .trivia-answer-row{ display:flex; gap:10px; margin-bottom:8px; }
+  .trivia-reveal{ font-size:13px; margin-top:10px; padding-top:10px; border-top:1px dotted var(--line); color:var(--paper-dim); }
+  .trivia-reveal.correct{ color:var(--sage); }
+  .trivia-reveal.incorrect{ color:var(--rust); }
+  .review-item{
+    background:var(--ink-2); border:1px solid var(--line); border-radius:6px;
+    padding:14px 18px; margin-bottom:10px;
+  }
+  .review-item .rq{ font-size:13px; color:var(--paper-dim); margin-bottom:6px; }
+  .review-item .ra{ font-size:14px; }
+  .review-item .ra.hit{ color:var(--sage); }
+  .review-item .ra.miss{ color:var(--rust); }
+  .review-item .ra .correct-note{ color:var(--paper-dim); font-size:12.5px; display:block; margin-top:2px; }
+
+  /* ---- minefield-specific ---- */
+  .mine-rank-badge{
+    display:inline-block; background:var(--brass); color:var(--ink); font-weight:600;
+    border-radius:3px; padding:2px 8px; font-size:12px; margin-right:8px;
+  }
+  .mine-list{ display:flex; flex-direction:column; gap:6px; }
+  .mine-list .row{
+    display:flex; justify-content:space-between; align-items:center; font-size:14px;
+    padding:6px 10px; border-bottom:1px dotted var(--line);
+  }
+  .mine-list .row .pop{ color:var(--brass); font-family:'Fraunces', serif; }
+  .final-grid .item.next{ background:rgba(181,98,74,0.14); color:var(--rust); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============ HOME ============ -->
+  <div class="screen active" id="screen-home">
+    <h1>Blank Slate</h1>
+    <p class="subtitle">Quick-fire recall games. See how much you know.</p>
+
+    <!-- ============ WORLD ============ -->
+    <h2 style="margin-top:36px; margin-bottom:12px; border-bottom:1px solid var(--line); padding-bottom:8px; color:var(--paper-dim); font-size:13px; text-transform:uppercase; letter-spacing:0.5px;">World</h2>
+    <div class="card-grid">
+      <div class="card">
+        <div class="tag">Free recall &middot; 193 items</div>
+        <h3>Name the World</h3>
+        <div class="meta">15 minutes</div>
+        <button class="btn-primary" onclick="showScreen('countries')">Play</button>
+      </div>
+      <div class="card">
+        <div class="tag">Prompted quiz &middot; 193 items</div>
+        <h3>Capital Idea: World</h3>
+        <div class="meta">15 minutes</div>
+        <button class="btn-primary" onclick="showScreen('worldcap')">Play</button>
+      </div>
+    </div>
+
+    <!-- ============ US (GENERAL) ============ -->
+    <h2 style="margin-top:36px; margin-bottom:12px; border-bottom:1px solid var(--line); padding-bottom:8px; color:var(--paper-dim); font-size:13px; text-transform:uppercase; letter-spacing:0.5px;">US (General)</h2>
+    <div class="card-grid">
+      <div class="card">
+        <div class="tag">Free recall &middot; 50 items</div>
+        <h3>Name the States</h3>
+        <div class="meta">10 minutes</div>
+        <button class="btn-primary" onclick="showScreen('states')">Play</button>
+      </div>
+      <div class="card">
+        <div class="tag">Prompted quiz &middot; 50 items</div>
+        <h3>State Codes</h3>
+        <div class="meta">8 minutes</div>
+        <button class="btn-primary" onclick="showScreen('abbr')">Play</button>
+      </div>
+      <div class="card">
+        <div class="tag">Prompted quiz &middot; 50 items</div>
+        <h3>Capital Idea: States</h3>
+        <div class="meta">10 minutes</div>
+        <button class="btn-primary" onclick="showScreen('statecap')">Play</button>
+      </div>
+      <div class="card">
+        <div class="tag">Minefield &middot; 50 items</div>
+        <h3>Rank &amp; File</h3>
+        <div class="meta">one wrong guess ends it</div>
+        <button class="btn-primary" onclick="showScreen('popmine')">Play</button>
+      </div>
+    </div>
+
+    <!-- ============ US STATES SHOWCASE ============ -->
+    <h2 style="margin-top:36px; margin-bottom:12px; border-bottom:1px solid var(--line); padding-bottom:8px; color:var(--paper-dim); font-size:13px; text-transform:uppercase; letter-spacing:0.5px;">US States Showcase</h2>
+    <p style="color:var(--paper-dim); font-size:13px; line-height:1.6; margin-bottom:16px;">Deep dives into individual states. Each offers trivia, facts, and local knowledge — starting with Alaska.</p>
+    <div class="card-grid">
+      <div class="card">
+        <div class="tag">Trivia quiz &middot; 7 questions</div>
+        <h3>Frontier Facts</h3>
+        <div class="meta">~3 minutes</div>
+        <button class="btn-primary" onclick="showScreen('alaska')">Play</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ COUNTRIES (free recall) ============ -->
+  <div class="screen" id="screen-countries">
+    <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
+    <div id="countries-mount"></div>
+  </div>
+
+  <!-- ============ STATES (free recall) ============ -->
+  <div class="screen" id="screen-states">
+    <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
+    <div id="states-mount"></div>
+  </div>
+
+  <!-- ============ ABBREVIATIONS (quiz) ============ -->
+  <div class="screen" id="screen-abbr">
+    <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
+    <div id="abbr-mount"></div>
+  </div>
+
+  <!-- ============ WORLD CAPITALS (quiz) ============ -->
+  <div class="screen" id="screen-worldcap">
+    <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
+    <div id="worldcap-mount"></div>
+  </div>
+
+  <!-- ============ STATE CAPITALS (quiz) ============ -->
+  <div class="screen" id="screen-statecap">
+    <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
+    <div id="statecap-mount"></div>
+  </div>
+
+  <!-- ============ ALASKA TRIVIA ============ -->
+  <div class="screen" id="screen-alaska">
+    <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
+    <div id="alaska-mount"></div>
+  </div>
+
+  <!-- ============ POPULATION MINEFIELD ============ -->
+  <div class="screen" id="screen-popmine">
+    <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
+    <div id="popmine-mount"></div>
+  </div>
+
+</div>
+
+<script>
+/* ============================================================
+   Navigation
+   ============================================================ */
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + id).classList.add('active');
+  window.scrollTo({top:0, behavior:'instant'});
+}
+
+/* ============================================================
+   Shared helpers
+   ============================================================ */
+function normalize(str){
+  return str
+    .toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+    .replace(/^(the|republic of|kingdom of|state of|federation)\s+/,"")
+    .replace(/[.'’,]/g,"")
+    .replace(/[-_]/g," ")
+    .replace(/\s+/g," ")
+    .trim();
+}
+function fmtTime(sec){
+  const m = Math.max(0, Math.floor(sec/60));
+  const s = Math.max(0, sec%60);
+  return `${m}:${s.toString().padStart(2,"0")}`;
+}
+function shuffled(arr){
+  const a = arr.slice();
+  for (let i = a.length-1; i>0; i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+/* ============================================================
+   Data: countries
+   ============================================================ */
+const COUNTRIES = [
+  "Afghanistan","Albania","Algeria","Andorra","Angola","Antigua and Barbuda","Argentina","Armenia",
+  "Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium",
+  "Belize","Benin","Bhutan","Bolivia","Bosnia and Herzegovina","Botswana","Brazil","Brunei","Bulgaria",
+  "Burkina Faso","Burundi","Cabo Verde","Cambodia","Cameroon","Canada","Central African Republic","Chad",
+  "Chile","China","Colombia","Comoros","Congo, Republic of the","Congo, Democratic Republic of the",
+  "Costa Rica","Côte d'Ivoire","Croatia","Cuba","Cyprus","Czech Republic","Denmark","Djibouti","Dominica",
+  "Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Eswatini",
+  "Ethiopia","Fiji","Finland","France","Gabon","Gambia","Georgia","Germany","Ghana","Greece","Grenada",
+  "Guatemala","Guinea","Guinea-Bissau","Guyana","Haiti","Honduras","Hungary","Iceland","India","Indonesia",
+  "Iran","Iraq","Ireland","Israel","Italy","Jamaica","Japan","Jordan","Kazakhstan","Kenya","Kiribati",
+  "Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania",
+  "Luxembourg","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands","Mauritania",
+  "Mauritius","Mexico","Micronesia","Moldova","Monaco","Mongolia","Montenegro","Morocco","Mozambique",
+  "Myanmar","Namibia","Nauru","Nepal","Netherlands","New Zealand","Nicaragua","Niger","Nigeria",
+  "North Korea","North Macedonia","Norway","Oman","Pakistan","Palau","Panama","Papua New Guinea",
+  "Paraguay","Peru","Philippines","Poland","Portugal","Qatar","Romania","Russia","Rwanda",
+  "Saint Kitts and Nevis","Saint Lucia","Saint Vincent and the Grenadines","Samoa","San Marino",
+  "Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore",
+  "Slovakia","Slovenia","Solomon Islands","Somalia","South Africa","South Korea","South Sudan","Spain",
+  "Sri Lanka","Sudan","Suriname","Sweden","Switzerland","Syria","Tajikistan","Tanzania","Thailand",
+  "Timor-Leste","Togo","Tonga","Trinidad and Tobago","Tunisia","Turkey","Turkmenistan","Tuvalu","Uganda",
+  "Ukraine","United Arab Emirates","United Kingdom","United States","Uruguay","Uzbekistan","Vanuatu",
+  "Venezuela","Vietnam","Yemen","Zambia","Zimbabwe"
+];
+const COUNTRY_ALIASES = {
+  "usa":"United States","us":"United States","united states of america":"United States","america":"United States",
+  "uk":"United Kingdom","britain":"United Kingdom","great britain":"United Kingdom",
+  "united kingdom of great britain and northern ireland":"United Kingdom","england":"United Kingdom",
+  "uae":"United Arab Emirates",
+  "south korea":"South Korea","korea south":"South Korea","republic of korea":"South Korea",
+  "north korea":"North Korea","korea north":"North Korea","dprk":"North Korea",
+  "russia":"Russia","russian federation":"Russia",
+  "congo":"Congo, Republic of the","republic of congo":"Congo, Republic of the",
+  "congo brazzaville":"Congo, Republic of the",
+  "dr congo":"Congo, Democratic Republic of the","drc":"Congo, Democratic Republic of the",
+  "democratic republic of congo":"Congo, Democratic Republic of the",
+  "democratic republic of the congo":"Congo, Democratic Republic of the",
+  "congo kinshasa":"Congo, Democratic Republic of the","zaire":"Congo, Democratic Republic of the",
+  "ivory coast":"Côte d'Ivoire","cote divoire":"Côte d'Ivoire","cote d ivoire":"Côte d'Ivoire",
+  "czechia":"Czech Republic",
+  "swaziland":"Eswatini",
+  "burma":"Myanmar",
+  "cape verde":"Cabo Verde",
+  "holland":"Netherlands",
+  "federated states of micronesia":"Micronesia",
+  "east timor":"Timor-Leste",
+  "macedonia":"North Macedonia","fyrom":"North Macedonia",
+  "bosnia":"Bosnia and Herzegovina",
+  "trinidad":"Trinidad and Tobago",
+  "antigua":"Antigua and Barbuda",
+  "st kitts and nevis":"Saint Kitts and Nevis","st kitts":"Saint Kitts and Nevis",
+  "st lucia":"Saint Lucia",
+  "st vincent":"Saint Vincent and the Grenadines",
+  "st vincent and the grenadines":"Saint Vincent and the Grenadines",
+  "sao tome":"Sao Tome and Principe","sao tome and principe":"Sao Tome and Principe",
+  "brunei darussalam":"Brunei",
+  "syrian arab republic":"Syria",
+  "lao pdr":"Laos",
+  "islamic republic of iran":"Iran",
+  "united republic of tanzania":"Tanzania",
+  "republic of moldova":"Moldova",
+  "vatican":null,"holy see":null,"taiwan":null,"palestine":null,"kosovo":null,"hong kong":null
+};
+
+/* ============================================================
+   Data: US states + postal abbreviations
+   ============================================================ */
+const STATES = [
+  ["Alabama","AL"],["Alaska","AK"],["Arizona","AZ"],["Arkansas","AR"],["California","CA"],
+  ["Colorado","CO"],["Connecticut","CT"],["Delaware","DE"],["Florida","FL"],["Georgia","GA"],
+  ["Hawaii","HI"],["Idaho","ID"],["Illinois","IL"],["Indiana","IN"],["Iowa","IA"],
+  ["Kansas","KS"],["Kentucky","KY"],["Louisiana","LA"],["Maine","ME"],["Maryland","MD"],
+  ["Massachusetts","MA"],["Michigan","MI"],["Minnesota","MN"],["Mississippi","MS"],["Missouri","MO"],
+  ["Montana","MT"],["Nebraska","NE"],["Nevada","NV"],["New Hampshire","NH"],["New Jersey","NJ"],
+  ["New Mexico","NM"],["New York","NY"],["North Carolina","NC"],["North Dakota","ND"],["Ohio","OH"],
+  ["Oklahoma","OK"],["Oregon","OR"],["Pennsylvania","PA"],["Rhode Island","RI"],["South Carolina","SC"],
+  ["South Dakota","SD"],["Tennessee","TN"],["Texas","TX"],["Utah","UT"],["Vermont","VT"],
+  ["Virginia","VA"],["Washington","WA"],["West Virginia","WV"],["Wisconsin","WI"],["Wyoming","WY"]
+];
+
+/* ============================================================
+   Data: World capitals (source: Wikipedia)
+   Keys must exactly match strings in COUNTRIES above.
+   ============================================================ */
+const WORLD_CAPITALS = {
+  "Afghanistan":{answer:"Kabul"}, "Albania":{answer:"Tirana"}, "Algeria":{answer:"Algiers"},
+  "Andorra":{answer:"Andorra la Vella"}, "Angola":{answer:"Luanda"},
+  "Antigua and Barbuda":{answer:"Saint John's"}, "Argentina":{answer:"Buenos Aires"},
+  "Armenia":{answer:"Yerevan"}, "Australia":{answer:"Canberra"}, "Austria":{answer:"Vienna"},
+  "Azerbaijan":{answer:"Baku"}, "Bahamas":{answer:"Nassau"}, "Bahrain":{answer:"Manama"},
+  "Bangladesh":{answer:"Dhaka"}, "Barbados":{answer:"Bridgetown"}, "Belarus":{answer:"Minsk"},
+  "Belgium":{answer:"Brussels"}, "Belize":{answer:"Belmopan"},
+  "Benin":{answer:"Porto-Novo", aliases:["Cotonou"]}, "Bhutan":{answer:"Thimphu"},
+  "Bolivia":{answer:"Sucre", aliases:["La Paz"]}, "Bosnia and Herzegovina":{answer:"Sarajevo"},
+  "Botswana":{answer:"Gaborone"}, "Brazil":{answer:"Brasília", aliases:["Brasilia"]},
+  "Brunei":{answer:"Bandar Seri Begawan"}, "Bulgaria":{answer:"Sofia"},
+  "Burkina Faso":{answer:"Ouagadougou"}, "Burundi":{answer:"Gitega", aliases:["Bujumbura"]},
+  "Cabo Verde":{answer:"Praia"}, "Cambodia":{answer:"Phnom Penh"},
+  "Cameroon":{answer:"Yaoundé", aliases:["Yaounde"]}, "Canada":{answer:"Ottawa"},
+  "Central African Republic":{answer:"Bangui"}, "Chad":{answer:"N'Djamena", aliases:["Ndjamena"]},
+  "Chile":{answer:"Santiago"}, "China":{answer:"Beijing"}, "Colombia":{answer:"Bogotá", aliases:["Bogota"]},
+  "Comoros":{answer:"Moroni"}, "Congo, Republic of the":{answer:"Brazzaville"},
+  "Congo, Democratic Republic of the":{answer:"Kinshasa"}, "Costa Rica":{answer:"San José", aliases:["San Jose"]},
+  "Côte d'Ivoire":{answer:"Yamoussoukro", aliases:["Abidjan"]}, "Croatia":{answer:"Zagreb"},
+  "Cuba":{answer:"Havana"}, "Cyprus":{answer:"Nicosia"}, "Czech Republic":{answer:"Prague"},
+  "Denmark":{answer:"Copenhagen"}, "Djibouti":{answer:"Djibouti"}, "Dominica":{answer:"Roseau"},
+  "Dominican Republic":{answer:"Santo Domingo"}, "Ecuador":{answer:"Quito"}, "Egypt":{answer:"Cairo"},
+  "El Salvador":{answer:"San Salvador"}, "Equatorial Guinea":{answer:"Malabo"},
+  "Eritrea":{answer:"Asmara"}, "Estonia":{answer:"Tallinn"},
+  "Eswatini":{answer:"Mbabane", aliases:["Lobamba"]}, "Ethiopia":{answer:"Addis Ababa"},
+  "Fiji":{answer:"Suva"}, "Finland":{answer:"Helsinki"}, "France":{answer:"Paris"},
+  "Gabon":{answer:"Libreville"}, "Gambia":{answer:"Banjul"}, "Georgia":{answer:"Tbilisi"},
+  "Germany":{answer:"Berlin"}, "Ghana":{answer:"Accra"}, "Greece":{answer:"Athens"},
+  "Grenada":{answer:"St. George's", aliases:["St George's","Saint George's"]},
+  "Guatemala":{answer:"Guatemala City"}, "Guinea":{answer:"Conakry"}, "Guinea-Bissau":{answer:"Bissau"},
+  "Guyana":{answer:"Georgetown"}, "Haiti":{answer:"Port-au-Prince"}, "Honduras":{answer:"Tegucigalpa"},
+  "Hungary":{answer:"Budapest"}, "Iceland":{answer:"Reykjavik"}, "India":{answer:"New Delhi"},
+  "Indonesia":{answer:"Jakarta"}, "Iran":{answer:"Tehran"}, "Iraq":{answer:"Baghdad"},
+  "Ireland":{answer:"Dublin"}, "Israel":{answer:"Jerusalem"}, "Italy":{answer:"Rome"},
+  "Jamaica":{answer:"Kingston"}, "Japan":{answer:"Tokyo"}, "Jordan":{answer:"Amman"},
+  "Kazakhstan":{answer:"Astana"}, "Kenya":{answer:"Nairobi"},
+  "Kiribati":{answer:"South Tarawa", aliases:["Tarawa"]}, "Kuwait":{answer:"Kuwait City"},
+  "Kyrgyzstan":{answer:"Bishkek"}, "Laos":{answer:"Vientiane"}, "Latvia":{answer:"Riga"},
+  "Lebanon":{answer:"Beirut"}, "Lesotho":{answer:"Maseru"}, "Liberia":{answer:"Monrovia"},
+  "Libya":{answer:"Tripoli"}, "Liechtenstein":{answer:"Vaduz"}, "Lithuania":{answer:"Vilnius"},
+  "Luxembourg":{answer:"Luxembourg"}, "Madagascar":{answer:"Antananarivo"}, "Malawi":{answer:"Lilongwe"},
+  "Malaysia":{answer:"Kuala Lumpur", aliases:["Putrajaya"]}, "Maldives":{answer:"Malé", aliases:["Male"]},
+  "Mali":{answer:"Bamako"}, "Malta":{answer:"Valletta"}, "Marshall Islands":{answer:"Majuro"},
+  "Mauritania":{answer:"Nouakchott"}, "Mauritius":{answer:"Port Louis"}, "Mexico":{answer:"Mexico City"},
+  "Micronesia":{answer:"Palikir"}, "Moldova":{answer:"Chișinău", aliases:["Chisinau"]},
+  "Monaco":{answer:"Monaco", aliases:["Monaco-Ville"]}, "Mongolia":{answer:"Ulaanbaatar"},
+  "Montenegro":{answer:"Podgorica", aliases:["Cetinje"]}, "Morocco":{answer:"Rabat"},
+  "Mozambique":{answer:"Maputo"}, "Myanmar":{answer:"Naypyidaw"}, "Namibia":{answer:"Windhoek"},
+  "Nauru":{answer:"Yaren"}, "Nepal":{answer:"Kathmandu"},
+  "Netherlands":{answer:"Amsterdam", aliases:["The Hague"]}, "New Zealand":{answer:"Wellington"},
+  "Nicaragua":{answer:"Managua"}, "Niger":{answer:"Niamey"}, "Nigeria":{answer:"Abuja"},
+  "North Korea":{answer:"Pyongyang"}, "North Macedonia":{answer:"Skopje"}, "Norway":{answer:"Oslo"},
+  "Oman":{answer:"Muscat"}, "Pakistan":{answer:"Islamabad"}, "Palau":{answer:"Ngerulmud", aliases:["Koror"]},
+  "Panama":{answer:"Panama City"}, "Papua New Guinea":{answer:"Port Moresby"},
+  "Paraguay":{answer:"Asunción", aliases:["Asuncion"]}, "Peru":{answer:"Lima"},
+  "Philippines":{answer:"Manila"}, "Poland":{answer:"Warsaw"}, "Portugal":{answer:"Lisbon"},
+  "Qatar":{answer:"Doha"}, "Romania":{answer:"Bucharest"}, "Russia":{answer:"Moscow"},
+  "Rwanda":{answer:"Kigali"}, "Saint Kitts and Nevis":{answer:"Basseterre"},
+  "Saint Lucia":{answer:"Castries"}, "Saint Vincent and the Grenadines":{answer:"Kingstown"},
+  "Samoa":{answer:"Apia"}, "San Marino":{answer:"San Marino"}, "Sao Tome and Principe":{answer:"São Tomé", aliases:["Sao Tome"]},
+  "Saudi Arabia":{answer:"Riyadh"}, "Senegal":{answer:"Dakar"}, "Serbia":{answer:"Belgrade"},
+  "Seychelles":{answer:"Victoria"}, "Sierra Leone":{answer:"Freetown"}, "Singapore":{answer:"Singapore"},
+  "Slovakia":{answer:"Bratislava"}, "Slovenia":{answer:"Ljubljana"}, "Solomon Islands":{answer:"Honiara"},
+  "Somalia":{answer:"Mogadishu"},
+  "South Africa":{answer:"Pretoria", aliases:["Cape Town","Bloemfontein"]},
+  "South Korea":{answer:"Seoul"}, "South Sudan":{answer:"Juba"}, "Spain":{answer:"Madrid"},
+  "Sri Lanka":{answer:"Sri Jayawardenepura Kotte", aliases:["Colombo","Kotte"]},
+  "Sudan":{answer:"Khartoum"}, "Suriname":{answer:"Paramaribo"}, "Sweden":{answer:"Stockholm"},
+  "Switzerland":{answer:"Bern"}, "Syria":{answer:"Damascus"}, "Tajikistan":{answer:"Dushanbe"},
+  "Tanzania":{answer:"Dodoma", aliases:["Dar es Salaam"]}, "Thailand":{answer:"Bangkok"},
+  "Timor-Leste":{answer:"Dili"}, "Togo":{answer:"Lomé", aliases:["Lome"]}, "Tonga":{answer:"Nuku'alofa", aliases:["Nukualofa"]},
+  "Trinidad and Tobago":{answer:"Port of Spain"}, "Tunisia":{answer:"Tunis"}, "Turkey":{answer:"Ankara"},
+  "Turkmenistan":{answer:"Ashgabat"}, "Tuvalu":{answer:"Funafuti"}, "Uganda":{answer:"Kampala"},
+  "Ukraine":{answer:"Kyiv", aliases:["Kiev"]}, "United Arab Emirates":{answer:"Abu Dhabi"},
+  "United Kingdom":{answer:"London"}, "United States":{answer:"Washington, D.C.", aliases:["Washington DC","Washington"]},
+  "Uruguay":{answer:"Montevideo"}, "Uzbekistan":{answer:"Tashkent"}, "Vanuatu":{answer:"Port Vila"},
+  "Venezuela":{answer:"Caracas"}, "Vietnam":{answer:"Hanoi"}, "Yemen":{answer:"Sana'a", aliases:["Sanaa","Aden"]},
+  "Zambia":{answer:"Lusaka"}, "Zimbabwe":{answer:"Harare"}
+};
+
+/* ============================================================
+   Data: US state capitals (parallel to STATES, by name)
+   ============================================================ */
+const STATE_CAPITALS = {
+  "Alabama":"Montgomery","Alaska":"Juneau","Arizona":"Phoenix","Arkansas":"Little Rock",
+  "California":"Sacramento","Colorado":"Denver","Connecticut":"Hartford","Delaware":"Dover",
+  "Florida":"Tallahassee","Georgia":"Atlanta","Hawaii":"Honolulu","Idaho":"Boise",
+  "Illinois":"Springfield","Indiana":"Indianapolis","Iowa":"Des Moines","Kansas":"Topeka",
+  "Kentucky":"Frankfort","Louisiana":"Baton Rouge","Maine":"Augusta","Maryland":"Annapolis",
+  "Massachusetts":"Boston","Michigan":"Lansing","Minnesota":"Saint Paul","Mississippi":"Jackson",
+  "Missouri":"Jefferson City","Montana":"Helena","Nebraska":"Lincoln","Nevada":"Carson City",
+  "New Hampshire":"Concord","New Jersey":"Trenton","New Mexico":"Santa Fe","New York":"Albany",
+  "North Carolina":"Raleigh","North Dakota":"Bismarck","Ohio":"Columbus","Oklahoma":"Oklahoma City",
+  "Oregon":"Salem","Pennsylvania":"Harrisburg","Rhode Island":"Providence","South Carolina":"Columbia",
+  "South Dakota":"Pierre","Tennessee":"Nashville","Texas":"Austin","Utah":"Salt Lake City",
+  "Vermont":"Montpelier","Virginia":"Richmond","Washington":"Olympia","West Virginia":"Charleston",
+  "Wisconsin":"Madison","Wyoming":"Cheyenne"
+};
+
+/* ============================================================
+   Data: US states by population, descending (source: US Census
+   Bureau Vintage estimates via worldpopulationreview.com)
+   ============================================================ */
+const STATE_POPULATION_RANKING = [
+  ["California",39345844],["Texas",32101064],["Florida",23659198],["New York",20003435],
+  ["Pennsylvania",13073016],["Illinois",12735249],["Ohio",11940399],["Georgia",11401288],
+  ["North Carolina",11343875],["Michigan",10155806],["New Jersey",9590076],["Virginia",8940572],
+  ["Washington",8074082],["Arizona",7691212],["Tennessee",7378861],["Massachusetts",7169608],
+  ["Indiana",7011912],["Missouri",6297538],["Maryland",6285380],["Colorado",6036620],
+  ["Wisconsin",5988406],["Minnesota",5863405],["South Carolina",5650232],["Alabama",5223121],
+  ["Kentucky",4629682],["Louisiana",4621500],["Oregon",4281848],["Oklahoma",4148818],
+  ["Connecticut",3702543],["Utah",3574825],["Nevada",3310833],["Iowa",3246320],
+  ["Arkansas",3133502],["Kansas",2989188],["Mississippi",2958148],["New Mexico",2124222],
+  ["Idaho",2058594],["Nebraska",2030421],["West Virginia",1764892],["Hawaii",1430688],
+  ["New Hampshire",1422166],["Maine",1421310],["Montana",1151831],["Rhode Island",1118627],
+  ["Delaware",1069781],["South Dakota",943078],["North Dakota",805329],["Alaska",738003],
+  ["Vermont",642805],["Wyoming",590784]
+];
+function fmtPop(pop){ return `${Math.round(pop/1e6)}M`; }
+
+/* ============================================================
+   FREE-RECALL GAME ENGINE (countries + states)
+   ============================================================ */
+function freeRecallHTML(id){
+  return `
+    <div id="${id}-intro">
+      <div class="plate" style="margin-bottom:18px;">
+        <div class="label">rules</div>
+        <div style="font-size:14px; line-height:1.7; color:var(--paper);" id="${id}-rules"></div>
+      </div>
+      <button class="btn-primary" id="${id}-startBtn">Begin — start the clock</button>
+    </div>
+
+    <div class="game" id="${id}-game" style="display:none;">
+      <div class="top-row">
+        <div class="plate timer" id="${id}-timerPlate">
+          <div class="label">time remaining</div>
+          <div class="value" id="${id}-timerValue">--:--</div>
+        </div>
+        <div class="plate">
+          <div class="label">score</div>
+          <div class="value" id="${id}-scoreValue">0</div>
+        </div>
+      </div>
+      <div class="entry">
+        <input type="text" id="${id}-guess" placeholder="Type an answer…" autocomplete="off">
+        <button id="${id}-endBtn" title="End the round now">End round</button>
+      </div>
+      <div class="feedback" id="${id}-feedback"></div>
+      <div class="section-title"><span>Guessed so far</span><span id="${id}-guessedCount">0</span></div>
+      <div id="${id}-guessedList" class="guessed-grid">
+        <div class="empty-note">Nothing yet — start typing.</div>
+      </div>
+    </div>
+
+    <div class="results" id="${id}-results" style="display:none;">
+      <div class="final-score" id="${id}-finalScoreLine"></div>
+      <div class="section-title"><span id="${id}-finalTitle"></span><span>your hits in green</span></div>
+      <div id="${id}-finalGrid" class="final-grid"></div>
+      <button id="${id}-resetBtn">Play again</button>
+    </div>
+  `;
+}
+
+class FreeRecallGame{
+  constructor(opts){
+    this.id = opts.id;
+    this.title = opts.title;
+    this.items = opts.items;          // canonical display list
+    this.lookup = opts.lookup;        // normalized-key -> canonical
+    this.duration = opts.duration;    // seconds
+    this.rulesHTML = opts.rulesHTML;
+    this.finalTitle = opts.finalTitle;
+
+    this.guessed = new Set();
+    this.timeLeft = this.duration;
+    this.timerId = null;
+    this.running = false;
+
+    document.getElementById(`${this.id}-mount`).innerHTML = freeRecallHTML(this.id);
+    document.getElementById(`${this.id}-rules`).innerHTML = this.rulesHTML;
+    document.getElementById(`${this.id}-finalTitle`).textContent = this.finalTitle;
+
+    this.el = key => document.getElementById(`${this.id}-${key}`);
+    this.el('startBtn').addEventListener('click', () => this.start());
+    this.el('endBtn').addEventListener('click', () => this.end());
+    this.el('resetBtn').addEventListener('click', () => this.reset());
+    this.el('guess').addEventListener('keydown', e => { if (e.key === 'Enter') this.submit(); });
+    this.el('guess').addEventListener('input', () => {
+      if (!this.running) return;
+      const key = normalize(this.el('guess').value);
+      if (key && this.lookup[key]) this.submit();
+    });
+
+    this.updateTimerDisplay();
+  }
+
+  start(){
+    this.el('intro').style.display = 'none';
+    this.el('game').style.display = 'block';
+    this.running = true;
+    this.timeLeft = this.duration;
+    this.updateTimerDisplay();
+    this.el('guess').disabled = false;
+    this.el('guess').focus();
+    this.timerId = setInterval(() => this.tick(), 1000);
+  }
+
+  tick(){
+    this.timeLeft--;
+    this.updateTimerDisplay();
+    if (this.timeLeft <= 0) this.end();
+  }
+
+  updateTimerDisplay(){
+    this.el('timerValue').textContent = fmtTime(this.timeLeft);
+    this.el('timerPlate').classList.toggle('low', this.timeLeft <= 60);
+  }
+
+  submit(){
+    if (!this.running) return;
+    const raw = this.el('guess').value;
+    if (!raw.trim()) return;
+    const key = normalize(raw);
+    const canonical = this.lookup[key];
+
+    if (canonical && this.guessed.has(canonical)) return; // silent, keep typing
+
+    this.el('guess').value = '';
+    const fb = this.el('feedback');
+    if (!canonical){
+      fb.textContent = `"${raw.trim()}" — not recognized.`;
+      fb.className = 'feedback bad';
+    } else {
+      this.guessed.add(canonical);
+      fb.textContent = `${canonical} — correct!`;
+      fb.className = 'feedback good';
+      this.renderGuessed();
+    }
+    this.el('guess').focus();
+  }
+
+  renderGuessed(){
+    this.el('scoreValue').innerHTML = `${this.guessed.size} <span style="font-size:16px;color:var(--paper-dim);">/ ${this.items.length}</span>`;
+    this.el('guessedCount').textContent = this.guessed.size;
+    const list = Array.from(this.guessed).sort((a,b)=>a.localeCompare(b));
+    const container = this.el('guessedList');
+    container.innerHTML = list.length
+      ? list.map(c => `<div>${c}</div>`).join('')
+      : `<div class="empty-note">Nothing yet — start typing.</div>`;
+  }
+
+  end(){
+    if (!this.running) return;
+    this.running = false;
+    clearInterval(this.timerId);
+    this.el('guess').disabled = true;
+    this.el('endBtn').disabled = true;
+    this.el('game').style.display = 'none';
+    this.el('results').style.display = 'block';
+
+    const pct = Math.round((this.guessed.size / this.items.length) * 100);
+    this.el('finalScoreLine').textContent = `You named ${this.guessed.size} of ${this.items.length} (${pct}%).`;
+
+    const sorted = [...this.items].sort((a,b)=>a.localeCompare(b));
+    this.el('finalGrid').innerHTML = sorted.map(c => {
+      const hit = this.guessed.has(c);
+      return `<div class="item ${hit ? 'hit' : 'miss'}"><span>${c}</span><span>${hit ? '✓' : '—'}</span></div>`;
+    }).join('');
+  }
+
+  reset(){
+    this.guessed = new Set();
+    this.timeLeft = this.duration;
+    this.running = false;
+    this.el('guess').disabled = false;
+    this.el('endBtn').disabled = false;
+    this.el('guess').value = '';
+    this.el('feedback').textContent = '';
+    this.el('feedback').className = 'feedback';
+    this.renderGuessed();
+    this.el('results').style.display = 'none';
+    this.el('intro').style.display = 'block';
+    this.updateTimerDisplay();
+  }
+}
+
+/* ============================================================
+   PROMPTED QUIZ ENGINE (generic: state->abbreviation, country->capital, etc.)
+   ============================================================ */
+function quizHTML(id, promptLabel, mode){
+  const inputAttrs = mode === 'short' ? 'maxlength="2"' : '';
+  const rowClass = mode === 'short' ? 'quiz-input-row short' : 'quiz-input-row text';
+  return `
+    <div id="${id}-intro">
+      <div class="plate" style="margin-bottom:18px;">
+        <div class="label">rules</div>
+        <div style="font-size:14px; line-height:1.7; color:var(--paper);" id="${id}-rules"></div>
+      </div>
+      <button class="btn-primary" id="${id}-startBtn">Begin — start the clock</button>
+    </div>
+
+    <div class="game" id="${id}-game" style="display:none;">
+      <div class="top-row">
+        <div class="plate timer" id="${id}-timerPlate">
+          <div class="label">time remaining</div>
+          <div class="value" id="${id}-timerValue">--:--</div>
+        </div>
+        <div class="plate">
+          <div class="label">score</div>
+          <div class="value" id="${id}-scoreValue">0</div>
+        </div>
+        <div class="plate">
+          <div class="label">remaining</div>
+          <div class="value" id="${id}-progressValue">0</div>
+        </div>
+      </div>
+
+      <div class="quiz-prompt">
+        <div class="prompt-label">${promptLabel}</div>
+        <div class="prompt-value" id="${id}-promptValue">—</div>
+      </div>
+      <div class="${rowClass}">
+        <input type="text" id="${id}-guess" ${inputAttrs} autocomplete="off">
+      </div>
+      <div class="feedback" id="${id}-feedback" style="text-align:center;"></div>
+      <div style="text-align:center;">
+        <button id="${id}-skipBtn">Skip</button>
+        <button id="${id}-endBtn" title="End the round now">End round</button>
+      </div>
+    </div>
+
+    <div class="results" id="${id}-results" style="display:none;">
+      <div class="final-score" id="${id}-finalScoreLine"></div>
+      <div class="section-title"><span id="${id}-finalRollLabel"></span><span>your hits in green</span></div>
+      <div id="${id}-finalGrid" class="final-grid"></div>
+      <button id="${id}-resetBtn">Play again</button>
+    </div>
+  `;
+}
+
+class PromptQuiz{
+  constructor(opts){
+    this.id = opts.id;
+    this.pairs = opts.pairs; // [{ prompt, answer, aliases: [] }, ...]
+    this.duration = opts.duration;
+    this.rulesHTML = opts.rulesHTML;
+    this.promptLabel = opts.promptLabel;
+    this.finalRollLabel = opts.finalRollLabel;
+    this.mode = opts.mode || 'text'; // 'short' (fixed-length codes) or 'text' (free text)
+    this.maxLength = opts.maxLength || 2;
+
+    this.queue = [];    // remaining pair-indices still to answer correctly
+    this.score = 0;
+    this.results = {}; // prompt -> true (only set once answered correctly)
+    this.timeLeft = this.duration;
+    this.timerId = null;
+    this.running = false;
+
+    document.getElementById(`${this.id}-mount`).innerHTML = quizHTML(this.id, this.promptLabel, this.mode);
+    document.getElementById(`${this.id}-rules`).innerHTML = this.rulesHTML;
+    document.getElementById(`${this.id}-finalRollLabel`).textContent = this.finalRollLabel;
+
+    this.el = key => document.getElementById(`${this.id}-${key}`);
+    this.el('startBtn').addEventListener('click', () => this.start());
+    this.el('endBtn').addEventListener('click', () => this.end());
+    this.el('skipBtn').addEventListener('click', () => this.skip());
+    this.el('resetBtn').addEventListener('click', () => this.reset());
+    this.el('guess').addEventListener('keydown', e => { if (e.key === 'Enter') this.checkAnswer(true); });
+    this.el('guess').addEventListener('input', () => {
+      if (!this.running) return;
+      const val = this.el('guess').value;
+      if (this.mode === 'short'){
+        if (val.trim().length >= this.maxLength) this.checkAnswer(false);
+      } else {
+        const key = normalize(val);
+        if (key && this.acceptedKeys().includes(key)) this.checkAnswer(false);
+      }
+    });
+
+    this.updateTimerDisplay();
+  }
+
+  start(){
+    this.el('intro').style.display = 'none';
+    this.el('game').style.display = 'block';
+    this.running = true;
+    this.timeLeft = this.duration;
+    this.score = 0;
+    this.results = {};
+    this.queue = shuffled(this.pairs.map((_,i)=>i));
+    this.updateTimerDisplay();
+    this.showPrompt();
+    this.el('guess').disabled = false;
+    this.el('guess').focus();
+    this.timerId = setInterval(() => this.tick(), 1000);
+  }
+
+  tick(){
+    this.timeLeft--;
+    this.updateTimerDisplay();
+    if (this.timeLeft <= 0) this.end();
+  }
+
+  updateTimerDisplay(){
+    this.el('timerValue').textContent = fmtTime(this.timeLeft);
+    this.el('timerPlate').classList.toggle('low', this.timeLeft <= 60);
+  }
+
+  currentPair(){ return this.pairs[this.queue[0]]; }
+  acceptedKeys(){
+    const p = this.currentPair();
+    return [p.answer, ...(p.aliases || [])].map(normalize);
+  }
+
+  showPrompt(){
+    if (this.queue.length === 0){ this.end(); return; }
+    const { prompt } = this.currentPair();
+    this.el('promptValue').textContent = prompt;
+    this.el('progressValue').textContent = this.queue.length;
+    this.el('guess').value = '';
+    this.el('feedback').textContent = '';
+    this.el('feedback').className = 'feedback';
+  }
+
+  checkAnswer(fromEnter){
+    if (!this.running) return;
+    const { prompt, answer } = this.currentPair();
+    const typed = this.el('guess').value.trim();
+    if (!typed) return;
+    const key = normalize(typed);
+    if (this.acceptedKeys().includes(key)){
+      this.results[prompt] = true;
+      this.score++;
+      this.el('scoreValue').textContent = this.score;
+      this.el('feedback').textContent = `${answer} — correct!`;
+      this.el('feedback').className = 'feedback good';
+      this.queue.shift();
+      setTimeout(() => this.showPrompt(), 150);
+    } else if (fromEnter || (this.mode === 'short' && typed.length >= this.maxLength)){
+      this.el('feedback').textContent = `Not quite — try again or skip.`;
+      this.el('feedback').className = 'feedback bad';
+      this.el('guess').value = '';
+    }
+  }
+
+  skip(){
+    if (!this.running) return;
+    // Send the current item to the back of the queue so it comes back around
+    // after the rest, instead of ending the round.
+    const idx = this.queue.shift();
+    this.queue.push(idx);
+    this.showPrompt();
+  }
+
+  end(){
+    if (!this.running) return;
+    this.running = false;
+    clearInterval(this.timerId);
+    this.el('guess').disabled = true;
+    this.el('endBtn').disabled = true;
+    this.el('skipBtn').disabled = true;
+    this.el('game').style.display = 'none';
+    this.el('results').style.display = 'block';
+
+    const pct = Math.round((this.score / this.pairs.length) * 100);
+    this.el('finalScoreLine').textContent = `You got ${this.score} of ${this.pairs.length} correct (${pct}%).`;
+
+    const sorted = [...this.pairs].sort((a,b)=>a.prompt.localeCompare(b.prompt));
+    this.el('finalGrid').innerHTML = sorted.map(({prompt, answer}) => {
+      const hit = this.results[prompt] === true;
+      return `<div class="item ${hit ? 'hit' : 'miss'}"><span>${prompt}</span><span>${answer} ${hit ? '✓' : '—'}</span></div>`;
+    }).join('');
+  }
+
+  reset(){
+    this.running = false;
+    this.timeLeft = this.duration;
+    this.score = 0;
+    this.results = {};
+    this.queue = [];
+    this.el('guess').disabled = false;
+    this.el('endBtn').disabled = false;
+    this.el('skipBtn').disabled = false;
+    this.el('scoreValue').textContent = '0';
+    this.el('results').style.display = 'none';
+    this.el('intro').style.display = 'block';
+    this.updateTimerDisplay();
+  }
+}
+
+/* ============================================================
+   Build lookups & instantiate games
+   ============================================================ */
+const COUNTRY_LOOKUP = {};
+COUNTRIES.forEach(c => { COUNTRY_LOOKUP[normalize(c)] = c; });
+Object.keys(COUNTRY_ALIASES).forEach(k => {
+  if (COUNTRY_ALIASES[k] !== null) COUNTRY_LOOKUP[normalize(k)] = COUNTRY_ALIASES[k];
+});
+
+const STATE_LOOKUP = {};
+STATES.forEach(([name, abbr]) => {
+  STATE_LOOKUP[normalize(name)] = name;
+});
+
+const countriesGame = new FreeRecallGame({
+  id: 'countries',
+  items: COUNTRIES,
+  lookup: COUNTRY_LOOKUP,
+  duration: 15*60,
+  finalTitle: 'Full roll — all 193 UN member states',
+  rulesHTML: `
+    &middot; 15 minutes on the clock, starting when you hit begin<br>
+    &middot; Every UN member state counts once — 193 total<br>
+    &middot; Common nicknames and abbreviations are accepted<br>
+    &middot; When time expires, the full roll is revealed with your hits marked
+  `
+});
+
+const statesGame = new FreeRecallGame({
+  id: 'states',
+  items: STATES.map(s => s[0]),
+  lookup: STATE_LOOKUP,
+  duration: 10*60,
+  finalTitle: 'Full roll — all 50 US states',
+  rulesHTML: `
+    &middot; 10 minutes on the clock, starting when you hit begin<br>
+    &middot; Every US state counts once — 50 total<br>
+    &middot; Type the full state name — abbreviations don't count here<br>
+    &middot; When time expires, the full roll is revealed with your hits marked
+  `
+});
+
+const abbrQuiz = new PromptQuiz({
+  id: 'abbr',
+  pairs: STATES.map(([name, abbr]) => ({ prompt: name, answer: abbr })),
+  duration: 8*60,
+  mode: 'short',
+  maxLength: 2,
+  promptLabel: "what's the abbreviation for",
+  finalRollLabel: 'Full roll — all 50 states',
+  rulesHTML: `
+    &middot; 8 minutes on the clock, starting when you hit begin<br>
+    &middot; States appear one at a time in random order — 50 total<br>
+    &middot; Type the two-letter postal abbreviation for each<br>
+    &middot; Use Skip if you're stuck; the round ends when you've been through all 50 or time runs out
+  `
+});
+
+const worldCapitalsQuiz = new PromptQuiz({
+  id: 'worldcap',
+  pairs: COUNTRIES.map(name => ({
+    prompt: name,
+    answer: WORLD_CAPITALS[name].answer,
+    aliases: WORLD_CAPITALS[name].aliases || []
+  })),
+  duration: 15*60,
+  mode: 'text',
+  promptLabel: "what's the capital of",
+  finalRollLabel: 'Full roll — all 193 countries',
+  rulesHTML: `
+    &middot; 15 minutes on the clock, starting when you hit begin<br>
+    &middot; Countries appear one at a time in random order — 193 total<br>
+    &middot; Type the capital city for each<br>
+    &middot; Use Skip if you're stuck; the round ends when you've been through all 193 or time runs out
+  `
+});
+
+const stateCapitalsQuiz = new PromptQuiz({
+  id: 'statecap',
+  pairs: STATES.map(([name]) => ({ prompt: name, answer: STATE_CAPITALS[name] })),
+  duration: 10*60,
+  mode: 'text',
+  promptLabel: "what's the capital of",
+  finalRollLabel: 'Full roll — all 50 states',
+  rulesHTML: `
+    &middot; 10 minutes on the clock, starting when you hit begin<br>
+    &middot; States appear one at a time in random order — 50 total<br>
+    &middot; Type the capital city for each<br>
+    &middot; Use Skip if you're stuck; the round ends when you've been through all 50 or time runs out
+  `
+});
+
+/* ============================================================
+   Data: Alaska trivia (source: Wikipedia)
+   ============================================================ */
+const ALASKA_TRIVIA = [
+  {
+    q: "What is Alaska's state gem?",
+    accepted: ["jade"],
+    display: "Jade"
+  },
+  {
+    q: "What is Alaska's state mineral?",
+    accepted: ["gold"],
+    display: "Gold"
+  },
+  {
+    q: "What is Alaska's well-known state nickname?",
+    accepted: ["last frontier"],
+    display: "The Last Frontier"
+  },
+  {
+    q: "What was Alaska's capital during Russian occupation?",
+    accepted: ["new archangel", "sitka"],
+    display: "New Archangel (present-day Sitka)"
+  },
+  {
+    q: "What is Alaska's state insect?",
+    accepted: ["four spotted skimmer dragonfly", "four spot skimmer dragonfly", "four spotted skimmer", "four spot skimmer", "skimmer dragonfly", "dragonfly"],
+    display: "Four-spotted skimmer dragonfly"
+  },
+  {
+    q: "To the nearest million dollars, how much did the US pay to purchase Alaska?",
+    accepted: ["7", "7 million", "$7 million", "seven million", "7m"],
+    display: "$7 million (actual price: $7.2 million)"
+  },
+  {
+    q: "What is the northernmost city on the Inside Passage?",
+    accepted: ["skagway"],
+    display: "Skagway"
+  }
+];
+
+/* ============================================================
+   TRIVIA QUIZ ENGINE (Alaska — one question at a time)
+   ============================================================ */
+function triviaHTML(id){
+  return `
+    <div id="${id}-intro">
+      <div class="plate" style="margin-bottom:18px;">
+        <div class="label">rules</div>
+        <div style="font-size:14px; line-height:1.7; color:var(--paper);" id="${id}-rules"></div>
+      </div>
+      <button class="btn-primary" id="${id}-startBtn">Begin</button>
+    </div>
+
+    <div class="game" id="${id}-game" style="display:none;">
+      <div class="trivia-progress" id="${id}-progress"></div>
+      <div class="trivia-q">
+        <div class="q-text" id="${id}-qText"></div>
+        <div class="trivia-answer-row" style="margin-top:20px;">
+          <input type="text" id="${id}-guess" placeholder="Type your answer…" autocomplete="off">
+          <button class="btn-primary" id="${id}-submitBtn">Submit</button>
+        </div>
+        <div class="trivia-reveal" id="${id}-reveal" style="display:none;"></div>
+      </div>
+      <button id="${id}-nextBtn" style="display:none;">Next question &rarr;</button>
+    </div>
+
+    <div class="results" id="${id}-results" style="display:none;">
+      <div class="final-score" id="${id}-finalScoreLine"></div>
+      <div id="${id}-review"></div>
+      <button id="${id}-resetBtn">Play again</button>
+    </div>
+  `;
+}
+
+class TriviaQuiz{
+  constructor(opts){
+    this.id = opts.id;
+    this.questions = opts.questions;
+    this.rulesHTML = opts.rulesHTML;
+
+    this.idx = 0;
+    this.score = 0;
+    this.answers = []; // { q, yourAnswer, correct, display }
+    this.answered = false;
+
+    document.getElementById(`${this.id}-mount`).innerHTML = triviaHTML(this.id);
+    document.getElementById(`${this.id}-rules`).innerHTML = this.rulesHTML;
+
+    this.el = key => document.getElementById(`${this.id}-${key}`);
+    this.el('startBtn').addEventListener('click', () => this.start());
+    this.el('submitBtn').addEventListener('click', () => this.submit());
+    this.el('nextBtn').addEventListener('click', () => this.next());
+    this.el('resetBtn').addEventListener('click', () => this.reset());
+    this.el('guess').addEventListener('keydown', e => {
+      if (e.key === 'Enter') { this.answered ? this.next() : this.submit(); }
+    });
+  }
+
+  start(){
+    this.el('intro').style.display = 'none';
+    this.el('game').style.display = 'block';
+    this.idx = 0;
+    this.score = 0;
+    this.answers = [];
+    this.showQuestion();
+  }
+
+  showQuestion(){
+    this.answered = false;
+    const q = this.questions[this.idx];
+    this.el('progress').textContent = `Question ${this.idx + 1} of ${this.questions.length}`;
+    this.el('qText').textContent = q.q;
+    this.el('guess').value = '';
+    this.el('guess').disabled = false;
+    this.el('submitBtn').style.display = 'inline-block';
+    this.el('reveal').style.display = 'none';
+    this.el('nextBtn').style.display = 'none';
+    this.el('guess').focus();
+  }
+
+  submit(){
+    if (this.answered) return;
+    const q = this.questions[this.idx];
+    const raw = this.el('guess').value;
+    if (!raw.trim()) return;
+    const key = normalize(raw);
+    const isCorrect = q.accepted.map(normalize).includes(key);
+
+    this.answered = true;
+    if (isCorrect) this.score++;
+    this.answers.push({ q: q.q, yourAnswer: raw.trim(), display: q.display, isCorrect });
+
+    this.el('guess').disabled = true;
+    this.el('submitBtn').style.display = 'none';
+    const reveal = this.el('reveal');
+    reveal.style.display = 'block';
+    reveal.className = `trivia-reveal ${isCorrect ? 'correct' : 'incorrect'}`;
+    reveal.textContent = isCorrect ? `Correct — ${q.display}` : `Not quite — the answer is ${q.display}`;
+    this.el('nextBtn').style.display = 'inline-block';
+    this.el('nextBtn').focus();
+  }
+
+  next(){
+    if (!this.answered) return;
+    this.idx++;
+    if (this.idx >= this.questions.length){ this.end(); return; }
+    this.showQuestion();
+  }
+
+  end(){
+    this.el('game').style.display = 'none';
+    this.el('results').style.display = 'block';
+    this.el('finalScoreLine').textContent = `You scored ${this.score} of ${this.questions.length}.`;
+    this.el('review').innerHTML = this.answers.map(a => `
+      <div class="review-item">
+        <div class="rq">${a.q}</div>
+        <div class="ra ${a.isCorrect ? 'hit' : 'miss'}">
+          Your answer: ${a.yourAnswer} ${a.isCorrect ? '✓' : '—'}
+          ${a.isCorrect ? '' : `<span class="correct-note">Correct answer: ${a.display}</span>`}
+        </div>
+      </div>
+    `).join('');
+  }
+
+  reset(){
+    this.idx = 0;
+    this.score = 0;
+    this.answers = [];
+    this.el('results').style.display = 'none';
+    this.el('intro').style.display = 'block';
+  }
+}
+
+const alaskaTrivia = new TriviaQuiz({
+  id: 'alaska',
+  questions: ALASKA_TRIVIA,
+  rulesHTML: `
+    &middot; 7 questions about Alaska, one at a time — no clock, just recall<br>
+    &middot; Type your answer and hit enter or submit<br>
+    &middot; You'll see the correct answer immediately after each question<br>
+    &middot; At the end, review your full scorecard
+  `
+});
+
+/* ============================================================
+   MINEFIELD ENGINE (guess items in strict descending order —
+   one wrong guess ends the round)
+   ============================================================ */
+function minefieldHTML(id){
+  return `
+    <div id="${id}-intro">
+      <div class="plate" style="margin-bottom:18px;">
+        <div class="label">rules</div>
+        <div style="font-size:14px; line-height:1.7; color:var(--paper);" id="${id}-rules"></div>
+      </div>
+      <button class="btn-primary" id="${id}-startBtn">Begin</button>
+    </div>
+
+    <div class="game" id="${id}-game" style="display:none;">
+      <div class="top-row">
+        <div class="plate">
+          <div class="label">correct so far</div>
+          <div class="value" id="${id}-scoreValue">0</div>
+        </div>
+        <div class="plate">
+          <div class="label">next rank</div>
+          <div class="value" id="${id}-rankValue">#1</div>
+        </div>
+      </div>
+      <div class="entry">
+        <input type="text" id="${id}-guess" placeholder="Type the next state…" autocomplete="off">
+        <button class="btn-primary" id="${id}-submitBtn">Guess</button>
+      </div>
+      <div class="feedback" id="${id}-feedback"></div>
+      <div class="section-title"><span>Correctly guessed, in order</span><span id="${id}-guessedCount">0</span></div>
+      <div id="${id}-mineList" class="mine-list">
+        <div class="empty-note">Nothing yet — guess the most populous state to start.</div>
+      </div>
+      <div style="margin-top:16px;">
+        <button id="${id}-giveupBtn">Give up</button>
+      </div>
+    </div>
+
+    <div class="results" id="${id}-results" style="display:none;">
+      <div class="final-score" id="${id}-finalScoreLine"></div>
+      <div class="section-title"><span>Full ranking — all 50 states by population</span><span>your hits in green</span></div>
+      <div id="${id}-finalGrid" class="final-grid"></div>
+      <button id="${id}-resetBtn">Play again</button>
+    </div>
+  `;
+}
+
+class MinefieldQuiz{
+  constructor(opts){
+    this.id = opts.id;
+    this.items = opts.items; // [[name, population], ...] already sorted descending
+    this.lookup = opts.lookup; // normalized name -> canonical
+    this.rulesHTML = opts.rulesHTML;
+
+    this.nextIndex = 0;
+    this.guessedSoFar = []; // [{name, population}]
+    this.running = false;
+
+    document.getElementById(`${this.id}-mount`).innerHTML = minefieldHTML(this.id);
+    document.getElementById(`${this.id}-rules`).innerHTML = this.rulesHTML;
+
+    this.el = key => document.getElementById(`${this.id}-${key}`);
+    this.el('startBtn').addEventListener('click', () => this.start());
+    this.el('submitBtn').addEventListener('click', () => this.submit());
+    this.el('giveupBtn').addEventListener('click', () => this.giveUp());
+    this.el('resetBtn').addEventListener('click', () => this.reset());
+    this.el('guess').addEventListener('keydown', e => { if (e.key === 'Enter') this.submit(); });
+  }
+
+  start(){
+    this.el('intro').style.display = 'none';
+    this.el('game').style.display = 'block';
+    this.running = true;
+    this.nextIndex = 0;
+    this.guessedSoFar = [];
+    this.renderList();
+    this.updateHeader();
+    this.el('guess').disabled = false;
+    this.el('guess').value = '';
+    this.el('feedback').textContent = '';
+    this.el('feedback').className = 'feedback';
+    this.el('guess').focus();
+  }
+
+  updateHeader(){
+    this.el('scoreValue').textContent = this.guessedSoFar.length;
+    this.el('rankValue').textContent = `#${this.nextIndex + 1}`;
+  }
+
+  submit(){
+    if (!this.running) return;
+    const raw = this.el('guess').value;
+    if (!raw.trim()) return;
+    const key = normalize(raw);
+    const canonical = this.lookup[key];
+    const [targetName, targetPop] = this.items[this.nextIndex];
+
+    if (canonical === targetName){
+      this.guessedSoFar.push({ name: targetName, population: targetPop });
+      this.nextIndex++;
+      this.el('guess').value = '';
+      this.el('feedback').textContent = `${targetName} — correct! (${fmtPop(targetPop)})`;
+      this.el('feedback').className = 'feedback good';
+      this.renderList();
+      this.updateHeader();
+      if (this.nextIndex >= this.items.length){ this.end('complete'); return; }
+      this.el('guess').focus();
+    } else {
+      this.end('wrong', { typed: raw.trim(), canonical, targetName });
+    }
+  }
+
+  renderList(){
+    this.el('guessedCount').textContent = this.guessedSoFar.length;
+    const container = this.el('mineList');
+    container.innerHTML = this.guessedSoFar.length
+      ? this.guessedSoFar.map((g, i) => `
+          <div class="row"><span><span class="mine-rank-badge">#${i+1}</span>${g.name}</span><span class="pop">${fmtPop(g.population)}</span></div>
+        `).join('')
+      : `<div class="empty-note">Nothing yet — guess the most populous state to start.</div>`;
+  }
+
+  giveUp(){
+    if (!this.running) return;
+    this.end('gaveup');
+  }
+
+  end(reason, details){
+    if (!this.running) return;
+    this.running = false;
+    this.el('guess').disabled = true;
+    this.el('game').style.display = 'none';
+    this.el('results').style.display = 'block';
+
+    const n = this.guessedSoFar.length;
+    const total = this.items.length;
+    let line;
+    if (reason === 'complete'){
+      line = `Perfect run — you named all ${total} states in order!`;
+    } else if (reason === 'wrong'){
+      line = details.canonical
+        ? `Game over — you got ${n} of ${total} right. "${details.typed}" is a real state, but it wasn't next — ${details.targetName} was.`
+        : `Game over — you got ${n} of ${total} right. "${details.typed}" wasn't recognized; the next state was ${details.targetName}.`;
+    } else {
+      line = `You stopped after ${n} of ${total} correct.`;
+    }
+    this.el('finalScoreLine').textContent = line;
+
+    this.el('finalGrid').innerHTML = this.items.map(([name, pop], i) => {
+      const hit = i < n;
+      const isMissPoint = reason === 'wrong' && i === n;
+      const cls = hit ? 'hit' : (isMissPoint ? 'next' : 'miss');
+      const mark = hit ? '✓' : (isMissPoint ? '✕' : '—');
+      return `<div class="item ${cls}"><span>#${i+1} ${name}</span><span>${fmtPop(pop)} ${mark}</span></div>`;
+    }).join('');
+  }
+
+  reset(){
+    this.running = false;
+    this.nextIndex = 0;
+    this.guessedSoFar = [];
+    this.el('guess').disabled = false;
+    this.el('results').style.display = 'none';
+    this.el('intro').style.display = 'block';
+  }
+}
+
+const populationMinefield = new MinefieldQuiz({
+  id: 'popmine',
+  items: STATE_POPULATION_RANKING,
+  lookup: STATE_LOOKUP,
+  rulesHTML: `
+    &middot; Name all 50 US states in order from most to least populous<br>
+    &middot; One wrong guess — including a right state in the wrong order — ends the round immediately<br>
+    &middot; Each correct guess shows that state's population, rounded to the nearest million<br>
+    &middot; No clock here — just don't miss
+  `
+});
+</script>
+</body>
+</html>
