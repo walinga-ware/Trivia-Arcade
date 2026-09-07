@@ -202,6 +202,23 @@
       </div>
     </div>
 
+    <!-- ============ CANADA (GENERAL) ============ -->
+    <h2 style="margin-top:36px; margin-bottom:12px; border-bottom:1px solid var(--line); padding-bottom:8px; color:var(--paper-dim); font-size:13px; text-transform:uppercase; letter-spacing:0.5px;">Canada (general)</h2>
+    <div class="card-grid">
+      <div class="card">
+        <div class="tag">Free recall &middot; 13 items</div>
+        <h3>Canadian Provinces</h3>
+        <div class="meta">5 minutes</div>
+        <button class="btn-primary" onclick="showScreen('provinces')">Play</button>
+      </div>
+      <div class="card">
+        <div class="tag">Prompted quiz &middot; 13 items</div>
+        <h3>Capital Idea: Canadian Provinces</h3>
+        <div class="meta">5 minutes</div>
+        <button class="btn-primary" onclick="showScreen('provincecap')">Play</button>
+      </div>
+    </div>
+
     <!-- ============ US (GENERAL) ============ -->
     <h2 style="margin-top:36px; margin-bottom:12px; border-bottom:1px solid var(--line); padding-bottom:8px; color:var(--paper-dim); font-size:13px; text-transform:uppercase; letter-spacing:0.5px;">US (General)</h2>
     <div class="card-grid">
@@ -299,6 +316,18 @@
   <div class="screen" id="screen-findstate">
     <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
     <div id="findstate-mount"></div>
+  </div>
+
+  <!-- ============ CANADIAN PROVINCES (free recall) ============ -->
+  <div class="screen" id="screen-provinces">
+    <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
+    <div id="provinces-mount"></div>
+  </div>
+
+  <!-- ============ CANADIAN PROVINCE CAPITALS (quiz) ============ -->
+  <div class="screen" id="screen-provincecap">
+    <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
+    <div id="provincecap-mount"></div>
   </div>
 
 </div>
@@ -550,6 +579,24 @@ const STATE_POPULATION_RANKING = [
   ["Vermont",642805],["Wyoming",590784]
 ];
 function fmtPop(pop){ return `${Math.round(pop/1e6)}M`; }
+
+/* ============================================================
+   Data: Canadian provinces + territories, and their capitals
+   ============================================================ */
+const CANADA_PROVINCES = [
+  "Alberta","British Columbia","Manitoba","New Brunswick","Newfoundland and Labrador",
+  "Northwest Territories","Nova Scotia","Nunavut","Ontario","Prince Edward Island",
+  "Quebec","Saskatchewan","Yukon"
+];
+const CANADA_PROVINCE_CAPITALS = {
+  "Alberta":{answer:"Edmonton"}, "British Columbia":{answer:"Victoria"}, "Manitoba":{answer:"Winnipeg"},
+  "New Brunswick":{answer:"Fredericton"},
+  "Newfoundland and Labrador":{answer:"St. John's", aliases:["St John's","Saint John's"]},
+  "Northwest Territories":{answer:"Yellowknife"}, "Nova Scotia":{answer:"Halifax"}, "Nunavut":{answer:"Iqaluit"},
+  "Ontario":{answer:"Toronto"}, "Prince Edward Island":{answer:"Charlottetown"},
+  "Quebec":{answer:"Quebec City", aliases:["Quebec"]},
+  "Saskatchewan":{answer:"Regina"}, "Yukon":{answer:"Whitehorse"}
+};
 
 /* ============================================================
    FREE-RECALL GAME ENGINE (countries + states)
@@ -1212,6 +1259,15 @@ STATES.forEach(([name, abbr]) => {
   STATE_LOOKUP[normalize(name)] = name;
 });
 
+const CANADA_PROVINCE_LOOKUP = {};
+CANADA_PROVINCES.forEach(name => {
+  CANADA_PROVINCE_LOOKUP[normalize(name)] = name;
+});
+CANADA_PROVINCE_LOOKUP[normalize("BC")] = "British Columbia";
+CANADA_PROVINCE_LOOKUP[normalize("PEI")] = "Prince Edward Island";
+CANADA_PROVINCE_LOOKUP[normalize("Newfoundland")] = "Newfoundland and Labrador";
+CANADA_PROVINCE_LOOKUP[normalize("NWT")] = "Northwest Territories";
+
 const countriesGame = new FreeRecallGame({
   id: 'countries',
   items: COUNTRIES,
@@ -1287,6 +1343,39 @@ const stateCapitalsQuiz = new PromptQuiz({
     &middot; States appear one at a time in random order — 50 total<br>
     &middot; Type the capital city for each<br>
     &middot; Use Skip if you're stuck; the round ends when you've been through all 50 or time runs out
+  `
+});
+
+const canadianProvincesGame = new FreeRecallGame({
+  id: 'provinces',
+  items: CANADA_PROVINCES,
+  lookup: CANADA_PROVINCE_LOOKUP,
+  duration: 5*60,
+  finalTitle: 'Full roll — all 10 provinces and 3 territories',
+  rulesHTML: `
+    &middot; 5 minutes on the clock, starting when you hit begin<br>
+    &middot; Every Canadian province and territory counts once — 13 total<br>
+    &middot; Type the full name — common short forms are accepted<br>
+    &middot; When time expires, the full roll is revealed with your hits marked
+  `
+});
+
+const provinceCapitalsQuiz = new PromptQuiz({
+  id: 'provincecap',
+  pairs: CANADA_PROVINCES.map(name => ({
+    prompt: name,
+    answer: CANADA_PROVINCE_CAPITALS[name].answer,
+    aliases: CANADA_PROVINCE_CAPITALS[name].aliases || []
+  })),
+  duration: 5*60,
+  mode: 'text',
+  promptLabel: "what's the capital of",
+  finalRollLabel: 'Full roll — all 13 provinces and territories',
+  rulesHTML: `
+    &middot; 5 minutes on the clock, starting when you hit begin<br>
+    &middot; Provinces and territories appear one at a time in random order — 13 total<br>
+    &middot; Type the capital city for each<br>
+    &middot; Use Skip if you're stuck; the round ends when you've been through all 13 or time runs out
   `
 });
 
