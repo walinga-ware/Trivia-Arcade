@@ -211,13 +211,19 @@
 
     <!-- ============ US STATES SHOWCASE ============ -->
     <h2 style="margin-top:36px; margin-bottom:12px; border-bottom:1px solid var(--line); padding-bottom:8px; color:var(--paper-dim); font-size:13px; text-transform:uppercase; letter-spacing:0.5px;">US States Showcase</h2>
-    <p style="color:var(--paper-dim); font-size:13px; line-height:1.6; margin-bottom:16px;">Deep dives into individual states. Each offers trivia, facts, and local knowledge — starting with Alaska.</p>
+    <p style="color:var(--paper-dim); font-size:13px; line-height:1.6; margin-bottom:16px;">Fun-sized quiz games for individual states. Each offers trivia, facts, and local knowledge.</p>
     <div class="card-grid">
       <div class="card">
         <div class="tag">Trivia quiz &middot; 7 questions</div>
         <h3>Alaska: Frontier Facts</h3>
         <div class="meta">~3 minutes</div>
         <button class="btn-primary" onclick="showScreen('alaska')">Play</button>
+      </div>
+      <div class="card">
+        <div class="tag">Trivia quiz &middot; 7 questions</div>
+        <h3>New York: Empire Smart</h3>
+        <div class="meta">~3 minutes</div>
+        <button class="btn-primary" onclick="showScreen('newyork')">Play</button>
       </div>
     </div>
   </div>
@@ -256,6 +262,12 @@
   <div class="screen" id="screen-alaska">
     <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
     <div id="alaska-mount"></div>
+  </div>
+
+  <!-- ============ NEW YORK TRIVIA ============ -->
+  <div class="screen" id="screen-newyork">
+    <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
+    <div id="newyork-mount"></div>
   </div>
 
   <!-- ============ POPULATION MINEFIELD ============ -->
@@ -1017,7 +1029,48 @@ const ALASKA_TRIVIA = [
 ];
 
 /* ============================================================
-   TRIVIA QUIZ ENGINE (Alaska — one question at a time)
+   Data: New York trivia (source: Wikipedia)
+   ============================================================ */
+   const NEW_YORK_TRIVIA = [
+  {
+    q: "What is New York's state gem?",
+    accepted: ["garnet"],
+    display: "Garnet"
+  },
+  {
+    q: "What is New York's state fruit?",
+    accepted: ["apple"],
+    display: "Apple"
+  },
+  {
+    q: "What is New York's well-known state nickname?",
+    accepted: ["empire state"],
+    display: "The Empire State"
+  },
+  {
+    q: "What is New York's highest mountain?",
+    accepted: ["mount marcy", "mt marcy"],
+    display: "Mount Marcy"
+  },
+  {
+    q: "What is New York's state insect?",
+    accepted: ["nine spotted ladybug", "spotted ladybug", "ladybug"],
+    display: "Nine-spotted ladybug"
+  },
+  {
+    q: "To the nearest percent, how much of New York state consists of water?",
+    accepted: ["13", "14", "13%", "14%", "thirteen", "fourteen"],
+    display: "14 percent (exact: 13.6%)"
+  },
+  {
+    q: "Near present-day Albany, what was the first Dutch settlement in New York state?",
+    accepted: ["fort nassau"],
+    display: "Fort Nassau"
+  }
+];
+
+/* ============================================================
+   TRIVIA QUIZ ENGINE (one question at a time)
    ============================================================ */
 function triviaHTML(id){
   return `
@@ -1154,6 +1207,17 @@ const alaskaTrivia = new TriviaQuiz({
   questions: ALASKA_TRIVIA,
   rulesHTML: `
     &middot; 7 questions about Alaska, one at a time — no clock, just recall<br>
+    &middot; Type your answer and hit enter or submit<br>
+    &middot; You'll see the correct answer immediately after each question<br>
+    &middot; At the end, review your full scorecard
+  `
+});
+
+const newYorkTrivia = new TriviaQuiz({
+  id: 'newyork',
+  questions: NEW_YORK_TRIVIA,
+  rulesHTML: `
+    &middot; 7 questions about New York, one at a time — no clock, just recall<br>
     &middot; Type your answer and hit enter or submit<br>
     &middot; You'll see the correct answer immediately after each question<br>
     &middot; At the end, review your full scorecard
