@@ -1365,7 +1365,7 @@ const worldCapitalsQuiz = new PromptQuiz({
     answer: WORLD_CAPITALS[name].answer,
     aliases: WORLD_CAPITALS[name].aliases || []
   })),
-  duration: 15*60,
+  duration: 25*60,
   mode: 'text',
   promptLabel: "what's the capital of",
   finalRollLabel: 'Full roll — all 193 countries',
@@ -1379,7 +1379,7 @@ const worldCapitalsQuiz = new PromptQuiz({
 const stateCapitalsQuiz = new PromptQuiz({
   id: 'statecap',
   pairs: STATES.map(([name]) => ({ prompt: name, answer: STATE_CAPITALS[name] })),
-  duration: 10*60,
+  duration: 15*60,
   mode: 'text',
   promptLabel: "what's the capital of",
   finalRollLabel: 'Full roll — all 50 states',
@@ -1410,7 +1410,7 @@ const provinceCapitalsQuiz = new PromptQuiz({
     answer: CANADA_PROVINCE_CAPITALS[name].answer,
     aliases: CANADA_PROVINCE_CAPITALS[name].aliases || []
   })),
-  duration: 5*60,
+  duration: 8*60,
   mode: 'text',
   promptLabel: "what's the capital of",
   finalRollLabel: 'Full roll — all 13 provinces and territories',
