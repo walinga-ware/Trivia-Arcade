@@ -213,9 +213,15 @@
       </div>
       <div class="card">
         <div class="tag">Prompted quiz &middot; 13 items</div>
-        <h3>Capital Idea: Canadian Provinces</h3>
+        <h3>Capital Idea: Canada</h3>
         <div class="meta">5 minutes</div>
         <button class="btn-primary" onclick="showScreen('provincecap')">Play</button>
+      </div>
+      <div class="card">
+        <div class="tag">Minefield &middot; 13 items</div>
+        <h3>Provinces by Population</h3>
+        <div class="meta">one wrong guess ends it</div>
+        <button class="btn-primary" onclick="showScreen('provpopmine')">Play</button>
       </div>
     </div>
 
@@ -328,6 +334,12 @@
   <div class="screen" id="screen-provincecap">
     <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
     <div id="provincecap-mount"></div>
+  </div>
+
+  <!-- ============ CANADIAN PROVINCE POPULATION MINEFIELD ============ -->
+  <div class="screen" id="screen-provpopmine">
+    <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
+    <div id="provpopmine-mount"></div>
   </div>
 
 </div>
@@ -597,6 +609,20 @@ const CANADA_PROVINCE_CAPITALS = {
   "Quebec":{answer:"Quebec City", aliases:["Quebec"]},
   "Saskatchewan":{answer:"Regina"}, "Yukon":{answer:"Whitehorse"}
 };
+
+/* ============================================================
+   Data: Canadian provinces/territories by population
+   Source: Statistics Canada, Table 17-10-0009-01, estimate for July 1, 2025
+   ============================================================ */
+const CANADA_POPULATION_RANKING = [
+  ["Ontario",16258260],["Quebec",9058297],["British Columbia",5697536],["Alberta",5029346],
+  ["Manitoba",1509702],["Saskatchewan",1266959],["Nova Scotia",1093245],["New Brunswick",869682],
+  ["Newfoundland and Labrador",549911],["Prince Edward Island",182657],["Yukon",48278],
+  ["Northwest Territories",45950],["Nunavut",41830]
+];
+function fmtPopCA(pop){
+  return pop >= 1e6 ? `${(pop/1e6).toFixed(1)}M` : `${Math.round(pop/1e3)}K`;
+}
 
 /* ============================================================
    FREE-RECALL GAME ENGINE (countries + states)
@@ -1818,6 +1844,7 @@ class MinefieldQuiz{
     this.items = opts.items; // [[name, population], ...] already sorted descending
     this.lookup = opts.lookup; // normalized name -> canonical
     this.rulesHTML = opts.rulesHTML;
+    this.fmtPop = opts.fmtPop || fmtPop; // allow a custom population formatter per instance
 
     this.nextIndex = 0;
     this.guessedSoFar = []; // [{name, population}]
@@ -1866,7 +1893,7 @@ class MinefieldQuiz{
       this.guessedSoFar.push({ name: targetName, population: targetPop });
       this.nextIndex++;
       this.el('guess').value = '';
-      this.el('feedback').textContent = `${targetName} — correct! (${fmtPop(targetPop)})`;
+      this.el('feedback').textContent = `${targetName} — correct! (${this.fmtPop(targetPop)})`;
       this.el('feedback').className = 'feedback good';
       this.renderList();
       this.updateHeader();
@@ -1882,7 +1909,7 @@ class MinefieldQuiz{
     const container = this.el('mineList');
     container.innerHTML = this.guessedSoFar.length
       ? this.guessedSoFar.map((g, i) => `
-          <div class="row"><span><span class="mine-rank-badge">#${i+1}</span>${g.name}</span><span class="pop">${fmtPop(g.population)}</span></div>
+          <div class="row"><span><span class="mine-rank-badge">#${i+1}</span>${g.name}</span><span class="pop">${this.fmtPop(g.population)}</span></div>
         `).join('')
       : `<div class="empty-note">Nothing yet — guess the most populous state to start.</div>`;
   }
@@ -1918,7 +1945,7 @@ class MinefieldQuiz{
       const isMissPoint = reason === 'wrong' && i === n;
       const cls = hit ? 'hit' : (isMissPoint ? 'next' : 'miss');
       const mark = hit ? '✓' : (isMissPoint ? '✕' : '—');
-      return `<div class="item ${cls}"><span>#${i+1} ${name}</span><span>${fmtPop(pop)} ${mark}</span></div>`;
+      return `<div class="item ${cls}"><span>#${i+1} ${name}</span><span>${this.fmtPop(pop)} ${mark}</span></div>`;
     }).join('');
   }
 
@@ -1940,6 +1967,19 @@ const populationMinefield = new MinefieldQuiz({
     &middot; Name all 50 US states in order from most to least populous<br>
     &middot; One wrong guess — including a right state in the wrong order — ends the round immediately<br>
     &middot; Each correct guess shows that state's population, rounded to the nearest million<br>
+    &middot; No clock here — just don't miss
+  `
+});
+
+const provincePopulationMinefield = new MinefieldQuiz({
+  id: 'provpopmine',
+  items: CANADA_POPULATION_RANKING,
+  lookup: CANADA_PROVINCE_LOOKUP,
+  fmtPop: fmtPopCA,
+  rulesHTML: `
+    &middot; Name all 10 provinces and 3 territories in order from most to least populous<br>
+    &middot; One wrong guess — including a right one in the wrong order — ends the round immediately<br>
+    &middot; Each correct guess shows that province or territory's population<br>
     &middot; No clock here — just don't miss
   `
 });
