@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Blank Slate</title>
+<title>Walinga Trivia Arcade</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -168,8 +168,8 @@
     <div class="card-grid">
       <div class="card">
         <div class="tag">Free recall &middot; 193 items</div>
-        <h3>Name the World</h3>
-        <div class="meta">15 minutes</div>
+        <h3>Countries of the World</h3>
+        <div class="meta">20 minutes</div>
         <button class="btn-primary" onclick="showScreen('countries')">Play</button>
       </div>
       <div class="card">
@@ -185,7 +185,7 @@
     <div class="card-grid">
       <div class="card">
         <div class="tag">Free recall &middot; 50 items</div>
-        <h3>Name the States</h3>
+        <h3>US States</h3>
         <div class="meta">10 minutes</div>
         <button class="btn-primary" onclick="showScreen('states')">Play</button>
       </div>
@@ -197,13 +197,13 @@
       </div>
       <div class="card">
         <div class="tag">Prompted quiz &middot; 50 items</div>
-        <h3>Capital Idea: States</h3>
+        <h3>Capital Idea: US States</h3>
         <div class="meta">10 minutes</div>
         <button class="btn-primary" onclick="showScreen('statecap')">Play</button>
       </div>
       <div class="card">
         <div class="tag">Minefield &middot; 50 items</div>
-        <h3>Rank &amp; File</h3>
+        <h3>US States by Population</h3>
         <div class="meta">one wrong guess ends it</div>
         <button class="btn-primary" onclick="showScreen('popmine')">Play</button>
       </div>
@@ -215,7 +215,7 @@
     <div class="card-grid">
       <div class="card">
         <div class="tag">Trivia quiz &middot; 7 questions</div>
-        <h3>Frontier Facts</h3>
+        <h3>Alaska: Frontier Facts</h3>
         <div class="meta">~3 minutes</div>
         <button class="btn-primary" onclick="showScreen('alaska')">Play</button>
       </div>
@@ -901,10 +901,10 @@ const countriesGame = new FreeRecallGame({
   id: 'countries',
   items: COUNTRIES,
   lookup: COUNTRY_LOOKUP,
-  duration: 15*60,
+  duration: 20*60,
   finalTitle: 'Full roll — all 193 UN member states',
   rulesHTML: `
-    &middot; 15 minutes on the clock, starting when you hit begin<br>
+    &middot; 20 minutes on the clock, starting when you hit begin<br>
     &middot; Every UN member state counts once — 193 total<br>
     &middot; Common nicknames and abbreviations are accepted<br>
     &middot; When time expires, the full roll is revealed with your hits marked
