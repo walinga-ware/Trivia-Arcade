@@ -255,6 +255,12 @@
       </div>
       <div class="card">
         <div class="tag">Trivia quiz &middot; 7 questions</div>
+        <h3>Maine: Pine Puzzler</h3>
+        <div class="meta">~3 minutes</div>
+        <button class="btn-primary" onclick="showScreen('maine')">Play</button>
+      </div>
+      <div class="card">
+        <div class="tag">Trivia quiz &middot; 7 questions</div>
         <h3>Minnesota: Northstar Knowhow</h3>
         <div class="meta">~3 minutes</div>
         <button class="btn-primary" onclick="showScreen('minnesota')">Play</button>
@@ -314,6 +320,12 @@
   <div class="screen" id="screen-minnesota">
     <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
     <div id="minnesota-mount"></div>
+  </div>
+
+  <!-- ============ MAINE TRIVIA ============ -->
+  <div class="screen" id="screen-maine">
+    <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
+    <div id="maine-mount"></div>
   </div>
 
   <!-- ============ POPULATION MINEFIELD ============ -->
@@ -1447,6 +1459,47 @@ const MINNESOTA_TRIVIA = [
 ];
 
 /* ============================================================
+   Data: Maine trivia (source: Wikipedia)
+   ============================================================ */
+   const MAINE_TRIVIA = [
+  {
+    q: "What is Maine's state tree?",
+    accepted: ["white pine", "pine"],
+    display: "White Pine"
+  },
+  {
+    q: "What is Maine's state cat?",
+    accepted: ["maine coon", "coon"],
+    display: "Maine Coon"
+  },
+  {
+    q: "What is Maine's state motto?",
+    accepted: ["the way life should be"],
+    display: "The Way Life Should Be"
+  },
+  {
+    q: "What do you call someone from Maine?",
+    accepted: ["mainer"],
+    display: "A Mainer"
+  },
+  {
+    q: "What is Maine's state insect?",
+    accepted: ["bee", "honey bee", "honeybee"],
+    display: "Honey Bee"
+  },
+  {
+    q: "What is the oldest lighthouse on the Maine coast?",
+    accepted: ["portland head light", "head light"],
+    display: "Portland Head Light"
+  },
+  {
+    q: "What is the single other US state that Maine borders?",
+    accepted: ["new hampshire"],
+    display: "New Hampshire"
+  }
+];
+
+/* ============================================================
    TRIVIA QUIZ ENGINE (one question at a time)
    ============================================================ */
 function triviaHTML(id){
@@ -1606,6 +1659,17 @@ const minnesotaTrivia = new TriviaQuiz({
   questions: MINNESOTA_TRIVIA,
   rulesHTML: `
     &middot; 7 questions about Minnesota, one at a time — no clock, just recall<br>
+    &middot; Type your answer and hit enter or submit<br>
+    &middot; You'll see the correct answer immediately after each question<br>
+    &middot; At the end, review your full scorecard
+  `
+});
+
+const maineTrivia = new TriviaQuiz({
+  id: 'maine',
+  questions: MAINE_TRIVIA,
+  rulesHTML: `
+    &middot; 7 questions about Maine, one at a time — no clock, just recall<br>
     &middot; Type your answer and hit enter or submit<br>
     &middot; You'll see the correct answer immediately after each question<br>
     &middot; At the end, review your full scorecard
