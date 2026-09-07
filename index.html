@@ -251,6 +251,12 @@
         <div class="meta">~3 minutes</div>
         <button class="btn-primary" onclick="showScreen('newyork')">Play</button>
       </div>
+      <div class="card">
+        <div class="tag">Trivia quiz &middot; 7 questions</div>
+        <h3>Minnesota: Northstar Knowhow</h3>
+        <div class="meta">~3 minutes</div>
+        <button class="btn-primary" onclick="showScreen('minnesota')">Play</button>
+      </div>
     </div>
   </div>
 
@@ -294,6 +300,12 @@
   <div class="screen" id="screen-newyork">
     <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
     <div id="newyork-mount"></div>
+  </div>
+
+  <!-- ============ MINNESOTA TRIVIA ============ -->
+  <div class="screen" id="screen-minnesota">
+    <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
+    <div id="minnesota-mount"></div>
   </div>
 
   <!-- ============ POPULATION MINEFIELD ============ -->
@@ -1241,6 +1253,47 @@ const ALASKA_TRIVIA = [
 ];
 
 /* ============================================================
+   Data: Minnesota trivia (source: Wikipedia)
+   ============================================================ */
+const MINNESOTA_TRIVIA = [
+  {
+    q: "What is Minnesota's state gem?",
+    accepted: ["lake superior agate", "superior agate", "agate"],
+    display: "Lake Superior Agate"
+  },
+  {
+    q: "What is Minnesota's state beverage?",
+    accepted: ["milk"],
+    display: "Milk"
+  },
+  {
+    q: "What is Minnesota's official state sport?",
+    accepted: ["ice hockey", "hockey"],
+    display: "Ice Hockey"
+  },
+  {
+    q: "What is Minnesota's well-known state nickname?",
+    accepted: ["land of 10000 lakes", "land of 10,000 lakes", "land of ten thousand lakes"],
+    display: "Land of 10,000 Lakes"
+  },
+  {
+    q: "What is Minnesota's state fish?",
+    accepted: ["walleye"],
+    display: "Walleye"
+  },
+  {
+    q: "What MLB team calls Minnesota home?",
+    accepted: ["minnesota twins", "twins"],
+    display: "Minnesota Twins"
+  },
+  {
+    q: "What is the largest city on Lake Superior?",
+    accepted: ["duluth"],
+    display: "Duluth"
+  }
+];
+
+/* ============================================================
    TRIVIA QUIZ ENGINE (one question at a time)
    ============================================================ */
 function triviaHTML(id){
@@ -1389,6 +1442,17 @@ const newYorkTrivia = new TriviaQuiz({
   questions: NEW_YORK_TRIVIA,
   rulesHTML: `
     &middot; 7 questions about New York, one at a time — no clock, just recall<br>
+    &middot; Type your answer and hit enter or submit<br>
+    &middot; You'll see the correct answer immediately after each question<br>
+    &middot; At the end, review your full scorecard
+  `
+});
+
+const minnesotaTrivia = new TriviaQuiz({
+  id: 'minnesota',
+  questions: MINNESOTA_TRIVIA,
+  rulesHTML: `
+    &middot; 7 questions about Minnesota, one at a time — no clock, just recall<br>
     &middot; Type your answer and hit enter or submit<br>
     &middot; You'll see the correct answer immediately after each question<br>
     &middot; At the end, review your full scorecard
