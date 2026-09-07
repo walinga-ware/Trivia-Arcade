@@ -162,6 +162,8 @@
   .state-map .state.target{ fill:var(--brass); stroke:var(--paper); stroke-width:1.5px; }
   .state-map .state.correct{ fill:var(--sage); opacity:.62; }
   .state-map .state.wrong{ fill:var(--rust); }
+  .state-map.clickable:not(.answered) .state{ cursor:pointer; }
+  .state-map.clickable:not(.answered) .state:hover{ fill:rgba(201,154,82,0.4); }
   .map-question{ text-align:center; margin:10px 0 16px; }
   .map-question .label{ font-size:11px; color:var(--paper-dim); text-transform:uppercase; letter-spacing:.5px; margin-bottom:6px; }
   .map-question h3{ font-family:'Fraunces',serif; font-size:clamp(24px,5vw,34px); margin:0; color:var(--paper); }
@@ -232,6 +234,12 @@
         <h3>On the Map: US States</h3>
         <div class="meta">name each state from its shape</div>
         <button class="btn-primary" onclick="showScreen('statemap')">Play</button>
+      </div>
+      <div class="card">
+        <div class="tag">Map quiz &middot; 50 items</div>
+        <h3>Find the US State</h3>
+        <div class="meta">click the named state on the map</div>
+        <button class="btn-primary" onclick="showScreen('findstate')">Play</button>
       </div>
     </div>
 
@@ -318,6 +326,12 @@
   <div class="screen" id="screen-statemap">
     <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
     <div id="statemap-mount"></div>
+  </div>
+
+  <!-- ============ FIND THE STATE QUIZ ============ -->
+  <div class="screen" id="screen-findstate">
+    <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
+    <div id="findstate-mount"></div>
   </div>
 
 </div>
@@ -1079,6 +1093,145 @@ class StateMapQuiz{
 }
 
 /* ============================================================
+   FIND THE STATE QUIZ
+   Given a state's name, click that state on the map.
+   Reuses the same us-atlas boundaries as the "On the Map" quiz.
+   ============================================================ */
+function findStateHTML(id){
+  return `
+    <div id="${id}-intro">
+      <div class="plate" style="margin-bottom:18px;">
+        <div class="label">rules</div>
+        <div style="font-size:14px; line-height:1.7; color:var(--paper);">
+          &middot; 50 states appear one at a time in random order<br>
+          &middot; You're given a state's name — click it on the map<br>
+          &middot; One click per state; the correct location is revealed either way<br>
+          &middot; No clock — take your time and see how many you can get
+        </div>
+      </div>
+      <button class="btn-primary" id="${id}-startBtn">Begin</button>
+    </div>
+
+    <div class="game map-quiz" id="${id}-game" style="display:none;">
+      <div class="top-row">
+        <div class="plate"><div class="label">score</div><div class="value" id="${id}-scoreValue">0</div></div>
+        <div class="plate"><div class="label">progress</div><div class="value" id="${id}-progressValue">0 / 50</div></div>
+      </div>
+      <div class="map-question">
+        <div class="label">click this state on the map</div>
+        <h3 id="${id}-promptValue"></h3>
+      </div>
+      <div class="state-map-wrap">
+        <svg class="state-map clickable" id="${id}-map" viewBox="0 0 975 610" role="img" aria-label="Map of the United States — click the named state"></svg>
+      </div>
+      <div class="map-progress" id="${id}-progressText"></div>
+      <div class="map-feedback" id="${id}-feedback"></div>
+      <div class="map-next-row"><button id="${id}-nextBtn" style="display:none;">Next state &rarr;</button></div>
+    </div>
+
+    <div class="results" id="${id}-results" style="display:none;">
+      <div class="final-score" id="${id}-finalScoreLine"></div>
+      <div class="section-title"><span>All 50 states</span><span>your hits in green</span></div>
+      <div id="${id}-finalGrid" class="final-grid"></div>
+      <button id="${id}-resetBtn">Play again</button>
+    </div>
+  `;
+}
+
+class FindStateQuiz{
+  constructor(opts){
+    this.id=opts.id; this.states=opts.states;
+    this.queue=[]; this.idx=0; this.score=0; this.answers=[]; this.answered=false; this.mapReady=false;
+    document.getElementById(`${this.id}-mount`).innerHTML=findStateHTML(this.id);
+    this.el=key=>document.getElementById(`${this.id}-${key}`);
+    this.el('startBtn').addEventListener('click',()=>this.start());
+    this.el('nextBtn').addEventListener('click',()=>this.next());
+    this.el('resetBtn').addEventListener('click',()=>this.reset());
+    document.addEventListener('keydown',e=>{ if(e.key==='Enter' && this.answered && this.el('game').style.display!=='none') this.next(); });
+    this.loadMap();
+  }
+
+  async loadMap(){
+    try{
+      const us=await d3.json('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json');
+      const features=topojson.feature(us,us.objects.states).features;
+      const projection=d3.geoAlbersUsa().scale(1300).translate([487.5,305]);
+      const path=d3.geoPath(projection);
+      d3.select(this.el('map')).selectAll('path').data(features).join('path')
+        .attr('class','state').attr('d',path).attr('data-name',d=>d.properties.name)
+        .on('click',(event,d)=>this.handleClick(d.properties.name));
+      this.mapReady=true;
+      if(this.queue.length) this.renderMapState();
+    }catch(err){
+      this.el('feedback').textContent='The map could not be loaded. Please refresh and try again.';
+      this.el('feedback').className='map-feedback bad';
+      console.error(err);
+    }
+  }
+
+  start(){
+    this.el('intro').style.display='none'; this.el('results').style.display='none'; this.el('game').style.display='block';
+    this.queue=shuffled(this.states); this.idx=0; this.score=0; this.answers=[]; this.el('scoreValue').textContent='0';
+    if(this.mapReady) d3.select(this.el('map')).selectAll('.state').attr('class','state');
+    this.showQuestion();
+  }
+
+  showQuestion(){
+    this.answered=false;
+    this.el('map').classList.remove('answered');
+    this.el('progressValue').textContent=`${this.idx} / 50`;
+    this.el('progressText').textContent=`State ${this.idx+1} of 50`;
+    this.el('promptValue').textContent=this.queue[this.idx];
+    this.el('feedback').textContent=''; this.el('feedback').className='map-feedback';
+    this.el('nextBtn').style.display='none';
+    this.renderMapState();
+  }
+
+  renderMapState(){
+    if(!this.mapReady || !this.queue.length) return;
+    d3.select(this.el('map')).selectAll('.state')
+      .classed('target',false)
+      .classed('wrong',false)
+      .classed('correct',d=>this.answers.some(a=>a.state===d.properties.name && a.isCorrect));
+  }
+
+  handleClick(name){
+    if(this.answered || !this.mapReady || !this.queue.length) return;
+    const target=this.queue[this.idx]; const isCorrect=name===target;
+    this.answered=true; if(isCorrect) this.score++;
+    this.answers.push({state:target,yourClick:name,isCorrect});
+    this.el('scoreValue').textContent=this.score;
+    this.el('map').classList.add('answered');
+    this.el('feedback').textContent=isCorrect ? `Correct — that's ${target}.` : `Not quite — you clicked ${name}. ${target} is highlighted below.`;
+    this.el('feedback').className=`map-feedback ${isCorrect?'good':'bad'}`;
+    d3.select(this.el('map')).selectAll('.state')
+      .classed('wrong',d=>d.properties.name===name && !isCorrect)
+      .classed('target',d=>d.properties.name===target && !isCorrect)
+      .classed('correct',d=>(d.properties.name===target && isCorrect) || this.answers.some(a=>a.state===d.properties.name && a.isCorrect));
+    this.el('nextBtn').textContent=this.idx===49 ? 'See results →' : 'Next state →';
+    this.el('nextBtn').style.display='inline-block'; this.el('nextBtn').focus();
+  }
+
+  next(){ if(!this.answered) return; this.idx++; if(this.idx>=this.queue.length){ this.end(); return; } this.showQuestion(); }
+
+  end(){
+    this.el('game').style.display='none'; this.el('results').style.display='block';
+    this.el('finalScoreLine').textContent=`You found ${this.score} of 50 states (${Math.round(this.score/50*100)}%).`;
+    const byState=new Map(this.answers.map(a=>[a.state,a]));
+    this.el('finalGrid').innerHTML=this.states.slice().sort((a,b)=>a.localeCompare(b)).map(state=>{
+      const a=byState.get(state), hit=a?.isCorrect;
+      return `<div class="item ${hit?'hit':'miss'}"><span>${state}</span><span>${hit?'✓':'—'}</span></div>`;
+    }).join('');
+  }
+
+  reset(){
+    this.el('results').style.display='none'; this.el('intro').style.display='block'; this.el('game').style.display='none';
+    this.queue=[]; this.idx=0; this.score=0; this.answers=[];
+    if(this.mapReady) d3.select(this.el('map')).selectAll('.state').attr('class','state');
+  }
+}
+
+/* ============================================================
    Build lookups & instantiate games
    ============================================================ */
 const COUNTRY_LOOKUP = {};
@@ -1640,6 +1793,7 @@ const populationMinefield = new MinefieldQuiz({
 });
 
 const stateMapQuiz = new StateMapQuiz({ id:'statemap', states:STATES.map(([name])=>name) });
+const findStateQuiz = new FindStateQuiz({ id:'findstate', states:STATES.map(([name])=>name) });
 </script>
 </body>
 </html>
