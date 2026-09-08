@@ -643,9 +643,9 @@ function fmtPopCA(pop){
 }
 
 /* ============================================================
-   FREE-RECALL GAME ENGINE (countries + states)
+   FREE-RECALL GAME ENGINE (countries, states, etc.)
    ============================================================ */
-function freeRecallHTML(id){
+function freeRecallHTML(id, title){
   return `
     <div id="${id}-intro">
       <div class="plate" style="margin-bottom:18px;">
@@ -656,6 +656,7 @@ function freeRecallHTML(id){
     </div>
 
     <div class="game" id="${id}-game" style="display:none;">
+      <h3>${title}</h3>
       <div class="top-row">
         <div class="plate timer" id="${id}-timerPlate">
           <div class="label">time remaining</div>
@@ -701,7 +702,7 @@ class FreeRecallGame{
     this.timerId = null;
     this.running = false;
 
-    document.getElementById(`${this.id}-mount`).innerHTML = freeRecallHTML(this.id);
+    document.getElementById(`${this.id}-mount`).innerHTML = freeRecallHTML(this.id, this.title);
     document.getElementById(`${this.id}-rules`).innerHTML = `
       &middot; ${minutesLabel(this.duration)} on the clock, starting when you hit begin<br>
       ${this.rulesHTML}
@@ -1352,6 +1353,7 @@ CANADA_PROVINCE_LOOKUP[normalize("NWT")] = "Northwest Territories";
 
 const countriesGame = new FreeRecallGame({
   id: 'countries',
+  title: 'Countries of the World',
   items: COUNTRIES,
   lookup: COUNTRY_LOOKUP,
   duration: 20*60,
@@ -1365,6 +1367,7 @@ const countriesGame = new FreeRecallGame({
 
 const statesGame = new FreeRecallGame({
   id: 'states',
+  title: 'US States',
   items: STATES.map(s => s[0]),
   lookup: STATE_LOOKUP,
   duration: 10*60,
@@ -1425,6 +1428,7 @@ const stateCapitalsQuiz = new PromptQuiz({
 
 const canadianProvincesGame = new FreeRecallGame({
   id: 'provinces',
+  title: 'Canadian Provinces',
   items: CANADA_PROVINCES,
   lookup: CANADA_PROVINCE_LOOKUP,
   duration: 5*60,
