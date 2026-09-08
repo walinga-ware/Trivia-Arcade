@@ -1623,6 +1623,47 @@ const MINNESOTA_TRIVIA = [
 ];
 
 /* ============================================================
+   Data: Maryland trivia (source: Wikipedia)
+   ============================================================ */
+const MARYLAND_TRIVIA = [
+  {
+    q: "What is Maryland's state tree?",
+    accepted: ["white oak"],
+    display: "White Oak"
+  },
+  {
+    q: "What is Maryland's state bird?",
+    accepted: ["baltimore oriole", "oriole"],
+    display: "Baltimore Oriole"
+  },
+  {
+    q: "What is the largest body of water in Maryland?",
+    accepted: ["chesapeake bay", "the chesapeake bay"],
+    display: "Chesapeake Bay"
+  },
+  {
+    q: "What type of traditional sailing ship is Maryland's state boat?",
+    accepted: ["skipjack"],
+    display: "Skipjack"
+  },
+  {
+    q: "What is Maryland's state crustacean?",
+    accepted: ["blue crab"],
+    display: "Blue Crab"
+  },
+  {
+    q: "Maryland is named after which English queen?",
+    accepted: ["queen henrietta maria", "henrietta maria"],
+    display: "Queen Henrietta Maria, wife of King Charles I of England"
+  },
+  {
+    q: "What is Maryland's official state dessert?",
+    accepted: ["smith island cake"],
+    display: "Smith Island Cake"
+  }
+];
+
+/* ============================================================
    TRIVIA QUIZ ENGINE (one question at a time)
    ============================================================ */
 function triviaHTML(id){
@@ -1778,6 +1819,7 @@ class TriviaQuiz{
 const STATE_SHOWCASE_QUIZZES = [
   { id: 'alaska',    state: 'Alaska',    subtitle: 'Frontier Facts',       questions: ALASKA_TRIVIA },
   { id: 'maine',     state: 'Maine',     subtitle: 'Pine Puzzler',         questions: MAINE_TRIVIA },
+  { id: 'maryland',  state: 'Maryland',  subtitle: 'Miscellanea',   questions: MARYLAND_TRIVIA },
   { id: 'minnesota', state: 'Minnesota', subtitle: 'Northstar Knowhow',    questions: MINNESOTA_TRIVIA },
   { id: 'newyork',   state: 'New York',  subtitle: 'Empire Smart',         questions: NEW_YORK_TRIVIA },
 ];
