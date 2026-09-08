@@ -1797,6 +1797,47 @@ class TriviaQuiz{
 }
 
 /* ============================================================
+   Data: California trivia (source: Wikipedia)
+   ============================================================ */
+const CALIFORNIA_TRIVIA = [
+  {
+    q: "What is California's state gem?",
+    accepted: ["benitoite"],
+    display: "Benitoite"
+  },
+  {
+    q: "What is California's state animal?",
+    accepted: ["california grizzly bear", "grizzly bear", "grizzly", "bear"],
+    display: "California grizzly bear"
+  },
+  {
+    q: "What is California's well-known state nickname?",
+    accepted: ["golden state"],
+    display: "The Golden State"
+  },
+  {
+    q: "What is California's highest mountain?",
+    accepted: ["mount whitney", "mt whitney"],
+    display: "Mount Whitney"
+  },
+  {
+    q: "What is California's state insect?",
+    accepted: ["california dogface butterfly", "dogface butterfly", "california dogface", "butterfly"],
+    display: "California dogface butterfly"
+  },
+  {
+    q: "In what year did California become a US state?",
+    accepted: ["1850"],
+    display: "1850"
+  },
+  {
+    q: "What is California's state flower?",
+    accepted: ["california poppy", "poppy"],
+    display: "California poppy"
+  }
+];
+
+/* ============================================================
    US STATES SHOWCASE — REGISTRY
    ============================================================
    To add a new state quiz:
@@ -1817,7 +1858,8 @@ class TriviaQuiz{
      questions - the JSON question array (KEEP this format)
    ============================================================ */
 const STATE_SHOWCASE_QUIZZES = [
-  { id: 'alaska',    state: 'Alaska',    subtitle: 'Frontier Facts',       questions: ALASKA_TRIVIA },
+  { id: 'alaska',     state: 'Alaska',     subtitle: 'Frontier Facts',      questions: ALASKA_TRIVIA },
+  { id: 'california', state: 'California', subtitle: 'Golden Genius',      questions: CALIFORNIA_TRIVIA },
   { id: 'maine',     state: 'Maine',     subtitle: 'Pine Puzzler',         questions: MAINE_TRIVIA },
   { id: 'maryland',  state: 'Maryland',  subtitle: 'Miscellanea',   questions: MARYLAND_TRIVIA },
   { id: 'minnesota', state: 'Minnesota', subtitle: 'Northstar Knowhow',    questions: MINNESOTA_TRIVIA },
