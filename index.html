@@ -159,6 +159,8 @@
   .state-map-wrap{ background:var(--ink-2); border:1px solid var(--line); border-radius:6px; padding:12px; margin:18px 0 16px; }
   .state-map{ display:block; width:100%; height:auto; overflow:visible; }
   .state-map .state{ fill:rgba(234,230,218,0.08); stroke:var(--ink); stroke-width:1.15px; stroke-linejoin:round; transition:fill 120ms ease, opacity 120ms ease; }
+  .state-map.hard-mode .state{ stroke:transparent; stroke-width:0; }
+  .state-map.hard-mode .state.guessed{ stroke:var(--paper); stroke-width:1.5px; }
   .state-map .state.target{ fill:var(--brass); stroke:var(--paper); stroke-width:1.5px; }
   .state-map .state.correct{ fill:var(--sage); opacity:.62; }
   .state-map .state.wrong{ fill:var(--rust); }
@@ -262,7 +264,10 @@
         <div class="tag">Map quiz &middot; 50 items</div>
         <h3>Find the US State</h3>
         <div class="meta">click the named state on the map</div>
-        <button class="btn-primary" onclick="showScreen('findstate')">Play</button>
+        <div style="display:flex; gap:8px; align-items:center;">
+          <button class="btn-primary" style="flex-grow: 1;" onclick="showScreen('findstate')">Play</button>
+          <button class="btn-primary" onclick="showScreen('findstate-hard')" aria-label="Hard mode" title="Hard mode">💣</button>
+        </div>
       </div>
     </div>
 
@@ -322,6 +327,11 @@
   <div class="screen" id="screen-findstate">
     <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
     <div id="findstate-mount"></div>
+  </div>
+
+  <div class="screen" id="screen-findstate-hard">
+    <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
+    <div id="findstate-hard-mount"></div>
   </div>
 
   <!-- ============ CANADIAN PROVINCES (free recall) ============ -->
@@ -1160,16 +1170,24 @@ class StateMapQuiz{
    Given a state's name, click that state on the map.
    Reuses the same us-atlas boundaries as the "On the Map" quiz.
    ============================================================ */
-function findStateHTML(id){
+function findStateHTML(id, hardMode=false){
   return `
     <div id="${id}-intro">
       <div class="plate" style="margin-bottom:18px;">
         <div class="label">rules</div>
         <div style="font-size:14px; line-height:1.7; color:var(--paper);">
+          ${hardMode ? `
+          Hard Mode<br>
+          &middot; 50 states appear one at a time in random order<br>
+          &middot; You're given a state's name — click it on the map<br>
+          &middot; NO state outlines are shown until you correctly guess them<br>
+          &middot; NO skipping — your first wrong answer ends the game
+          ` : `
           &middot; 50 states appear one at a time in random order<br>
           &middot; You're given a state's name — click it on the map<br>
           &middot; One click per state; the correct location is revealed either way<br>
           &middot; No clock — take your time and see how many you can get
+          `}
         </div>
       </div>
       <button class="btn-primary" id="${id}-startBtn">Begin</button>
@@ -1203,9 +1221,9 @@ function findStateHTML(id){
 
 class FindStateQuiz{
   constructor(opts){
-    this.id=opts.id; this.states=opts.states;
+    this.id=opts.id; this.states=opts.states; this.hardMode=!!opts.hardMode;
     this.queue=[]; this.idx=0; this.score=0; this.answers=[]; this.answered=false; this.mapReady=false;
-    document.getElementById(`${this.id}-mount`).innerHTML=findStateHTML(this.id);
+    document.getElementById(`${this.id}-mount`).innerHTML=findStateHTML(this.id, this.hardMode);
     this.el=key=>document.getElementById(`${this.id}-${key}`);
     this.el('startBtn').addEventListener('click',()=>this.start());
     this.el('nextBtn').addEventListener('click',()=>this.next());
@@ -1220,7 +1238,7 @@ class FindStateQuiz{
       const features=topojson.feature(us,us.objects.states).features;
       const projection=d3.geoAlbersUsa().scale(1300).translate([487.5,305]);
       const path=d3.geoPath(projection);
-      d3.select(this.el('map')).selectAll('path').data(features).join('path')
+      d3.select(this.el('map')).classed('hard-mode',this.hardMode).selectAll('path').data(features).join('path')
         .attr('class','state').attr('d',path).attr('data-name',d=>d.properties.name)
         .on('click',(event,d)=>this.handleClick(d.properties.name));
       this.mapReady=true;
@@ -1255,6 +1273,7 @@ class FindStateQuiz{
     d3.select(this.el('map')).selectAll('.state')
       .classed('target',false)
       .classed('wrong',false)
+      .classed('guessed',d=>this.answers.some(a=>a.state===d.properties.name && a.isCorrect))
       .classed('correct',d=>this.answers.some(a=>a.state===d.properties.name && a.isCorrect));
   }
 
@@ -1265,21 +1284,34 @@ class FindStateQuiz{
     this.answers.push({state:target,yourClick:name,isCorrect});
     this.el('scoreValue').textContent=this.score;
     this.el('map').classList.add('answered');
-    this.el('feedback').textContent=isCorrect ? `Correct — that's ${target}.` : `Not quite — you clicked ${name}. ${target} is highlighted below.`;
+    this.el('feedback').textContent=isCorrect ? `Correct — that's ${target}.` : `Not quite — you clicked ${name}. ${target} is highlighted above.`;
     this.el('feedback').className=`map-feedback ${isCorrect?'good':'bad'}`;
     d3.select(this.el('map')).selectAll('.state')
       .classed('wrong',d=>d.properties.name===name && !isCorrect)
       .classed('target',d=>d.properties.name===target && !isCorrect)
+      .classed('guessed',d=>this.answers.some(a=>a.state===d.properties.name && a.isCorrect))
       .classed('correct',d=>(d.properties.name===target && isCorrect) || this.answers.some(a=>a.state===d.properties.name && a.isCorrect));
+    if(this.hardMode && !isCorrect){
+      this.end();
+      return;
+    }
     this.el('nextBtn').textContent=this.idx===49 ? 'See results →' : 'Next state →';
     this.el('nextBtn').style.display='inline-block'; this.el('nextBtn').focus();
   }
 
-  next(){ if(!this.answered) return; this.idx++; if(this.idx>=this.queue.length){ this.end(); return; } this.showQuestion(); }
+  next(){
+    if(!this.answered) return;
+    if(this.hardMode && !this.answers[this.answers.length-1]?.isCorrect){ this.end(); return; }
+    this.idx++;
+    if(this.idx>=this.queue.length){ this.end(); return; }
+    this.showQuestion();
+  }
 
   end(){
     this.el('game').style.display='none'; this.el('results').style.display='block';
-    this.el('finalScoreLine').textContent=`You found ${this.score} of 50 states (${Math.round(this.score/50*100)}%).`;
+    this.el('finalScoreLine').textContent=this.hardMode
+      ? `Hard mode: ${this.score} of 50 states (${Math.round(this.score/50*100)}%).`
+      : `You found ${this.score} of 50 states (${Math.round(this.score/50*100)}%).`;
     const byState=new Map(this.answers.map(a=>[a.state,a]));
     this.el('finalGrid').innerHTML=this.states.slice().sort((a,b)=>a.localeCompare(b)).map(state=>{
       const a=byState.get(state), hit=a?.isCorrect;
@@ -1291,6 +1323,7 @@ class FindStateQuiz{
     this.el('results').style.display='none'; this.el('intro').style.display='block'; this.el('game').style.display='none';
     this.queue=[]; this.idx=0; this.score=0; this.answers=[];
     if(this.mapReady) d3.select(this.el('map')).selectAll('.state').attr('class','state');
+    if(this.mapReady) d3.select(this.el('map')).classed('hard-mode',this.hardMode);
   }
 }
 
@@ -1997,6 +2030,7 @@ const provincePopulationMinefield = new MinefieldQuiz({
 
 const stateMapQuiz = new StateMapQuiz({ id:'statemap', states:STATES.map(([name])=>name) });
 const findStateQuiz = new FindStateQuiz({ id:'findstate', states:STATES.map(([name])=>name) });
+const findStateHardQuiz = new FindStateQuiz({ id:'findstate-hard', states:STATES.map(([name])=>name), hardMode:true });
 </script>
 </body>
 </html>
