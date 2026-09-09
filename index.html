@@ -1664,6 +1664,47 @@ const MARYLAND_TRIVIA = [
 ];
 
 /* ============================================================
+   Data: Delaware trivia (source: Wikipedia)
+   ============================================================ */
+const DELAWARE_TRIVIA = [
+  {
+    q: "What is Delaware's state bird?",
+    accepted: ["delaware blue hen", "blue hen chicken", "blue hen"],
+    display: "Delaware Blue Hen"
+  },
+  {
+    q: "What is Delaware's state tree?",
+    accepted: ["american holly", "holly"],
+    display: "American Holly"
+  },
+  {
+    q: "What is Delaware's state flower?",
+    accepted: ["peach blossom"],
+    display: "Peach Blossom"
+  },
+  {
+    q: "How many counties does Delaware have (the fewestof any state)?",
+    accepted: ["3", "three"],
+    display: "Three: New Castle, Kent, and Sussex"
+  },
+  {
+    q: "What everyday cost do shoppers famously skip when buying retail goods in Delaware?",
+    accepted: ["sales tax", "state sales tax", "tax"],
+    display: "Sales tax — Delaware charges no state or local sales tax on retail purchases"
+  },
+  {
+    q: "For decades, a small town in Delaware hosted the world championship for launching what fall vegetable (technically a fruit) as far as possible?",
+    accepted: ["pumpkin", "pumpkins", "punkin", "punkins"],
+    display: "Pumpkins — the World Championship Punkin Chunkin contest ran in Delaware for years"
+  },
+  {
+    q: "In terms of land area, Delaware is the second-smallest US state — which state is smaller?",
+    accepted: ["rhode island"],
+    display: "Rhode Island"
+  }
+];
+
+/* ============================================================
    TRIVIA QUIZ ENGINE (one question at a time)
    ============================================================ */
 function triviaHTML(id){
@@ -1807,7 +1848,7 @@ const CALIFORNIA_TRIVIA = [
   },
   {
     q: "What is California's state animal?",
-    accepted: ["california grizzly bear", "grizzly bear", "grizzly", "bear"],
+    accepted: ["california grizzly bear", "grizzly bear", "grizzly"],
     display: "California grizzly bear"
   },
   {
@@ -1822,7 +1863,7 @@ const CALIFORNIA_TRIVIA = [
   },
   {
     q: "What is California's state insect?",
-    accepted: ["california dogface butterfly", "dogface butterfly", "california dogface", "butterfly"],
+    accepted: ["california dogface butterfly", "dogface butterfly", "california dogface"],
     display: "California dogface butterfly"
   },
   {
@@ -1860,6 +1901,7 @@ const CALIFORNIA_TRIVIA = [
 const STATE_SHOWCASE_QUIZZES = [
   { id: 'alaska',     state: 'Alaska',     subtitle: 'Frontier Facts',      questions: ALASKA_TRIVIA },
   { id: 'california', state: 'California', subtitle: 'Golden Genius',      questions: CALIFORNIA_TRIVIA },
+  { id: 'delaware',  state: 'Delaware',  subtitle: 'First State Facts',    questions: DELAWARE_TRIVIA },
   { id: 'maine',     state: 'Maine',     subtitle: 'Pine Puzzler',         questions: MAINE_TRIVIA },
   { id: 'maryland',  state: 'Maryland',  subtitle: 'Miscellanea',   questions: MARYLAND_TRIVIA },
   { id: 'minnesota', state: 'Minnesota', subtitle: 'Northstar Knowhow',    questions: MINNESOTA_TRIVIA },
