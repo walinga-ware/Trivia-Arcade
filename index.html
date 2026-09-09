@@ -203,6 +203,12 @@
         <div class="meta" id="worldcap-meta"></div>
         <button class="btn-primary" onclick="showScreen('worldcap')">Play</button>
       </div>
+      <div class="card">
+        <div class="tag">Minefield &middot; 193 items</div>
+        <h3>Countries by Population</h3>
+        <div class="meta">one wrong guess ends it</div>
+        <button class="btn-primary" onclick="showScreen('worldpopmine')">Play</button>
+      </div>
     </div>
 
     <!-- ============ CANADA (GENERAL) ============ -->
@@ -286,6 +292,12 @@
   <div class="screen" id="screen-countries">
     <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
     <div id="countries-mount"></div>
+  </div>
+
+  <!-- ============ WORLD POPULATION MINEFIELD ============ -->
+  <div class="screen" id="screen-worldpopmine">
+    <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
+    <div id="worldpopmine-mount"></div>
   </div>
 
   <!-- ============ STATES (free recall) ============ -->
@@ -469,6 +481,84 @@ const COUNTRY_ALIASES = {
   "republic of moldova":"Moldova",
   "vatican":null,"holy see":null,"taiwan":null,"palestine":null,"kosovo":null,"hong kong":null
 };
+
+/* ============================================================
+   Data: countries of the world by population, descending
+   (source: UN World Population Prospects 2024 revision via
+   worldometers.info, 2026 projection)
+   ============================================================ */
+const WORLD_POPULATION_RANKING = [
+  ["India",1476625576],["China",1412914089],["United States",349035494],
+  ["Indonesia",287886782],["Pakistan",259299791],["Nigeria",242431832],
+  ["Brazil",213562666],["Bangladesh",177818044],["Russia",143394458],
+  ["Ethiopia",138902185],["Mexico",132997658],["Japan",122427731],
+  ["Egypt",120101175],["Philippines",117724471],["Congo, Democratic Republic of the",116452162],
+  ["Vietnam",102177431],["Iran",93168497],["Turkey",87926082],
+  ["Germany",83644258],["Tanzania",72563780],["Thailand",71559614],
+  ["United Kingdom",69931528],["France",66746401],["South Africa",65453084],
+  ["Italy",58926166],["Kenya",58636412],["Myanmar",55184819],
+  ["Colombia",53936226],["Sudan",53282719],["Uganda",52761469],
+  ["South Korea",51600388],["Algeria",48028334],["Iraq",48007437],
+  ["Spain",47850793],["Argentina",46003734],["Afghanistan",45047069],
+  ["Yemen",42961653],["Canada",40467728],["Angola",40215179],
+  ["Ukraine",39535849],["Morocco",38762441],["Poland",37843188],
+  ["Uzbekistan",37724223],["Mozambique",36639851],["Malaysia",36385115],
+  ["Ghana",35697557],["Saudi Arabia",35165787],["Peru",34922148],
+  ["Madagascar",33522052],["Côte d'Ivoire",33494346],["Cameroon",30640817],
+  ["Nepal",29629410],["Niger",28814878],["Venezuela",28633711],
+  ["Australia",27227096],["North Korea",26633691],["Syria",26472497],
+  ["Mali",25932275],["Burkina Faso",24601700],["Sri Lanka",23348315],
+  ["Malawi",22785535],["Zambia",22521915],["Chad",21560380],
+  ["Kazakhstan",21083626],["Somalia",20305907],["Chile",19945850],
+  ["Senegal",19366548],["Guatemala",18967978],["Romania",18800605],
+  ["Netherlands",18448775],["Ecuador",18444506],["Cambodia",18051219],
+  ["Zimbabwe",17273580],["Guinea",15441993],["Benin",15170419],
+  ["Rwanda",14889693],["Burundi",14729157],["Bolivia",12749291],
+  ["South Sudan",12436037],["Tunisia",12415138],["Haiti",12037506],
+  ["Belgium",11774642],["Dominican Republic",11609500],["Jordan",11589532],
+  ["United Arab Emirates",11574682],["Honduras",11184760],["Tajikistan",10978599],
+  ["Papua New Guinea",10947848],["Cuba",10892659],["Sweden",10701047],
+  ["Czech Republic",10527781],["Azerbaijan",10454855],["Portugal",10395362],
+  ["Togo",9930918],["Greece",9897115],["Israel",9647689],
+  ["Hungary",9585818],["Austria",9107266],["Switzerland",9007798],
+  ["Sierra Leone",8996745],["Belarus",8937018],["Laos",7974017],
+  ["Turkmenistan",7736632],["Libya",7539851],["Kyrgyzstan",7400465],
+  ["Nicaragua",7097329],["Paraguay",7095279],["Bulgaria",6667659],
+  ["Serbia",6641964],["Congo, Republic of the",6637785],["El Salvador",6391253],
+  ["Denmark",6023520],["Singapore",5905748],["Lebanon",5897467],
+  ["Liberia",5853949],["Central African Republic",5698984],["Oman",5671458],
+  ["Norway",5652989],["Finland",5621739],["Mauritania",5461319],
+  ["Slovakia",5451342],["Ireland",5356950],["New Zealand",5287479],
+  ["Costa Rica",5174789],["Kuwait",5102773],["Panama",4625718],
+  ["Croatia",3822345],["Georgia",3804642],["Eritrea",3682669],
+  ["Mongolia",3556798],["Uruguay",3382537],["Qatar",3173559],
+  ["Namibia",3153246],["Bosnia and Herzegovina",3114242],["Moldova",2961253],
+  ["Armenia",2930915],["Gambia",2884079],["Jamaica",2833403],
+  ["Lithuania",2797338],["Albania",2751025],["Gabon",2647399],
+  ["Botswana",2603388],["Lesotho",2389336],["Guinea-Bissau",2297808],
+  ["Slovenia",2114573],["Equatorial Guinea",1984468],["Latvia",1835935],
+  ["North Macedonia",1804063],["Bahrain",1675572],["Trinidad and Tobago",1513268],
+  ["Timor-Leste",1436923],["Cyprus",1382334],["Estonia",1331062],
+  ["Eswatini",1269859],["Mauritius",1265059],["Djibouti",1199459],
+  ["Fiji",937282],["Comoros",899010],["Solomon Islands",858288],
+  ["Guyana",840890],["Bhutan",802214],["Luxembourg",687448],
+  ["Suriname",645256],["Montenegro",626233],["Malta",549011],
+  ["Maldives",531517],["Cabo Verde",529630],["Brunei",469775],
+  ["Belize",428644],["Bahamas",404628],["Iceland",402329],
+  ["Vanuatu",342564],["Barbados",282724],["Sao Tome and Principe",244994],
+  ["Samoa",220528],["Saint Lucia",180488],["Kiribati",138445],
+  ["Seychelles",134959],["Grenada",117362],["Micronesia",114183],
+  ["Tonga",103291],["Saint Vincent and the Grenadines",99245],["Antigua and Barbuda",94626],
+  ["Andorra",83753],["Dominica",65511],["Saint Kitts and Nevis",46992],
+  ["Liechtenstein",40368],["Monaco",38087],["Marshall Islands",35075],
+  ["San Marino",33605],["Palau",17614],["Nauru",12101],
+  ["Tuvalu",9362]
+];
+function fmtPopWorld(pop){
+  if (pop >= 1e9) return `${(pop/1e9).toFixed(2)}B`;
+  if (pop >= 1e6) return `${(pop/1e6).toFixed(1)}M`;
+  return `${Math.round(pop/1e3)}K`;
+}
 
 /* ============================================================
    Data: US states + postal abbreviations
@@ -2142,6 +2232,19 @@ const populationMinefield = new MinefieldQuiz({
     &middot; Name all 50 US states in order from most to least populous<br>
     &middot; One wrong guess — including a right state in the wrong order — ends the round immediately<br>
     &middot; Each correct guess shows that state's population, rounded to the nearest million<br>
+    &middot; No clock here — just don't miss
+  `
+});
+
+const worldPopulationMinefield = new MinefieldQuiz({
+  id: 'worldpopmine',
+  items: WORLD_POPULATION_RANKING,
+  lookup: COUNTRY_LOOKUP,
+  fmtPop: fmtPopWorld,
+  rulesHTML: `
+    &middot; Name all 193 countries in order from most to least populous<br>
+    &middot; One wrong guess — including a right country in the wrong order — ends the round immediately<br>
+    &middot; Each correct guess shows that country's population<br>
     &middot; No clock here — just don't miss
   `
 });
