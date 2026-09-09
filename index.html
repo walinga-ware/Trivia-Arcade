@@ -211,6 +211,29 @@
       </div>
     </div>
 
+    <!-- ============ GEOGRAPHICAL FEATURES ============ -->
+    <h2 style="margin-top:36px; margin-bottom:12px; border-bottom:1px solid var(--line); padding-bottom:8px; color:var(--paper-dim); font-size:13px; text-transform:uppercase; letter-spacing:0.5px;">Geographical features 🏔️</h2>
+    <div class="card-grid">
+      <div class="card">
+        <div class="tag">Minefield &middot; 15 items</div>
+        <h3>Highest Mountains</h3>
+        <div class="meta">one wrong guess ends it</div>
+        <button class="btn-primary" onclick="showScreen('mountainmine')">Play</button>
+      </div>
+      <div class="card">
+        <div class="tag">Minefield &middot; 15 items</div>
+        <h3>Longest Rivers</h3>
+        <div class="meta">one wrong guess ends it</div>
+        <button class="btn-primary" onclick="showScreen('rivermine')">Play</button>
+      </div>
+      <div class="card">
+        <div class="tag">Free recall &middot; 5 items</div>
+        <h3>Name the Oceans</h3>
+        <div class="meta" id="oceans-meta"></div>
+        <button class="btn-primary" onclick="showScreen('oceans')">Play</button>
+      </div>
+    </div>
+
     <!-- ============ CANADA (GENERAL) ============ -->
     <h2 style="margin-top:36px; margin-bottom:12px; border-bottom:1px solid var(--line); padding-bottom:8px; color:var(--paper-dim); font-size:13px; text-transform:uppercase; letter-spacing:0.5px;">Canada (general) 🇨🇦 </h2>
     <div class="card-grid">
@@ -363,6 +386,24 @@
   <div class="screen" id="screen-provpopmine">
     <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
     <div id="provpopmine-mount"></div>
+  </div>
+
+  <!-- ============ HIGHEST MOUNTAINS MINEFIELD ============ -->
+  <div class="screen" id="screen-mountainmine">
+    <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
+    <div id="mountainmine-mount"></div>
+  </div>
+
+  <!-- ============ LONGEST RIVERS MINEFIELD ============ -->
+  <div class="screen" id="screen-rivermine">
+    <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
+    <div id="rivermine-mount"></div>
+  </div>
+
+  <!-- ============ NAME THE OCEANS (free recall) ============ -->
+  <div class="screen" id="screen-oceans">
+    <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
+    <div id="oceans-mount"></div>
   </div>
 
 </div>
@@ -732,6 +773,83 @@ const CANADA_POPULATION_RANKING = [
 function fmtPopCA(pop){
   return pop >= 1e6 ? `${(pop/1e6).toFixed(1)}M` : `${Math.round(pop/1e3)}K`;
 }
+
+/* ============================================================
+   Data: world's highest mountains by elevation, descending
+   (source: peak elevations, generally-cited figures in meters)
+   ============================================================ */
+const MOUNTAIN_RANKING = [
+  ["Mount Everest",8849],["K2",8611],["Kangchenjunga",8586],["Lhotse",8516],
+  ["Makalu",8485],["Cho Oyu",8188],["Dhaulagiri I",8167],["Manaslu",8163],
+  ["Nanga Parbat",8126],["Annapurna I",8091],["Gasherbrum I",8080],["Broad Peak",8051],
+  ["Gasherbrum II",8035],["Shishapangma",8027],["Gyachung Kang",7952]
+];
+const MOUNTAIN_ALIASES = {
+  "everest":"Mount Everest","sagarmatha":"Mount Everest","chomolungma":"Mount Everest","qomolangma":"Mount Everest",
+  "k2":"K2","godwin austen":"K2","mount godwin austen":"K2","chhogori":"K2","qogir":"K2",
+  "kangchenjunga":"Kangchenjunga","kanchenjunga":"Kangchenjunga",
+  "lhotse":"Lhotse",
+  "makalu":"Makalu",
+  "cho oyu":"Cho Oyu",
+  "dhaulagiri":"Dhaulagiri I","dhaulagiri i":"Dhaulagiri I",
+  "manaslu":"Manaslu","kutang":"Manaslu",
+  "nanga parbat":"Nanga Parbat",
+  "annapurna":"Annapurna I","annapurna i":"Annapurna I",
+  "gasherbrum i":"Gasherbrum I","hidden peak":"Gasherbrum I",
+  "broad peak":"Broad Peak","k3":"Broad Peak",
+  "gasherbrum ii":"Gasherbrum II",
+  "shishapangma":"Shishapangma","gosainthan":"Shishapangma",
+  "gyachung kang":"Gyachung Kang"
+};
+const MOUNTAIN_LOOKUP = {};
+MOUNTAIN_RANKING.forEach(([name]) => { MOUNTAIN_LOOKUP[normalize(name)] = name; });
+Object.keys(MOUNTAIN_ALIASES).forEach(k => { MOUNTAIN_LOOKUP[normalize(k)] = MOUNTAIN_ALIASES[k]; });
+function fmtElev(elev){ return `${elev.toLocaleString()} m`; }
+
+/* ============================================================
+   Data: world's longest rivers (or river systems) by length,
+   descending (source: generally-cited length figures in km)
+   ============================================================ */
+const RIVER_RANKING = [
+  ["Nile",6650],["Amazon",6400],["Yangtze",6300],["Mississippi",6275],
+  ["Yenisei",5539],["Yellow River",5464],["Ob",5410],["Rio de la Plata–Paraná",4880],
+  ["Congo",4700],["Amur",4444],["Lena",4400],["Mekong",4350],
+  ["Mackenzie",4241],["Niger",4184],["Brahmaputra",3969]
+];
+const RIVER_ALIASES = {
+  "nile":"Nile","river nile":"Nile",
+  "amazon":"Amazon","amazon river":"Amazon",
+  "yangtze":"Yangtze","chang jiang":"Yangtze","yangtze river":"Yangtze",
+  "mississippi":"Mississippi","mississippi river":"Mississippi","mississippi missouri":"Mississippi",
+  "yenisei":"Yenisei","yenisei angara":"Yenisei",
+  "yellow river":"Yellow River","huang he":"Yellow River",
+  "ob":"Ob","ob river":"Ob","ob irtysh":"Ob",
+  "rio de la plata parana":"Rio de la Plata–Paraná","parana":"Rio de la Plata–Paraná","rio de la plata":"Rio de la Plata–Paraná",
+  "congo":"Congo","congo river":"Congo","zaire river":"Congo",
+  "amur":"Amur","heilong jiang":"Amur",
+  "lena":"Lena","lena river":"Lena",
+  "mekong":"Mekong","mekong river":"Mekong",
+  "mackenzie":"Mackenzie","mackenzie river":"Mackenzie",
+  "niger":"Niger","niger river":"Niger",
+  "brahmaputra":"Brahmaputra","yarlung tsangpo":"Brahmaputra"
+};
+const RIVER_LOOKUP = {};
+RIVER_RANKING.forEach(([name]) => { RIVER_LOOKUP[normalize(name)] = name; });
+Object.keys(RIVER_ALIASES).forEach(k => { RIVER_LOOKUP[normalize(k)] = RIVER_ALIASES[k]; });
+function fmtLen(len){ return `${len.toLocaleString()} km`; }
+
+/* ============================================================
+   Data: the world's oceans
+   ============================================================ */
+const OCEANS = ["Pacific Ocean","Atlantic Ocean","Indian Ocean","Southern Ocean","Arctic Ocean"];
+const OCEAN_ALIASES = {
+  "pacific":"Pacific Ocean","atlantic":"Atlantic Ocean","indian":"Indian Ocean",
+  "southern":"Southern Ocean","antarctic":"Southern Ocean","antarctic ocean":"Southern Ocean",
+  "arctic":"Arctic Ocean"
+};
+const OCEAN_LOOKUP = {};
+OCEANS.forEach(name => { OCEAN_LOOKUP[normalize(name)] = name; });
+Object.keys(OCEAN_ALIASES).forEach(k => { OCEAN_LOOKUP[normalize(k)] = OCEAN_ALIASES[k]; });
 
 /* ============================================================
    FREE-RECALL GAME ENGINE (countries, states, etc.)
@@ -2259,6 +2377,46 @@ const provincePopulationMinefield = new MinefieldQuiz({
     &middot; One wrong guess — including a right one in the wrong order — ends the round immediately<br>
     &middot; Each correct guess shows that province or territory's population<br>
     &middot; No clock here — just don't miss
+  `
+});
+
+const mountainMinefield = new MinefieldQuiz({
+  id: 'mountainmine',
+  items: MOUNTAIN_RANKING,
+  lookup: MOUNTAIN_LOOKUP,
+  fmtPop: fmtElev,
+  rulesHTML: `
+    &middot; Name the world's 15 highest mountains in order from tallest to shortest<br>
+    &middot; One wrong guess — including a real mountain in the wrong order — ends the round immediately<br>
+    &middot; Each correct guess shows that mountain's elevation<br>
+    &middot; No clock here — just don't miss
+  `
+});
+
+const riverMinefield = new MinefieldQuiz({
+  id: 'rivermine',
+  items: RIVER_RANKING,
+  lookup: RIVER_LOOKUP,
+  fmtPop: fmtLen,
+  rulesHTML: `
+    &middot; Name the world's 15 longest rivers (or river systems) in order from longest to shortest<br>
+    &middot; One wrong guess — including a real river in the wrong order — ends the round immediately<br>
+    &middot; Each correct guess shows that river's length<br>
+    &middot; No clock here — just don't miss
+  `
+});
+
+const oceansGame = new FreeRecallGame({
+  id: 'oceans',
+  title: 'Name the Oceans',
+  items: OCEANS,
+  lookup: OCEAN_LOOKUP,
+  duration: 1*60,
+  finalTitle: 'Full roll — all 5 oceans',
+  rulesHTML: `
+    &middot; Every ocean counts once — 5 total<br>
+    &middot; Common short forms are accepted<br>
+    &middot; When time expires, the full roll is revealed with your hits marked
   `
 });
 
