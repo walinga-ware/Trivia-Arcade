@@ -48,6 +48,26 @@
 
   /* ---- home ---- */
   .card-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); gap:16px; margin-top:8px; }
+  .section{ margin-top:36px; }
+  .section-summary{
+    cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:baseline; gap:12px;
+    border-bottom:1px solid var(--line); padding-bottom:8px; margin-bottom:12px;
+    font-family:'Fraunces', serif; color:var(--paper-dim); font-size:13px; text-transform:uppercase; letter-spacing:0.5px;
+  }
+  .section-summary::-webkit-details-marker{ display:none; }
+  .section-summary::marker{ content:''; }
+  .section-summary:hover{ color:var(--paper); }
+  .section-summary .chevron{
+    display:inline-block; margin-right:8px; font-family:'IBM Plex Mono', monospace; text-transform:none;
+    transition:transform 150ms ease; color:var(--brass);
+  }
+  .section[open] > .section-summary .chevron{ transform:rotate(90deg); }
+  .section-summary .quiz-count{
+    font-size:11px; color:var(--paper-dim); text-transform:none; letter-spacing:0;
+    font-family:'IBM Plex Mono', monospace; white-space:nowrap;
+  }
+  .section > .card-grid{ margin-top:12px; }
+  .section-note{ color:var(--paper-dim); font-size:13px; line-height:1.6; margin:0 0 16px; }
   .card{
     background:var(--ink-2); border:1px solid var(--line); border-radius:6px;
     padding:22px; display:flex; flex-direction:column; gap:14px;
@@ -189,7 +209,8 @@
     <p class="subtitle">Quick-fire recall games. See how much you know.</p>
 
     <!-- ============ WORLD ============ -->
-    <h2 style="margin-top:36px; margin-bottom:12px; border-bottom:1px solid var(--line); padding-bottom:8px; color:var(--paper-dim); font-size:13px; text-transform:uppercase; letter-spacing:0.5px;">World 🌎</h2>
+    <details class="section">
+      <summary class="section-summary"><span><span class="chevron">▸</span>World 🌎</span><span class="quiz-count">3 quizzes</span></summary>
     <div class="card-grid">
       <div class="card">
         <div class="tag">Free recall &middot; 193 items</div>
@@ -210,9 +231,11 @@
         <button class="btn-primary" onclick="showScreen('worldpopmine')">Play</button>
       </div>
     </div>
+    </details>
 
     <!-- ============ GEOGRAPHICAL FEATURES ============ -->
-    <h2 style="margin-top:36px; margin-bottom:12px; border-bottom:1px solid var(--line); padding-bottom:8px; color:var(--paper-dim); font-size:13px; text-transform:uppercase; letter-spacing:0.5px;">Geographical features 🏔️</h2>
+    <details class="section">
+      <summary class="section-summary"><span><span class="chevron">▸</span>Geographical features 🏔️</span><span class="quiz-count">3 quizzes</span></summary>
     <div class="card-grid">
       <div class="card">
         <div class="tag">Minefield &middot; 15 items</div>
@@ -233,9 +256,11 @@
         <button class="btn-primary" onclick="showScreen('oceans')">Play</button>
       </div>
     </div>
+    </details>
 
     <!-- ============ CANADA (GENERAL) ============ -->
-    <h2 style="margin-top:36px; margin-bottom:12px; border-bottom:1px solid var(--line); padding-bottom:8px; color:var(--paper-dim); font-size:13px; text-transform:uppercase; letter-spacing:0.5px;">Canada (general) 🇨🇦 </h2>
+    <details class="section">
+      <summary class="section-summary"><span><span class="chevron">▸</span>Canada (general) 🇨🇦</span><span class="quiz-count">3 quizzes</span></summary>
     <div class="card-grid">
       <div class="card">
         <div class="tag">Free recall &middot; 13 items</div>
@@ -256,9 +281,11 @@
         <button class="btn-primary" onclick="showScreen('provpopmine')">Play</button>
       </div>
     </div>
+    </details>
 
     <!-- ============ US (GENERAL) ============ -->
-    <h2 style="margin-top:36px; margin-bottom:12px; border-bottom:1px solid var(--line); padding-bottom:8px; color:var(--paper-dim); font-size:13px; text-transform:uppercase; letter-spacing:0.5px;">US (General) 🇺🇸 </h2>
+    <details class="section">
+      <summary class="section-summary"><span><span class="chevron">▸</span>US (General) 🇺🇸</span><span class="quiz-count">6 quizzes</span></summary>
     <div class="card-grid">
       <div class="card">
         <div class="tag">Free recall &middot; 50 items</div>
@@ -300,12 +327,15 @@
         </div>
       </div>
     </div>
+    </details>
 
     <!-- ============ US STATES SHOWCASE ============ -->
     <!-- Cards below are generated automatically from STATE_SHOWCASE_QUIZZES — see script at bottom of file. -->
-    <h2 style="margin-top:36px; margin-bottom:12px; border-bottom:1px solid var(--line); padding-bottom:8px; color:var(--paper-dim); font-size:13px; text-transform:uppercase; letter-spacing:0.5px;">US States Showcase 🏆</h2>
-    <p style="color:var(--paper-dim); font-size:13px; line-height:1.6; margin-bottom:16px;">Fun-sized quiz games for individual states. Each offers trivia, facts, and local knowledge.</p>
+    <details class="section">
+      <summary class="section-summary"><span><span class="chevron">▸</span>US States Showcase 🏆</span><span class="quiz-count" id="showcase-quiz-count"></span></summary>
+    <p class="section-note">Fun-sized quiz games for individual states. Each offers trivia, facts, and local knowledge.</p>
     <div class="card-grid" id="showcase-card-grid"></div>
+    </details>
   </div>
 
   <!-- ============ US STATES SHOWCASE — SCREENS (generated automatically) ============ -->
@@ -2138,6 +2168,9 @@ function initStateShowcase(quizzes){
 
   // Alphabetize automatically — no manual ordering required in the registry above.
   const sorted = [...quizzes].sort((a, b) => a.state.localeCompare(b.state));
+
+  const countEl = document.getElementById('showcase-quiz-count');
+  if (countEl) countEl.textContent = `${sorted.length} quiz${sorted.length === 1 ? '' : 'zes'}`;
 
   sorted.forEach(quiz => {
     const count = quiz.questions.length;
