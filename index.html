@@ -1944,6 +1944,47 @@ const DELAWARE_TRIVIA = [
 ];
 
 /* ============================================================
+   Data: Connecticut trivia (source: Wikipedia)
+   ============================================================ */
+const CONNECTICUT_TRIVIA = [
+  {
+    q: "What is Connecticut's state tree?",
+    accepted: ["charter oak", "white oak", "oak"],
+    display: "Charter Oak (a white oak)"
+  },
+  {
+    q: "What is Connecticut's state bird?",
+    accepted: ["american robin", "robin"],
+    display: "American Robin"
+  },
+  {
+    q: "What is Connecticut's state insect?",
+    accepted: ["european mantis", "praying mantis", "mantis"],
+    display: "European Mantis (praying mantis)"
+  },
+  {
+    q: "What is Connecticut's state animal?",
+    accepted: ["sperm whale", "whale"],
+    display: "Sperm Whale"
+  },
+  {
+    q: "What is Connecticut's well-known state nickname?",
+    accepted: ["constitution state"],
+    display: "The Constitution State"
+  },
+  {
+    q: "Legend says a New Haven diner called Louis' Lunch invented what iconic sandwich around 1900?",
+    accepted: ["hamburger", "the hamburger", "burger"],
+    display: "The Hamburger"
+  },
+  {
+    q: "A Bridgeport bakery's pie tins, tossed around by Yale students, are said to have inspired the name of what popular flying toy?",
+    accepted: ["frisbee", "the frisbee"],
+    display: "The Frisbee — named after the Frisbie Pie Company"
+  }
+];
+
+/* ============================================================
    TRIVIA QUIZ ENGINE (one question at a time)
    ============================================================ */
 function triviaHTML(id){
@@ -2140,6 +2181,7 @@ const CALIFORNIA_TRIVIA = [
 const STATE_SHOWCASE_QUIZZES = [
   { id: 'alaska',     state: 'Alaska',     subtitle: 'Frontier Facts',      questions: ALASKA_TRIVIA },
   { id: 'california', state: 'California', subtitle: 'Golden Genius',      questions: CALIFORNIA_TRIVIA },
+  { id: 'connecticut', state: 'Connecticut', subtitle: 'Nutmeg Knowledge',  questions: CONNECTICUT_TRIVIA },
   { id: 'delaware',  state: 'Delaware',  subtitle: 'First State Facts',    questions: DELAWARE_TRIVIA },
   { id: 'maine',     state: 'Maine',     subtitle: 'Pine Puzzler',         questions: MAINE_TRIVIA },
   { id: 'maryland',  state: 'Maryland',  subtitle: 'Miscellanea',   questions: MARYLAND_TRIVIA },
