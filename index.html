@@ -48,6 +48,18 @@
 
   /* ---- home ---- */
   .card-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); gap:16px; margin-top:8px; }
+  .category{ margin-top:48px; }
+  .category:first-of-type{ margin-top:8px; }
+  .category-title{
+    font-family:'Fraunces', serif; font-weight:700; font-size:clamp(15px,3vw,18px);
+    color:var(--brass); text-transform:uppercase; letter-spacing:1.5px;
+    margin:0 0 4px; padding-bottom:10px; border-bottom:2px solid var(--brass);
+  }
+  .category .section:first-of-type{ margin-top:22px; }
+  @media (max-width: 640px){
+    .category{ margin-top:34px; }
+    .category-title{ padding-bottom:8px; }
+  }
   .section{ margin-top:36px; }
   .section-summary{
     cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:baseline; gap:12px;
@@ -225,6 +237,10 @@
     <h1>Walinga Trivia Arcade</h1>
     <p class="subtitle">Quick-fire recall games. See how much you know.</p>
 
+    <!-- ============ GEOGRAPHY ============ -->
+    <div class="category">
+    <h2 class="category-title">Geography</h2>
+
     <!-- ============ WORLD ============ -->
     <details class="section">
       <summary class="section-summary"><span><span class="chevron">▸</span>World 🌎</span><span class="quiz-count">3 quizzes</span></summary>
@@ -345,6 +361,24 @@
       </div>
     </div>
     </details>
+    </div>
+    <!-- ============ /GEOGRAPHY ============ -->
+
+    <!-- ============ HISTORY ============ -->
+    <div class="category">
+    <h2 class="category-title">History</h2>
+
+    <!-- ============ WORLD LEADERS ============ -->
+    <details class="section">
+      <summary class="section-summary"><span><span class="chevron">▸</span>World Leaders 🏛️</span><span class="quiz-count">Coming soon</span></summary>
+    <p class="section-note">Quizzes for this section are on the way — check back soon.</p>
+    </details>
+    </div>
+    <!-- ============ /HISTORY ============ -->
+
+    <!-- ============ GENERAL KNOWLEDGE ============ -->
+    <div class="category">
+    <h2 class="category-title">General Knowledge</h2>
 
     <!-- ============ US STATES SHOWCASE ============ -->
     <!-- Cards below are generated automatically from STATE_SHOWCASE_QUIZZES — see script at bottom of file. -->
@@ -353,6 +387,8 @@
     <p class="section-note">Fun-sized quiz games for individual states. Each offers trivia, facts, and local knowledge.</p>
     <div class="card-grid" id="showcase-card-grid"></div>
     </details>
+    </div>
+    <!-- ============ /GENERAL KNOWLEDGE ============ -->
   </div>
 
   <!-- ============ US STATES SHOWCASE — SCREENS (generated automatically) ============ -->
