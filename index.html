@@ -109,6 +109,7 @@
   .feedback{ min-height:20px; font-size:13px; margin:2px 2px 20px; color:var(--paper-dim); }
   .feedback.good{ color:var(--sage); }
   .feedback.bad{ color:var(--rust); }
+  .feedback.dup{ color:var(--brass); }
 
   .section-title{
     font-family:'Fraunces', serif; font-size:15px; color:var(--paper-dim); border-bottom:1px solid var(--line);
@@ -993,7 +994,12 @@ class FreeRecallGame{
     const key = normalize(raw);
     const canonical = this.lookup[key];
 
-    if (canonical && this.guessed.has(canonical)) return; // silent, keep typing
+    if (canonical && this.guessed.has(canonical)){
+      const fb = this.el('feedback');
+      fb.textContent = `${canonical} — already got that one. Keep typing.`;
+      fb.className = 'feedback dup';
+      return;
+    }
 
     this.el('guess').value = '';
     const fb = this.el('feedback');
@@ -2252,7 +2258,13 @@ const stateShowcaseQuizInstances = initStateShowcase(STATE_SHOWCASE_QUIZZES);
    MINEFIELD ENGINE (guess items in strict descending order —
    one wrong guess ends the round)
    ============================================================ */
-function minefieldHTML(id){
+function minefieldHTML(id, opts){
+  opts = opts || {};
+  const itemNoun = opts.itemNoun || 'state';
+  const itemNounPlural = opts.itemNounPlural || `${itemNoun}s`;
+  const startHint = opts.startHint || 'most populous';
+  const metricLabel = opts.metricLabel || 'population';
+  const total = opts.total;
   return `
     <div id="${id}-intro">
       <div class="plate" style="margin-bottom:18px;">
@@ -2274,13 +2286,13 @@ function minefieldHTML(id){
         </div>
       </div>
       <div class="entry">
-        <input type="text" id="${id}-guess" placeholder="Type the next state…" autocomplete="off">
+        <input type="text" id="${id}-guess" placeholder="Type the next ${itemNoun}…" autocomplete="off">
         <button class="btn-primary" id="${id}-submitBtn">Guess</button>
       </div>
       <div class="feedback" id="${id}-feedback"></div>
       <div class="section-title"><span>Correctly guessed, in order</span><span id="${id}-guessedCount">0</span></div>
       <div id="${id}-mineList" class="mine-list">
-        <div class="empty-note">Nothing yet — guess the most populous state to start.</div>
+        <div class="empty-note">Nothing yet — guess the ${startHint} ${itemNoun} to start.</div>
       </div>
       <div style="margin-top:16px;">
         <button id="${id}-giveupBtn">Give up</button>
@@ -2289,7 +2301,7 @@ function minefieldHTML(id){
 
     <div class="results" id="${id}-results" style="display:none;">
       <div class="final-score" id="${id}-finalScoreLine"></div>
-      <div class="section-title"><span>Full ranking — all 50 states by population</span><span>your hits in green</span></div>
+      <div class="section-title"><span>Full ranking — all ${total} ${itemNounPlural} by ${metricLabel}</span><span>your hits in green</span></div>
       <div id="${id}-finalGrid" class="final-grid"></div>
       <button id="${id}-resetBtn">Play again</button>
     </div>
@@ -2303,12 +2315,23 @@ class MinefieldQuiz{
     this.lookup = opts.lookup; // normalized name -> canonical
     this.rulesHTML = opts.rulesHTML;
     this.fmtPop = opts.fmtPop || fmtPop; // allow a custom population formatter per instance
+    this.itemNoun = opts.itemNoun || 'state';
+    this.itemNounPlural = opts.itemNounPlural || `${this.itemNoun}s`;
+    this.startHint = opts.startHint || 'most populous';
+    this.metricLabel = opts.metricLabel || 'population';
+    this.emptyNoteHTML = `<div class="empty-note">Nothing yet — guess the ${this.startHint} ${this.itemNoun} to start.</div>`;
 
     this.nextIndex = 0;
     this.guessedSoFar = []; // [{name, population}]
     this.running = false;
 
-    document.getElementById(`${this.id}-mount`).innerHTML = minefieldHTML(this.id);
+    document.getElementById(`${this.id}-mount`).innerHTML = minefieldHTML(this.id, {
+      itemNoun: this.itemNoun,
+      itemNounPlural: this.itemNounPlural,
+      startHint: this.startHint,
+      metricLabel: this.metricLabel,
+      total: this.items.length
+    });
     document.getElementById(`${this.id}-rules`).innerHTML = this.rulesHTML;
 
     this.el = key => document.getElementById(`${this.id}-${key}`);
@@ -2369,7 +2392,7 @@ class MinefieldQuiz{
       ? this.guessedSoFar.map((g, i) => `
           <div class="row"><span><span class="mine-rank-badge">#${i+1}</span>${g.name}</span><span class="pop">${this.fmtPop(g.population)}</span></div>
         `).join('')
-      : `<div class="empty-note">Nothing yet — guess the most populous state to start.</div>`;
+      : this.emptyNoteHTML;
   }
 
   giveUp(){
@@ -2421,6 +2444,10 @@ const populationMinefield = new MinefieldQuiz({
   id: 'popmine',
   items: STATE_POPULATION_RANKING,
   lookup: STATE_LOOKUP,
+  itemNoun: 'state',
+  itemNounPlural: 'states',
+  startHint: 'most populous',
+  metricLabel: 'population',
   rulesHTML: `
     &middot; Name all 50 US states in order from most to least populous<br>
     &middot; One wrong guess — including a right state in the wrong order — ends the round immediately<br>
@@ -2434,6 +2461,10 @@ const worldPopulationMinefield = new MinefieldQuiz({
   items: WORLD_POPULATION_RANKING,
   lookup: COUNTRY_LOOKUP,
   fmtPop: fmtPopWorld,
+  itemNoun: 'country',
+  itemNounPlural: 'countries',
+  startHint: 'most populous',
+  metricLabel: 'population',
   rulesHTML: `
     &middot; Name all 193 countries in order from most to least populous<br>
     &middot; One wrong guess — including a right country in the wrong order — ends the round immediately<br>
@@ -2447,6 +2478,10 @@ const provincePopulationMinefield = new MinefieldQuiz({
   items: CANADA_POPULATION_RANKING,
   lookup: CANADA_PROVINCE_LOOKUP,
   fmtPop: fmtPopCA,
+  itemNoun: 'province or territory',
+  itemNounPlural: 'provinces and territories',
+  startHint: 'most populous',
+  metricLabel: 'population',
   rulesHTML: `
     &middot; Name all 10 provinces and 3 territories in order from most to least populous<br>
     &middot; One wrong guess — including a right one in the wrong order — ends the round immediately<br>
@@ -2460,6 +2495,10 @@ const mountainMinefield = new MinefieldQuiz({
   items: MOUNTAIN_RANKING,
   lookup: MOUNTAIN_LOOKUP,
   fmtPop: fmtElev,
+  itemNoun: 'mountain',
+  itemNounPlural: 'mountains',
+  startHint: 'tallest',
+  metricLabel: 'elevation',
   rulesHTML: `
     &middot; Name the world's 15 highest mountains in order from tallest to shortest<br>
     &middot; One wrong guess — including a real mountain in the wrong order — ends the round immediately<br>
@@ -2473,6 +2512,10 @@ const riverMinefield = new MinefieldQuiz({
   items: RIVER_RANKING,
   lookup: RIVER_LOOKUP,
   fmtPop: fmtLen,
+  itemNoun: 'river',
+  itemNounPlural: 'rivers',
+  startHint: 'longest',
+  metricLabel: 'length',
   rulesHTML: `
     &middot; Name the world's 15 longest rivers (or river systems) in order from longest to shortest<br>
     &middot; One wrong guess — including a real river in the wrong order — ends the round immediately<br>
