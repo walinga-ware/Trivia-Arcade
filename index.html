@@ -126,6 +126,15 @@
   .final-score{ font-family:'Fraunces', serif; font-size:20px; color:var(--brass); margin-bottom:4px; }
   .final-score span{ color:var(--paper-dim); font-size:14px; font-family:'IBM Plex Mono', monospace; }
 
+  .play-again-top{ display:block; margin:0 0 18px; }
+  @media (max-width: 640px){
+    .play-again-top{
+      width:100%; padding:16px 22px; font-size:16px;
+      position:sticky; top:10px; z-index:5;
+      box-shadow:0 4px 14px rgba(0,0,0,0.35);
+    }
+  }
+
   /* ---- quiz-specific ---- */
   .quiz-prompt{
     background:var(--ink-2); border:1px solid var(--line); border-radius:6px;
@@ -919,10 +928,10 @@ function freeRecallHTML(id, title){
     </div>
 
     <div class="results" id="${id}-results" style="display:none;">
+      <button id="${id}-resetBtn" class="play-again-top">Play again</button>
       <div class="final-score" id="${id}-finalScoreLine"></div>
       <div class="section-title"><span id="${id}-finalTitle"></span><span>your hits in green</span></div>
       <div id="${id}-finalGrid" class="final-grid"></div>
-      <button id="${id}-resetBtn">Play again</button>
     </div>
   `;
 }
@@ -1111,10 +1120,10 @@ function quizHTML(id, promptLabel, mode){
     </div>
 
     <div class="results" id="${id}-results" style="display:none;">
+      <button id="${id}-resetBtn" class="play-again-top">Play again</button>
       <div class="final-score" id="${id}-finalScoreLine"></div>
       <div class="section-title"><span id="${id}-finalRollLabel"></span><span>your hits in green</span></div>
       <div id="${id}-finalGrid" class="final-grid"></div>
-      <button id="${id}-resetBtn">Play again</button>
     </div>
   `;
 }
@@ -1316,10 +1325,10 @@ function stateMapHTML(id){
     </div>
 
     <div class="results" id="${id}-results" style="display:none;">
+      <button id="${id}-resetBtn" class="play-again-top">Play again</button>
       <div class="final-score" id="${id}-finalScoreLine"></div>
       <div class="section-title"><span>All 50 states</span><span>your hits in green</span></div>
       <div id="${id}-finalGrid" class="final-grid"></div>
-      <button id="${id}-resetBtn">Play again</button>
     </div>
   `;
 }
@@ -1457,10 +1466,10 @@ function findStateHTML(id, hardMode=false){
     </div>
 
     <div class="results" id="${id}-results" style="display:none;">
+      <button id="${id}-resetBtn" class="play-again-top">Play again</button>
       <div class="final-score" id="${id}-finalScoreLine"></div>
       <div class="section-title"><span>All 50 states</span><span>your hits in green</span></div>
       <div id="${id}-finalGrid" class="final-grid"></div>
-      <button id="${id}-resetBtn">Play again</button>
     </div>
   `;
 }
@@ -2017,9 +2026,9 @@ function triviaHTML(id){
     </div>
 
     <div class="results" id="${id}-results" style="display:none;">
+      <button id="${id}-resetBtn" class="play-again-top">Play again</button>
       <div class="final-score" id="${id}-finalScoreLine"></div>
       <div id="${id}-review"></div>
-      <button id="${id}-resetBtn">Play again</button>
     </div>
   `;
 }
@@ -2300,10 +2309,10 @@ function minefieldHTML(id, opts){
     </div>
 
     <div class="results" id="${id}-results" style="display:none;">
+      <button id="${id}-resetBtn" class="play-again-top">Play again</button>
       <div class="final-score" id="${id}-finalScoreLine"></div>
       <div class="section-title"><span>Full ranking — all ${total} ${itemNounPlural} by ${metricLabel}</span><span>your hits in green</span></div>
       <div id="${id}-finalGrid" class="final-grid"></div>
-      <button id="${id}-resetBtn">Play again</button>
     </div>
   `;
 }
