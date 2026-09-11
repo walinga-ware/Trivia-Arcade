@@ -18,7 +18,7 @@
     --rust:#b5624a;
     --line: rgba(234,230,218,0.14);
   }
-  *{box-sizing:border-box;}
+  *{ box-sizing:border-box; -webkit-tap-highlight-color:rgba(201,154,82,0.28); }
   html,body{margin:0;padding:0;}
   body{
     background:var(--ink);
@@ -68,6 +68,13 @@
   }
   .section > .card-grid{ margin-top:12px; }
   .section-note{ color:var(--paper-dim); font-size:13px; line-height:1.6; margin:0 0 16px; }
+  @media (max-width: 640px){
+    .section{ margin-top:26px; }
+    .section-summary{
+      padding:16px 2px; margin-bottom:8px; font-size:14px;
+    }
+    .section-summary .quiz-count{ font-size:12px; }
+  }
   .card{
     background:var(--ink-2); border:1px solid var(--line); border-radius:6px;
     padding:22px; display:flex; flex-direction:column; gap:14px;
