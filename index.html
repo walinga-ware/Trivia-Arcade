@@ -1219,7 +1219,7 @@ const PRESIDENT_ALIASES = {
   "chester a arthur":["Chester A. Arthur"], "chester arthur":["Chester A. Arthur"], "arthur":["Chester A. Arthur"],
   "grover cleveland":["Grover Cleveland"], "cleveland":["Grover Cleveland"],
   "william mckinley":["William McKinley"], "mckinley":["William McKinley"],
-  "theodore roosevelt":["Theodore Roosevelt"], "teddy roosevelt":["Theodore Roosevelt"], "teddy":["Theodore Roosevelt"], "tr":["Theodore Roosevelt"],
+  "theodore roosevelt":["Theodore Roosevelt"], "teddy roosevelt":["Theodore Roosevelt"],
   "franklin d roosevelt":["Franklin D. Roosevelt"], "franklin roosevelt":["Franklin D. Roosevelt"], "fdr":["Franklin D. Roosevelt"],
   "roosevelt":["Theodore Roosevelt","Franklin D. Roosevelt"],
   "william howard taft":["William Howard Taft"], "william taft":["William Howard Taft"], "taft":["William Howard Taft"],
@@ -1241,7 +1241,7 @@ const PRESIDENT_ALIASES = {
   "bush":["George H. W. Bush","George W. Bush"],
   "bill clinton":["Bill Clinton"], "william clinton":["Bill Clinton"], "clinton":["Bill Clinton"],
   "barack obama":["Barack Obama"], "obama":["Barack Obama"],
-  "donald trump":["Donald Trump"], "trump":["Donald Trump"],
+  "donald trump":["Donald Trump"], "donald j trump":["Donald Trump"], "trump":["Donald Trump"],
   "joe biden":["Joe Biden"], "joseph biden":["Joe Biden"], "biden":["Joe Biden"]
 };
 const PRESIDENT_LOOKUP = {};
@@ -2887,9 +2887,9 @@ const presidentsGame = new PresidentsRecallGame({
   duration: 10*60,
   finalTitle: 'Full roster — all 47 terms, chronological from Washington',
   rulesHTML: `
-    &middot; 45 presidents across 47 terms — Grover Cleveland and Donald Trump each served two non-consecutive terms and appear twice<br>
-    &middot; Full name, last name, or common abbreviations (e.g. JFK, FDR, LBJ) are all accepted<br>
-    &middot; A shared last name (Adams, Harrison, Johnson, Roosevelt, Bush) credits whichever of those two presidents you haven't gotten yet<br>
+    &middot; 45 presidents across 47 terms — Some presidents served two non-consecutive terms and appear twice<br>
+    &middot; Full name, last name, or common abbreviations are all accepted<br>
+    &middot; A shared last name gives you credit for all presidents with that last name<br>
     &middot; When time expires, the full roster is revealed in chronological order with years served
   `
 });
