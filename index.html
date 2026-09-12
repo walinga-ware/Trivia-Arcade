@@ -375,7 +375,7 @@
 
     <!-- ============ WORLD LEADERS ============ -->
     <details class="section">
-      <summary class="section-summary"><span><span class="chevron">▸</span>World Leaders 🏛️</span><span class="quiz-count">2 quizzes</span></summary>
+      <summary class="section-summary"><span><span class="chevron">▸</span>World Leaders 🏛️</span><span class="quiz-count">3 quizzes</span></summary>
     <div class="card-grid">
       <div class="card">
         <div class="tag">Free recall &middot; 47 terms</div>
@@ -388,6 +388,12 @@
         <h3>Canadian Prime Ministers</h3>
         <div class="meta" id="pms-meta"></div>
         <button class="btn-primary" onclick="showScreen('pms')">Play</button>
+      </div>
+      <div class="card">
+        <div class="tag">Free recall &middot; 45 terms</div>
+        <h3>English &amp; British Monarchs</h3>
+        <div class="meta" id="monarchs-meta"></div>
+        <button class="btn-primary" onclick="showScreen('monarchs')">Play</button>
       </div>
     </div>
     </details>
@@ -517,6 +523,12 @@
   <div class="screen" id="screen-pms">
     <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
     <div id="pms-mount"></div>
+  </div>
+
+  <!-- ============ ENGLISH &amp; BRITISH MONARCHS (free recall) ============ -->
+  <div class="screen" id="screen-monarchs">
+    <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
+    <div id="monarchs-mount"></div>
   </div>
 
 </div>
@@ -1341,6 +1353,108 @@ const PM_ALIASES = {
 const PM_LOOKUP = {};
 PM_NAMES.forEach(name => { PM_LOOKUP[normalize(name)] = [name]; });
 Object.keys(PM_ALIASES).forEach(k => { PM_LOOKUP[normalize(k)] = PM_ALIASES[k]; });
+
+/* ============================================================
+   Data: English monarchs from the Norman Conquest, followed by monarchs
+   of Great Britain from the Acts of Union through the present day (1066–present),
+   in chronological order. William III and Mary II are listed separately because
+   both were sovereign monarchs.
+   ============================================================ */
+const ENGLISH_MONARCH_TERMS = [
+  ["William I","1066–1087"],
+  ["William II","1087–1100"],
+  ["Henry I","1100–1135"],
+  ["Stephen","1135–1154"],
+  ["Henry II","1154–1189"],
+  ["Richard I","1189–1199"],
+  ["John","1199–1216"],
+  ["Henry III","1216–1272"],
+  ["Edward I","1272–1307"],
+  ["Edward II","1307–1327"],
+  ["Edward III","1327–1377"],
+  ["Richard II","1377–1399"],
+  ["Henry IV","1399–1413"],
+  ["Henry V","1413–1422"],
+  ["Henry VI","1422–1461"],
+  ["Edward IV","1461–1470"],
+  ["Henry VI","1470–1471"],
+  ["Edward IV","1471–1483"],
+  ["Edward V","1483"],
+  ["Richard III","1483–1485"],
+  ["Henry VII","1485–1509"],
+  ["Henry VIII","1509–1547"],
+  ["Edward VI","1547–1553"],
+  ["Mary I","1553–1558"],
+  ["Elizabeth I","1558–1603"],
+  ["James I","1603–1625"],
+  ["Charles I","1625–1649"],
+  ["Charles II","1660–1685"],
+  ["James II","1685–1688"],
+  ["William III","1689–1702"],
+  ["Mary II","1689–1694"],
+  ["Anne","1702–1714"],
+  ["George I","1714–1727"],
+  ["George II","1727–1760"],
+  ["George III","1760–1820"],
+  ["George IV","1820–1830"],
+  ["William IV","1830–1837"],
+  ["Victoria","1837–1901"],
+  ["Edward VII","1901–1910"],
+  ["George V","1910–1936"],
+  ["Edward VIII","1936"],
+  ["George VI","1936–1952"],
+  ["Elizabeth II","1952–2022"],
+  ["Charles III","2022–present"]
+];
+const ENGLISH_MONARCH_NAMES = [...new Set(ENGLISH_MONARCH_TERMS.map(t => t[0]))];
+
+const ENGLISH_MONARCH_ALIASES = {
+  "william i":["William I"], "william the conqueror":["William I"], "the conqueror":["William I"], "william the first":["William I"],
+  "william ii":["William II"], "william rufus":["William II"], "william the second":["William II"],
+  "henry i":["Henry I"], "henry beauclerc":["Henry I"], "henry the first":["Henry I"],
+  "stephen":["Stephen"], "stephen of blois":["Stephen"], "king stephen":["Stephen"],
+  "henry ii":["Henry II"], "henry curtmantle":["Henry II"], "henry the second":["Henry II"],
+  "richard i":["Richard I"], "richard the lionheart":["Richard I"], "richard the lionheart":["Richard I"], "lionheart":["Richard I"],
+  "john":["John"], "king john":["John"], "john of england":["John"], "john lackland":["John"],
+  "henry iii":["Henry III"], "henry the third":["Henry III"],
+  "edward i":["Edward I"], "edward longshanks":["Edward I"], "longshanks":["Edward I"], "edward the first":["Edward I"],
+  "edward ii":["Edward II"], "edward the second":["Edward II"],
+  "edward iii":["Edward III"], "edward the third":["Edward III"],
+  "richard ii":["Richard II"], "richard the second":["Richard II"],
+  "henry iv":["Henry IV"], "henry bolingbroke":["Henry IV"], "henry the fourth":["Henry IV"],
+  "henry v":["Henry V"], "henry the fifth":["Henry V"],
+  "henry vi":["Henry VI"], "henry the sixth":["Henry VI"],
+  "edward iv":["Edward IV"], "edward the fourth":["Edward IV"],
+  "edward v":["Edward V"], "edward the fifth":["Edward V"],
+  "richard iii":["Richard III"], "richard crookback":["Richard III"], "richard the third":["Richard III"],
+  "henry vii":["Henry VII"], "henry tudor":["Henry VII"], "henry the seventh":["Henry VII"],
+  "henry viii":["Henry VIII"], "henry the eighth":["Henry VIII"],
+  "edward vi":["Edward VI"], "edward the sixth":["Edward VI"],
+  "mary i":["Mary I"], "mary tudor":["Mary I"], "bloody mary":["Mary I"], "mary the first":["Mary I"],
+  "elizabeth i":["Elizabeth I"], "elizabeth the first":["Elizabeth I"], "elizabeth tudor":["Elizabeth I"],
+  "james i":["James I"], "james the first":["James I"], "james vi and i":["James I"],
+  "charles i":["Charles I"], "charles the first":["Charles I"],
+  "charles ii":["Charles II"], "charles the second":["Charles II"], "the merry monarch":["Charles II"],
+  "james ii":["James II"], "james the second":["James II"],
+  "william iii":["William III"], "william of orange":["William III"], "william of orange nassau":["William III"], "king william iii":["William III"],
+  "mary ii":["Mary II"], "mary the second":["Mary II"],
+  "anne":["Anne"], "queen anne":["Anne"],
+  "george i":["George I"], "george the first":["George I"],
+  "george ii":["George II"], "george the second":["George II"],
+  "george iii":["George III"], "george the third":["George III"],
+  "george iv":["George IV"], "george the fourth":["George IV"],
+  "william iv":["William IV"], "william the fourth":["William IV"],
+  "victoria":["Victoria"], "queen victoria":["Victoria"],
+  "edward vii":["Edward VII"], "edward the seventh":["Edward VII"],
+  "edward viii":["Edward VIII"], "edward the eighth":["Edward VIII"],
+  "george v":["George V"], "george the fifth":["George V"],
+  "george vi":["George VI"], "george the sixth":["George VI"],
+  "elizabeth ii":["Elizabeth II"], "elizabeth the second":["Elizabeth II"], "queen elizabeth ii":["Elizabeth II"],
+  "charles iii":["Charles III"], "charles the third":["Charles III"], "king charles iii":["Charles III"],
+};
+const ENGLISH_MONARCH_LOOKUP = {};
+ENGLISH_MONARCH_NAMES.forEach(name => { ENGLISH_MONARCH_LOOKUP[normalize(name)] = [name]; });
+Object.keys(ENGLISH_MONARCH_ALIASES).forEach(k => { ENGLISH_MONARCH_LOOKUP[normalize(k)] = ENGLISH_MONARCH_ALIASES[k]; });
 
 /* ============================================================
    FREE-RECALL GAME ENGINE — US PRESIDENTS VARIANT
@@ -2999,6 +3113,23 @@ const pmsGame = new PresidentsRecallGame({
     &middot; 24 prime ministers across 29 terms — several served multiple non-consecutive terms and appear more than once<br>
     &middot; Full name, last name, or common short forms are accepted<br>
     &middot; There is one last name shared between two PMs. Guessing it will give you credit for both<br>
+    &middot; When time expires, the full roster is revealed in chronological order with years served
+  `
+});
+
+const monarchsGame = new PresidentsRecallGame({
+  id: 'monarchs',
+  title: 'English & British Monarchs',
+  terms: ENGLISH_MONARCH_TERMS,
+  lookup: ENGLISH_MONARCH_LOOKUP,
+  duration: 6*60,
+  peopleLabel: 'monarchs',
+  finalTitle: 'Full roster — English & British monarchs from 1066 to present',
+  rulesHTML: `
+    &middot; Name the English monarchs from William I through Anne, then the monarchs of Great Britain to Charles III<br>
+    &middot; Henry VI and Edward IV each appear twice because of their separate reigns<br>
+    &middot; Full names, regnal numbers, and common historical nicknames are accepted<br>
+    &middot; William III and Mary II are listed separately as co-monarchs<br>
     &middot; When time expires, the full roster is revealed in chronological order with years served
   `
 });
