@@ -6,7 +6,7 @@
 <title>Walinga Trivia Arcade</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎟️</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
     --ink:#101c26;
@@ -29,14 +29,14 @@
   }
   .wrap{ max-width:900px; margin:0 auto; }
   h1{
-    font-family:'Fraunces', serif;
+    font-family:'IBM Plex Sans', sans-serif;
     font-weight:600;
     font-size:clamp(28px,5vw,44px);
     margin:0 0 4px;
     color:var(--paper);
   }
   h2{
-    font-family:'Fraunces', serif;
+    font-family:'IBM Plex Sans', sans-serif;
     font-weight:600;
     font-size:clamp(22px,4vw,32px);
     margin:0 0 4px;
@@ -51,7 +51,7 @@
   .category{ margin-top:48px; }
   .category:first-of-type{ margin-top:8px; }
   .category-title{
-    font-family:'Fraunces', serif; font-weight:700; font-size:clamp(15px,3vw,18px);
+    font-family:'IBM Plex Sans', sans-serif; font-weight:700; font-size:clamp(15px,3vw,18px);
     color:var(--brass); text-transform:uppercase; letter-spacing:1.5px;
     margin:0 0 4px; padding-bottom:10px; border-bottom:2px solid var(--brass);
   }
@@ -64,7 +64,7 @@
   .section-summary{
     cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:baseline; gap:12px;
     border-bottom:1px solid var(--line); padding-bottom:8px; margin-bottom:12px;
-    font-family:'Fraunces', serif; color:var(--paper-dim); font-size:13px; text-transform:uppercase; letter-spacing:0.5px;
+    font-family:'IBM Plex Sans', sans-serif; color:var(--paper-dim); font-size:13px; text-transform:uppercase; letter-spacing:0.5px;
   }
   .section-summary::-webkit-details-marker{ display:none; }
   .section-summary::marker{ content:''; }
@@ -92,7 +92,7 @@
     padding:22px; display:flex; flex-direction:column; gap:14px;
   }
   .card .tag{ font-size:11px; color:var(--brass); letter-spacing:0.5px; text-transform:uppercase; }
-  .card h3{ font-family:'Fraunces', serif; font-size:20px; margin:0; color:var(--paper); }
+  .card h3{ font-family:'IBM Plex Sans', sans-serif; font-size:20px; margin:0; color:var(--paper); }
   .card .meta{ font-size:12px; color:var(--paper-dim); }
 
   /* ---- shared controls ---- */
@@ -113,7 +113,7 @@
   .top-row{ display:flex; gap:16px; flex-wrap:wrap; align-items:stretch; margin-bottom:22px; }
   .plate{ background:var(--ink-2); border:1px solid var(--line); border-radius:4px; padding:14px 20px; flex:1; min-width:140px; }
   .plate .label{ font-size:11px; color:var(--paper-dim); margin-bottom:6px; }
-  .plate .value{ font-family:'Fraunces', serif; font-size:30px; font-weight:600; color:var(--paper); }
+  .plate .value{ font-family:'IBM Plex Sans', sans-serif; font-size:30px; font-weight:600; color:var(--paper); }
   .plate.timer .value{ color:var(--brass); font-variant-numeric: tabular-nums; }
   .plate.timer.low .value{ color:var(--rust); }
 
@@ -131,8 +131,13 @@
   .feedback.dup{ color:var(--brass); }
 
   .section-title{
-    font-family:'Fraunces', serif; font-size:15px; color:var(--paper-dim); border-bottom:1px solid var(--line);
-    padding-bottom:8px; margin:26px 0 12px; display:flex; justify-content:space-between; align-items:baseline;
+    font-family:'IBM Plex Sans', sans-serif; font-size:15px; color:var(--paper-dim); border-bottom:1px solid var(--line);
+    padding-bottom:8px; margin:26px 0 12px; display:flex; justify-content:space-between; align-items:baseline; gap:6px 16px;
+  }
+  @media (max-width: 640px){
+    .section-title{
+      flex-direction:column; align-items:flex-start; gap:6px;
+    }
   }
   .guessed-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(180px,1fr)); gap:6px 14px; }
   .guessed-grid div{ font-size:14px; padding:5px 0; border-bottom:1px dotted var(--line); color:var(--paper); }
@@ -142,7 +147,7 @@
   .final-grid .item.miss{ color:var(--paper-dim); }
   .empty-note{ color:var(--paper-dim); font-size:13px; font-style:italic; }
 
-  .final-score{ font-family:'Fraunces', serif; font-size:20px; color:var(--brass); margin-bottom:4px; }
+  .final-score{ font-family:'IBM Plex Sans', sans-serif; font-size:20px; color:var(--brass); margin-bottom:4px; }
   .final-score span{ color:var(--paper-dim); font-size:14px; font-family:'IBM Plex Mono', monospace; }
 
   .play-again-top{ display:block; margin:0 0 18px; }
@@ -160,7 +165,7 @@
     padding:34px 20px; text-align:center; margin-bottom:16px;
   }
   .quiz-prompt .prompt-label{ font-size:12px; color:var(--paper-dim); margin-bottom:10px; }
-  .quiz-prompt .prompt-value{ font-family:'Fraunces', serif; font-size:clamp(26px,6vw,38px); color:var(--paper); }
+  .quiz-prompt .prompt-value{ font-family:'IBM Plex Sans', sans-serif; font-size:clamp(26px,6vw,38px); color:var(--paper); }
   .quiz-input-row{ display:flex; gap:10px; justify-content:center; margin-bottom:8px; }
   .quiz-input-row.short input{
     text-align:center; text-transform:uppercase; max-width:140px; font-size:22px; letter-spacing:4px;
@@ -176,7 +181,7 @@
     background:var(--ink-2); border:1px solid var(--line); border-radius:6px;
     padding:28px 22px; margin-bottom:16px;
   }
-  .trivia-q .q-text{ font-family:'Fraunces', serif; font-size:clamp(18px,3.2vw,24px); color:var(--paper); line-height:1.4; }
+  .trivia-q .q-text{ font-family:'IBM Plex Sans', sans-serif; font-size:clamp(18px,3.2vw,24px); color:var(--paper); line-height:1.4; }
   .trivia-answer-row{ display:flex; gap:10px; margin-bottom:8px; }
   .trivia-reveal{ font-size:13px; margin-top:10px; padding-top:10px; border-top:1px dotted var(--line); color:var(--paper-dim); }
   .trivia-reveal.correct{ color:var(--sage); }
@@ -201,7 +206,7 @@
     display:flex; justify-content:space-between; align-items:center; font-size:14px;
     padding:6px 10px; border-bottom:1px dotted var(--line);
   }
-  .mine-list .row .pop{ color:var(--brass); font-family:'Fraunces', serif; }
+  .mine-list .row .pop{ color:var(--brass); font-family:'IBM Plex Sans', sans-serif; }
   .final-grid .item.next{ background:rgba(181,98,74,0.14); color:var(--rust); }
 
   /* ---- map state quiz ---- */
@@ -218,7 +223,7 @@
   .state-map.clickable:not(.answered) .state:hover{ fill:rgba(201,154,82,0.4); }
   .map-question{ text-align:center; margin:10px 0 16px; }
   .map-question .label{ font-size:11px; color:var(--paper-dim); text-transform:uppercase; letter-spacing:.5px; margin-bottom:6px; }
-  .map-question h3{ font-family:'Fraunces',serif; font-size:clamp(24px,5vw,34px); margin:0; color:var(--paper); }
+  .map-question h3{ font-family:'IBM Plex Sans', sans-serif; font-size:clamp(24px,5vw,34px); margin:0; color:var(--paper); }
   .map-answer-row{ display:flex; gap:10px; max-width:620px; margin:0 auto; }
   .map-answer-row input{ text-align:center; }
   .map-progress{ font-size:12px; color:var(--paper-dim); text-align:center; margin:4px 0 12px; }
@@ -998,7 +1003,7 @@ function freeRecallHTML(id, title){
     <div class="results" id="${id}-results" style="display:none;">
       <button id="${id}-resetBtn" class="play-again-top">Play again</button>
       <div class="final-score" id="${id}-finalScoreLine"></div>
-      <div class="section-title"><span id="${id}-finalTitle"></span><span>your hits in green</span></div>
+      <div class="section-title"><span id="${id}-finalTitle"></span><span>Your hits in green</span></div>
       <div id="${id}-finalGrid" class="final-grid"></div>
     </div>
   `;
@@ -1542,7 +1547,7 @@ function quizHTML(id, promptLabel, mode){
     <div class="results" id="${id}-results" style="display:none;">
       <button id="${id}-resetBtn" class="play-again-top">Play again</button>
       <div class="final-score" id="${id}-finalScoreLine"></div>
-      <div class="section-title"><span id="${id}-finalRollLabel"></span><span>your hits in green</span></div>
+      <div class="section-title"><span id="${id}-finalRollLabel"></span><span>Your hits in green</span></div>
       <div id="${id}-finalGrid" class="final-grid"></div>
     </div>
   `;
@@ -1747,7 +1752,7 @@ function stateMapHTML(id){
     <div class="results" id="${id}-results" style="display:none;">
       <button id="${id}-resetBtn" class="play-again-top">Play again</button>
       <div class="final-score" id="${id}-finalScoreLine"></div>
-      <div class="section-title"><span>All 50 states</span><span>your hits in green</span></div>
+      <div class="section-title"><span>All 50 states</span><span>Your hits in green</span></div>
       <div id="${id}-finalGrid" class="final-grid"></div>
     </div>
   `;
@@ -1888,7 +1893,7 @@ function findStateHTML(id, hardMode=false){
     <div class="results" id="${id}-results" style="display:none;">
       <button id="${id}-resetBtn" class="play-again-top">Play again</button>
       <div class="final-score" id="${id}-finalScoreLine"></div>
-      <div class="section-title"><span>All 50 states</span><span>your hits in green</span></div>
+      <div class="section-title"><span>All 50 states</span><span>Your hits in green</span></div>
       <div id="${id}-finalGrid" class="final-grid"></div>
     </div>
   `;
@@ -2731,7 +2736,7 @@ function minefieldHTML(id, opts){
     <div class="results" id="${id}-results" style="display:none;">
       <button id="${id}-resetBtn" class="play-again-top">Play again</button>
       <div class="final-score" id="${id}-finalScoreLine"></div>
-      <div class="section-title"><span>Full ranking — all ${total} ${itemNounPlural} by ${metricLabel}</span><span>your hits in green</span></div>
+      <div class="section-title"><span>Full ranking — all ${total} ${itemNounPlural} by ${metricLabel}</span><span>Your hits in green</span></div>
       <div id="${id}-finalGrid" class="final-grid"></div>
     </div>
   `;
