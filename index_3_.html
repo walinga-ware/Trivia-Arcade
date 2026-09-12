@@ -1,0 +1,3006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Walinga Trivia Arcade</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎟️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#101c26;
+    --ink-2:#182634;
+    --paper:#eae6da;
+    --paper-dim:#c9c2ac;
+    --brass:#c99a52;
+    --sage:#7fa37a;
+    --rust:#b5624a;
+    --line: rgba(234,230,218,0.14);
+  }
+  *{ box-sizing:border-box; -webkit-tap-highlight-color:rgba(201,154,82,0.28); }
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--ink);
+    color:var(--paper);
+    font-family:'IBM Plex Mono', monospace;
+    min-height:100vh;
+    padding:32px 20px 60px;
+  }
+  .wrap{ max-width:900px; margin:0 auto; }
+  h1{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:clamp(28px,5vw,44px);
+    margin:0 0 4px;
+    color:var(--paper);
+  }
+  h2{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:clamp(22px,4vw,32px);
+    margin:0 0 4px;
+    color:var(--paper);
+  }
+  .subtitle{ color:var(--paper-dim); font-size:13px; margin:0 0 28px; line-height:1.6; }
+  .screen{ display:none; }
+  .screen.active{ display:block; }
+
+  /* ---- home ---- */
+  .card-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); gap:16px; margin-top:8px; }
+  .category{ margin-top:48px; }
+  .category:first-of-type{ margin-top:8px; }
+  .category-title{
+    font-family:'Fraunces', serif; font-weight:700; font-size:clamp(15px,3vw,18px);
+    color:var(--brass); text-transform:uppercase; letter-spacing:1.5px;
+    margin:0 0 4px; padding-bottom:10px; border-bottom:2px solid var(--brass);
+  }
+  .category .section:first-of-type{ margin-top:22px; }
+  @media (max-width: 640px){
+    .category{ margin-top:34px; }
+    .category-title{ padding-bottom:8px; }
+  }
+  .section{ margin-top:36px; }
+  .section-summary{
+    cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:baseline; gap:12px;
+    border-bottom:1px solid var(--line); padding-bottom:8px; margin-bottom:12px;
+    font-family:'Fraunces', serif; color:var(--paper-dim); font-size:13px; text-transform:uppercase; letter-spacing:0.5px;
+  }
+  .section-summary::-webkit-details-marker{ display:none; }
+  .section-summary::marker{ content:''; }
+  .section-summary:hover{ color:var(--paper); }
+  .section-summary .chevron{
+    display:inline-block; margin-right:8px; font-family:'IBM Plex Mono', monospace; text-transform:none;
+    transition:transform 150ms ease; color:var(--brass);
+  }
+  .section[open] > .section-summary .chevron{ transform:rotate(90deg); }
+  .section-summary .quiz-count{
+    font-size:11px; color:var(--paper-dim); text-transform:none; letter-spacing:0;
+    font-family:'IBM Plex Mono', monospace; white-space:nowrap;
+  }
+  .section > .card-grid{ margin-top:12px; }
+  .section-note{ color:var(--paper-dim); font-size:13px; line-height:1.6; margin:0 0 16px; }
+  @media (max-width: 640px){
+    .section{ margin-top:26px; }
+    .section-summary{
+      padding:16px 2px; margin-bottom:8px; font-size:14px;
+    }
+    .section-summary .quiz-count{ font-size:12px; }
+  }
+  .card{
+    background:var(--ink-2); border:1px solid var(--line); border-radius:6px;
+    padding:22px; display:flex; flex-direction:column; gap:14px;
+  }
+  .card .tag{ font-size:11px; color:var(--brass); letter-spacing:0.5px; text-transform:uppercase; }
+  .card h3{ font-family:'Fraunces', serif; font-size:20px; margin:0; color:var(--paper); }
+  .card .meta{ font-size:12px; color:var(--paper-dim); }
+
+  /* ---- shared controls ---- */
+  button{
+    font-family:'IBM Plex Mono', monospace; font-weight:600; font-size:14px; letter-spacing:0.3px;
+    border-radius:4px; border:1px solid var(--brass); background:transparent; color:var(--brass);
+    padding:12px 22px; cursor:pointer;
+  }
+  button:hover:not(:disabled){ background:var(--brass); color:var(--ink); }
+  button:disabled{ opacity:0.35; cursor:default; }
+  .btn-primary{ background:var(--brass); color:var(--ink); }
+  .back-link{
+    border:none; background:none; color:var(--paper-dim); padding:0; font-size:13px;
+    margin-bottom:18px; cursor:pointer; text-decoration:underline;
+  }
+  .back-link:hover{ color:var(--brass); background:none; }
+
+  .top-row{ display:flex; gap:16px; flex-wrap:wrap; align-items:stretch; margin-bottom:22px; }
+  .plate{ background:var(--ink-2); border:1px solid var(--line); border-radius:4px; padding:14px 20px; flex:1; min-width:140px; }
+  .plate .label{ font-size:11px; color:var(--paper-dim); margin-bottom:6px; }
+  .plate .value{ font-family:'Fraunces', serif; font-size:30px; font-weight:600; color:var(--paper); }
+  .plate.timer .value{ color:var(--brass); font-variant-numeric: tabular-nums; }
+  .plate.timer.low .value{ color:var(--rust); }
+
+  .entry{ display:flex; gap:10px; margin-bottom:10px; }
+  input[type="text"]{
+    flex:1; background:var(--ink-2); border:1px solid var(--paper-dim); color:var(--paper);
+    font-family:'IBM Plex Mono', monospace; font-size:17px; padding:14px 16px; border-radius:4px; outline:none;
+  }
+  input[type="text"]:focus{ border-color:var(--brass); }
+  input[type="text"]:disabled{ opacity:0.4; }
+
+  .feedback{ min-height:20px; font-size:13px; margin:2px 2px 20px; color:var(--paper-dim); }
+  .feedback.good{ color:var(--sage); }
+  .feedback.bad{ color:var(--rust); }
+  .feedback.dup{ color:var(--brass); }
+
+  .section-title{
+    font-family:'Fraunces', serif; font-size:15px; color:var(--paper-dim); border-bottom:1px solid var(--line);
+    padding-bottom:8px; margin:26px 0 12px; display:flex; justify-content:space-between; align-items:baseline;
+  }
+  .guessed-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(180px,1fr)); gap:6px 14px; }
+  .guessed-grid div{ font-size:14px; padding:5px 0; border-bottom:1px dotted var(--line); color:var(--paper); }
+  .final-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(180px,1fr)); gap:6px 14px; }
+  .final-grid .item{ font-size:13.5px; padding:6px 8px; border-radius:3px; display:flex; justify-content:space-between; gap:8px; }
+  .final-grid .item.hit{ background:rgba(127,163,122,0.14); color:var(--sage); }
+  .final-grid .item.miss{ color:var(--paper-dim); }
+  .empty-note{ color:var(--paper-dim); font-size:13px; font-style:italic; }
+
+  .final-score{ font-family:'Fraunces', serif; font-size:20px; color:var(--brass); margin-bottom:4px; }
+  .final-score span{ color:var(--paper-dim); font-size:14px; font-family:'IBM Plex Mono', monospace; }
+
+  .play-again-top{ display:block; margin:0 0 18px; }
+  @media (max-width: 640px){
+    .play-again-top{
+      width:100%; padding:16px 22px; font-size:16px;
+      position:sticky; top:10px; z-index:5;
+      box-shadow:0 4px 14px rgba(0,0,0,0.35);
+    }
+  }
+
+  /* ---- quiz-specific ---- */
+  .quiz-prompt{
+    background:var(--ink-2); border:1px solid var(--line); border-radius:6px;
+    padding:34px 20px; text-align:center; margin-bottom:16px;
+  }
+  .quiz-prompt .prompt-label{ font-size:12px; color:var(--paper-dim); margin-bottom:10px; }
+  .quiz-prompt .prompt-value{ font-family:'Fraunces', serif; font-size:clamp(26px,6vw,38px); color:var(--paper); }
+  .quiz-input-row{ display:flex; gap:10px; justify-content:center; margin-bottom:8px; }
+  .quiz-input-row.short input{
+    text-align:center; text-transform:uppercase; max-width:140px; font-size:22px; letter-spacing:4px;
+  }
+  .quiz-input-row.text input{
+    text-align:center; max-width:320px; font-size:18px;
+  }
+  ::selection{ background:var(--brass); color:var(--ink); }
+
+  /* ---- trivia-specific ---- */
+  .trivia-progress{ font-size:12px; color:var(--paper-dim); margin-bottom:10px; }
+  .trivia-q{
+    background:var(--ink-2); border:1px solid var(--line); border-radius:6px;
+    padding:28px 22px; margin-bottom:16px;
+  }
+  .trivia-q .q-text{ font-family:'Fraunces', serif; font-size:clamp(18px,3.2vw,24px); color:var(--paper); line-height:1.4; }
+  .trivia-answer-row{ display:flex; gap:10px; margin-bottom:8px; }
+  .trivia-reveal{ font-size:13px; margin-top:10px; padding-top:10px; border-top:1px dotted var(--line); color:var(--paper-dim); }
+  .trivia-reveal.correct{ color:var(--sage); }
+  .trivia-reveal.incorrect{ color:var(--rust); }
+  .review-item{
+    background:var(--ink-2); border:1px solid var(--line); border-radius:6px;
+    padding:14px 18px; margin-bottom:10px;
+  }
+  .review-item .rq{ font-size:13px; color:var(--paper-dim); margin-bottom:6px; }
+  .review-item .ra{ font-size:14px; }
+  .review-item .ra.hit{ color:var(--sage); }
+  .review-item .ra.miss{ color:var(--rust); }
+  .review-item .ra .correct-note{ color:var(--paper-dim); font-size:12.5px; display:block; margin-top:2px; }
+
+  /* ---- minefield-specific ---- */
+  .mine-rank-badge{
+    display:inline-block; background:var(--brass); color:var(--ink); font-weight:600;
+    border-radius:3px; padding:2px 8px; font-size:12px; margin-right:8px;
+  }
+  .mine-list{ display:flex; flex-direction:column; gap:6px; }
+  .mine-list .row{
+    display:flex; justify-content:space-between; align-items:center; font-size:14px;
+    padding:6px 10px; border-bottom:1px dotted var(--line);
+  }
+  .mine-list .row .pop{ color:var(--brass); font-family:'Fraunces', serif; }
+  .final-grid .item.next{ background:rgba(181,98,74,0.14); color:var(--rust); }
+
+  /* ---- map state quiz ---- */
+  .map-quiz{ margin-top:4px; }
+  .state-map-wrap{ background:var(--ink-2); border:1px solid var(--line); border-radius:6px; padding:12px; margin:18px 0 16px; }
+  .state-map{ display:block; width:100%; height:auto; overflow:visible; }
+  .state-map .state{ fill:rgba(234,230,218,0.08); stroke:var(--ink); stroke-width:1.15px; stroke-linejoin:round; transition:fill 120ms ease, opacity 120ms ease; }
+  .state-map.hard-mode .state{ stroke:transparent; stroke-width:0; }
+  .state-map.hard-mode .state.guessed{ stroke:var(--paper); stroke-width:1.5px; }
+  .state-map .state.target{ fill:var(--brass); stroke:var(--paper); stroke-width:1.5px; }
+  .state-map .state.correct{ fill:var(--sage); opacity:.62; }
+  .state-map .state.wrong{ fill:var(--rust); }
+  .state-map.clickable:not(.answered) .state{ cursor:pointer; }
+  .state-map.clickable:not(.answered) .state:hover{ fill:rgba(201,154,82,0.4); }
+  .map-question{ text-align:center; margin:10px 0 16px; }
+  .map-question .label{ font-size:11px; color:var(--paper-dim); text-transform:uppercase; letter-spacing:.5px; margin-bottom:6px; }
+  .map-question h3{ font-family:'Fraunces',serif; font-size:clamp(24px,5vw,34px); margin:0; color:var(--paper); }
+  .map-answer-row{ display:flex; gap:10px; max-width:620px; margin:0 auto; }
+  .map-answer-row input{ text-align:center; }
+  .map-progress{ font-size:12px; color:var(--paper-dim); text-align:center; margin:4px 0 12px; }
+  .map-feedback{ min-height:22px; text-align:center; font-size:13px; margin:10px 0; }
+  .map-feedback.good{ color:var(--sage); }
+  .map-feedback.bad{ color:var(--rust); }
+  .map-next-row{ text-align:center; min-height:48px; }
+  @media(max-width:600px){ .map-answer-row{ flex-direction:column; } .map-answer-row button{ width:100%; } .state-map-wrap{ padding:5px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============ HOME ============ -->
+  <div class="screen active" id="screen-home">
+    <h1>Walinga Trivia Arcade</h1>
+    <p class="subtitle">Quick-fire recall games. See how much you know.</p>
+
+    <!-- ============ GEOGRAPHY ============ -->
+    <div class="category">
+    <h2 class="category-title">Geography</h2>
+
+    <!-- ============ WORLD ============ -->
+    <details class="section">
+      <summary class="section-summary"><span><span class="chevron">▸</span>World 🌎</span><span class="quiz-count">3 quizzes</span></summary>
+    <div class="card-grid">
+      <div class="card">
+        <div class="tag">Free recall &middot; 193 items</div>
+        <h3>Countries of the World</h3>
+        <div class="meta" id="countries-meta"></div>
+        <button class="btn-primary" onclick="showScreen('countries')">Play</button>
+      </div>
+      <div class="card">
+        <div class="tag">Prompted quiz &middot; 193 items</div>
+        <h3>Capital Idea: World</h3>
+        <div class="meta" id="worldcap-meta"></div>
+        <button class="btn-primary" onclick="showScreen('worldcap')">Play</button>
+      </div>
+      <div class="card">
+        <div class="tag">Minefield &middot; 193 items</div>
+        <h3>Countries by Population</h3>
+        <div class="meta">one wrong guess ends it</div>
+        <button class="btn-primary" onclick="showScreen('worldpopmine')">Play</button>
+      </div>
+    </div>
+    </details>
+
+    <!-- ============ GEOGRAPHICAL FEATURES ============ -->
+    <details class="section">
+      <summary class="section-summary"><span><span class="chevron">▸</span>Geographical features 🏔️</span><span class="quiz-count">3 quizzes</span></summary>
+    <div class="card-grid">
+      <div class="card">
+        <div class="tag">Minefield &middot; 15 items</div>
+        <h3>Highest Mountains</h3>
+        <div class="meta">one wrong guess ends it</div>
+        <button class="btn-primary" onclick="showScreen('mountainmine')">Play</button>
+      </div>
+      <div class="card">
+        <div class="tag">Minefield &middot; 15 items</div>
+        <h3>Longest Rivers</h3>
+        <div class="meta">one wrong guess ends it</div>
+        <button class="btn-primary" onclick="showScreen('rivermine')">Play</button>
+      </div>
+      <div class="card">
+        <div class="tag">Free recall &middot; 5 items</div>
+        <h3>Name the Oceans</h3>
+        <div class="meta" id="oceans-meta"></div>
+        <button class="btn-primary" onclick="showScreen('oceans')">Play</button>
+      </div>
+    </div>
+    </details>
+
+    <!-- ============ CANADA (GENERAL) ============ -->
+    <details class="section">
+      <summary class="section-summary"><span><span class="chevron">▸</span>Canada (general) 🇨🇦</span><span class="quiz-count">3 quizzes</span></summary>
+    <div class="card-grid">
+      <div class="card">
+        <div class="tag">Free recall &middot; 13 items</div>
+        <h3>Canadian Provinces</h3>
+        <div class="meta" id="provinces-meta"></div>
+        <button class="btn-primary" onclick="showScreen('provinces')">Play</button>
+      </div>
+      <div class="card">
+        <div class="tag">Prompted quiz &middot; 13 items</div>
+        <h3>Capital Idea: Canada</h3>
+        <div class="meta" id="provincecap-meta"></div>
+        <button class="btn-primary" onclick="showScreen('provincecap')">Play</button>
+      </div>
+      <div class="card">
+        <div class="tag">Minefield &middot; 13 items</div>
+        <h3>Provinces by Population</h3>
+        <div class="meta">one wrong guess ends it</div>
+        <button class="btn-primary" onclick="showScreen('provpopmine')">Play</button>
+      </div>
+    </div>
+    </details>
+
+    <!-- ============ US (GENERAL) ============ -->
+    <details class="section">
+      <summary class="section-summary"><span><span class="chevron">▸</span>US (General) 🇺🇸</span><span class="quiz-count">6 quizzes</span></summary>
+    <div class="card-grid">
+      <div class="card">
+        <div class="tag">Free recall &middot; 50 items</div>
+        <h3>US States</h3>
+        <div class="meta" id="states-meta"></div>
+        <button class="btn-primary" onclick="showScreen('states')">Play</button>
+      </div>
+      <div class="card">
+        <div class="tag">Prompted quiz &middot; 50 items</div>
+        <h3>State Codes</h3>
+        <div class="meta" id="abbr-meta"></div>
+        <button class="btn-primary" onclick="showScreen('abbr')">Play</button>
+      </div>
+      <div class="card">
+        <div class="tag">Prompted quiz &middot; 50 items</div>
+        <h3>Capital Idea: US States</h3>
+        <div class="meta" id="statecap-meta"></div>
+        <button class="btn-primary" onclick="showScreen('statecap')">Play</button>
+      </div>
+      <div class="card">
+        <div class="tag">Minefield &middot; 50 items</div>
+        <h3>US States by Population</h3>
+        <div class="meta">one wrong guess ends it</div>
+        <button class="btn-primary" onclick="showScreen('popmine')">Play</button>
+      </div>
+      <div class="card">
+        <div class="tag">Map quiz &middot; 50 items</div>
+        <h3>On the Map: US States</h3>
+        <div class="meta">name each state from its shape</div>
+        <button class="btn-primary" onclick="showScreen('statemap')">Play</button>
+      </div>
+      <div class="card">
+        <div class="tag">Map quiz &middot; 50 items</div>
+        <h3>Find the US State</h3>
+        <div class="meta">click the named state on the map</div>
+        <div style="display:flex; gap:8px; align-items:center;">
+          <button class="btn-primary" style="flex-grow: 1;" onclick="showScreen('findstate')">Play</button>
+          <button class="btn-primary" onclick="showScreen('findstate-hard')" aria-label="Hard mode" title="Hard mode">💣</button>
+        </div>
+      </div>
+    </div>
+    </details>
+    </div>
+    <!-- ============ /GEOGRAPHY ============ -->
+
+    <!-- ============ HISTORY ============ -->
+    <div class="category">
+    <h2 class="category-title">History</h2>
+
+    <!-- ============ WORLD LEADERS ============ -->
+    <details class="section">
+      <summary class="section-summary"><span><span class="chevron">▸</span>World Leaders 🏛️</span><span class="quiz-count">2 quizzes</span></summary>
+    <div class="card-grid">
+      <div class="card">
+        <div class="tag">Free recall &middot; 47 terms</div>
+        <h3>US Presidents</h3>
+        <div class="meta" id="presidents-meta"></div>
+        <button class="btn-primary" onclick="showScreen('presidents')">Play</button>
+      </div>
+      <div class="card">
+        <div class="tag">Free recall &middot; 29 terms</div>
+        <h3>Canadian Prime Ministers</h3>
+        <div class="meta" id="pms-meta"></div>
+        <button class="btn-primary" onclick="showScreen('pms')">Play</button>
+      </div>
+    </div>
+    </details>
+    </div>
+    <!-- ============ /HISTORY ============ -->
+
+    <!-- ============ GENERAL KNOWLEDGE ============ -->
+    <div class="category">
+    <h2 class="category-title">General Knowledge</h2>
+
+    <!-- ============ US STATES SHOWCASE ============ -->
+    <!-- Cards below are generated automatically from STATE_SHOWCASE_QUIZZES — see script at bottom of file. -->
+    <details class="section">
+      <summary class="section-summary"><span><span class="chevron">▸</span>US States Showcase 🏆</span><span class="quiz-count" id="showcase-quiz-count"></span></summary>
+    <p class="section-note">Fun-sized quiz games for individual states. Each offers trivia, facts, and local knowledge.</p>
+    <div class="card-grid" id="showcase-card-grid"></div>
+    </details>
+    </div>
+    <!-- ============ /GENERAL KNOWLEDGE ============ -->
+  </div>
+
+  <!-- ============ US STATES SHOWCASE — SCREENS (generated automatically) ============ -->
+  <div id="showcase-screens"></div>
+
+  <!-- ============ COUNTRIES (free recall) ============ -->
+  <div class="screen" id="screen-countries">
+    <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
+    <div id="countries-mount"></div>
+  </div>
+
+  <!-- ============ WORLD POPULATION MINEFIELD ============ -->
+  <div class="screen" id="screen-worldpopmine">
+    <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
+    <div id="worldpopmine-mount"></div>
+  </div>
+
+  <!-- ============ STATES (free recall) ============ -->
+  <div class="screen" id="screen-states">
+    <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
+    <div id="states-mount"></div>
+  </div>
+
+  <!-- ============ ABBREVIATIONS (quiz) ============ -->
+  <div class="screen" id="screen-abbr">
+    <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
+    <div id="abbr-mount"></div>
+  </div>
+
+  <!-- ============ WORLD CAPITALS (quiz) ============ -->
+  <div class="screen" id="screen-worldcap">
+    <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
+    <div id="worldcap-mount"></div>
+  </div>
+
+  <!-- ============ STATE CAPITALS (quiz) ============ -->
+  <div class="screen" id="screen-statecap">
+    <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
+    <div id="statecap-mount"></div>
+  </div>
+
+  <!-- ============ POPULATION MINEFIELD ============ -->
+  <div class="screen" id="screen-popmine">
+    <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
+    <div id="popmine-mount"></div>
+  </div>
+
+  <!-- ============ STATE MAP QUIZ ============ -->
+  <div class="screen" id="screen-statemap">
+    <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
+    <div id="statemap-mount"></div>
+  </div>
+
+  <!-- ============ FIND THE STATE QUIZ ============ -->
+  <div class="screen" id="screen-findstate">
+    <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
+    <div id="findstate-mount"></div>
+  </div>
+
+  <div class="screen" id="screen-findstate-hard">
+    <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
+    <div id="findstate-hard-mount"></div>
+  </div>
+
+  <!-- ============ CANADIAN PROVINCES (free recall) ============ -->
+  <div class="screen" id="screen-provinces">
+    <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
+    <div id="provinces-mount"></div>
+  </div>
+
+  <!-- ============ CANADIAN PROVINCE CAPITALS (quiz) ============ -->
+  <div class="screen" id="screen-provincecap">
+    <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
+    <div id="provincecap-mount"></div>
+  </div>
+
+  <!-- ============ CANADIAN PROVINCE POPULATION MINEFIELD ============ -->
+  <div class="screen" id="screen-provpopmine">
+    <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
+    <div id="provpopmine-mount"></div>
+  </div>
+
+  <!-- ============ HIGHEST MOUNTAINS MINEFIELD ============ -->
+  <div class="screen" id="screen-mountainmine">
+    <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
+    <div id="mountainmine-mount"></div>
+  </div>
+
+  <!-- ============ LONGEST RIVERS MINEFIELD ============ -->
+  <div class="screen" id="screen-rivermine">
+    <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
+    <div id="rivermine-mount"></div>
+  </div>
+
+  <!-- ============ NAME THE OCEANS (free recall) ============ -->
+  <div class="screen" id="screen-oceans">
+    <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
+    <div id="oceans-mount"></div>
+  </div>
+
+  <!-- ============ US PRESIDENTS (free recall) ============ -->
+  <div class="screen" id="screen-presidents">
+    <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
+    <div id="presidents-mount"></div>
+  </div>
+
+  <!-- ============ CANADIAN PRIME MINISTERS (free recall) ============ -->
+  <div class="screen" id="screen-pms">
+    <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
+    <div id="pms-mount"></div>
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
+<script>
+/* ============================================================
+   Navigation
+   ============================================================ */
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-' + id).classList.add('active');
+  window.scrollTo({top:0, behavior:'instant'});
+}
+
+/* ============================================================
+   Shared helpers
+   ============================================================ */
+function normalize(str){
+  return str
+    .toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+    .replace(/^(the|republic of|kingdom of|state of|federation)\s+/,"")
+    .replace(/[.'’,]/g,"")
+    .replace(/[-_]/g," ")
+    .replace(/\s+/g," ")
+    .trim();
+}
+function fmtTime(sec){
+  const m = Math.max(0, Math.floor(sec/60));
+  const s = Math.max(0, sec%60);
+  return `${m}:${s.toString().padStart(2,"0")}`;
+}
+// Single source of truth for "X minutes" copy. Every place that needs to say
+// how long a timed game takes (home-page card blurb, in-game rules text)
+// should call this instead of hardcoding a number, so changing a game's
+// `duration` (in seconds) automatically updates all of the copy about it.
+function minutesLabel(seconds){
+  const mins = Math.round(seconds / 60);
+  return `${mins} minute${mins === 1 ? '' : 's'}`;
+}
+function shuffled(arr){
+  const a = arr.slice();
+  for (let i = a.length-1; i>0; i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+/* ============================================================
+   Data: countries
+   ============================================================ */
+const COUNTRIES = [
+  "Afghanistan","Albania","Algeria","Andorra","Angola","Antigua and Barbuda","Argentina","Armenia",
+  "Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium",
+  "Belize","Benin","Bhutan","Bolivia","Bosnia and Herzegovina","Botswana","Brazil","Brunei","Bulgaria",
+  "Burkina Faso","Burundi","Cabo Verde","Cambodia","Cameroon","Canada","Central African Republic","Chad",
+  "Chile","China","Colombia","Comoros","Congo, Republic of the","Congo, Democratic Republic of the",
+  "Costa Rica","Côte d'Ivoire","Croatia","Cuba","Cyprus","Czech Republic","Denmark","Djibouti","Dominica",
+  "Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Eswatini",
+  "Ethiopia","Fiji","Finland","France","Gabon","Gambia","Georgia","Germany","Ghana","Greece","Grenada",
+  "Guatemala","Guinea","Guinea-Bissau","Guyana","Haiti","Honduras","Hungary","Iceland","India","Indonesia",
+  "Iran","Iraq","Ireland","Israel","Italy","Jamaica","Japan","Jordan","Kazakhstan","Kenya","Kiribati",
+  "Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania",
+  "Luxembourg","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands","Mauritania",
+  "Mauritius","Mexico","Micronesia","Moldova","Monaco","Mongolia","Montenegro","Morocco","Mozambique",
+  "Myanmar","Namibia","Nauru","Nepal","Netherlands","New Zealand","Nicaragua","Niger","Nigeria",
+  "North Korea","North Macedonia","Norway","Oman","Pakistan","Palau","Panama","Papua New Guinea",
+  "Paraguay","Peru","Philippines","Poland","Portugal","Qatar","Romania","Russia","Rwanda",
+  "Saint Kitts and Nevis","Saint Lucia","Saint Vincent and the Grenadines","Samoa","San Marino",
+  "Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore",
+  "Slovakia","Slovenia","Solomon Islands","Somalia","South Africa","South Korea","South Sudan","Spain",
+  "Sri Lanka","Sudan","Suriname","Sweden","Switzerland","Syria","Tajikistan","Tanzania","Thailand",
+  "Timor-Leste","Togo","Tonga","Trinidad and Tobago","Tunisia","Turkey","Turkmenistan","Tuvalu","Uganda",
+  "Ukraine","United Arab Emirates","United Kingdom","United States","Uruguay","Uzbekistan","Vanuatu",
+  "Venezuela","Vietnam","Yemen","Zambia","Zimbabwe"
+];
+const COUNTRY_ALIASES = {
+  "usa":"United States","us":"United States","united states of america":"United States","america":"United States",
+  "uk":"United Kingdom","britain":"United Kingdom","great britain":"United Kingdom",
+  "united kingdom of great britain and northern ireland":"United Kingdom","england":"United Kingdom",
+  "uae":"United Arab Emirates",
+  "south korea":"South Korea","korea south":"South Korea","republic of korea":"South Korea",
+  "north korea":"North Korea","korea north":"North Korea","dprk":"North Korea",
+  "russia":"Russia","russian federation":"Russia",
+  "congo":"Congo, Republic of the","republic of congo":"Congo, Republic of the",
+  "congo brazzaville":"Congo, Republic of the",
+  "dr congo":"Congo, Democratic Republic of the","drc":"Congo, Democratic Republic of the",
+  "democratic republic of congo":"Congo, Democratic Republic of the",
+  "democratic republic of the congo":"Congo, Democratic Republic of the",
+  "congo kinshasa":"Congo, Democratic Republic of the","zaire":"Congo, Democratic Republic of the",
+  "ivory coast":"Côte d'Ivoire","cote divoire":"Côte d'Ivoire","cote d ivoire":"Côte d'Ivoire",
+  "czechia":"Czech Republic",
+  "swaziland":"Eswatini",
+  "burma":"Myanmar",
+  "cape verde":"Cabo Verde",
+  "holland":"Netherlands",
+  "federated states of micronesia":"Micronesia",
+  "east timor":"Timor-Leste",
+  "macedonia":"North Macedonia","fyrom":"North Macedonia",
+  "bosnia":"Bosnia and Herzegovina",
+  "trinidad":"Trinidad and Tobago",
+  "antigua":"Antigua and Barbuda",
+  "st kitts and nevis":"Saint Kitts and Nevis","st kitts":"Saint Kitts and Nevis",
+  "st lucia":"Saint Lucia",
+  "st vincent":"Saint Vincent and the Grenadines",
+  "st vincent and the grenadines":"Saint Vincent and the Grenadines",
+  "sao tome":"Sao Tome and Principe","sao tome and principe":"Sao Tome and Principe",
+  "brunei darussalam":"Brunei",
+  "syrian arab republic":"Syria",
+  "lao pdr":"Laos",
+  "islamic republic of iran":"Iran",
+  "united republic of tanzania":"Tanzania",
+  "republic of moldova":"Moldova",
+  "vatican":null,"holy see":null,"taiwan":null,"palestine":null,"kosovo":null,"hong kong":null
+};
+
+/* ============================================================
+   Data: countries of the world by population, descending
+   (source: UN World Population Prospects 2024 revision via
+   worldometers.info, 2026 projection)
+   ============================================================ */
+const WORLD_POPULATION_RANKING = [
+  ["India",1476625576],["China",1412914089],["United States",349035494],
+  ["Indonesia",287886782],["Pakistan",259299791],["Nigeria",242431832],
+  ["Brazil",213562666],["Bangladesh",177818044],["Russia",143394458],
+  ["Ethiopia",138902185],["Mexico",132997658],["Japan",122427731],
+  ["Egypt",120101175],["Philippines",117724471],["Congo, Democratic Republic of the",116452162],
+  ["Vietnam",102177431],["Iran",93168497],["Turkey",87926082],
+  ["Germany",83644258],["Tanzania",72563780],["Thailand",71559614],
+  ["United Kingdom",69931528],["France",66746401],["South Africa",65453084],
+  ["Italy",58926166],["Kenya",58636412],["Myanmar",55184819],
+  ["Colombia",53936226],["Sudan",53282719],["Uganda",52761469],
+  ["South Korea",51600388],["Algeria",48028334],["Iraq",48007437],
+  ["Spain",47850793],["Argentina",46003734],["Afghanistan",45047069],
+  ["Yemen",42961653],["Canada",40467728],["Angola",40215179],
+  ["Ukraine",39535849],["Morocco",38762441],["Poland",37843188],
+  ["Uzbekistan",37724223],["Mozambique",36639851],["Malaysia",36385115],
+  ["Ghana",35697557],["Saudi Arabia",35165787],["Peru",34922148],
+  ["Madagascar",33522052],["Côte d'Ivoire",33494346],["Cameroon",30640817],
+  ["Nepal",29629410],["Niger",28814878],["Venezuela",28633711],
+  ["Australia",27227096],["North Korea",26633691],["Syria",26472497],
+  ["Mali",25932275],["Burkina Faso",24601700],["Sri Lanka",23348315],
+  ["Malawi",22785535],["Zambia",22521915],["Chad",21560380],
+  ["Kazakhstan",21083626],["Somalia",20305907],["Chile",19945850],
+  ["Senegal",19366548],["Guatemala",18967978],["Romania",18800605],
+  ["Netherlands",18448775],["Ecuador",18444506],["Cambodia",18051219],
+  ["Zimbabwe",17273580],["Guinea",15441993],["Benin",15170419],
+  ["Rwanda",14889693],["Burundi",14729157],["Bolivia",12749291],
+  ["South Sudan",12436037],["Tunisia",12415138],["Haiti",12037506],
+  ["Belgium",11774642],["Dominican Republic",11609500],["Jordan",11589532],
+  ["United Arab Emirates",11574682],["Honduras",11184760],["Tajikistan",10978599],
+  ["Papua New Guinea",10947848],["Cuba",10892659],["Sweden",10701047],
+  ["Czech Republic",10527781],["Azerbaijan",10454855],["Portugal",10395362],
+  ["Togo",9930918],["Greece",9897115],["Israel",9647689],
+  ["Hungary",9585818],["Austria",9107266],["Switzerland",9007798],
+  ["Sierra Leone",8996745],["Belarus",8937018],["Laos",7974017],
+  ["Turkmenistan",7736632],["Libya",7539851],["Kyrgyzstan",7400465],
+  ["Nicaragua",7097329],["Paraguay",7095279],["Bulgaria",6667659],
+  ["Serbia",6641964],["Congo, Republic of the",6637785],["El Salvador",6391253],
+  ["Denmark",6023520],["Singapore",5905748],["Lebanon",5897467],
+  ["Liberia",5853949],["Central African Republic",5698984],["Oman",5671458],
+  ["Norway",5652989],["Finland",5621739],["Mauritania",5461319],
+  ["Slovakia",5451342],["Ireland",5356950],["New Zealand",5287479],
+  ["Costa Rica",5174789],["Kuwait",5102773],["Panama",4625718],
+  ["Croatia",3822345],["Georgia",3804642],["Eritrea",3682669],
+  ["Mongolia",3556798],["Uruguay",3382537],["Qatar",3173559],
+  ["Namibia",3153246],["Bosnia and Herzegovina",3114242],["Moldova",2961253],
+  ["Armenia",2930915],["Gambia",2884079],["Jamaica",2833403],
+  ["Lithuania",2797338],["Albania",2751025],["Gabon",2647399],
+  ["Botswana",2603388],["Lesotho",2389336],["Guinea-Bissau",2297808],
+  ["Slovenia",2114573],["Equatorial Guinea",1984468],["Latvia",1835935],
+  ["North Macedonia",1804063],["Bahrain",1675572],["Trinidad and Tobago",1513268],
+  ["Timor-Leste",1436923],["Cyprus",1382334],["Estonia",1331062],
+  ["Eswatini",1269859],["Mauritius",1265059],["Djibouti",1199459],
+  ["Fiji",937282],["Comoros",899010],["Solomon Islands",858288],
+  ["Guyana",840890],["Bhutan",802214],["Luxembourg",687448],
+  ["Suriname",645256],["Montenegro",626233],["Malta",549011],
+  ["Maldives",531517],["Cabo Verde",529630],["Brunei",469775],
+  ["Belize",428644],["Bahamas",404628],["Iceland",402329],
+  ["Vanuatu",342564],["Barbados",282724],["Sao Tome and Principe",244994],
+  ["Samoa",220528],["Saint Lucia",180488],["Kiribati",138445],
+  ["Seychelles",134959],["Grenada",117362],["Micronesia",114183],
+  ["Tonga",103291],["Saint Vincent and the Grenadines",99245],["Antigua and Barbuda",94626],
+  ["Andorra",83753],["Dominica",65511],["Saint Kitts and Nevis",46992],
+  ["Liechtenstein",40368],["Monaco",38087],["Marshall Islands",35075],
+  ["San Marino",33605],["Palau",17614],["Nauru",12101],
+  ["Tuvalu",9362]
+];
+function fmtPopWorld(pop){
+  if (pop >= 1e9) return `${(pop/1e9).toFixed(2)}B`;
+  if (pop >= 1e6) return `${(pop/1e6).toFixed(1)}M`;
+  return `${Math.round(pop/1e3)}K`;
+}
+
+/* ============================================================
+   Data: US states + postal abbreviations
+   ============================================================ */
+const STATES = [
+  ["Alabama","AL"],["Alaska","AK"],["Arizona","AZ"],["Arkansas","AR"],["California","CA"],
+  ["Colorado","CO"],["Connecticut","CT"],["Delaware","DE"],["Florida","FL"],["Georgia","GA"],
+  ["Hawaii","HI"],["Idaho","ID"],["Illinois","IL"],["Indiana","IN"],["Iowa","IA"],
+  ["Kansas","KS"],["Kentucky","KY"],["Louisiana","LA"],["Maine","ME"],["Maryland","MD"],
+  ["Massachusetts","MA"],["Michigan","MI"],["Minnesota","MN"],["Mississippi","MS"],["Missouri","MO"],
+  ["Montana","MT"],["Nebraska","NE"],["Nevada","NV"],["New Hampshire","NH"],["New Jersey","NJ"],
+  ["New Mexico","NM"],["New York","NY"],["North Carolina","NC"],["North Dakota","ND"],["Ohio","OH"],
+  ["Oklahoma","OK"],["Oregon","OR"],["Pennsylvania","PA"],["Rhode Island","RI"],["South Carolina","SC"],
+  ["South Dakota","SD"],["Tennessee","TN"],["Texas","TX"],["Utah","UT"],["Vermont","VT"],
+  ["Virginia","VA"],["Washington","WA"],["West Virginia","WV"],["Wisconsin","WI"],["Wyoming","WY"]
+];
+
+/* ============================================================
+   Data: World capitals (source: Wikipedia)
+   Keys must exactly match strings in COUNTRIES above.
+   ============================================================ */
+const WORLD_CAPITALS = {
+  "Afghanistan":{answer:"Kabul"}, "Albania":{answer:"Tirana"}, "Algeria":{answer:"Algiers"},
+  "Andorra":{answer:"Andorra la Vella"}, "Angola":{answer:"Luanda"},
+  "Antigua and Barbuda":{answer:"Saint John's"}, "Argentina":{answer:"Buenos Aires"},
+  "Armenia":{answer:"Yerevan"}, "Australia":{answer:"Canberra"}, "Austria":{answer:"Vienna"},
+  "Azerbaijan":{answer:"Baku"}, "Bahamas":{answer:"Nassau"}, "Bahrain":{answer:"Manama"},
+  "Bangladesh":{answer:"Dhaka"}, "Barbados":{answer:"Bridgetown"}, "Belarus":{answer:"Minsk"},
+  "Belgium":{answer:"Brussels"}, "Belize":{answer:"Belmopan"},
+  "Benin":{answer:"Porto-Novo", aliases:["Cotonou"]}, "Bhutan":{answer:"Thimphu"},
+  "Bolivia":{answer:"Sucre", aliases:["La Paz"]}, "Bosnia and Herzegovina":{answer:"Sarajevo"},
+  "Botswana":{answer:"Gaborone"}, "Brazil":{answer:"Brasília", aliases:["Brasilia"]},
+  "Brunei":{answer:"Bandar Seri Begawan"}, "Bulgaria":{answer:"Sofia"},
+  "Burkina Faso":{answer:"Ouagadougou"}, "Burundi":{answer:"Gitega", aliases:["Bujumbura"]},
+  "Cabo Verde":{answer:"Praia"}, "Cambodia":{answer:"Phnom Penh"},
+  "Cameroon":{answer:"Yaoundé", aliases:["Yaounde"]}, "Canada":{answer:"Ottawa"},
+  "Central African Republic":{answer:"Bangui"}, "Chad":{answer:"N'Djamena", aliases:["Ndjamena"]},
+  "Chile":{answer:"Santiago"}, "China":{answer:"Beijing"}, "Colombia":{answer:"Bogotá", aliases:["Bogota"]},
+  "Comoros":{answer:"Moroni"}, "Congo, Republic of the":{answer:"Brazzaville"},
+  "Congo, Democratic Republic of the":{answer:"Kinshasa"}, "Costa Rica":{answer:"San José", aliases:["San Jose"]},
+  "Côte d'Ivoire":{answer:"Yamoussoukro", aliases:["Abidjan"]}, "Croatia":{answer:"Zagreb"},
+  "Cuba":{answer:"Havana"}, "Cyprus":{answer:"Nicosia"}, "Czech Republic":{answer:"Prague"},
+  "Denmark":{answer:"Copenhagen"}, "Djibouti":{answer:"Djibouti"}, "Dominica":{answer:"Roseau"},
+  "Dominican Republic":{answer:"Santo Domingo"}, "Ecuador":{answer:"Quito"}, "Egypt":{answer:"Cairo"},
+  "El Salvador":{answer:"San Salvador"}, "Equatorial Guinea":{answer:"Malabo"},
+  "Eritrea":{answer:"Asmara"}, "Estonia":{answer:"Tallinn"},
+  "Eswatini":{answer:"Mbabane", aliases:["Lobamba"]}, "Ethiopia":{answer:"Addis Ababa"},
+  "Fiji":{answer:"Suva"}, "Finland":{answer:"Helsinki"}, "France":{answer:"Paris"},
+  "Gabon":{answer:"Libreville"}, "Gambia":{answer:"Banjul"}, "Georgia":{answer:"Tbilisi"},
+  "Germany":{answer:"Berlin"}, "Ghana":{answer:"Accra"}, "Greece":{answer:"Athens"},
+  "Grenada":{answer:"St. George's", aliases:["St George's","Saint George's"]},
+  "Guatemala":{answer:"Guatemala City"}, "Guinea":{answer:"Conakry"}, "Guinea-Bissau":{answer:"Bissau"},
+  "Guyana":{answer:"Georgetown"}, "Haiti":{answer:"Port-au-Prince"}, "Honduras":{answer:"Tegucigalpa"},
+  "Hungary":{answer:"Budapest"}, "Iceland":{answer:"Reykjavik"}, "India":{answer:"New Delhi"},
+  "Indonesia":{answer:"Jakarta"}, "Iran":{answer:"Tehran"}, "Iraq":{answer:"Baghdad"},
+  "Ireland":{answer:"Dublin"}, "Israel":{answer:"Jerusalem"}, "Italy":{answer:"Rome"},
+  "Jamaica":{answer:"Kingston"}, "Japan":{answer:"Tokyo"}, "Jordan":{answer:"Amman"},
+  "Kazakhstan":{answer:"Astana"}, "Kenya":{answer:"Nairobi"},
+  "Kiribati":{answer:"South Tarawa", aliases:["Tarawa"]}, "Kuwait":{answer:"Kuwait City"},
+  "Kyrgyzstan":{answer:"Bishkek"}, "Laos":{answer:"Vientiane"}, "Latvia":{answer:"Riga"},
+  "Lebanon":{answer:"Beirut"}, "Lesotho":{answer:"Maseru"}, "Liberia":{answer:"Monrovia"},
+  "Libya":{answer:"Tripoli"}, "Liechtenstein":{answer:"Vaduz"}, "Lithuania":{answer:"Vilnius"},
+  "Luxembourg":{answer:"Luxembourg"}, "Madagascar":{answer:"Antananarivo"}, "Malawi":{answer:"Lilongwe"},
+  "Malaysia":{answer:"Kuala Lumpur", aliases:["Putrajaya"]}, "Maldives":{answer:"Malé", aliases:["Male"]},
+  "Mali":{answer:"Bamako"}, "Malta":{answer:"Valletta"}, "Marshall Islands":{answer:"Majuro"},
+  "Mauritania":{answer:"Nouakchott"}, "Mauritius":{answer:"Port Louis"}, "Mexico":{answer:"Mexico City"},
+  "Micronesia":{answer:"Palikir"}, "Moldova":{answer:"Chișinău", aliases:["Chisinau"]},
+  "Monaco":{answer:"Monaco", aliases:["Monaco-Ville"]}, "Mongolia":{answer:"Ulaanbaatar"},
+  "Montenegro":{answer:"Podgorica", aliases:["Cetinje"]}, "Morocco":{answer:"Rabat"},
+  "Mozambique":{answer:"Maputo"}, "Myanmar":{answer:"Naypyidaw"}, "Namibia":{answer:"Windhoek"},
+  "Nauru":{answer:"Yaren"}, "Nepal":{answer:"Kathmandu"},
+  "Netherlands":{answer:"Amsterdam", aliases:["The Hague"]}, "New Zealand":{answer:"Wellington"},
+  "Nicaragua":{answer:"Managua"}, "Niger":{answer:"Niamey"}, "Nigeria":{answer:"Abuja"},
+  "North Korea":{answer:"Pyongyang"}, "North Macedonia":{answer:"Skopje"}, "Norway":{answer:"Oslo"},
+  "Oman":{answer:"Muscat"}, "Pakistan":{answer:"Islamabad"}, "Palau":{answer:"Ngerulmud", aliases:["Koror"]},
+  "Panama":{answer:"Panama City"}, "Papua New Guinea":{answer:"Port Moresby"},
+  "Paraguay":{answer:"Asunción", aliases:["Asuncion"]}, "Peru":{answer:"Lima"},
+  "Philippines":{answer:"Manila"}, "Poland":{answer:"Warsaw"}, "Portugal":{answer:"Lisbon"},
+  "Qatar":{answer:"Doha"}, "Romania":{answer:"Bucharest"}, "Russia":{answer:"Moscow"},
+  "Rwanda":{answer:"Kigali"}, "Saint Kitts and Nevis":{answer:"Basseterre"},
+  "Saint Lucia":{answer:"Castries"}, "Saint Vincent and the Grenadines":{answer:"Kingstown"},
+  "Samoa":{answer:"Apia"}, "San Marino":{answer:"San Marino"}, "Sao Tome and Principe":{answer:"São Tomé", aliases:["Sao Tome"]},
+  "Saudi Arabia":{answer:"Riyadh"}, "Senegal":{answer:"Dakar"}, "Serbia":{answer:"Belgrade"},
+  "Seychelles":{answer:"Victoria"}, "Sierra Leone":{answer:"Freetown"}, "Singapore":{answer:"Singapore"},
+  "Slovakia":{answer:"Bratislava"}, "Slovenia":{answer:"Ljubljana"}, "Solomon Islands":{answer:"Honiara"},
+  "Somalia":{answer:"Mogadishu"},
+  "South Africa":{answer:"Pretoria", aliases:["Cape Town","Bloemfontein"]},
+  "South Korea":{answer:"Seoul"}, "South Sudan":{answer:"Juba"}, "Spain":{answer:"Madrid"},
+  "Sri Lanka":{answer:"Sri Jayawardenepura Kotte", aliases:["Colombo","Kotte"]},
+  "Sudan":{answer:"Khartoum"}, "Suriname":{answer:"Paramaribo"}, "Sweden":{answer:"Stockholm"},
+  "Switzerland":{answer:"Bern"}, "Syria":{answer:"Damascus"}, "Tajikistan":{answer:"Dushanbe"},
+  "Tanzania":{answer:"Dodoma", aliases:["Dar es Salaam"]}, "Thailand":{answer:"Bangkok"},
+  "Timor-Leste":{answer:"Dili"}, "Togo":{answer:"Lomé", aliases:["Lome"]}, "Tonga":{answer:"Nuku'alofa", aliases:["Nukualofa"]},
+  "Trinidad and Tobago":{answer:"Port of Spain"}, "Tunisia":{answer:"Tunis"}, "Turkey":{answer:"Ankara"},
+  "Turkmenistan":{answer:"Ashgabat"}, "Tuvalu":{answer:"Funafuti"}, "Uganda":{answer:"Kampala"},
+  "Ukraine":{answer:"Kyiv", aliases:["Kiev"]}, "United Arab Emirates":{answer:"Abu Dhabi"},
+  "United Kingdom":{answer:"London"}, "United States":{answer:"Washington, D.C.", aliases:["Washington DC","Washington"]},
+  "Uruguay":{answer:"Montevideo"}, "Uzbekistan":{answer:"Tashkent"}, "Vanuatu":{answer:"Port Vila"},
+  "Venezuela":{answer:"Caracas"}, "Vietnam":{answer:"Hanoi"}, "Yemen":{answer:"Sana'a", aliases:["Sanaa","Aden"]},
+  "Zambia":{answer:"Lusaka"}, "Zimbabwe":{answer:"Harare"}
+};
+
+/* ============================================================
+   Data: US state capitals (parallel to STATES, by name)
+   ============================================================ */
+const STATE_CAPITALS = {
+  "Alabama":"Montgomery","Alaska":"Juneau","Arizona":"Phoenix","Arkansas":"Little Rock",
+  "California":"Sacramento","Colorado":"Denver","Connecticut":"Hartford","Delaware":"Dover",
+  "Florida":"Tallahassee","Georgia":"Atlanta","Hawaii":"Honolulu","Idaho":"Boise",
+  "Illinois":"Springfield","Indiana":"Indianapolis","Iowa":"Des Moines","Kansas":"Topeka",
+  "Kentucky":"Frankfort","Louisiana":"Baton Rouge","Maine":"Augusta","Maryland":"Annapolis",
+  "Massachusetts":"Boston","Michigan":"Lansing","Minnesota":"Saint Paul","Mississippi":"Jackson",
+  "Missouri":"Jefferson City","Montana":"Helena","Nebraska":"Lincoln","Nevada":"Carson City",
+  "New Hampshire":"Concord","New Jersey":"Trenton","New Mexico":"Santa Fe","New York":"Albany",
+  "North Carolina":"Raleigh","North Dakota":"Bismarck","Ohio":"Columbus","Oklahoma":"Oklahoma City",
+  "Oregon":"Salem","Pennsylvania":"Harrisburg","Rhode Island":"Providence","South Carolina":"Columbia",
+  "South Dakota":"Pierre","Tennessee":"Nashville","Texas":"Austin","Utah":"Salt Lake City",
+  "Vermont":"Montpelier","Virginia":"Richmond","Washington":"Olympia","West Virginia":"Charleston",
+  "Wisconsin":"Madison","Wyoming":"Cheyenne"
+};
+
+/* ============================================================
+   Data: US states by population, descending (source: US Census
+   Bureau Vintage estimates via worldpopulationreview.com)
+   ============================================================ */
+const STATE_POPULATION_RANKING = [
+  ["California",39345844],["Texas",32101064],["Florida",23659198],["New York",20003435],
+  ["Pennsylvania",13073016],["Illinois",12735249],["Ohio",11940399],["Georgia",11401288],
+  ["North Carolina",11343875],["Michigan",10155806],["New Jersey",9590076],["Virginia",8940572],
+  ["Washington",8074082],["Arizona",7691212],["Tennessee",7378861],["Massachusetts",7169608],
+  ["Indiana",7011912],["Missouri",6297538],["Maryland",6285380],["Colorado",6036620],
+  ["Wisconsin",5988406],["Minnesota",5863405],["South Carolina",5650232],["Alabama",5223121],
+  ["Kentucky",4629682],["Louisiana",4621500],["Oregon",4281848],["Oklahoma",4148818],
+  ["Connecticut",3702543],["Utah",3574825],["Nevada",3310833],["Iowa",3246320],
+  ["Arkansas",3133502],["Kansas",2989188],["Mississippi",2958148],["New Mexico",2124222],
+  ["Idaho",2058594],["Nebraska",2030421],["West Virginia",1764892],["Hawaii",1430688],
+  ["New Hampshire",1422166],["Maine",1421310],["Montana",1151831],["Rhode Island",1118627],
+  ["Delaware",1069781],["South Dakota",943078],["North Dakota",805329],["Alaska",738003],
+  ["Vermont",642805],["Wyoming",590784]
+];
+function fmtPop(pop){ return `${Math.round(pop/1e6)}M`; }
+
+/* ============================================================
+   Data: Canadian provinces + territories, and their capitals
+   ============================================================ */
+const CANADA_PROVINCES = [
+  "Alberta","British Columbia","Manitoba","New Brunswick","Newfoundland and Labrador",
+  "Northwest Territories","Nova Scotia","Nunavut","Ontario","Prince Edward Island",
+  "Quebec","Saskatchewan","Yukon"
+];
+const CANADA_PROVINCE_CAPITALS = {
+  "Alberta":{answer:"Edmonton"}, "British Columbia":{answer:"Victoria"}, "Manitoba":{answer:"Winnipeg"},
+  "New Brunswick":{answer:"Fredericton"},
+  "Newfoundland and Labrador":{answer:"St. John's", aliases:["St John's","Saint John's"]},
+  "Northwest Territories":{answer:"Yellowknife"}, "Nova Scotia":{answer:"Halifax"}, "Nunavut":{answer:"Iqaluit"},
+  "Ontario":{answer:"Toronto"}, "Prince Edward Island":{answer:"Charlottetown"},
+  "Quebec":{answer:"Quebec City", aliases:["Quebec"]},
+  "Saskatchewan":{answer:"Regina"}, "Yukon":{answer:"Whitehorse"}
+};
+
+/* ============================================================
+   Data: Canadian provinces/territories by population
+   Source: Statistics Canada, Table 17-10-0009-01, estimate for July 1, 2025
+   ============================================================ */
+const CANADA_POPULATION_RANKING = [
+  ["Ontario",16258260],["Quebec",9058297],["British Columbia",5697536],["Alberta",5029346],
+  ["Manitoba",1509702],["Saskatchewan",1266959],["Nova Scotia",1093245],["New Brunswick",869682],
+  ["Newfoundland and Labrador",549911],["Prince Edward Island",182657],["Yukon",48278],
+  ["Northwest Territories",45950],["Nunavut",41830]
+];
+function fmtPopCA(pop){
+  return pop >= 1e6 ? `${(pop/1e6).toFixed(1)}M` : `${Math.round(pop/1e3)}K`;
+}
+
+/* ============================================================
+   Data: world's highest mountains by elevation, descending
+   (source: peak elevations, generally-cited figures in meters)
+   ============================================================ */
+const MOUNTAIN_RANKING = [
+  ["Mount Everest",8849],["K2",8611],["Kangchenjunga",8586],["Lhotse",8516],
+  ["Makalu",8485],["Cho Oyu",8188],["Dhaulagiri I",8167],["Manaslu",8163],
+  ["Nanga Parbat",8126],["Annapurna I",8091],["Gasherbrum I",8080],["Broad Peak",8051],
+  ["Gasherbrum II",8035],["Shishapangma",8027],["Gyachung Kang",7952]
+];
+const MOUNTAIN_ALIASES = {
+  "everest":"Mount Everest","sagarmatha":"Mount Everest","chomolungma":"Mount Everest","qomolangma":"Mount Everest",
+  "k2":"K2","godwin austen":"K2","mount godwin austen":"K2","chhogori":"K2","qogir":"K2",
+  "kangchenjunga":"Kangchenjunga","kanchenjunga":"Kangchenjunga",
+  "lhotse":"Lhotse",
+  "makalu":"Makalu",
+  "cho oyu":"Cho Oyu",
+  "dhaulagiri":"Dhaulagiri I","dhaulagiri i":"Dhaulagiri I",
+  "manaslu":"Manaslu","kutang":"Manaslu",
+  "nanga parbat":"Nanga Parbat",
+  "annapurna":"Annapurna I","annapurna i":"Annapurna I",
+  "gasherbrum i":"Gasherbrum I","hidden peak":"Gasherbrum I",
+  "broad peak":"Broad Peak","k3":"Broad Peak",
+  "gasherbrum ii":"Gasherbrum II",
+  "shishapangma":"Shishapangma","gosainthan":"Shishapangma",
+  "gyachung kang":"Gyachung Kang"
+};
+const MOUNTAIN_LOOKUP = {};
+MOUNTAIN_RANKING.forEach(([name]) => { MOUNTAIN_LOOKUP[normalize(name)] = name; });
+Object.keys(MOUNTAIN_ALIASES).forEach(k => { MOUNTAIN_LOOKUP[normalize(k)] = MOUNTAIN_ALIASES[k]; });
+function fmtElev(elev){ return `${elev.toLocaleString()} m`; }
+
+/* ============================================================
+   Data: world's longest rivers (or river systems) by length,
+   descending (source: generally-cited length figures in km)
+   ============================================================ */
+const RIVER_RANKING = [
+  ["Nile",6650],["Amazon",6400],["Yangtze",6300],["Mississippi",6275],
+  ["Yenisei",5539],["Yellow River",5464],["Ob",5410],["Rio de la Plata–Paraná",4880],
+  ["Congo",4700],["Amur",4444],["Lena",4400],["Mekong",4350],
+  ["Mackenzie",4241],["Niger",4184],["Brahmaputra",3969]
+];
+const RIVER_ALIASES = {
+  "nile":"Nile","river nile":"Nile",
+  "amazon":"Amazon","amazon river":"Amazon",
+  "yangtze":"Yangtze","chang jiang":"Yangtze","yangtze river":"Yangtze",
+  "mississippi":"Mississippi","mississippi river":"Mississippi","mississippi missouri":"Mississippi",
+  "yenisei":"Yenisei","yenisei angara":"Yenisei",
+  "yellow river":"Yellow River","huang he":"Yellow River",
+  "ob":"Ob","ob river":"Ob","ob irtysh":"Ob",
+  "rio de la plata parana":"Rio de la Plata–Paraná","parana":"Rio de la Plata–Paraná","rio de la plata":"Rio de la Plata–Paraná",
+  "congo":"Congo","congo river":"Congo","zaire river":"Congo",
+  "amur":"Amur","heilong jiang":"Amur",
+  "lena":"Lena","lena river":"Lena",
+  "mekong":"Mekong","mekong river":"Mekong",
+  "mackenzie":"Mackenzie","mackenzie river":"Mackenzie",
+  "niger":"Niger","niger river":"Niger",
+  "brahmaputra":"Brahmaputra","yarlung tsangpo":"Brahmaputra"
+};
+const RIVER_LOOKUP = {};
+RIVER_RANKING.forEach(([name]) => { RIVER_LOOKUP[normalize(name)] = name; });
+Object.keys(RIVER_ALIASES).forEach(k => { RIVER_LOOKUP[normalize(k)] = RIVER_ALIASES[k]; });
+function fmtLen(len){ return `${len.toLocaleString()} km`; }
+
+/* ============================================================
+   Data: the world's oceans
+   ============================================================ */
+const OCEANS = ["Pacific Ocean","Atlantic Ocean","Indian Ocean","Southern Ocean","Arctic Ocean"];
+const OCEAN_ALIASES = {
+  "pacific":"Pacific Ocean","atlantic":"Atlantic Ocean","indian":"Indian Ocean",
+  "southern":"Southern Ocean","antarctic":"Southern Ocean","antarctic ocean":"Southern Ocean",
+  "arctic":"Arctic Ocean"
+};
+const OCEAN_LOOKUP = {};
+OCEANS.forEach(name => { OCEAN_LOOKUP[normalize(name)] = name; });
+Object.keys(OCEAN_ALIASES).forEach(k => { OCEAN_LOOKUP[normalize(k)] = OCEAN_ALIASES[k]; });
+
+/* ============================================================
+   FREE-RECALL GAME ENGINE (countries, states, etc.)
+   ============================================================ */
+function freeRecallHTML(id, title){
+  return `
+    <div id="${id}-intro">
+      <div class="plate" style="margin-bottom:18px;">
+        <div class="label">rules</div>
+        <div style="font-size:14px; line-height:1.7; color:var(--paper);" id="${id}-rules"></div>
+      </div>
+      <button class="btn-primary" id="${id}-startBtn">Begin — start the clock</button>
+    </div>
+
+    <div class="game" id="${id}-game" style="display:none;">
+      <h3>${title}</h3>
+      <div class="top-row">
+        <div class="plate timer" id="${id}-timerPlate">
+          <div class="label">time remaining</div>
+          <div class="value" id="${id}-timerValue">--:--</div>
+        </div>
+        <div class="plate">
+          <div class="label">score</div>
+          <div class="value" id="${id}-scoreValue">0</div>
+        </div>
+      </div>
+      <div class="entry">
+        <input type="text" id="${id}-guess" placeholder="Type an answer…" autocomplete="off">
+        <button id="${id}-endBtn" title="End the round now">End round</button>
+      </div>
+      <div class="feedback" id="${id}-feedback"></div>
+      <div class="section-title"><span>Guessed so far</span><span id="${id}-guessedCount">0</span></div>
+      <div id="${id}-guessedList" class="guessed-grid">
+        <div class="empty-note">Nothing yet — start typing.</div>
+      </div>
+    </div>
+
+    <div class="results" id="${id}-results" style="display:none;">
+      <button id="${id}-resetBtn" class="play-again-top">Play again</button>
+      <div class="final-score" id="${id}-finalScoreLine"></div>
+      <div class="section-title"><span id="${id}-finalTitle"></span><span>your hits in green</span></div>
+      <div id="${id}-finalGrid" class="final-grid"></div>
+    </div>
+  `;
+}
+
+class FreeRecallGame{
+  constructor(opts){
+    this.id = opts.id;
+    this.title = opts.title;
+    this.items = opts.items;          // canonical display list
+    this.lookup = opts.lookup;        // normalized-key -> canonical
+    this.duration = opts.duration;    // seconds
+    this.rulesHTML = opts.rulesHTML;
+    this.finalTitle = opts.finalTitle;
+
+    this.guessed = new Set();
+    this.timeLeft = this.duration;
+    this.timerId = null;
+    this.running = false;
+
+    document.getElementById(`${this.id}-mount`).innerHTML = freeRecallHTML(this.id, this.title);
+    document.getElementById(`${this.id}-rules`).innerHTML = `
+      &middot; ${minutesLabel(this.duration)} on the clock, starting when you hit begin<br>
+      ${this.rulesHTML}
+    `;
+    document.getElementById(`${this.id}-finalTitle`).textContent = this.finalTitle;
+    const metaEl = document.getElementById(`${this.id}-meta`);
+    if (metaEl) metaEl.textContent = minutesLabel(this.duration);
+
+    this.el = key => document.getElementById(`${this.id}-${key}`);
+    this.el('startBtn').addEventListener('click', () => this.start());
+    this.el('endBtn').addEventListener('click', () => this.end());
+    this.el('resetBtn').addEventListener('click', () => this.reset());
+    this.el('guess').addEventListener('keydown', e => { if (e.key === 'Enter') this.submit(); });
+    this.el('guess').addEventListener('input', () => {
+      if (!this.running) return;
+      const key = normalize(this.el('guess').value);
+      if (key && this.lookup[key]) this.submit();
+    });
+
+    this.updateTimerDisplay();
+  }
+
+  start(){
+    this.el('intro').style.display = 'none';
+    this.el('game').style.display = 'block';
+    this.running = true;
+    this.timeLeft = this.duration;
+    this.updateTimerDisplay();
+    this.el('guess').disabled = false;
+    this.el('guess').focus();
+    this.timerId = setInterval(() => this.tick(), 1000);
+  }
+
+  tick(){
+    this.timeLeft--;
+    this.updateTimerDisplay();
+    if (this.timeLeft <= 0) this.end();
+  }
+
+  updateTimerDisplay(){
+    this.el('timerValue').textContent = fmtTime(this.timeLeft);
+    this.el('timerPlate').classList.toggle('low', this.timeLeft <= 60);
+  }
+
+  submit(){
+    if (!this.running) return;
+    const raw = this.el('guess').value;
+    if (!raw.trim()) return;
+    const key = normalize(raw);
+    const canonical = this.lookup[key];
+
+    if (canonical && this.guessed.has(canonical)){
+      const fb = this.el('feedback');
+      fb.textContent = `${canonical} — already got that one. Keep typing.`;
+      fb.className = 'feedback dup';
+      return;
+    }
+
+    this.el('guess').value = '';
+    const fb = this.el('feedback');
+    if (!canonical){
+      fb.textContent = `"${raw.trim()}" — not recognized.`;
+      fb.className = 'feedback bad';
+    } else {
+      this.guessed.add(canonical);
+      fb.textContent = `${canonical} — correct!`;
+      fb.className = 'feedback good';
+      this.renderGuessed();
+
+      if (this.guessed.size >= this.items.length){
+        this.end();
+        return;
+      }
+    }
+    this.el('guess').focus();
+  }
+
+  renderGuessed(){
+    this.el('scoreValue').innerHTML = `${this.guessed.size} <span style="font-size:16px;color:var(--paper-dim);">/ ${this.items.length}</span>`;
+    this.el('guessedCount').textContent = this.guessed.size;
+    const list = Array.from(this.guessed).sort((a,b)=>a.localeCompare(b));
+    const container = this.el('guessedList');
+    container.innerHTML = list.length
+      ? list.map(c => `<div>${c}</div>`).join('')
+      : `<div class="empty-note">Nothing yet — start typing.</div>`;
+  }
+
+  end(){
+    if (!this.running) return;
+    this.running = false;
+    clearInterval(this.timerId);
+    this.el('guess').disabled = true;
+    this.el('endBtn').disabled = true;
+    this.el('game').style.display = 'none';
+    this.el('results').style.display = 'block';
+
+    const pct = Math.round((this.guessed.size / this.items.length) * 100);
+    this.el('finalScoreLine').textContent = `You named ${this.guessed.size} of ${this.items.length} (${pct}%).`;
+
+    const sorted = [...this.items].sort((a,b)=>a.localeCompare(b));
+    this.el('finalGrid').innerHTML = sorted.map(c => {
+      const hit = this.guessed.has(c);
+      return `<div class="item ${hit ? 'hit' : 'miss'}"><span>${c}</span><span>${hit ? '✓' : '—'}</span></div>`;
+    }).join('');
+  }
+
+  reset(){
+    this.guessed = new Set();
+    this.timeLeft = this.duration;
+    this.running = false;
+    this.el('guess').disabled = false;
+    this.el('endBtn').disabled = false;
+    this.el('guess').value = '';
+    this.el('feedback').textContent = '';
+    this.el('feedback').className = 'feedback';
+    this.renderGuessed();
+    this.el('results').style.display = 'none';
+    this.el('intro').style.display = 'block';
+    this.updateTimerDisplay();
+  }
+}
+
+/* ============================================================
+   Data: US presidents (chronological, by term)
+   Grover Cleveland and Donald Trump each served two non-consecutive
+   terms, so each appears twice in the chronological list below.
+   ============================================================ */
+const PRESIDENTS_TERMS = [
+  ["George Washington","1789–1797"],
+  ["John Adams","1797–1801"],
+  ["Thomas Jefferson","1801–1809"],
+  ["James Madison","1809–1817"],
+  ["James Monroe","1817–1825"],
+  ["John Quincy Adams","1825–1829"],
+  ["Andrew Jackson","1829–1837"],
+  ["Martin Van Buren","1837–1841"],
+  ["William Henry Harrison","1841"],
+  ["John Tyler","1841–1845"],
+  ["James K. Polk","1845–1849"],
+  ["Zachary Taylor","1849–1850"],
+  ["Millard Fillmore","1850–1853"],
+  ["Franklin Pierce","1853–1857"],
+  ["James Buchanan","1857–1861"],
+  ["Abraham Lincoln","1861–1865"],
+  ["Andrew Johnson","1865–1869"],
+  ["Ulysses S. Grant","1869–1877"],
+  ["Rutherford B. Hayes","1877–1881"],
+  ["James A. Garfield","1881"],
+  ["Chester A. Arthur","1881–1885"],
+  ["Grover Cleveland","1885–1889"],
+  ["Benjamin Harrison","1889–1893"],
+  ["Grover Cleveland","1893–1897"],
+  ["William McKinley","1897–1901"],
+  ["Theodore Roosevelt","1901–1909"],
+  ["William Howard Taft","1909–1913"],
+  ["Woodrow Wilson","1913–1921"],
+  ["Warren G. Harding","1921–1923"],
+  ["Calvin Coolidge","1923–1929"],
+  ["Herbert Hoover","1929–1933"],
+  ["Franklin D. Roosevelt","1933–1945"],
+  ["Harry S. Truman","1945–1953"],
+  ["Dwight D. Eisenhower","1953–1961"],
+  ["John F. Kennedy","1961–1963"],
+  ["Lyndon B. Johnson","1963–1969"],
+  ["Richard Nixon","1969–1974"],
+  ["Gerald Ford","1974–1977"],
+  ["Jimmy Carter","1977–1981"],
+  ["Ronald Reagan","1981–1989"],
+  ["George H. W. Bush","1989–1993"],
+  ["Bill Clinton","1993–2001"],
+  ["George W. Bush","2001–2009"],
+  ["Barack Obama","2009–2017"],
+  ["Donald Trump","2017–2021"],
+  ["Joe Biden","2021–2025"],
+  ["Donald Trump","2025–present"]
+];
+const PRESIDENT_NAMES = [...new Set(PRESIDENTS_TERMS.map(t => t[0]))];
+
+// Each alias maps to an ARRAY of canonical names, because a handful of
+// last names (Adams, Harrison, Johnson, Roosevelt, Bush) are shared by
+// two different presidents. Guessing that shared last name credits
+// whichever of the two haven't been guessed yet.
+const PRESIDENT_ALIASES = {
+  "george washington":["George Washington"], "washington":["George Washington"],
+  "john adams":["John Adams"],
+  "john quincy adams":["John Quincy Adams"], "quincy adams":["John Quincy Adams"], "jqa":["John Quincy Adams"],
+  "adams":["John Adams","John Quincy Adams"],
+  "thomas jefferson":["Thomas Jefferson"], "jefferson":["Thomas Jefferson"],
+  "james madison":["James Madison"], "madison":["James Madison"],
+  "james monroe":["James Monroe"], "monroe":["James Monroe"],
+  "andrew jackson":["Andrew Jackson"], "jackson":["Andrew Jackson"],
+  "martin van buren":["Martin Van Buren"], "van buren":["Martin Van Buren"], "buren":["Martin Van Buren"],
+  "william henry harrison":["William Henry Harrison"], "w h harrison":["William Henry Harrison"], "whh":["William Henry Harrison"],
+  "benjamin harrison":["Benjamin Harrison"], "ben harrison":["Benjamin Harrison"],
+  "harrison":["William Henry Harrison","Benjamin Harrison"],
+  "john tyler":["John Tyler"], "tyler":["John Tyler"],
+  "james k polk":["James K. Polk"], "james polk":["James K. Polk"], "polk":["James K. Polk"],
+  "zachary taylor":["Zachary Taylor"], "taylor":["Zachary Taylor"],
+  "millard fillmore":["Millard Fillmore"], "fillmore":["Millard Fillmore"],
+  "franklin pierce":["Franklin Pierce"], "pierce":["Franklin Pierce"],
+  "james buchanan":["James Buchanan"], "buchanan":["James Buchanan"],
+  "abraham lincoln":["Abraham Lincoln"], "lincoln":["Abraham Lincoln"], "abe lincoln":["Abraham Lincoln"], "honest abe":["Abraham Lincoln"],
+  "andrew johnson":["Andrew Johnson"],
+  "lyndon b johnson":["Lyndon B. Johnson"], "lyndon johnson":["Lyndon B. Johnson"], "lbj":["Lyndon B. Johnson"],
+  "johnson":["Andrew Johnson","Lyndon B. Johnson"],
+  "ulysses s grant":["Ulysses S. Grant"], "ulysses grant":["Ulysses S. Grant"], "grant":["Ulysses S. Grant"],
+  "rutherford b hayes":["Rutherford B. Hayes"], "rutherford hayes":["Rutherford B. Hayes"], "hayes":["Rutherford B. Hayes"],
+  "james a garfield":["James A. Garfield"], "james garfield":["James A. Garfield"], "garfield":["James A. Garfield"],
+  "chester a arthur":["Chester A. Arthur"], "chester arthur":["Chester A. Arthur"], "arthur":["Chester A. Arthur"],
+  "grover cleveland":["Grover Cleveland"], "cleveland":["Grover Cleveland"],
+  "william mckinley":["William McKinley"], "mckinley":["William McKinley"],
+  "theodore roosevelt":["Theodore Roosevelt"], "teddy roosevelt":["Theodore Roosevelt"],
+  "franklin d roosevelt":["Franklin D. Roosevelt"], "franklin roosevelt":["Franklin D. Roosevelt"], "fdr":["Franklin D. Roosevelt"],
+  "roosevelt":["Theodore Roosevelt","Franklin D. Roosevelt"],
+  "william howard taft":["William Howard Taft"], "william taft":["William Howard Taft"], "taft":["William Howard Taft"],
+  "woodrow wilson":["Woodrow Wilson"], "wilson":["Woodrow Wilson"],
+  "warren g harding":["Warren G. Harding"], "warren harding":["Warren G. Harding"], "harding":["Warren G. Harding"],
+  "calvin coolidge":["Calvin Coolidge"], "coolidge":["Calvin Coolidge"],
+  "herbert hoover":["Herbert Hoover"], "hoover":["Herbert Hoover"],
+  "harry s truman":["Harry S. Truman"], "harry truman":["Harry S. Truman"], "truman":["Harry S. Truman"],
+  "dwight d eisenhower":["Dwight D. Eisenhower"], "dwight eisenhower":["Dwight D. Eisenhower"], "eisenhower":["Dwight D. Eisenhower"], "ike":["Dwight D. Eisenhower"],
+  "john f kennedy":["John F. Kennedy"], "john kennedy":["John F. Kennedy"], "kennedy":["John F. Kennedy"], "jfk":["John F. Kennedy"],
+  "richard nixon":["Richard Nixon"], "nixon":["Richard Nixon"],
+  "gerald ford":["Gerald Ford"], "ford":["Gerald Ford"],
+  "jimmy carter":["Jimmy Carter"], "james carter":["Jimmy Carter"], "carter":["Jimmy Carter"],
+  "ronald reagan":["Ronald Reagan"], "reagan":["Ronald Reagan"],
+  "george h w bush":["George H. W. Bush"], "george hw bush":["George H. W. Bush"], "bush sr":["George H. W. Bush"],
+  "bush senior":["George H. W. Bush"], "poppy bush":["George H. W. Bush"], "ghwb":["George H. W. Bush"],
+  "george w bush":["George W. Bush"], "george bush jr":["George W. Bush"], "bush jr":["George W. Bush"],
+  "dubya":["George W. Bush"], "gwb":["George W. Bush"],
+  "bush":["George H. W. Bush","George W. Bush"],
+  "bill clinton":["Bill Clinton"], "william clinton":["Bill Clinton"], "clinton":["Bill Clinton"],
+  "barack obama":["Barack Obama"], "obama":["Barack Obama"],
+  "donald trump":["Donald Trump"], "donald j trump":["Donald Trump"], "trump":["Donald Trump"],
+  "joe biden":["Joe Biden"], "joseph biden":["Joe Biden"], "biden":["Joe Biden"]
+};
+const PRESIDENT_LOOKUP = {};
+// Safety net: every canonical name resolves to itself even if a manual
+// alias above were ever missing.
+PRESIDENT_NAMES.forEach(name => { PRESIDENT_LOOKUP[normalize(name)] = [name]; });
+Object.keys(PRESIDENT_ALIASES).forEach(k => { PRESIDENT_LOOKUP[normalize(k)] = PRESIDENT_ALIASES[k]; });
+
+/* ============================================================
+   Data: Canadian prime ministers (chronological, by term)
+   John A. Macdonald, William Lyon Mackenzie King, Arthur Meighen, and
+   Pierre Trudeau each served multiple non-consecutive terms, so each
+   appears more than once in the chronological list below.
+   ============================================================ */
+const PM_TERMS = [
+  ["John A. Macdonald","1867–1873"],
+  ["Alexander Mackenzie","1873–1878"],
+  ["John A. Macdonald","1878–1891"],
+  ["John Abbott","1891–1892"],
+  ["John Thompson","1892–1894"],
+  ["Mackenzie Bowell","1894–1896"],
+  ["Charles Tupper","1896"],
+  ["Wilfrid Laurier","1896–1911"],
+  ["Robert Borden","1911–1920"],
+  ["Arthur Meighen","1920–1921"],
+  ["William Lyon Mackenzie King","1921–1926"],
+  ["Arthur Meighen","1926"],
+  ["William Lyon Mackenzie King","1926–1930"],
+  ["R. B. Bennett","1930–1935"],
+  ["William Lyon Mackenzie King","1935–1948"],
+  ["Louis St. Laurent","1948–1957"],
+  ["John Diefenbaker","1957–1963"],
+  ["Lester B. Pearson","1963–1968"],
+  ["Pierre Trudeau","1968–1979"],
+  ["Joe Clark","1979–1980"],
+  ["Pierre Trudeau","1980–1984"],
+  ["John Turner","1984"],
+  ["Brian Mulroney","1984–1993"],
+  ["Kim Campbell","1993"],
+  ["Jean Chrétien","1993–2003"],
+  ["Paul Martin","2003–2006"],
+  ["Stephen Harper","2006–2015"],
+  ["Justin Trudeau","2015–2025"],
+  ["Mark Carney","2025–present"]
+];
+const PM_NAMES = [...new Set(PM_TERMS.map(t => t[0]))];
+
+// As with the presidents list, a guess can resolve to more than one
+// canonical name — here that's just the shared "Trudeau" surname,
+// which credits whichever Trudeau (Pierre or Justin) hasn't been
+// guessed yet.
+const PM_ALIASES = {
+  "john a macdonald":["John A. Macdonald"], "john macdonald":["John A. Macdonald"], "macdonald":["John A. Macdonald"], "sir john a":["John A. Macdonald"],
+  "alexander mackenzie":["Alexander Mackenzie"], "mackenzie":["Alexander Mackenzie"],
+  "john abbott":["John Abbott"], "abbott":["John Abbott"],
+  "john thompson":["John Thompson"], "john sparrow thompson":["John Thompson"], "thompson":["John Thompson"],
+  "mackenzie bowell":["Mackenzie Bowell"], "bowell":["Mackenzie Bowell"],
+  "charles tupper":["Charles Tupper"], "tupper":["Charles Tupper"],
+  "wilfrid laurier":["Wilfrid Laurier"], "laurier":["Wilfrid Laurier"],
+  "robert borden":["Robert Borden"], "robert laird borden":["Robert Borden"], "borden":["Robert Borden"],
+  "arthur meighen":["Arthur Meighen"], "meighen":["Arthur Meighen"],
+  "william lyon mackenzie king":["William Lyon Mackenzie King"], "mackenzie king":["William Lyon Mackenzie King"],
+  "william king":["William Lyon Mackenzie King"], "wlmk":["William Lyon Mackenzie King"], "king":["William Lyon Mackenzie King"],
+  "r b bennett":["R. B. Bennett"], "richard bennett":["R. B. Bennett"], "richard bedford bennett":["R. B. Bennett"], "bennett":["R. B. Bennett"],
+  "louis st laurent":["Louis St. Laurent"], "louis stlaurent":["Louis St. Laurent"], "st laurent":["Louis St. Laurent"], "stlaurent":["Louis St. Laurent"],
+  "john diefenbaker":["John Diefenbaker"], "diefenbaker":["John Diefenbaker"],
+  "lester b pearson":["Lester B. Pearson"], "lester pearson":["Lester B. Pearson"], "pearson":["Lester B. Pearson"], "mike pearson":["Lester B. Pearson"],
+  "pierre trudeau":["Pierre Trudeau"], "pierre elliott trudeau":["Pierre Trudeau"],
+  "joe clark":["Joe Clark"], "charles joseph clark":["Joe Clark"], "clark":["Joe Clark"],
+  "john turner":["John Turner"], "turner":["John Turner"],
+  "brian mulroney":["Brian Mulroney"], "mulroney":["Brian Mulroney"],
+  "kim campbell":["Kim Campbell"], "campbell":["Kim Campbell"], "avril campbell":["Kim Campbell"],
+  "jean chretien":["Jean Chrétien"], "chretien":["Jean Chrétien"],
+  "paul martin":["Paul Martin"], "paul martin jr":["Paul Martin"], "martin":["Paul Martin"],
+  "stephen harper":["Stephen Harper"], "harper":["Stephen Harper"],
+  "justin trudeau":["Justin Trudeau"],
+  "trudeau":["Pierre Trudeau","Justin Trudeau"],
+  "mark carney":["Mark Carney"], "carney":["Mark Carney"]
+};
+const PM_LOOKUP = {};
+PM_NAMES.forEach(name => { PM_LOOKUP[normalize(name)] = [name]; });
+Object.keys(PM_ALIASES).forEach(k => { PM_LOOKUP[normalize(k)] = PM_ALIASES[k]; });
+
+/* ============================================================
+   FREE-RECALL GAME ENGINE — US PRESIDENTS VARIANT
+   Like FreeRecallGame, but:
+   - results stay in chronological order (not alphabetical) and show years served
+   - a guess can resolve to more than one canonical name (shared last names),
+     crediting every not-yet-guessed match
+   - Cleveland and Trump each occupy two chronological slots but only need
+     to be guessed once
+   ============================================================ */
+class PresidentsRecallGame{
+  constructor(opts){
+    this.id = opts.id;
+    this.title = opts.title;
+    this.terms = opts.terms;                 // [[name, years], ...] chronological, names may repeat
+    this.names = [...new Set(this.terms.map(t => t[0]))];
+    this.lookup = opts.lookup;                // normalized-key -> array of canonical names
+    this.duration = opts.duration;
+    this.rulesHTML = opts.rulesHTML;
+    this.finalTitle = opts.finalTitle;
+    this.peopleLabel = opts.peopleLabel || 'presidents';
+
+    this.guessed = new Set();
+    this.timeLeft = this.duration;
+    this.timerId = null;
+    this.running = false;
+
+    document.getElementById(`${this.id}-mount`).innerHTML = freeRecallHTML(this.id, this.title);
+    document.getElementById(`${this.id}-rules`).innerHTML = `
+      &middot; ${minutesLabel(this.duration)} on the clock, starting when you hit begin<br>
+      ${this.rulesHTML}
+    `;
+    document.getElementById(`${this.id}-finalTitle`).textContent = this.finalTitle;
+    const metaEl = document.getElementById(`${this.id}-meta`);
+    if (metaEl) metaEl.textContent = minutesLabel(this.duration);
+
+    this.el = key => document.getElementById(`${this.id}-${key}`);
+    this.el('startBtn').addEventListener('click', () => this.start());
+    this.el('endBtn').addEventListener('click', () => this.end());
+    this.el('resetBtn').addEventListener('click', () => this.reset());
+    this.el('guess').addEventListener('keydown', e => { if (e.key === 'Enter') this.submit(); });
+    this.el('guess').addEventListener('input', () => {
+      if (!this.running) return;
+      const key = normalize(this.el('guess').value);
+      if (key && this.lookup[key]) this.submit();
+    });
+
+    this.updateTimerDisplay();
+  }
+
+  start(){
+    this.el('intro').style.display = 'none';
+    this.el('game').style.display = 'block';
+    this.running = true;
+    this.timeLeft = this.duration;
+    this.updateTimerDisplay();
+    this.el('guess').disabled = false;
+    this.el('guess').focus();
+    this.timerId = setInterval(() => this.tick(), 1000);
+  }
+
+  tick(){
+    this.timeLeft--;
+    this.updateTimerDisplay();
+    if (this.timeLeft <= 0) this.end();
+  }
+
+  updateTimerDisplay(){
+    this.el('timerValue').textContent = fmtTime(this.timeLeft);
+    this.el('timerPlate').classList.toggle('low', this.timeLeft <= 60);
+  }
+
+  submit(){
+    if (!this.running) return;
+    const raw = this.el('guess').value;
+    if (!raw.trim()) return;
+    const key = normalize(raw);
+    const matches = this.lookup[key];
+    const fb = this.el('feedback');
+
+    if (!matches){
+      this.el('guess').value = '';
+      fb.textContent = `"${raw.trim()}" — not recognized.`;
+      fb.className = 'feedback bad';
+      this.el('guess').focus();
+      return;
+    }
+
+    const fresh = matches.filter(name => !this.guessed.has(name));
+
+    if (fresh.length === 0){
+      fb.textContent = matches.length > 1
+        ? `Already got ${matches.join(' and ')} — keep typing.`
+        : `${matches[0]} — already got that one. Keep typing.`;
+      fb.className = 'feedback dup';
+      return;
+    }
+
+    this.el('guess').value = '';
+    fresh.forEach(name => this.guessed.add(name));
+    fb.textContent = fresh.length > 1
+      ? `${fresh.join(' and ')} — both correct!`
+      : `${fresh[0]} — correct!`;
+    fb.className = 'feedback good';
+    this.renderGuessed();
+
+    if (this.guessed.size >= this.names.length){
+      this.end();
+      return;
+    }
+    this.el('guess').focus();
+  }
+
+  renderGuessed(){
+    const hitTerms = this.terms.filter(([name]) => this.guessed.has(name));
+    this.el('scoreValue').innerHTML = `${hitTerms.length} <span style="font-size:16px;color:var(--paper-dim);">/ ${this.terms.length}</span>`;
+    this.el('guessedCount').textContent = this.guessed.size;
+    const container = this.el('guessedList');
+    container.innerHTML = hitTerms.length
+      ? hitTerms.map(([name, years]) => `<div>${name} <span style="color:var(--paper-dim);">(${years})</span></div>`).join('')
+      : `<div class="empty-note">Nothing yet — start typing.</div>`;
+  }
+
+  end(){
+    if (!this.running) return;
+    this.running = false;
+    clearInterval(this.timerId);
+    this.el('guess').disabled = true;
+    this.el('endBtn').disabled = true;
+    this.el('game').style.display = 'none';
+    this.el('results').style.display = 'block';
+
+    const hitTerms = this.terms.filter(([name]) => this.guessed.has(name)).length;
+    const pct = Math.round((hitTerms / this.terms.length) * 100);
+    this.el('finalScoreLine').textContent = `You named ${this.guessed.size} of ${this.names.length} ${this.peopleLabel} — ${hitTerms} of ${this.terms.length} terms (${pct}%).`;
+
+    this.el('finalGrid').innerHTML = this.terms.map(([name, years]) => {
+      const hit = this.guessed.has(name);
+      return `<div class="item ${hit ? 'hit' : 'miss'}"><span>${name} <span style="color:var(--paper-dim);">(${years})</span></span><span>${hit ? '✓' : '—'}</span></div>`;
+    }).join('');
+  }
+
+  reset(){
+    this.guessed = new Set();
+    this.timeLeft = this.duration;
+    this.running = false;
+    this.el('guess').disabled = false;
+    this.el('endBtn').disabled = false;
+    this.el('guess').value = '';
+    this.el('feedback').textContent = '';
+    this.el('feedback').className = 'feedback';
+    this.renderGuessed();
+    this.el('results').style.display = 'none';
+    this.el('intro').style.display = 'block';
+    this.updateTimerDisplay();
+  }
+}
+
+/* ============================================================
+   PROMPTED QUIZ ENGINE (generic: state->abbreviation, country->capital, etc.)
+   ============================================================ */
+function quizHTML(id, promptLabel, mode){
+  const inputAttrs = mode === 'short' ? 'maxlength="2"' : '';
+  const rowClass = mode === 'short' ? 'quiz-input-row short' : 'quiz-input-row text';
+  return `
+    <div id="${id}-intro">
+      <div class="plate" style="margin-bottom:18px;">
+        <div class="label">rules</div>
+        <div style="font-size:14px; line-height:1.7; color:var(--paper);" id="${id}-rules"></div>
+      </div>
+      <button class="btn-primary" id="${id}-startBtn">Begin — start the clock</button>
+    </div>
+
+    <div class="game" id="${id}-game" style="display:none;">
+      <div class="top-row">
+        <div class="plate timer" id="${id}-timerPlate">
+          <div class="label">time remaining</div>
+          <div class="value" id="${id}-timerValue">--:--</div>
+        </div>
+        <div class="plate">
+          <div class="label">score</div>
+          <div class="value" id="${id}-scoreValue">0</div>
+        </div>
+        <div class="plate">
+          <div class="label">remaining</div>
+          <div class="value" id="${id}-progressValue">0</div>
+        </div>
+      </div>
+
+      <div class="quiz-prompt">
+        <div class="prompt-label">${promptLabel}</div>
+        <div class="prompt-value" id="${id}-promptValue">—</div>
+      </div>
+      <div class="${rowClass}">
+        <input type="text" id="${id}-guess" ${inputAttrs} autocomplete="off">
+      </div>
+      <div class="feedback" id="${id}-feedback" style="text-align:center;"></div>
+      <div style="text-align:center;">
+        <button id="${id}-skipBtn">Skip</button>
+        <button id="${id}-endBtn" title="End the round now">End round</button>
+      </div>
+    </div>
+
+    <div class="results" id="${id}-results" style="display:none;">
+      <button id="${id}-resetBtn" class="play-again-top">Play again</button>
+      <div class="final-score" id="${id}-finalScoreLine"></div>
+      <div class="section-title"><span id="${id}-finalRollLabel"></span><span>your hits in green</span></div>
+      <div id="${id}-finalGrid" class="final-grid"></div>
+    </div>
+  `;
+}
+
+class PromptQuiz{
+  constructor(opts){
+    this.id = opts.id;
+    this.pairs = opts.pairs; // [{ prompt, answer, aliases: [] }, ...]
+    this.duration = opts.duration;
+    this.rulesHTML = opts.rulesHTML;
+    this.promptLabel = opts.promptLabel;
+    this.finalRollLabel = opts.finalRollLabel;
+    this.mode = opts.mode || 'text'; // 'short' (fixed-length codes) or 'text' (free text)
+    this.maxLength = opts.maxLength || 2;
+
+    this.queue = [];    // remaining pair-indices still to answer correctly
+    this.score = 0;
+    this.results = {}; // prompt -> true (only set once answered correctly)
+    this.timeLeft = this.duration;
+    this.timerId = null;
+    this.running = false;
+
+    document.getElementById(`${this.id}-mount`).innerHTML = quizHTML(this.id, this.promptLabel, this.mode);
+    document.getElementById(`${this.id}-rules`).innerHTML = `
+      &middot; ${minutesLabel(this.duration)} on the clock, starting when you hit begin<br>
+      ${this.rulesHTML}
+    `;
+    document.getElementById(`${this.id}-finalRollLabel`).textContent = this.finalRollLabel;
+    const metaEl = document.getElementById(`${this.id}-meta`);
+    if (metaEl) metaEl.textContent = minutesLabel(this.duration);
+
+    this.el = key => document.getElementById(`${this.id}-${key}`);
+    this.el('startBtn').addEventListener('click', () => this.start());
+    this.el('endBtn').addEventListener('click', () => this.end());
+    this.el('skipBtn').addEventListener('click', () => this.skip());
+    this.el('resetBtn').addEventListener('click', () => this.reset());
+    this.el('guess').addEventListener('keydown', e => { if (e.key === 'Enter') this.checkAnswer(true); });
+    this.el('guess').addEventListener('input', () => {
+      if (!this.running) return;
+      const val = this.el('guess').value;
+      if (this.mode === 'short'){
+        if (val.trim().length >= this.maxLength) this.checkAnswer(false);
+      } else {
+        const key = normalize(val);
+        if (key && this.acceptedKeys().includes(key)) this.checkAnswer(false);
+      }
+    });
+
+    this.updateTimerDisplay();
+  }
+
+  start(){
+    this.el('intro').style.display = 'none';
+    this.el('game').style.display = 'block';
+    this.running = true;
+    this.timeLeft = this.duration;
+    this.score = 0;
+    this.results = {};
+    this.queue = shuffled(this.pairs.map((_,i)=>i));
+    this.updateTimerDisplay();
+    this.showPrompt();
+    this.el('guess').disabled = false;
+    this.el('guess').focus();
+    this.timerId = setInterval(() => this.tick(), 1000);
+  }
+
+  tick(){
+    this.timeLeft--;
+    this.updateTimerDisplay();
+    if (this.timeLeft <= 0) this.end();
+  }
+
+  updateTimerDisplay(){
+    this.el('timerValue').textContent = fmtTime(this.timeLeft);
+    this.el('timerPlate').classList.toggle('low', this.timeLeft <= 60);
+  }
+
+  currentPair(){ return this.pairs[this.queue[0]]; }
+  acceptedKeys(){
+    const p = this.currentPair();
+    return [p.answer, ...(p.aliases || [])].map(normalize);
+  }
+
+  showPrompt(){
+    if (this.queue.length === 0){ this.end(); return; }
+    const { prompt } = this.currentPair();
+    this.el('promptValue').textContent = prompt;
+    this.el('progressValue').textContent = this.queue.length;
+    this.el('guess').value = '';
+    this.el('feedback').textContent = '';
+    this.el('feedback').className = 'feedback';
+  }
+
+  checkAnswer(fromEnter){
+    if (!this.running) return;
+    const { prompt, answer } = this.currentPair();
+    const typed = this.el('guess').value.trim();
+    if (!typed) return;
+    const key = normalize(typed);
+    if (this.acceptedKeys().includes(key)){
+      this.results[prompt] = true;
+      this.score++;
+      this.el('scoreValue').textContent = this.score;
+      this.el('feedback').textContent = `${answer} — correct!`;
+      this.el('feedback').className = 'feedback good';
+      this.queue.shift();
+      setTimeout(() => this.showPrompt(), 150);
+    } else if (fromEnter || (this.mode === 'short' && typed.length >= this.maxLength)){
+      this.el('feedback').textContent = `Not quite — try again or skip.`;
+      this.el('feedback').className = 'feedback bad';
+      this.el('guess').value = '';
+    }
+  }
+
+  skip(){
+    if (!this.running) return;
+    // Send the current item to the back of the queue so it comes back around
+    // after the rest, instead of ending the round.
+    const idx = this.queue.shift();
+    this.queue.push(idx);
+    this.showPrompt();
+  }
+
+  end(){
+    if (!this.running) return;
+    this.running = false;
+    clearInterval(this.timerId);
+    this.el('guess').disabled = true;
+    this.el('endBtn').disabled = true;
+    this.el('skipBtn').disabled = true;
+    this.el('game').style.display = 'none';
+    this.el('results').style.display = 'block';
+
+    const pct = Math.round((this.score / this.pairs.length) * 100);
+    this.el('finalScoreLine').textContent = `You got ${this.score} of ${this.pairs.length} correct (${pct}%).`;
+
+    const sorted = [...this.pairs].sort((a,b)=>a.prompt.localeCompare(b.prompt));
+    this.el('finalGrid').innerHTML = sorted.map(({prompt, answer}) => {
+      const hit = this.results[prompt] === true;
+      return `<div class="item ${hit ? 'hit' : 'miss'}"><span>${prompt}</span><span>${answer} ${hit ? '✓' : '—'}</span></div>`;
+    }).join('');
+  }
+
+  reset(){
+    this.running = false;
+    this.timeLeft = this.duration;
+    this.score = 0;
+    this.results = {};
+    this.queue = [];
+    this.el('guess').disabled = false;
+    this.el('endBtn').disabled = false;
+    this.el('skipBtn').disabled = false;
+    this.el('scoreValue').textContent = '0';
+    this.el('results').style.display = 'none';
+    this.el('intro').style.display = 'block';
+    this.updateTimerDisplay();
+  }
+}
+
+/* ============================================================
+   STATE MAP QUIZ
+   Uses us-atlas state boundaries derived from U.S. Census Bureau
+   cartographic boundaries, rendered with d3.geoAlbersUsa.
+   ============================================================ */
+function stateMapHTML(id){
+  return `
+    <div id="${id}-intro">
+      <div class="plate" style="margin-bottom:18px;">
+        <div class="label">rules</div>
+        <div style="font-size:14px; line-height:1.7; color:var(--paper);">
+          &middot; 50 states appear one at a time in random order<br>
+          &middot; A single state is highlighted on the map — name it<br>
+          &middot; Type the full state name; common spelling variations are accepted<br>
+          &middot; No clock — take your time and see how many you can get
+        </div>
+      </div>
+      <button class="btn-primary" id="${id}-startBtn">Begin</button>
+    </div>
+
+    <div class="game map-quiz" id="${id}-game" style="display:none;">
+      <div class="top-row">
+        <div class="plate"><div class="label">score</div><div class="value" id="${id}-scoreValue">0</div></div>
+        <div class="plate"><div class="label">progress</div><div class="value" id="${id}-progressValue">0 / 50</div></div>
+      </div>
+      <div class="map-question">
+        <div class="label">which state is highlighted?</div>
+        <h3>Name this state</h3>
+      </div>
+      <div class="state-map-wrap">
+        <svg class="state-map" id="${id}-map" viewBox="0 0 975 610" role="img" aria-label="Map of the United States with one highlighted state"></svg>
+      </div>
+      <div class="map-progress" id="${id}-progressText"></div>
+      <div class="map-answer-row">
+        <input type="text" id="${id}-guess" placeholder="Type the state name…" autocomplete="off" spellcheck="false">
+        <button class="btn-primary" id="${id}-submitBtn">Submit</button>
+      </div>
+      <div class="map-feedback" id="${id}-feedback"></div>
+      <div class="map-next-row"><button id="${id}-nextBtn" style="display:none;">Next state &rarr;</button></div>
+    </div>
+
+    <div class="results" id="${id}-results" style="display:none;">
+      <button id="${id}-resetBtn" class="play-again-top">Play again</button>
+      <div class="final-score" id="${id}-finalScoreLine"></div>
+      <div class="section-title"><span>All 50 states</span><span>your hits in green</span></div>
+      <div id="${id}-finalGrid" class="final-grid"></div>
+    </div>
+  `;
+}
+
+class StateMapQuiz{
+  constructor(opts){
+    this.id=opts.id; this.states=opts.states;
+    this.queue=[]; this.idx=0; this.score=0; this.answers=[]; this.answered=false; this.mapReady=false;
+    document.getElementById(`${this.id}-mount`).innerHTML=stateMapHTML(this.id);
+    this.el=key=>document.getElementById(`${this.id}-${key}`);
+    this.el('startBtn').addEventListener('click',()=>this.start());
+    this.el('submitBtn').addEventListener('click',()=>this.submit());
+    this.el('nextBtn').addEventListener('click',()=>this.next());
+    this.el('resetBtn').addEventListener('click',()=>this.reset());
+    this.el('guess').addEventListener('keydown',e=>{ if(e.key==='Enter') this.answered ? this.next() : this.submit(); });
+    this.loadMap();
+  }
+
+  async loadMap(){
+    try{
+      const us=await d3.json('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json');
+      const features=topojson.feature(us,us.objects.states).features;
+      const projection=d3.geoAlbersUsa().scale(1300).translate([487.5,305]);
+      const path=d3.geoPath(projection);
+      d3.select(this.el('map')).selectAll('path').data(features).join('path')
+        .attr('class','state').attr('d',path).attr('data-name',d=>d.properties.name);
+      this.mapReady=true;
+      if(this.queue.length) this.renderTarget();
+    }catch(err){
+      this.el('feedback').textContent='The map could not be loaded. Please refresh and try again.';
+      this.el('feedback').className='map-feedback bad';
+      console.error(err);
+    }
+  }
+
+  start(){
+    this.el('intro').style.display='none'; this.el('results').style.display='none'; this.el('game').style.display='block';
+    this.queue=shuffled(this.states); this.idx=0; this.score=0; this.answers=[]; this.el('scoreValue').textContent='0'; this.showQuestion();
+  }
+
+  showQuestion(){
+    this.answered=false;
+    this.el('progressValue').textContent=`${this.idx} / 50`;
+    this.el('progressText').textContent=`State ${this.idx+1} of 50`;
+    this.el('guess').value=''; this.el('guess').disabled=false; this.el('submitBtn').style.display='inline-block'; this.el('nextBtn').style.display='none';
+    this.el('feedback').textContent=''; this.el('feedback').className='map-feedback'; this.renderTarget(); this.el('guess').focus();
+  }
+
+  renderTarget(){
+    if(!this.mapReady || !this.queue.length) return;
+    const target=this.queue[this.idx];
+    d3.select(this.el('map')).selectAll('.state')
+      .classed('target',d=>d.properties.name===target)
+      .classed('correct',d=>this.answers.some(a=>a.state===d.properties.name && a.isCorrect))
+      .classed('wrong',false);
+  }
+
+  submit(){
+    if(this.answered) return;
+    const raw=this.el('guess').value.trim(); if(!raw) return;
+    const target=this.queue[this.idx]; const isCorrect=normalize(raw)===normalize(target);
+    this.answered=true; if(isCorrect) this.score++; this.answers.push({state:target,yourAnswer:raw,isCorrect});
+    this.el('scoreValue').textContent=this.score; this.el('guess').disabled=true; this.el('submitBtn').style.display='none';
+    this.el('feedback').textContent=isCorrect ? `${target} — correct!` : `Not quite — the answer is ${target}.`;
+    this.el('feedback').className=`map-feedback ${isCorrect?'good':'bad'}`;
+    d3.select(this.el('map')).selectAll('.state')
+      .classed('target',false)
+      .classed('correct',d=>this.answers.some(a=>a.state===d.properties.name && a.isCorrect))
+      .classed('wrong',d=>d.properties.name===target && !isCorrect);
+    this.el('nextBtn').textContent=this.idx===49 ? 'See results →' : 'Next state →'; this.el('nextBtn').style.display='inline-block'; this.el('nextBtn').focus();
+  }
+
+  next(){ if(!this.answered) return; this.idx++; if(this.idx>=this.queue.length){ this.end(); return; } this.showQuestion(); }
+
+  end(){
+    this.el('game').style.display='none'; this.el('results').style.display='block';
+    this.el('finalScoreLine').textContent=`You identified ${this.score} of 50 states (${Math.round(this.score/50*100)}%).`;
+    const byState=new Map(this.answers.map(a=>[a.state,a]));
+    this.el('finalGrid').innerHTML=this.states.slice().sort((a,b)=>a.localeCompare(b)).map(state=>{
+      const a=byState.get(state), hit=a?.isCorrect;
+      return `<div class="item ${hit?'hit':'miss'}"><span>${state}</span><span>${hit?'✓':'—'}</span></div>`;
+    }).join('');
+  }
+
+  reset(){
+    this.el('results').style.display='none'; this.el('intro').style.display='block'; this.el('game').style.display='none';
+    this.queue=[]; this.idx=0; this.score=0; this.answers=[];
+    if(this.mapReady) d3.select(this.el('map')).selectAll('.state').attr('class','state');
+  }
+}
+
+/* ============================================================
+   FIND THE STATE QUIZ
+   Given a state's name, click that state on the map.
+   Reuses the same us-atlas boundaries as the "On the Map" quiz.
+   ============================================================ */
+function findStateHTML(id, hardMode=false){
+  return `
+    <div id="${id}-intro">
+      <div class="plate" style="margin-bottom:18px;">
+        <div class="label">rules</div>
+        <div style="font-size:14px; line-height:1.7; color:var(--paper);">
+          ${hardMode ? `
+          Hard Mode<br>
+          &middot; 50 states appear one at a time in random order<br>
+          &middot; You're given a state's name — click it on the map<br>
+          &middot; NO state outlines are shown until you correctly guess them<br>
+          &middot; NO skipping — your first wrong answer ends the game
+          ` : `
+          &middot; 50 states appear one at a time in random order<br>
+          &middot; You're given a state's name — click it on the map<br>
+          &middot; One click per state; the correct location is revealed either way<br>
+          &middot; No clock — take your time and see how many you can get
+          `}
+        </div>
+      </div>
+      <button class="btn-primary" id="${id}-startBtn">Begin</button>
+    </div>
+
+    <div class="game map-quiz" id="${id}-game" style="display:none;">
+      <div class="top-row">
+        <div class="plate"><div class="label">score</div><div class="value" id="${id}-scoreValue">0</div></div>
+        <div class="plate"><div class="label">progress</div><div class="value" id="${id}-progressValue">0 / 50</div></div>
+      </div>
+      <div class="map-question">
+        <div class="label">click this state on the map</div>
+        <h3 id="${id}-promptValue"></h3>
+      </div>
+      <div class="state-map-wrap">
+        <svg class="state-map clickable" id="${id}-map" viewBox="0 0 975 610" role="img" aria-label="Map of the United States — click the named state"></svg>
+      </div>
+      <div class="map-progress" id="${id}-progressText"></div>
+      <div class="map-feedback" id="${id}-feedback"></div>
+      <div class="map-next-row"><button id="${id}-nextBtn" style="display:none;">Next state &rarr;</button></div>
+    </div>
+
+    <div class="results" id="${id}-results" style="display:none;">
+      <button id="${id}-resetBtn" class="play-again-top">Play again</button>
+      <div class="final-score" id="${id}-finalScoreLine"></div>
+      <div class="section-title"><span>All 50 states</span><span>your hits in green</span></div>
+      <div id="${id}-finalGrid" class="final-grid"></div>
+    </div>
+  `;
+}
+
+class FindStateQuiz{
+  constructor(opts){
+    this.id=opts.id; this.states=opts.states; this.hardMode=!!opts.hardMode;
+    this.queue=[]; this.idx=0; this.score=0; this.answers=[]; this.answered=false; this.mapReady=false;
+    document.getElementById(`${this.id}-mount`).innerHTML=findStateHTML(this.id, this.hardMode);
+    this.el=key=>document.getElementById(`${this.id}-${key}`);
+    this.el('startBtn').addEventListener('click',()=>this.start());
+    this.el('nextBtn').addEventListener('click',()=>this.next());
+    this.el('resetBtn').addEventListener('click',()=>this.reset());
+    document.addEventListener('keydown',e=>{ if(e.key==='Enter' && this.answered && this.el('game').style.display!=='none') this.next(); });
+    this.loadMap();
+  }
+
+  async loadMap(){
+    try{
+      const us=await d3.json('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json');
+      const features=topojson.feature(us,us.objects.states).features;
+      const projection=d3.geoAlbersUsa().scale(1300).translate([487.5,305]);
+      const path=d3.geoPath(projection);
+      d3.select(this.el('map')).classed('hard-mode',this.hardMode).selectAll('path').data(features).join('path')
+        .attr('class','state').attr('d',path).attr('data-name',d=>d.properties.name)
+        .on('click',(event,d)=>this.handleClick(d.properties.name));
+      this.mapReady=true;
+      if(this.queue.length) this.renderMapState();
+    }catch(err){
+      this.el('feedback').textContent='The map could not be loaded. Please refresh and try again.';
+      this.el('feedback').className='map-feedback bad';
+      console.error(err);
+    }
+  }
+
+  start(){
+    this.el('intro').style.display='none'; this.el('results').style.display='none'; this.el('game').style.display='block';
+    this.queue=shuffled(this.states); this.idx=0; this.score=0; this.answers=[]; this.el('scoreValue').textContent='0';
+    if(this.mapReady) d3.select(this.el('map')).selectAll('.state').attr('class','state');
+    this.showQuestion();
+  }
+
+  showQuestion(){
+    this.answered=false;
+    this.el('map').classList.remove('answered');
+    this.el('progressValue').textContent=`${this.idx} / 50`;
+    this.el('progressText').textContent=`State ${this.idx+1} of 50`;
+    this.el('promptValue').textContent=this.queue[this.idx];
+    this.el('feedback').textContent=''; this.el('feedback').className='map-feedback';
+    this.el('nextBtn').style.display='none';
+    this.renderMapState();
+  }
+
+  renderMapState(){
+    if(!this.mapReady || !this.queue.length) return;
+    d3.select(this.el('map')).selectAll('.state')
+      .classed('target',false)
+      .classed('wrong',false)
+      .classed('guessed',d=>this.answers.some(a=>a.state===d.properties.name && a.isCorrect))
+      .classed('correct',d=>this.answers.some(a=>a.state===d.properties.name && a.isCorrect));
+  }
+
+  handleClick(name){
+    if(this.answered || !this.mapReady || !this.queue.length) return;
+    const target=this.queue[this.idx]; const isCorrect=name===target;
+    this.answered=true; if(isCorrect) this.score++;
+    this.answers.push({state:target,yourClick:name,isCorrect});
+    this.el('scoreValue').textContent=this.score;
+    this.el('map').classList.add('answered');
+    this.el('feedback').textContent=isCorrect ? `Correct — that's ${target}.` : `Not quite — you clicked ${name}. ${target} is highlighted above.`;
+    this.el('feedback').className=`map-feedback ${isCorrect?'good':'bad'}`;
+    d3.select(this.el('map')).selectAll('.state')
+      .classed('wrong',d=>d.properties.name===name && !isCorrect)
+      .classed('target',d=>d.properties.name===target && !isCorrect)
+      .classed('guessed',d=>this.answers.some(a=>a.state===d.properties.name && a.isCorrect))
+      .classed('correct',d=>(d.properties.name===target && isCorrect) || this.answers.some(a=>a.state===d.properties.name && a.isCorrect));
+    if(this.hardMode && !isCorrect){
+      this.end();
+      return;
+    }
+    this.el('nextBtn').textContent=this.idx===49 ? 'See results →' : 'Next state →';
+    this.el('nextBtn').style.display='inline-block'; this.el('nextBtn').focus();
+  }
+
+  next(){
+    if(!this.answered) return;
+    if(this.hardMode && !this.answers[this.answers.length-1]?.isCorrect){ this.end(); return; }
+    this.idx++;
+    if(this.idx>=this.queue.length){ this.end(); return; }
+    this.showQuestion();
+  }
+
+  end(){
+    this.el('game').style.display='none'; this.el('results').style.display='block';
+    this.el('finalScoreLine').textContent=this.hardMode
+      ? `Hard mode: ${this.score} of 50 states (${Math.round(this.score/50*100)}%).`
+      : `You found ${this.score} of 50 states (${Math.round(this.score/50*100)}%).`;
+    const byState=new Map(this.answers.map(a=>[a.state,a]));
+    this.el('finalGrid').innerHTML=this.states.slice().sort((a,b)=>a.localeCompare(b)).map(state=>{
+      const a=byState.get(state), hit=a?.isCorrect;
+      return `<div class="item ${hit?'hit':'miss'}"><span>${state}</span><span>${hit?'✓':'—'}</span></div>`;
+    }).join('');
+  }
+
+  reset(){
+    this.el('results').style.display='none'; this.el('intro').style.display='block'; this.el('game').style.display='none';
+    this.queue=[]; this.idx=0; this.score=0; this.answers=[];
+    if(this.mapReady) d3.select(this.el('map')).selectAll('.state').attr('class','state');
+    if(this.mapReady) d3.select(this.el('map')).classed('hard-mode',this.hardMode);
+  }
+}
+
+/* ============================================================
+   Build lookups & instantiate games
+   ============================================================ */
+const COUNTRY_LOOKUP = {};
+COUNTRIES.forEach(c => { COUNTRY_LOOKUP[normalize(c)] = c; });
+Object.keys(COUNTRY_ALIASES).forEach(k => {
+  if (COUNTRY_ALIASES[k] !== null) COUNTRY_LOOKUP[normalize(k)] = COUNTRY_ALIASES[k];
+});
+
+const STATE_LOOKUP = {};
+STATES.forEach(([name, abbr]) => {
+  STATE_LOOKUP[normalize(name)] = name;
+});
+
+const CANADA_PROVINCE_LOOKUP = {};
+CANADA_PROVINCES.forEach(name => {
+  CANADA_PROVINCE_LOOKUP[normalize(name)] = name;
+});
+CANADA_PROVINCE_LOOKUP[normalize("BC")] = "British Columbia";
+CANADA_PROVINCE_LOOKUP[normalize("PEI")] = "Prince Edward Island";
+CANADA_PROVINCE_LOOKUP[normalize("Newfoundland")] = "Newfoundland and Labrador";
+CANADA_PROVINCE_LOOKUP[normalize("NWT")] = "Northwest Territories";
+
+const countriesGame = new FreeRecallGame({
+  id: 'countries',
+  title: 'Countries of the World',
+  items: COUNTRIES,
+  lookup: COUNTRY_LOOKUP,
+  duration: 20*60,
+  finalTitle: 'Full roll — all 193 UN member states',
+  rulesHTML: `
+    &middot; Every UN member state counts once — 193 total<br>
+    &middot; Common nicknames and abbreviations are accepted<br>
+    &middot; When time expires, the full roll is revealed with your hits marked
+  `
+});
+
+const statesGame = new FreeRecallGame({
+  id: 'states',
+  title: 'US States',
+  items: STATES.map(s => s[0]),
+  lookup: STATE_LOOKUP,
+  duration: 10*60,
+  finalTitle: 'Full roll — all 50 US states',
+  rulesHTML: `
+    &middot; Every US state counts once — 50 total<br>
+    &middot; Type the full state name — abbreviations don't count here<br>
+    &middot; When time expires, the full roll is revealed with your hits marked
+  `
+});
+
+const abbrQuiz = new PromptQuiz({
+  id: 'abbr',
+  pairs: STATES.map(([name, abbr]) => ({ prompt: name, answer: abbr })),
+  duration: 8*60,
+  mode: 'short',
+  maxLength: 2,
+  promptLabel: "what's the abbreviation for",
+  finalRollLabel: 'Full roll — all 50 states',
+  rulesHTML: `
+    &middot; States appear one at a time in random order — 50 total<br>
+    &middot; Type the two-letter postal abbreviation for each<br>
+    &middot; Use Skip if you're stuck; the round ends when time runs out
+  `
+});
+
+const worldCapitalsQuiz = new PromptQuiz({
+  id: 'worldcap',
+  pairs: COUNTRIES.map(name => ({
+    prompt: name,
+    answer: WORLD_CAPITALS[name].answer,
+    aliases: WORLD_CAPITALS[name].aliases || []
+  })),
+  duration: 25*60,
+  mode: 'text',
+  promptLabel: "what's the capital of",
+  finalRollLabel: 'Full roll — all 193 countries',
+  rulesHTML: `
+    &middot; Countries appear one at a time in random order — 193 total<br>
+    &middot; Type the capital city for each<br>
+    &middot; Use Skip if you're stuck; the round ends when time runs out
+  `
+});
+
+const stateCapitalsQuiz = new PromptQuiz({
+  id: 'statecap',
+  pairs: STATES.map(([name]) => ({ prompt: name, answer: STATE_CAPITALS[name] })),
+  duration: 15*60,
+  mode: 'text',
+  promptLabel: "what's the capital of",
+  finalRollLabel: 'Full roll — all 50 states',
+  rulesHTML: `
+    &middot; States appear one at a time in random order — 50 total<br>
+    &middot; Type the capital city for each<br>
+    &middot; Use Skip if you're stuck; the round ends when you've been through all 50 or time runs out
+  `
+});
+
+const canadianProvincesGame = new FreeRecallGame({
+  id: 'provinces',
+  title: 'Canadian Provinces',
+  items: CANADA_PROVINCES,
+  lookup: CANADA_PROVINCE_LOOKUP,
+  duration: 5*60,
+  finalTitle: 'Full roll — all 10 provinces and 3 territories',
+  rulesHTML: `
+    &middot; Every Canadian province and territory counts once — 13 total<br>
+    &middot; Type the full name — common short forms are accepted<br>
+    &middot; When time expires, the full roll is revealed with your hits marked
+  `
+});
+
+const provinceCapitalsQuiz = new PromptQuiz({
+  id: 'provincecap',
+  pairs: CANADA_PROVINCES.map(name => ({
+    prompt: name,
+    answer: CANADA_PROVINCE_CAPITALS[name].answer,
+    aliases: CANADA_PROVINCE_CAPITALS[name].aliases || []
+  })),
+  duration: 8*60,
+  mode: 'text',
+  promptLabel: "what's the capital of",
+  finalRollLabel: 'Full roll — all 13 provinces and territories',
+  rulesHTML: `
+    &middot; Provinces and territories appear one at a time in random order — 13 total<br>
+    &middot; Type the capital city for each<br>
+    &middot; Use Skip if you're stuck; the round ends when you've been through all 13 or time runs out
+  `
+});
+
+/* ============================================================
+   Data: Alaska trivia (source: Wikipedia)
+   ============================================================ */
+const ALASKA_TRIVIA = [
+  {
+    q: "What is Alaska's state gem?",
+    accepted: ["jade"],
+    display: "Jade"
+  },
+  {
+    q: "What is Alaska's state mineral?",
+    accepted: ["gold"],
+    display: "Gold"
+  },
+  {
+    q: "What is Alaska's well-known state nickname?",
+    accepted: ["last frontier"],
+    display: "The Last Frontier"
+  },
+  {
+    q: "What was Alaska's capital during Russian occupation?",
+    accepted: ["new archangel", "sitka"],
+    display: "New Archangel (present-day Sitka)"
+  },
+  {
+    q: "What is Alaska's state insect?",
+    accepted: ["four spotted skimmer dragonfly", "four spot skimmer dragonfly", "four spotted skimmer", "four spot skimmer", "skimmer dragonfly", "dragonfly"],
+    display: "Four-spotted skimmer dragonfly"
+  },
+  {
+    q: "To the nearest million dollars, how much did the US pay to purchase Alaska?",
+    accepted: ["7", "7 million", "$7 million", "seven million", "7m"],
+    display: "$7 million (actual price: $7.2 million)"
+  },
+  {
+    q: "What is the northernmost city on the Inside Passage?",
+    accepted: ["skagway"],
+    display: "Skagway"
+  }
+];
+
+/* ============================================================
+   Data: New York trivia (source: Wikipedia)
+   ============================================================ */
+   const NEW_YORK_TRIVIA = [
+  {
+    q: "What is New York's state gem?",
+    accepted: ["garnet"],
+    display: "Garnet"
+  },
+  {
+    q: "What is New York's state fruit?",
+    accepted: ["apple"],
+    display: "Apple"
+  },
+  {
+    q: "What is New York's well-known state nickname?",
+    accepted: ["empire state", "empire"],
+    display: "The Empire State"
+  },
+  {
+    q: "What is New York's highest mountain?",
+    accepted: ["mount marcy", "mt marcy"],
+    display: "Mount Marcy"
+  },
+  {
+    q: "What is New York's state insect?",
+    accepted: ["nine spotted ladybug", "spotted ladybug", "ladybug"],
+    display: "Nine-spotted ladybug"
+  },
+  {
+    q: "To the nearest percent, how much of New York state consists of water?",
+    accepted: ["13", "14", "13%", "14%", "thirteen", "fourteen"],
+    display: "14 percent (exact: 13.6%)"
+  },
+  {
+    q: "Near present-day Albany, what was the first Dutch settlement in New York state?",
+    accepted: ["fort nassau"],
+    display: "Fort Nassau"
+  }
+];
+
+/* ============================================================
+   Data: Minnesota trivia (source: Wikipedia)
+   ============================================================ */
+const MINNESOTA_TRIVIA = [
+  {
+    q: "What is Minnesota's state gem?",
+    accepted: ["lake superior agate", "superior agate", "agate"],
+    display: "Lake Superior Agate"
+  },
+  {
+    q: "What is Minnesota's state beverage?",
+    accepted: ["milk"],
+    display: "Milk"
+  },
+  {
+    q: "What is Minnesota's official state sport?",
+    accepted: ["ice hockey", "hockey"],
+    display: "Ice Hockey"
+  },
+  {
+    q: "What is Minnesota's well-known state nickname?",
+    accepted: ["land of 10000 lakes", "land of 10,000 lakes", "land of ten thousand lakes"],
+    display: "Land of 10,000 Lakes"
+  },
+  {
+    q: "What is Minnesota's state fish?",
+    accepted: ["walleye"],
+    display: "Walleye"
+  },
+  {
+    q: "What MLB team calls Minnesota home?",
+    accepted: ["minnesota twins", "twins"],
+    display: "Minnesota Twins"
+  },
+  {
+    q: "What is the largest city on Lake Superior?",
+    accepted: ["duluth"],
+    display: "Duluth"
+  }
+];
+
+/* ============================================================
+   Data: Maine trivia (source: Wikipedia)
+   ============================================================ */
+   const MAINE_TRIVIA = [
+  {
+    q: "What is Maine's state tree?",
+    accepted: ["white pine", "pine"],
+    display: "White Pine"
+  },
+  {
+    q: "What is Maine's state cat?",
+    accepted: ["maine coon", "coon"],
+    display: "Maine Coon"
+  },
+  {
+    q: "What is Maine's state motto?",
+    accepted: ["the way life should be"],
+    display: "The Way Life Should Be"
+  },
+  {
+    q: "What do you call someone from Maine?",
+    accepted: ["mainer"],
+    display: "A Mainer"
+  },
+  {
+    q: "What is Maine's state insect?",
+    accepted: ["bee", "honey bee", "honeybee"],
+    display: "Honey Bee"
+  },
+  {
+    q: "What is the oldest lighthouse on the Maine coast?",
+    accepted: ["portland head light", "head light"],
+    display: "Portland Head Light"
+  },
+  {
+    q: "What is the single other US state that Maine borders?",
+    accepted: ["new hampshire"],
+    display: "New Hampshire"
+  }
+];
+
+/* ============================================================
+   Data: Maryland trivia (source: Wikipedia)
+   ============================================================ */
+const MARYLAND_TRIVIA = [
+  {
+    q: "What is Maryland's state tree?",
+    accepted: ["white oak"],
+    display: "White Oak"
+  },
+  {
+    q: "What is Maryland's state bird?",
+    accepted: ["baltimore oriole", "oriole"],
+    display: "Baltimore Oriole"
+  },
+  {
+    q: "What is the largest body of water in Maryland?",
+    accepted: ["chesapeake bay", "the chesapeake bay"],
+    display: "Chesapeake Bay"
+  },
+  {
+    q: "What type of traditional sailing ship is Maryland's state boat?",
+    accepted: ["skipjack"],
+    display: "Skipjack"
+  },
+  {
+    q: "What is Maryland's state crustacean?",
+    accepted: ["blue crab"],
+    display: "Blue Crab"
+  },
+  {
+    q: "Maryland is named after which English queen?",
+    accepted: ["queen henrietta maria", "henrietta maria"],
+    display: "Queen Henrietta Maria, wife of King Charles I of England"
+  },
+  {
+    q: "What is Maryland's official state dessert?",
+    accepted: ["smith island cake"],
+    display: "Smith Island Cake"
+  }
+];
+
+/* ============================================================
+   Data: Delaware trivia (source: Wikipedia)
+   ============================================================ */
+const DELAWARE_TRIVIA = [
+  {
+    q: "What is Delaware's state bird?",
+    accepted: ["delaware blue hen", "blue hen chicken", "blue hen"],
+    display: "Delaware Blue Hen"
+  },
+  {
+    q: "What is Delaware's state tree?",
+    accepted: ["american holly", "holly"],
+    display: "American Holly"
+  },
+  {
+    q: "What is Delaware's state flower?",
+    accepted: ["peach blossom"],
+    display: "Peach Blossom"
+  },
+  {
+    q: "How many counties does Delaware have (the fewest of any state)?",
+    accepted: ["3", "three"],
+    display: "Three: New Castle, Kent, and Sussex"
+  },
+  {
+    q: "What everyday cost do shoppers famously skip when buying retail goods in Delaware?",
+    accepted: ["sales tax", "state sales tax", "tax"],
+    display: "Sales tax — Delaware charges no state or local sales tax on retail purchases"
+  },
+  {
+    q: "For decades, a small town in Delaware hosted the world championship for launching what fall vegetable (technically a fruit) as far as possible?",
+    accepted: ["pumpkin", "pumpkins", "punkin", "punkins"],
+    display: "Pumpkins — the World Championship Punkin Chunkin contest ran in Delaware for years"
+  },
+  {
+    q: "In terms of land area, Delaware is the second-smallest US state — which state is smaller?",
+    accepted: ["rhode island"],
+    display: "Rhode Island"
+  }
+];
+
+/* ============================================================
+   Data: Connecticut trivia (source: Wikipedia)
+   ============================================================ */
+const CONNECTICUT_TRIVIA = [
+  {
+    q: "What is Connecticut's state tree?",
+    accepted: ["charter oak", "white oak", "oak"],
+    display: "Charter Oak (a white oak)"
+  },
+  {
+    q: "What is Connecticut's state bird?",
+    accepted: ["american robin", "robin"],
+    display: "American Robin"
+  },
+  {
+    q: "What is Connecticut's state insect?",
+    accepted: ["european mantis", "praying mantis", "mantis"],
+    display: "European Mantis (praying mantis)"
+  },
+  {
+    q: "What is Connecticut's state animal?",
+    accepted: ["sperm whale", "whale"],
+    display: "Sperm Whale"
+  },
+  {
+    q: "What is Connecticut's *official* state nickname, which refers to a document written in 1639?",
+    accepted: ["constitution state", "constitution"],
+    display: "The Constitution State"
+  },
+  {
+    q: "Legend says a New Haven diner called Louis' Lunch invented what iconic sandwich around 1900?",
+    accepted: ["hamburger", "the hamburger", "burger"],
+    display: "The Hamburger"
+  },
+  {
+    q: "A Bridgeport bakery's pie tins, tossed around by Yale students, are said to have inspired the name of what popular flying toy?",
+    accepted: ["frisbee", "the frisbee"],
+    display: "The Frisbee — named after the Frisbie Pie Company"
+  }
+];
+
+/* ============================================================
+   TRIVIA QUIZ ENGINE (one question at a time)
+   ============================================================ */
+function triviaHTML(id){
+  return `
+    <div id="${id}-intro">
+      <div class="plate" style="margin-bottom:18px;">
+        <div class="label">rules</div>
+        <div style="font-size:14px; line-height:1.7; color:var(--paper);" id="${id}-rules"></div>
+      </div>
+      <button class="btn-primary" id="${id}-startBtn">Begin</button>
+    </div>
+
+    <div class="game" id="${id}-game" style="display:none;">
+      <div class="trivia-progress" id="${id}-progress"></div>
+      <div class="trivia-q">
+        <div class="q-text" id="${id}-qText"></div>
+        <div class="trivia-answer-row" style="margin-top:20px;">
+          <input type="text" id="${id}-guess" placeholder="Type your answer…" autocomplete="off">
+          <button class="btn-primary" id="${id}-submitBtn">Submit</button>
+        </div>
+        <div class="trivia-reveal" id="${id}-reveal" style="display:none;"></div>
+      </div>
+      <button id="${id}-nextBtn" style="display:none;">Next question &rarr;</button>
+    </div>
+
+    <div class="results" id="${id}-results" style="display:none;">
+      <button id="${id}-resetBtn" class="play-again-top">Play again</button>
+      <div class="final-score" id="${id}-finalScoreLine"></div>
+      <div id="${id}-review"></div>
+    </div>
+  `;
+}
+
+class TriviaQuiz{
+  constructor(opts){
+    this.id = opts.id;
+    this.questions = opts.questions;
+    this.rulesHTML = opts.rulesHTML;
+
+    this.idx = 0;
+    this.score = 0;
+    this.answers = []; // { q, yourAnswer, correct, display }
+    this.answered = false;
+
+    document.getElementById(`${this.id}-mount`).innerHTML = triviaHTML(this.id);
+    document.getElementById(`${this.id}-rules`).innerHTML = this.rulesHTML;
+
+    this.el = key => document.getElementById(`${this.id}-${key}`);
+    this.el('startBtn').addEventListener('click', () => this.start());
+    this.el('submitBtn').addEventListener('click', () => this.submit());
+    this.el('nextBtn').addEventListener('click', () => this.next());
+    this.el('resetBtn').addEventListener('click', () => this.reset());
+    this.el('guess').addEventListener('keydown', e => {
+      if (e.key === 'Enter') { this.answered ? this.next() : this.submit(); }
+    });
+  }
+
+  start(){
+    this.el('intro').style.display = 'none';
+    this.el('game').style.display = 'block';
+    this.idx = 0;
+    this.score = 0;
+    this.answers = [];
+    this.showQuestion();
+  }
+
+  showQuestion(){
+    this.answered = false;
+    const q = this.questions[this.idx];
+    this.el('progress').textContent = `Question ${this.idx + 1} of ${this.questions.length}`;
+    this.el('qText').textContent = q.q;
+    this.el('guess').value = '';
+    this.el('guess').disabled = false;
+    this.el('submitBtn').style.display = 'inline-block';
+    this.el('reveal').style.display = 'none';
+    this.el('nextBtn').style.display = 'none';
+    this.el('guess').focus();
+  }
+
+  submit(){
+    if (this.answered) return;
+    const q = this.questions[this.idx];
+    const raw = this.el('guess').value;
+    if (!raw.trim()) return;
+    const key = normalize(raw);
+    const isCorrect = q.accepted.map(normalize).includes(key);
+
+    this.answered = true;
+    if (isCorrect) this.score++;
+    this.answers.push({ q: q.q, yourAnswer: raw.trim(), display: q.display, isCorrect });
+
+    this.el('guess').disabled = true;
+    this.el('submitBtn').style.display = 'none';
+    const reveal = this.el('reveal');
+    reveal.style.display = 'block';
+    reveal.className = `trivia-reveal ${isCorrect ? 'correct' : 'incorrect'}`;
+    reveal.textContent = isCorrect ? `Correct — ${q.display}` : `Not quite — the answer is ${q.display}`;
+    this.el('nextBtn').style.display = 'inline-block';
+    this.el('nextBtn').focus();
+  }
+
+  next(){
+    if (!this.answered) return;
+    this.idx++;
+    if (this.idx >= this.questions.length){ this.end(); return; }
+    this.showQuestion();
+  }
+
+  end(){
+    this.el('game').style.display = 'none';
+    this.el('results').style.display = 'block';
+    this.el('finalScoreLine').textContent = `You scored ${this.score} of ${this.questions.length}.`;
+    this.el('review').innerHTML = this.answers.map(a => `
+      <div class="review-item">
+        <div class="rq">${a.q}</div>
+        <div class="ra ${a.isCorrect ? 'hit' : 'miss'}">
+          Your answer: ${a.yourAnswer} ${a.isCorrect ? '✓' : '—'}
+          ${a.isCorrect ? '' : `<span class="correct-note">Correct answer: ${a.display}</span>`}
+        </div>
+      </div>
+    `).join('');
+  }
+
+  reset(){
+    this.idx = 0;
+    this.score = 0;
+    this.answers = [];
+    this.el('results').style.display = 'none';
+    this.el('intro').style.display = 'block';
+  }
+}
+
+/* ============================================================
+   Data: California trivia (source: Wikipedia)
+   ============================================================ */
+const CALIFORNIA_TRIVIA = [
+  {
+    q: "What is California's state gem?",
+    accepted: ["benitoite"],
+    display: "Benitoite"
+  },
+  {
+    q: "What is California's state animal?",
+    accepted: ["california grizzly bear", "grizzly bear", "grizzly"],
+    display: "California grizzly bear"
+  },
+  {
+    q: "What is California's well-known state nickname?",
+    accepted: ["golden state"],
+    display: "The Golden State"
+  },
+  {
+    q: "What is California's highest mountain?",
+    accepted: ["mount whitney", "mt whitney"],
+    display: "Mount Whitney"
+  },
+  {
+    q: "What is California's state insect?",
+    accepted: ["california dogface butterfly", "dogface butterfly", "california dogface"],
+    display: "California dogface butterfly"
+  },
+  {
+    q: "In what year did California become a US state?",
+    accepted: ["1850"],
+    display: "1850"
+  },
+  {
+    q: "What is California's state flower?",
+    accepted: ["california poppy", "poppy"],
+    display: "California poppy"
+  }
+];
+
+/* ============================================================
+   US STATES SHOWCASE — REGISTRY
+   ============================================================
+   To add a new state quiz:
+     1. Add a `const XYZ_TRIVIA = [ {q, accepted, display}, ... ]`
+        array above (or anywhere before this block) — same JSON-array
+        shape as the existing ones.
+     2. Add ONE entry to STATE_SHOWCASE_QUIZZES below.
+   That's it. The home-page card, its alphabetical position, the
+   screen markup, the mount point, the rules text, and the
+   TriviaQuiz instance are all generated automatically just below.
+
+   Fields:
+     id        - unique, no spaces (used for URL-free screen id)
+     state     - state name, used for sorting + default rules text
+     subtitle  - short flavor text for the card title, e.g.
+                 state "Alaska" + subtitle "Frontier Facts"
+                 -> card reads "Alaska: Frontier Facts"
+     questions - the JSON question array (KEEP this format)
+   ============================================================ */
+const STATE_SHOWCASE_QUIZZES = [
+  { id: 'alaska',     state: 'Alaska',     subtitle: 'Frontier Facts',      questions: ALASKA_TRIVIA },
+  { id: 'california', state: 'California', subtitle: 'Golden Genius',      questions: CALIFORNIA_TRIVIA },
+  { id: 'connecticut', state: 'Connecticut', subtitle: 'Nutmeg Knowledge',  questions: CONNECTICUT_TRIVIA },
+  { id: 'delaware',  state: 'Delaware',  subtitle: 'First State Facts',    questions: DELAWARE_TRIVIA },
+  { id: 'maine',     state: 'Maine',     subtitle: 'Pine Puzzler',         questions: MAINE_TRIVIA },
+  { id: 'maryland',  state: 'Maryland',  subtitle: 'Miscellanea',   questions: MARYLAND_TRIVIA },
+  { id: 'minnesota', state: 'Minnesota', subtitle: 'Northstar Knowhow',    questions: MINNESOTA_TRIVIA },
+  { id: 'newyork',   state: 'New York',  subtitle: 'Empire Smart',         questions: NEW_YORK_TRIVIA },
+];
+
+/* ---- generator: turns the registry above into cards + screens + quizzes ---- */
+function stateTriviaRulesHTML(state, count){
+  return `
+    &middot; ${count} questions about ${state}, one at a time — no clock, just recall<br>
+    &middot; Type your answer and hit enter or submit<br>
+    &middot; You'll see the correct answer immediately after each question<br>
+    &middot; At the end, review your full scorecard
+  `;
+}
+
+function estMinutes(count){
+  return Math.max(1, Math.round(count * 0.4));
+}
+
+function initStateShowcase(quizzes){
+  const cardGrid = document.getElementById('showcase-card-grid');
+  const screenHost = document.getElementById('showcase-screens');
+  const instances = {};
+
+  // Alphabetize automatically — no manual ordering required in the registry above.
+  const sorted = [...quizzes].sort((a, b) => a.state.localeCompare(b.state));
+
+  const countEl = document.getElementById('showcase-quiz-count');
+  if (countEl) countEl.textContent = `${sorted.length} quiz${sorted.length === 1 ? '' : 'zes'}`;
+
+  sorted.forEach(quiz => {
+    const count = quiz.questions.length;
+
+    // Home page card
+    cardGrid.insertAdjacentHTML('beforeend', `
+      <div class="card">
+        <div class="tag">Trivia quiz &middot; ${count} questions</div>
+        <h3>${quiz.state}: ${quiz.subtitle}</h3>
+        <div class="meta">~${estMinutes(count)} minutes</div>
+        <button class="btn-primary" onclick="showScreen('${quiz.id}')">Play</button>
+      </div>
+    `);
+
+    // Screen + mount point
+    screenHost.insertAdjacentHTML('beforeend', `
+      <div class="screen" id="screen-${quiz.id}">
+        <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
+        <div id="${quiz.id}-mount"></div>
+      </div>
+    `);
+
+    // Quiz instance
+    instances[quiz.id] = new TriviaQuiz({
+      id: quiz.id,
+      questions: quiz.questions,
+      rulesHTML: quiz.rulesHTML || stateTriviaRulesHTML(quiz.state, count)
+    });
+  });
+
+  return instances;
+}
+
+const stateShowcaseQuizInstances = initStateShowcase(STATE_SHOWCASE_QUIZZES);
+
+/* ============================================================
+   MINEFIELD ENGINE (guess items in strict descending order —
+   one wrong guess ends the round)
+   ============================================================ */
+function minefieldHTML(id, opts){
+  opts = opts || {};
+  const itemNoun = opts.itemNoun || 'state';
+  const itemNounPlural = opts.itemNounPlural || `${itemNoun}s`;
+  const startHint = opts.startHint || 'most populous';
+  const metricLabel = opts.metricLabel || 'population';
+  const total = opts.total;
+  return `
+    <div id="${id}-intro">
+      <div class="plate" style="margin-bottom:18px;">
+        <div class="label">rules</div>
+        <div style="font-size:14px; line-height:1.7; color:var(--paper);" id="${id}-rules"></div>
+      </div>
+      <button class="btn-primary" id="${id}-startBtn">Begin</button>
+    </div>
+
+    <div class="game" id="${id}-game" style="display:none;">
+      <div class="top-row">
+        <div class="plate">
+          <div class="label">correct so far</div>
+          <div class="value" id="${id}-scoreValue">0</div>
+        </div>
+        <div class="plate">
+          <div class="label">next rank</div>
+          <div class="value" id="${id}-rankValue">#1</div>
+        </div>
+      </div>
+      <div class="entry">
+        <input type="text" id="${id}-guess" placeholder="Type the next ${itemNoun}…" autocomplete="off">
+        <button class="btn-primary" id="${id}-submitBtn">Guess</button>
+      </div>
+      <div class="feedback" id="${id}-feedback"></div>
+      <div class="section-title"><span>Correctly guessed, in order</span><span id="${id}-guessedCount">0</span></div>
+      <div id="${id}-mineList" class="mine-list">
+        <div class="empty-note">Nothing yet — guess the ${startHint} ${itemNoun} to start.</div>
+      </div>
+      <div style="margin-top:16px;">
+        <button id="${id}-giveupBtn">Give up</button>
+      </div>
+    </div>
+
+    <div class="results" id="${id}-results" style="display:none;">
+      <button id="${id}-resetBtn" class="play-again-top">Play again</button>
+      <div class="final-score" id="${id}-finalScoreLine"></div>
+      <div class="section-title"><span>Full ranking — all ${total} ${itemNounPlural} by ${metricLabel}</span><span>your hits in green</span></div>
+      <div id="${id}-finalGrid" class="final-grid"></div>
+    </div>
+  `;
+}
+
+class MinefieldQuiz{
+  constructor(opts){
+    this.id = opts.id;
+    this.items = opts.items; // [[name, population], ...] already sorted descending
+    this.lookup = opts.lookup; // normalized name -> canonical
+    this.rulesHTML = opts.rulesHTML;
+    this.fmtPop = opts.fmtPop || fmtPop; // allow a custom population formatter per instance
+    this.itemNoun = opts.itemNoun || 'state';
+    this.itemNounPlural = opts.itemNounPlural || `${this.itemNoun}s`;
+    this.startHint = opts.startHint || 'most populous';
+    this.metricLabel = opts.metricLabel || 'population';
+    this.emptyNoteHTML = `<div class="empty-note">Nothing yet — guess the ${this.startHint} ${this.itemNoun} to start.</div>`;
+
+    this.nextIndex = 0;
+    this.guessedSoFar = []; // [{name, population}]
+    this.running = false;
+
+    document.getElementById(`${this.id}-mount`).innerHTML = minefieldHTML(this.id, {
+      itemNoun: this.itemNoun,
+      itemNounPlural: this.itemNounPlural,
+      startHint: this.startHint,
+      metricLabel: this.metricLabel,
+      total: this.items.length
+    });
+    document.getElementById(`${this.id}-rules`).innerHTML = this.rulesHTML;
+
+    this.el = key => document.getElementById(`${this.id}-${key}`);
+    this.el('startBtn').addEventListener('click', () => this.start());
+    this.el('submitBtn').addEventListener('click', () => this.submit());
+    this.el('giveupBtn').addEventListener('click', () => this.giveUp());
+    this.el('resetBtn').addEventListener('click', () => this.reset());
+    this.el('guess').addEventListener('keydown', e => { if (e.key === 'Enter') this.submit(); });
+  }
+
+  start(){
+    this.el('intro').style.display = 'none';
+    this.el('game').style.display = 'block';
+    this.running = true;
+    this.nextIndex = 0;
+    this.guessedSoFar = [];
+    this.renderList();
+    this.updateHeader();
+    this.el('guess').disabled = false;
+    this.el('guess').value = '';
+    this.el('feedback').textContent = '';
+    this.el('feedback').className = 'feedback';
+    this.el('guess').focus();
+  }
+
+  updateHeader(){
+    this.el('scoreValue').textContent = this.guessedSoFar.length;
+    this.el('rankValue').textContent = `#${this.nextIndex + 1}`;
+  }
+
+  submit(){
+    if (!this.running) return;
+    const raw = this.el('guess').value;
+    if (!raw.trim()) return;
+    const key = normalize(raw);
+    const canonical = this.lookup[key];
+    const [targetName, targetPop] = this.items[this.nextIndex];
+
+    if (canonical === targetName){
+      this.guessedSoFar.push({ name: targetName, population: targetPop });
+      this.nextIndex++;
+      this.el('guess').value = '';
+      this.el('feedback').textContent = `${targetName} — correct! (${this.fmtPop(targetPop)})`;
+      this.el('feedback').className = 'feedback good';
+      this.renderList();
+      this.updateHeader();
+      if (this.nextIndex >= this.items.length){ this.end('complete'); return; }
+      this.el('guess').focus();
+    } else {
+      this.end('wrong', { typed: raw.trim(), canonical, targetName });
+    }
+  }
+
+  renderList(){
+    this.el('guessedCount').textContent = this.guessedSoFar.length;
+    const container = this.el('mineList');
+    container.innerHTML = this.guessedSoFar.length
+      ? this.guessedSoFar.map((g, i) => `
+          <div class="row"><span><span class="mine-rank-badge">#${i+1}</span>${g.name}</span><span class="pop">${this.fmtPop(g.population)}</span></div>
+        `).join('')
+      : this.emptyNoteHTML;
+  }
+
+  giveUp(){
+    if (!this.running) return;
+    this.end('gaveup');
+  }
+
+  end(reason, details){
+    if (!this.running) return;
+    this.running = false;
+    this.el('guess').disabled = true;
+    this.el('game').style.display = 'none';
+    this.el('results').style.display = 'block';
+
+    const n = this.guessedSoFar.length;
+    const total = this.items.length;
+    let line;
+    if (reason === 'complete'){
+      line = `Perfect run — you named all ${total} states in order!`;
+    } else if (reason === 'wrong'){
+      line = details.canonical
+        ? `Game over — you got ${n} of ${total} right. "${details.typed}" is a real state, but it wasn't next — ${details.targetName} was.`
+        : `Game over — you got ${n} of ${total} right. "${details.typed}" wasn't recognized; the next state was ${details.targetName}.`;
+    } else {
+      line = `You stopped after ${n} of ${total} correct.`;
+    }
+    this.el('finalScoreLine').textContent = line;
+
+    this.el('finalGrid').innerHTML = this.items.map(([name, pop], i) => {
+      const hit = i < n;
+      const isMissPoint = reason === 'wrong' && i === n;
+      const cls = hit ? 'hit' : (isMissPoint ? 'next' : 'miss');
+      const mark = hit ? '✓' : (isMissPoint ? '✕' : '—');
+      return `<div class="item ${cls}"><span>#${i+1} ${name}</span><span>${this.fmtPop(pop)} ${mark}</span></div>`;
+    }).join('');
+  }
+
+  reset(){
+    this.running = false;
+    this.nextIndex = 0;
+    this.guessedSoFar = [];
+    this.el('guess').disabled = false;
+    this.el('results').style.display = 'none';
+    this.el('intro').style.display = 'block';
+  }
+}
+
+const populationMinefield = new MinefieldQuiz({
+  id: 'popmine',
+  items: STATE_POPULATION_RANKING,
+  lookup: STATE_LOOKUP,
+  itemNoun: 'state',
+  itemNounPlural: 'states',
+  startHint: 'most populous',
+  metricLabel: 'population',
+  rulesHTML: `
+    &middot; Name all 50 US states in order from most to least populous<br>
+    &middot; One wrong guess — including a right state in the wrong order — ends the round immediately<br>
+    &middot; Each correct guess shows that state's population, rounded to the nearest million<br>
+    &middot; No clock here — just don't miss
+  `
+});
+
+const worldPopulationMinefield = new MinefieldQuiz({
+  id: 'worldpopmine',
+  items: WORLD_POPULATION_RANKING,
+  lookup: COUNTRY_LOOKUP,
+  fmtPop: fmtPopWorld,
+  itemNoun: 'country',
+  itemNounPlural: 'countries',
+  startHint: 'most populous',
+  metricLabel: 'population',
+  rulesHTML: `
+    &middot; Name all 193 countries in order from most to least populous<br>
+    &middot; One wrong guess — including a right country in the wrong order — ends the round immediately<br>
+    &middot; Each correct guess shows that country's population<br>
+    &middot; No clock here — just don't miss
+  `
+});
+
+const provincePopulationMinefield = new MinefieldQuiz({
+  id: 'provpopmine',
+  items: CANADA_POPULATION_RANKING,
+  lookup: CANADA_PROVINCE_LOOKUP,
+  fmtPop: fmtPopCA,
+  itemNoun: 'province or territory',
+  itemNounPlural: 'provinces and territories',
+  startHint: 'most populous',
+  metricLabel: 'population',
+  rulesHTML: `
+    &middot; Name all 10 provinces and 3 territories in order from most to least populous<br>
+    &middot; One wrong guess — including a right one in the wrong order — ends the round immediately<br>
+    &middot; Each correct guess shows that province or territory's population<br>
+    &middot; No clock here — just don't miss
+  `
+});
+
+const mountainMinefield = new MinefieldQuiz({
+  id: 'mountainmine',
+  items: MOUNTAIN_RANKING,
+  lookup: MOUNTAIN_LOOKUP,
+  fmtPop: fmtElev,
+  itemNoun: 'mountain',
+  itemNounPlural: 'mountains',
+  startHint: 'tallest',
+  metricLabel: 'elevation',
+  rulesHTML: `
+    &middot; Name the world's 15 highest mountains in order from tallest to shortest<br>
+    &middot; One wrong guess — including a real mountain in the wrong order — ends the round immediately<br>
+    &middot; Each correct guess shows that mountain's elevation<br>
+    &middot; No clock here — just don't miss
+  `
+});
+
+const riverMinefield = new MinefieldQuiz({
+  id: 'rivermine',
+  items: RIVER_RANKING,
+  lookup: RIVER_LOOKUP,
+  fmtPop: fmtLen,
+  itemNoun: 'river',
+  itemNounPlural: 'rivers',
+  startHint: 'longest',
+  metricLabel: 'length',
+  rulesHTML: `
+    &middot; Name the world's 15 longest rivers (or river systems) in order from longest to shortest<br>
+    &middot; One wrong guess — including a real river in the wrong order — ends the round immediately<br>
+    &middot; Each correct guess shows that river's length<br>
+    &middot; No clock here — just don't miss
+  `
+});
+
+const oceansGame = new FreeRecallGame({
+  id: 'oceans',
+  title: 'Name the Oceans',
+  items: OCEANS,
+  lookup: OCEAN_LOOKUP,
+  duration: 1*60,
+  finalTitle: 'Full roll — all 5 oceans',
+  rulesHTML: `
+    &middot; Every ocean counts once — 5 total<br>
+    &middot; Common short forms are accepted<br>
+    &middot; When time expires, the full roll is revealed with your hits marked
+  `
+});
+
+const presidentsGame = new PresidentsRecallGame({
+  id: 'presidents',
+  title: 'US Presidents',
+  terms: PRESIDENTS_TERMS,
+  lookup: PRESIDENT_LOOKUP,
+  duration: 10*60,
+  finalTitle: 'Full roster — all 47 terms, chronological from Washington',
+  rulesHTML: `
+    &middot; 45 presidents across 47 terms — Some presidents served two non-consecutive terms and appear twice<br>
+    &middot; Full name, last name, or common abbreviations are all accepted<br>
+    &middot; A shared last name gives you credit for all presidents with that last name<br>
+    &middot; When time expires, the full roster is revealed in chronological order with years served
+  `
+});
+
+const pmsGame = new PresidentsRecallGame({
+  id: 'pms',
+  title: 'Canadian Prime Ministers',
+  terms: PM_TERMS,
+  lookup: PM_LOOKUP,
+  duration: 6*60,
+  peopleLabel: 'prime ministers',
+  finalTitle: 'Full roster — all 29 terms, chronological from Macdonald',
+  rulesHTML: `
+    &middot; 24 prime ministers across 29 terms — several served multiple non-consecutive terms and appear more than once<br>
+    &middot; Full name, last name, or common short forms are accepted<br>
+    &middot; The shared last name Trudeau gives you credit for whichever Trudeau (Pierre or Justin) you haven't gotten yet<br>
+    &middot; When time expires, the full roster is revealed in chronological order with years served
+  `
+});
+
+const stateMapQuiz = new StateMapQuiz({ id:'statemap', states:STATES.map(([name])=>name) });
+const findStateQuiz = new FindStateQuiz({ id:'findstate', states:STATES.map(([name])=>name) });
+const findStateHardQuiz = new FindStateQuiz({ id:'findstate-hard', states:STATES.map(([name])=>name), hardMode:true });
+</script>
+</body>
+</html>
