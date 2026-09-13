@@ -494,10 +494,11 @@ SCREEN_IDS.forEach(id => {
 Promise.all([
   fetch('geography.json').then(r => r.json()),
   fetch('history.json').then(r => r.json()),
-  fetch('general-knowledge.json').then(r => r.json())
+  fetch('general-knowledge.json').then(r => r.json()),
+  fetch('sports.json').then(r => r.json())
 ])
-  .then(([geography, history, generalKnowledge]) => {
-    window.QUIZ_DATA = { ...geography, ...history, ...generalKnowledge };
+  .then(([geography, history, generalKnowledge, sports]) => {
+    window.QUIZ_DATA = { ...geography, ...history, ...generalKnowledge, ...sports };
     const s = document.createElement('script');
     s.src = 'app-init.js';
     document.body.appendChild(s);
