@@ -1,0 +1,35 @@
+# .github/workflows/validate-json.yml
+name: Validate JSON
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate-json:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate all JSON files
+        run: |
+          set -e
+          shopt -s globstar nullglob
+          files=(**/*.json)
+          if [ ${#files[@]} -eq 0 ]; then
+            echo "No JSON files found."
+            exit 0
+          fi
+          fail=0
+          for f in "${files[@]}"; do
+            if ! jq empty "$f" > /dev/null 2>&1; then
+              echo "::error file=$f::Invalid JSON"
+              fail=1
+            else
+              echo "OK: $f"
+            fi
+          done
+          exit $fail
