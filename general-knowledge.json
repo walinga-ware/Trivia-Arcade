@@ -1,0 +1,473 @@
+{
+  "ALASKA_TRIVIA": [
+    {
+      "q": "What is Alaska's state gem?",
+      "accepted": [
+        "jade"
+      ],
+      "display": "Jade"
+    },
+    {
+      "q": "What is Alaska's state mineral?",
+      "accepted": [
+        "gold"
+      ],
+      "display": "Gold"
+    },
+    {
+      "q": "What is Alaska's well-known state nickname?",
+      "accepted": [
+        "last frontier"
+      ],
+      "display": "The Last Frontier"
+    },
+    {
+      "q": "What was Alaska's capital during Russian occupation?",
+      "accepted": [
+        "new archangel",
+        "sitka"
+      ],
+      "display": "New Archangel (present-day Sitka)"
+    },
+    {
+      "q": "What is Alaska's state insect?",
+      "accepted": [
+        "four spotted skimmer dragonfly",
+        "four spot skimmer dragonfly",
+        "four spotted skimmer",
+        "four spot skimmer",
+        "skimmer dragonfly",
+        "dragonfly"
+      ],
+      "display": "Four-spotted skimmer dragonfly"
+    },
+    {
+      "q": "To the nearest million dollars, how much did the US pay to purchase Alaska?",
+      "accepted": [
+        "7",
+        "7 million",
+        "$7 million",
+        "seven million",
+        "7m"
+      ],
+      "display": "$7 million (actual price: $7.2 million)"
+    },
+    {
+      "q": "What is the northernmost city on the Inside Passage?",
+      "accepted": [
+        "skagway"
+      ],
+      "display": "Skagway"
+    }
+  ],
+  "NEW_YORK_TRIVIA": [
+    {
+      "q": "What is New York's state gem?",
+      "accepted": [
+        "garnet"
+      ],
+      "display": "Garnet"
+    },
+    {
+      "q": "What is New York's state fruit?",
+      "accepted": [
+        "apple"
+      ],
+      "display": "Apple"
+    },
+    {
+      "q": "What is New York's well-known state nickname?",
+      "accepted": [
+        "empire state",
+        "empire"
+      ],
+      "display": "The Empire State"
+    },
+    {
+      "q": "What is New York's highest mountain?",
+      "accepted": [
+        "mount marcy",
+        "mt marcy"
+      ],
+      "display": "Mount Marcy"
+    },
+    {
+      "q": "What is New York's state insect?",
+      "accepted": [
+        "nine spotted ladybug",
+        "spotted ladybug",
+        "ladybug"
+      ],
+      "display": "Nine-spotted ladybug"
+    },
+    {
+      "q": "To the nearest percent, how much of New York state consists of water?",
+      "accepted": [
+        "13",
+        "14",
+        "13%",
+        "14%",
+        "thirteen",
+        "fourteen"
+      ],
+      "display": "14 percent (exact: 13.6%)"
+    },
+    {
+      "q": "Near present-day Albany, what was the first Dutch settlement in New York state?",
+      "accepted": [
+        "fort nassau"
+      ],
+      "display": "Fort Nassau"
+    }
+  ],
+  "MINNESOTA_TRIVIA": [
+    {
+      "q": "What is Minnesota's state gem?",
+      "accepted": [
+        "lake superior agate",
+        "superior agate",
+        "agate"
+      ],
+      "display": "Lake Superior Agate"
+    },
+    {
+      "q": "What is Minnesota's state beverage?",
+      "accepted": [
+        "milk"
+      ],
+      "display": "Milk"
+    },
+    {
+      "q": "What is Minnesota's official state sport?",
+      "accepted": [
+        "ice hockey",
+        "hockey"
+      ],
+      "display": "Ice Hockey"
+    },
+    {
+      "q": "What is Minnesota's well-known state nickname?",
+      "accepted": [
+        "land of 10000 lakes",
+        "land of 10,000 lakes",
+        "land of ten thousand lakes"
+      ],
+      "display": "Land of 10,000 Lakes"
+    },
+    {
+      "q": "What is Minnesota's state fish?",
+      "accepted": [
+        "walleye"
+      ],
+      "display": "Walleye"
+    },
+    {
+      "q": "What downtown Minneapolis baseball stadium is home to the Minnesota Twins?",
+      "accepted": [
+        "target field",
+        "target"
+      ],
+      "display": "Target Field"
+    },
+    {
+      "q": "What is the largest city on Lake Superior?",
+      "accepted": [
+        "duluth"
+      ],
+      "display": "Duluth"
+    }
+  ],
+  "MAINE_TRIVIA": [
+    {
+      "q": "What is Maine's state tree?",
+      "accepted": [
+        "white pine",
+        "pine"
+      ],
+      "display": "White Pine"
+    },
+    {
+      "q": "What is Maine's state cat?",
+      "accepted": [
+        "maine coon",
+        "coon"
+      ],
+      "display": "Maine Coon"
+    },
+    {
+      "q": "What is Maine's state motto?",
+      "accepted": [
+        "the way life should be"
+      ],
+      "display": "The Way Life Should Be"
+    },
+    {
+      "q": "What do you call someone from Maine?",
+      "accepted": [
+        "mainer"
+      ],
+      "display": "A Mainer"
+    },
+    {
+      "q": "What is Maine's state insect?",
+      "accepted": [
+        "bee",
+        "honey bee",
+        "honeybee"
+      ],
+      "display": "Honey Bee"
+    },
+    {
+      "q": "What is the oldest lighthouse on the Maine coast?",
+      "accepted": [
+        "portland head light",
+        "head light"
+      ],
+      "display": "Portland Head Light"
+    },
+    {
+      "q": "What is the single other US state that Maine borders?",
+      "accepted": [
+        "new hampshire"
+      ],
+      "display": "New Hampshire"
+    }
+  ],
+  "MARYLAND_TRIVIA": [
+    {
+      "q": "What is Maryland's state tree?",
+      "accepted": [
+        "white oak"
+      ],
+      "display": "White Oak"
+    },
+    {
+      "q": "What is Maryland's state bird?",
+      "accepted": [
+        "baltimore oriole",
+        "oriole"
+      ],
+      "display": "Baltimore Oriole"
+    },
+    {
+      "q": "What is the largest body of water in Maryland?",
+      "accepted": [
+        "chesapeake bay",
+        "the chesapeake bay"
+      ],
+      "display": "Chesapeake Bay"
+    },
+    {
+      "q": "What type of traditional sailing ship is Maryland's state boat?",
+      "accepted": [
+        "skipjack"
+      ],
+      "display": "Skipjack"
+    },
+    {
+      "q": "What is Maryland's state crustacean?",
+      "accepted": [
+        "blue crab"
+      ],
+      "display": "Blue Crab"
+    },
+    {
+      "q": "Maryland is named after which English queen?",
+      "accepted": [
+        "queen henrietta maria",
+        "henrietta maria"
+      ],
+      "display": "Queen Henrietta Maria, wife of King Charles I of England"
+    },
+    {
+      "q": "What is Maryland's official state dessert?",
+      "accepted": [
+        "smith island cake"
+      ],
+      "display": "Smith Island Cake"
+    }
+  ],
+  "DELAWARE_TRIVIA": [
+    {
+      "q": "What is Delaware's state bird?",
+      "accepted": [
+        "delaware blue hen",
+        "blue hen chicken",
+        "blue hen"
+      ],
+      "display": "Delaware Blue Hen"
+    },
+    {
+      "q": "What is Delaware's state tree?",
+      "accepted": [
+        "american holly",
+        "holly"
+      ],
+      "display": "American Holly"
+    },
+    {
+      "q": "What is Delaware's state flower?",
+      "accepted": [
+        "peach blossom"
+      ],
+      "display": "Peach Blossom"
+    },
+    {
+      "q": "How many counties does Delaware have (the fewest of any state)?",
+      "accepted": [
+        "3",
+        "three"
+      ],
+      "display": "Three: New Castle, Kent, and Sussex"
+    },
+    {
+      "q": "What everyday cost do shoppers famously skip when buying retail goods in Delaware?",
+      "accepted": [
+        "sales tax",
+        "state sales tax",
+        "tax"
+      ],
+      "display": "Sales tax — Delaware charges no state or local sales tax on retail purchases"
+    },
+    {
+      "q": "For decades, a small town in Delaware hosted the world championship for launching what fall vegetable (technically a fruit) as far as possible?",
+      "accepted": [
+        "pumpkin",
+        "pumpkins",
+        "punkin",
+        "punkins"
+      ],
+      "display": "Pumpkins — the World Championship Punkin Chunkin contest ran in Delaware for years"
+    },
+    {
+      "q": "In terms of land area, Delaware is the second-smallest US state — which state is smaller?",
+      "accepted": [
+        "rhode island"
+      ],
+      "display": "Rhode Island"
+    }
+  ],
+  "CONNECTICUT_TRIVIA": [
+    {
+      "q": "What is Connecticut's state tree?",
+      "accepted": [
+        "charter oak",
+        "white oak",
+        "oak"
+      ],
+      "display": "Charter Oak (a white oak)"
+    },
+    {
+      "q": "What is Connecticut's state bird?",
+      "accepted": [
+        "american robin",
+        "robin"
+      ],
+      "display": "American Robin"
+    },
+    {
+      "q": "What is Connecticut's state insect?",
+      "accepted": [
+        "european mantis",
+        "praying mantis",
+        "mantis"
+      ],
+      "display": "European Mantis (praying mantis)"
+    },
+    {
+      "q": "What is Connecticut's state animal?",
+      "accepted": [
+        "sperm whale",
+        "whale"
+      ],
+      "display": "Sperm Whale"
+    },
+    {
+      "q": "What is Connecticut's *official* state nickname, which refers to a document written in 1639?",
+      "accepted": [
+        "constitution state",
+        "constitution"
+      ],
+      "display": "The Constitution State"
+    },
+    {
+      "q": "Legend says a New Haven diner called Louis' Lunch invented what iconic sandwich around 1900?",
+      "accepted": [
+        "hamburger",
+        "the hamburger",
+        "burger"
+      ],
+      "display": "The Hamburger"
+    },
+    {
+      "q": "A Bridgeport bakery's pie tins, tossed around by Yale students, are said to have inspired the name of what popular flying toy?",
+      "accepted": [
+        "frisbee",
+        "the frisbee"
+      ],
+      "display": "The Frisbee — named after the Frisbie Pie Company"
+    }
+  ],
+  "CALIFORNIA_TRIVIA": [
+    {
+      "q": "Name either of California's two state trees",
+      "accepted": [
+        "coast redwood",
+        "redwood",
+        "red wood",
+        "redwood tree",
+        "giant sequoia",
+        "sequoia"
+      ],
+      "display": "Coast Redwood and Giant Sequoia"
+    },
+    {
+      "q": "What is California's state animal?",
+      "accepted": [
+        "california grizzly bear",
+        "grizzly bear",
+        "grizzly"
+      ],
+      "display": "California grizzly bear"
+    },
+    {
+      "q": "What is California's well-known state nickname?",
+      "accepted": [
+        "golden state"
+      ],
+      "display": "The Golden State"
+    },
+    {
+      "q": "What is California's highest mountain?",
+      "accepted": [
+        "mount whitney",
+        "mt whitney"
+      ],
+      "display": "Mount Whitney"
+    },
+    {
+      "q": "What is California's state insect?",
+      "accepted": [
+        "california dogface butterfly",
+        "dogface butterfly",
+        "california dogface"
+      ],
+      "display": "California dogface butterfly"
+    },
+    {
+      "q": "In what year did California become a US state?",
+      "accepted": [
+        "1850"
+      ],
+      "display": "1850"
+    },
+    {
+      "q": "What is California's state flower?",
+      "accepted": [
+        "california poppy",
+        "poppy"
+      ],
+      "display": "California poppy"
+    }
+  ]
+}
