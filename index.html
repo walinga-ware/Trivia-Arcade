@@ -449,15 +449,18 @@ SCREEN_IDS.forEach(id => {
 
 /* ============================================================
    Data + wiring
-   quiz-data.json holds every dataset (countries, states, trivia,
-   president terms, etc). We fetch it once, then load app-init.js —
+   quiz data json files hold every dataset (countries, states, trivia,
+   president terms, etc). We fetch these once, then load app-init.js —
    which builds lookups and instantiates every game — only after the
    data (and the screen shells above) are ready.
    ============================================================ */
-fetch('quiz-data.json')
-  .then(r => r.json())
-  .then(data => {
-    window.QUIZ_DATA = data;
+Promise.all([
+  fetch('geography.json').then(r => r.json()),
+  fetch('history.json').then(r => r.json()),
+  fetch('general-knowledge.json').then(r => r.json())
+])
+  .then(([geography, history, generalKnowledge]) => {
+    window.QUIZ_DATA = { ...geography, ...history, ...generalKnowledge };
     const s = document.createElement('script');
     s.src = 'app-init.js';
     document.body.appendChild(s);
@@ -465,7 +468,7 @@ fetch('quiz-data.json')
   .catch(err => {
     document.body.insertAdjacentHTML('afterbegin',
       `<div style="background:#b5624a;color:#fff;padding:16px;font-family:sans-serif;">
-        Couldn't load quiz-data.json (${err.message}). If you opened this file
+        Couldn't load quiz data (${err.message}). If you opened this file
         directly (file://), serve the folder with a local server instead, e.g.
         <code>python3 -m http.server</code>, then open it via http://localhost.
       </div>`);
