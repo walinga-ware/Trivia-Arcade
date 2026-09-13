@@ -400,6 +400,43 @@
     </div>
     <!-- ============ /HISTORY ============ -->
 
+    <!-- ============ SPORTS ============ -->
+    <div class="category">
+    <h2 class="category-title">Sports</h2>
+
+    <!-- ============ PRO LEAGUE TEAMS ============ -->
+    <details class="section">
+      <summary class="section-summary"><span><span class="chevron">▸</span>Pro League Teams 🏀</span><span class="quiz-count">4 quizzes</span></summary>
+    <div class="card-grid">
+      <div class="card">
+        <div class="tag">Free recall &middot; 30 items</div>
+        <h3>NBA Teams</h3>
+        <div class="meta" id="nba-meta"></div>
+        <button class="btn-primary" onclick="showScreen('nba')">Play</button>
+      </div>
+      <div class="card">
+        <div class="tag">Free recall &middot; 30 items</div>
+        <h3>MLB Teams</h3>
+        <div class="meta" id="mlb-meta"></div>
+        <button class="btn-primary" onclick="showScreen('mlb')">Play</button>
+      </div>
+      <div class="card">
+        <div class="tag">Free recall &middot; 32 items</div>
+        <h3>NHL Teams</h3>
+        <div class="meta" id="nhl-meta"></div>
+        <button class="btn-primary" onclick="showScreen('nhl')">Play</button>
+      </div>
+      <div class="card">
+        <div class="tag">Free recall &middot; 32 items</div>
+        <h3>NFL Teams</h3>
+        <div class="meta" id="nfl-meta"></div>
+        <button class="btn-primary" onclick="showScreen('nfl')">Play</button>
+      </div>
+    </div>
+    </details>
+    </div>
+    <!-- ============ /SPORTS ============ -->
+
     <!-- ============ GENERAL KNOWLEDGE ============ -->
     <div class="category">
     <h2 class="category-title">General Knowledge</h2>
@@ -435,7 +472,7 @@
    of ids. To add a new screen here, just add its id to this array —
    the actual game instance (in app-init.js) is what gives it content.
    ============================================================ */
-const SCREEN_IDS = ['countries', 'worldpopmine', 'states', 'abbr', 'worldcap', 'statecap', 'popmine', 'statemap', 'findstate', 'findstate-hard', 'provinces', 'provincecap', 'provpopmine', 'mountainmine', 'rivermine', 'oceans', 'presidents', 'pms', 'monarchs'];
+const SCREEN_IDS = ['countries', 'worldpopmine', 'states', 'abbr', 'worldcap', 'statecap', 'popmine', 'statemap', 'findstate', 'findstate-hard', 'provinces', 'provincecap', 'provpopmine', 'mountainmine', 'rivermine', 'oceans', 'presidents', 'pms', 'monarchs', 'nba', 'mlb', 'nhl', 'nfl'];
 
 const screenHost = document.getElementById('dynamic-screens');
 SCREEN_IDS.forEach(id => {
@@ -457,10 +494,11 @@ SCREEN_IDS.forEach(id => {
 Promise.all([
   fetch('geography.json').then(r => r.json()),
   fetch('history.json').then(r => r.json()),
-  fetch('general-knowledge.json').then(r => r.json())
+  fetch('general-knowledge.json').then(r => r.json()),
+  fetch('sports.json').then(r => r.json())
 ])
-  .then(([geography, history, generalKnowledge]) => {
-    window.QUIZ_DATA = { ...geography, ...history, ...generalKnowledge };
+  .then(([geography, history, generalKnowledge, sports]) => {
+    window.QUIZ_DATA = { ...geography, ...history, ...generalKnowledge, ...sports };
     const s = document.createElement('script');
     s.src = 'app-init.js';
     document.body.appendChild(s);
