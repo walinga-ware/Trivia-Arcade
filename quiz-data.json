@@ -4028,12 +4028,12 @@
       "display": "Walleye"
     },
     {
-      "q": "What MLB team calls Minnesota home?",
+      "q": "What downtown Minneapolis baseball stadium is home to the Minnesota Twins?",
       "accepted": [
-        "minnesota twins",
-        "twins"
+        "target field",
+        "target"
       ],
-      "display": "Minnesota Twins"
+      "display": "Target Field"
     },
     {
       "q": "What is the largest city on Lake Superior?",
@@ -4276,11 +4276,16 @@
   ],
   "CALIFORNIA_TRIVIA": [
     {
-      "q": "What is California's state gem?",
+      "q": "Name either of California's two state trees",
       "accepted": [
-        "benitoite"
+        "coast redwood",
+        "redwood",
+        "red wood",
+        "redwood tree",
+        "giant sequoia",
+        "sequoia"
       ],
-      "display": "Benitoite"
+      "display": "Coast Redwood and Giant Sequoia"
     },
     {
       "q": "What is California's state animal?",
