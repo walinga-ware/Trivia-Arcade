@@ -1,28 +1,28 @@
 {
   "ALASKA_TRIVIA": [
     {
-      "q": "What is Alaska's state gem?",
+      "q": "Sparkly and state-official — what's Alaska's state gem?",
       "accepted": [
         "jade"
       ],
       "display": "Jade"
     },
     {
-      "q": "What is Alaska's state mineral?",
+      "q": "Which precious metal, once the target of a famous 19th-century rush, is Alaska's official state mineral?",
       "accepted": [
         "gold"
       ],
       "display": "Gold"
     },
     {
-      "q": "What is Alaska's well-known state nickname?",
+      "q": "What rugged nickname has earned Alaska its reputation as America's wild edge?",
       "accepted": [
         "last frontier"
       ],
       "display": "The Last Frontier"
     },
     {
-      "q": "What was Alaska's capital during Russian occupation?",
+      "q": "Before it ever flew the Stars and Stripes, what was Alaska's capital called under Russian rule?",
       "accepted": [
         "new archangel",
         "sitka"
@@ -30,7 +30,7 @@
       "display": "New Archangel (present-day Sitka)"
     },
     {
-      "q": "What is Alaska's state insect?",
+      "q": "Buzzing around Alaska's skies, what four-spotted flier is the state's official insect?",
       "accepted": [
         "four spotted skimmer dragonfly",
         "four spot skimmer dragonfly",
@@ -42,7 +42,7 @@
       "display": "Four-spotted skimmer dragonfly"
     },
     {
-      "q": "To the nearest million dollars, how much did the US pay to purchase Alaska?",
+      "q": "Uncle Sam got quite a deal — to the nearest million dollars, how much did the US pay to purchase Alaska?",
       "accepted": [
         "7",
         "7 million",
@@ -53,7 +53,7 @@
       "display": "$7 million (actual price: $7.2 million)"
     },
     {
-      "q": "What is the northernmost city on the Inside Passage?",
+      "q": "Sailing up the Inside Passage, what's the northernmost city you'd reach?",
       "accepted": [
         "skagway"
       ],
@@ -62,21 +62,21 @@
   ],
   "NEW_YORK_TRIVIA": [
     {
-      "q": "What is New York's state gem?",
+      "q": "What deep red gemstone is New York's official state gem?",
       "accepted": [
         "garnet"
       ],
       "display": "Garnet"
     },
     {
-      "q": "What is New York's state fruit?",
+      "q": "Home of the Big Apple — what fruit officially represents New York state?",
       "accepted": [
         "apple"
       ],
       "display": "Apple"
     },
     {
-      "q": "What is New York's well-known state nickname?",
+      "q": "What grand nickname gives New York its imperial reputation?",
       "accepted": [
         "empire state",
         "empire"
@@ -84,7 +84,7 @@
       "display": "The Empire State"
     },
     {
-      "q": "What is New York's highest mountain?",
+      "q": "Which peak stands taller than any other in New York state?",
       "accepted": [
         "mount marcy",
         "mt marcy"
@@ -92,7 +92,7 @@
       "display": "Mount Marcy"
     },
     {
-      "q": "What is New York's state insect?",
+      "q": "What spotted little beetle is New York's official state insect?",
       "accepted": [
         "nine spotted ladybug",
         "spotted ladybug",
@@ -101,7 +101,7 @@
       "display": "Nine-spotted ladybug"
     },
     {
-      "q": "To the nearest percent, how much of New York state consists of water?",
+      "q": "To the nearest percent, how much of New York state is covered in water?",
       "accepted": [
         "13",
         "14",
@@ -113,7 +113,7 @@
       "display": "14 percent (exact: 13.6%)"
     },
     {
-      "q": "Near present-day Albany, what was the first Dutch settlement in New York state?",
+      "q": "Near present-day Albany, what was the very first Dutch settlement in New York state?",
       "accepted": [
         "fort nassau"
       ],
@@ -122,7 +122,7 @@
   ],
   "MINNESOTA_TRIVIA": [
     {
-      "q": "What is Minnesota's state gem?",
+      "q": "What shimmering, banded stone from the shores of a Great Lake is Minnesota's official state gem?",
       "accepted": [
         "lake superior agate",
         "superior agate",
@@ -131,14 +131,14 @@
       "display": "Lake Superior Agate"
     },
     {
-      "q": "What is Minnesota's state beverage?",
+      "q": "What's Minnesota's official state beverage — hint: it comes from a cow?",
       "accepted": [
         "milk"
       ],
       "display": "Milk"
     },
     {
-      "q": "What is Minnesota's official state sport?",
+      "q": "What fast, icy sport holds the honor of being Minnesota's official state sport?",
       "accepted": [
         "ice hockey",
         "hockey"
@@ -146,7 +146,7 @@
       "display": "Ice Hockey"
     },
     {
-      "q": "What is Minnesota's well-known state nickname?",
+      "q": "What watery nickname is Minnesota famous for, thanks to its countless lakes?",
       "accepted": [
         "land of 10000 lakes",
         "land of 10,000 lakes",
@@ -155,14 +155,14 @@
       "display": "Land of 10,000 Lakes"
     },
     {
-      "q": "What is Minnesota's state fish?",
+      "q": "What toothy, prized catch is Minnesota's official state fish?",
       "accepted": [
         "walleye"
       ],
       "display": "Walleye"
     },
     {
-      "q": "What downtown Minneapolis baseball stadium is home to the Minnesota Twins?",
+      "q": "What's the name of the downtown Minneapolis ballpark where the Twins play?",
       "accepted": [
         "target field",
         "target"
@@ -170,7 +170,7 @@
       "display": "Target Field"
     },
     {
-      "q": "What is the largest city on Lake Superior?",
+      "q": "What's the largest city perched on the shores of Lake Superior?",
       "accepted": [
         "duluth"
       ],
@@ -179,7 +179,7 @@
   ],
   "MAINE_TRIVIA": [
     {
-      "q": "What is Maine's state tree?",
+      "q": "What towering evergreen is Maine's official state tree?",
       "accepted": [
         "white pine",
         "pine"
@@ -187,7 +187,7 @@
       "display": "White Pine"
     },
     {
-      "q": "What is Maine's state cat?",
+      "q": "What fluffy, oversized breed is Maine's official state cat?",
       "accepted": [
         "maine coon",
         "coon"
@@ -195,21 +195,21 @@
       "display": "Maine Coon"
     },
     {
-      "q": "What is Maine's state motto?",
+      "q": "What laid-back motto captures Maine's easygoing spirit?",
       "accepted": [
         "the way life should be"
       ],
       "display": "The Way Life Should Be"
     },
     {
-      "q": "What do you call someone from Maine?",
+      "q": "What do you call a proud native of Maine?",
       "accepted": [
         "mainer"
       ],
       "display": "A Mainer"
     },
     {
-      "q": "What is Maine's state insect?",
+      "q": "What hardworking pollinator is Maine's official state insect?",
       "accepted": [
         "bee",
         "honey bee",
@@ -218,7 +218,7 @@
       "display": "Honey Bee"
     },
     {
-      "q": "What is the oldest lighthouse on the Maine coast?",
+      "q": "What's the oldest lighthouse still standing guard along the Maine coast?",
       "accepted": [
         "portland head light",
         "head light"
@@ -226,7 +226,7 @@
       "display": "Portland Head Light"
     },
     {
-      "q": "What is the single other US state that Maine borders?",
+      "q": "Maine borders just one other US state — which one?",
       "accepted": [
         "new hampshire"
       ],
@@ -235,14 +235,14 @@
   ],
   "MARYLAND_TRIVIA": [
     {
-      "q": "What is Maryland's state tree?",
+      "q": "What sturdy tree is Maryland's official state tree?",
       "accepted": [
         "white oak"
       ],
       "display": "White Oak"
     },
     {
-      "q": "What is Maryland's state bird?",
+      "q": "What orange-and-black bird, also a famous MLB namesake, is Maryland's state bird?",
       "accepted": [
         "baltimore oriole",
         "oriole"
@@ -250,7 +250,7 @@
       "display": "Baltimore Oriole"
     },
     {
-      "q": "What is the largest body of water in Maryland?",
+      "q": "What massive estuary is the largest body of water in Maryland?",
       "accepted": [
         "chesapeake bay",
         "the chesapeake bay"
@@ -258,21 +258,21 @@
       "display": "Chesapeake Bay"
     },
     {
-      "q": "What type of traditional sailing ship is Maryland's state boat?",
+      "q": "What traditional oyster-dredging sailboat is Maryland's official state boat?",
       "accepted": [
         "skipjack"
       ],
       "display": "Skipjack"
     },
     {
-      "q": "What is Maryland's state crustacean?",
+      "q": "What pinchy, seafood-famous creature is Maryland's official state crustacean?",
       "accepted": [
         "blue crab"
       ],
       "display": "Blue Crab"
     },
     {
-      "q": "Maryland is named after which English queen?",
+      "q": "Maryland takes its name from which 17th-century English queen?",
       "accepted": [
         "queen henrietta maria",
         "henrietta maria"
@@ -280,7 +280,7 @@
       "display": "Queen Henrietta Maria, wife of King Charles I of England"
     },
     {
-      "q": "What is Maryland's official state dessert?",
+      "q": "What many-layered treat is Maryland's official state dessert?",
       "accepted": [
         "smith island cake"
       ],
@@ -289,7 +289,7 @@
   ],
   "DELAWARE_TRIVIA": [
     {
-      "q": "What is Delaware's state bird?",
+      "q": "What feisty fowl is Delaware's official state bird?",
       "accepted": [
         "delaware blue hen",
         "blue hen chicken",
@@ -298,7 +298,7 @@
       "display": "Delaware Blue Hen"
     },
     {
-      "q": "What is Delaware's state tree?",
+      "q": "What evergreen, known for its bright winter berries, is Delaware's official state tree?",
       "accepted": [
         "american holly",
         "holly"
@@ -306,14 +306,14 @@
       "display": "American Holly"
     },
     {
-      "q": "What is Delaware's state flower?",
+      "q": "What delicate blossom is Delaware's official state flower?",
       "accepted": [
         "peach blossom"
       ],
       "display": "Peach Blossom"
     },
     {
-      "q": "How many counties does Delaware have (the fewest of any state)?",
+      "q": "Delaware has the fewest counties of any US state — how many does it have?",
       "accepted": [
         "3",
         "three"
@@ -321,7 +321,7 @@
       "display": "Three: New Castle, Kent, and Sussex"
     },
     {
-      "q": "What everyday cost do shoppers famously skip when buying retail goods in Delaware?",
+      "q": "What everyday cost do savvy shoppers famously dodge when buying retail goods in Delaware?",
       "accepted": [
         "sales tax",
         "state sales tax",
@@ -330,7 +330,7 @@
       "display": "Sales tax — Delaware charges no state or local sales tax on retail purchases"
     },
     {
-      "q": "For decades, a small town in Delaware hosted the world championship for launching what fall vegetable (technically a fruit) as far as possible?",
+      "q": "For decades, a small Delaware town hosted the world championship for launching what fall vegetable (technically a fruit) as far as possible?",
       "accepted": [
         "pumpkin",
         "pumpkins",
@@ -340,7 +340,7 @@
       "display": "Pumpkins — the World Championship Punkin Chunkin contest ran in Delaware for years"
     },
     {
-      "q": "In terms of land area, Delaware is the second-smallest US state — which state is smaller?",
+      "q": "Delaware is the second-smallest US state by land area — which tiny state edges it out for smallest?",
       "accepted": [
         "rhode island"
       ],
@@ -349,7 +349,7 @@
   ],
   "CONNECTICUT_TRIVIA": [
     {
-      "q": "What is Connecticut's state tree?",
+      "q": "What famous oak, said to have once hidden a colonial charter, is Connecticut's state tree?",
       "accepted": [
         "charter oak",
         "white oak",
@@ -358,7 +358,7 @@
       "display": "Charter Oak (a white oak)"
     },
     {
-      "q": "What is Connecticut's state bird?",
+      "q": "What cheerful, red-breasted songbird is Connecticut's official state bird?",
       "accepted": [
         "american robin",
         "robin"
@@ -366,7 +366,7 @@
       "display": "American Robin"
     },
     {
-      "q": "What is Connecticut's state insect?",
+      "q": "What patient, prayer-postured insect is Connecticut's official state insect?",
       "accepted": [
         "european mantis",
         "praying mantis",
@@ -375,7 +375,7 @@
       "display": "European Mantis (praying mantis)"
     },
     {
-      "q": "What is Connecticut's state animal?",
+      "q": "What massive, deep-diving ocean mammal is Connecticut's official state animal?",
       "accepted": [
         "sperm whale",
         "whale"
@@ -410,7 +410,7 @@
   ],
   "CALIFORNIA_TRIVIA": [
     {
-      "q": "Name either of California's two state trees",
+      "q": "California boasts two official state trees — can you name either one?",
       "accepted": [
         "coast redwood",
         "redwood",
@@ -422,7 +422,7 @@
       "display": "Coast Redwood and Giant Sequoia"
     },
     {
-      "q": "What is California's state animal?",
+      "q": "What powerful bear, now extinct in the wild but still on the state flag, is California's official state animal?",
       "accepted": [
         "california grizzly bear",
         "grizzly bear",
@@ -432,14 +432,14 @@
       "display": "California grizzly bear"
     },
     {
-      "q": "What is California's well-known state nickname?",
+      "q": "What shimmering nickname gives California its golden reputation?",
       "accepted": [
         "golden state"
       ],
       "display": "The Golden State"
     },
     {
-      "q": "What is California's highest mountain?",
+      "q": "What's the tallest peak in all of California?",
       "accepted": [
         "mount whitney",
         "mt whitney"
@@ -447,7 +447,7 @@
       "display": "Mount Whitney"
     },
     {
-      "q": "What is California's state insect?",
+      "q": "What butterfly, sporting a wing pattern that resembles a dog's face, is California's official state insect?",
       "accepted": [
         "california dogface butterfly",
         "dogface butterfly",
@@ -456,14 +456,14 @@
       "display": "California dogface butterfly"
     },
     {
-      "q": "In what year did California become a US state?",
+      "q": "In what year did California officially join the union as a US state?",
       "accepted": [
         "1850"
       ],
       "display": "1850"
     },
     {
-      "q": "What is California's state flower?",
+      "q": "What golden-orange bloom is California's official state flower?",
       "accepted": [
         "california poppy",
         "poppy"
