@@ -1,5 +1,4 @@
-/* All quiz data lives in quiz-data.json — pull it into local names here
-   so the rest of this file (and the debugger) reads the same as before. */
+/* All quiz data lives in quiz data JSON files (e.g. history.json, sports.json) */
 const {
   COUNTRIES,
   COUNTRY_ALIASES,
@@ -235,7 +234,7 @@ const nbaGame = new FreeRecallGame({
   finalTitle: 'Full roll — all 30 NBA teams',
   rulesHTML: `
     &middot; Every NBA team counts once — 30 total<br>
-    &middot; Nickname (e.g. "Cavaliers"), city + nickname (e.g. "Cleveland Cavaliers"), or a common abbreviation (e.g. "Cavs") are accepted — city alone doesn't count<br>
+    &middot; Nickname, city + nickname, or a common abbreviation are accepted — city alone doesn't count<br>
     &middot; When time expires, the full roll is revealed with your hits marked
   `
 });
@@ -249,7 +248,7 @@ const mlbGame = new FreeRecallGame({
   finalTitle: 'Full roll — all 30 MLB teams',
   rulesHTML: `
     &middot; Every MLB team counts once — 30 total<br>
-    &middot; Nickname (e.g. "Yankees"), city + nickname (e.g. "New York Yankees"), or a common abbreviation (e.g. "Yanks") are accepted — city alone doesn't count<br>
+    &middot; Nickname, city + nickname, or a common abbreviation are accepted — city alone doesn't count<br>
     &middot; When time expires, the full roll is revealed with your hits marked
   `
 });
@@ -263,7 +262,7 @@ const nhlGame = new FreeRecallGame({
   finalTitle: 'Full roll — all 32 NHL teams',
   rulesHTML: `
     &middot; Every NHL team counts once — 32 total<br>
-    &middot; Nickname (e.g. "Bruins"), city + nickname (e.g. "Boston Bruins"), or a common abbreviation (e.g. "Habs") are accepted — city alone doesn't count<br>
+    &middot; Nickname, city + nickname, or a common abbreviation are accepted — city alone doesn't count<br>
     &middot; When time expires, the full roll is revealed with your hits marked
   `
 });
@@ -277,7 +276,7 @@ const nflGame = new FreeRecallGame({
   finalTitle: 'Full roll — all 32 NFL teams',
   rulesHTML: `
     &middot; Every NFL team counts once — 32 total<br>
-    &middot; Nickname (e.g. "Cowboys"), city + nickname (e.g. "Dallas Cowboys"), or a common abbreviation (e.g. "Niners") are accepted — city alone doesn't count<br>
+    &middot; Nickname, city + nickname, or a common abbreviation are accepted — city alone doesn't count<br>
     &middot; When time expires, the full roll is revealed with your hits marked
   `
 });
