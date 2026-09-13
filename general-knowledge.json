@@ -84,7 +84,7 @@
       "display": "The Empire State"
     },
     {
-      "q": "Which peak stands taller than any other in New York state?",
+      "q": "Which summit marks the highest point in New York state?",
       "accepted": [
         "mount marcy",
         "mt marcy"
@@ -92,7 +92,7 @@
       "display": "Mount Marcy"
     },
     {
-      "q": "What spotted little beetle is New York's official state insect?",
+      "q": "What spotted beetle is New York's official state insect?",
       "accepted": [
         "nine spotted ladybug",
         "spotted ladybug",
@@ -131,14 +131,14 @@
       "display": "Lake Superior Agate"
     },
     {
-      "q": "What's Minnesota's official state beverage — hint: it comes from a cow?",
+      "q": "What is Minnesota's state beverage?",
       "accepted": [
         "milk"
       ],
       "display": "Milk"
     },
     {
-      "q": "What fast, icy sport holds the honor of being Minnesota's official state sport?",
+      "q": "Which sport holds the honor of being Minnesota's official state sport?",
       "accepted": [
         "ice hockey",
         "hockey"
@@ -146,7 +146,7 @@
       "display": "Ice Hockey"
     },
     {
-      "q": "What watery nickname is Minnesota famous for, thanks to its countless lakes?",
+      "q": "What watery nickname is Minnesota famous for?",
       "accepted": [
         "land of 10000 lakes",
         "land of 10,000 lakes",
