@@ -162,7 +162,7 @@
       "display": "Walleye"
     },
     {
-      "q": "What's the name of the downtown Minneapolis ballpark where the Twins play?",
+      "q": "What downtown Minneapolis baseball stadium is home to the Minnesota Twins?",
       "accepted": [
         "target field",
         "target"
@@ -170,7 +170,7 @@
       "display": "Target Field"
     },
     {
-      "q": "What's the largest city perched on the shores of Lake Superior?",
+      "q": "What Minnesota port city is the largest on the US shore of Lake Superior?",
       "accepted": [
         "duluth"
       ],
@@ -277,7 +277,7 @@
         "queen henrietta maria",
         "henrietta maria"
       ],
-      "display": "Queen Henrietta Maria, wife of King Charles I of England"
+      "display": "Queen Henrietta Maria, wife of King Charles I"
     },
     {
       "q": "What many-layered treat is Maryland's official state dessert?",
@@ -340,7 +340,7 @@
       "display": "Pumpkins — the World Championship Punkin Chunkin contest ran in Delaware for years"
     },
     {
-      "q": "Delaware is the second-smallest US state by land area — which tiny state edges it out for smallest?",
+      "q": "Delaware is the second-smallest US state by land area — which state is the smallest?",
       "accepted": [
         "rhode island"
       ],
@@ -366,7 +366,7 @@
       "display": "American Robin"
     },
     {
-      "q": "What patient, prayer-postured insect is Connecticut's official state insect?",
+      "q": "What patient predatory insect is Connecticut's official state insect?",
       "accepted": [
         "european mantis",
         "praying mantis",
@@ -426,13 +426,12 @@
       "accepted": [
         "california grizzly bear",
         "grizzly bear",
-        "grizzly",
-        "bear"
+        "grizzly"
       ],
       "display": "California grizzly bear"
     },
     {
-      "q": "What shimmering nickname gives California its golden reputation?",
+      "q": "What is California's well-known state nickname?",
       "accepted": [
         "golden state"
       ],
@@ -447,11 +446,12 @@
       "display": "Mount Whitney"
     },
     {
-      "q": "What butterfly, sporting a wing pattern that resembles a dog's face, is California's official state insect?",
+      "q": "Sporting a wing pattern that resembles a dog's face, what is California's official state insect?",
       "accepted": [
         "california dogface butterfly",
         "dogface butterfly",
-        "california dogface"
+        "california dogface",
+        "butterfly"
       ],
       "display": "California dogface butterfly"
     },
