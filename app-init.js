@@ -30,7 +30,15 @@ const {
   MARYLAND_TRIVIA,
   DELAWARE_TRIVIA,
   CONNECTICUT_TRIVIA,
-  CALIFORNIA_TRIVIA
+  CALIFORNIA_TRIVIA,
+  NBA_TEAMS,
+  NBA_TEAM_ALIASES,
+  NFL_TEAMS,
+  NFL_TEAM_ALIASES,
+  NHL_TEAMS,
+  NHL_TEAM_ALIASES,
+  MLB_TEAMS,
+  MLB_TEAM_ALIASES
 } = QUIZ_DATA;
 
 const MOUNTAIN_LOOKUP = {};
@@ -199,6 +207,81 @@ const provinceCapitalsQuiz = new PromptQuiz({
     &middot; Use Skip if you're stuck; the round ends when you've been through all 13 or time runs out
   `
 });
+/* ============================================================
+   SPORTS — PRO LEAGUE TEAM FREE RECALL QUIZZES
+   ============================================================ */
+const NBA_TEAM_LOOKUP = {};
+NBA_TEAMS.forEach(name => { NBA_TEAM_LOOKUP[normalize(name)] = name; });
+Object.keys(NBA_TEAM_ALIASES).forEach(k => { NBA_TEAM_LOOKUP[normalize(k)] = NBA_TEAM_ALIASES[k]; });
+
+const NFL_TEAM_LOOKUP = {};
+NFL_TEAMS.forEach(name => { NFL_TEAM_LOOKUP[normalize(name)] = name; });
+Object.keys(NFL_TEAM_ALIASES).forEach(k => { NFL_TEAM_LOOKUP[normalize(k)] = NFL_TEAM_ALIASES[k]; });
+
+const NHL_TEAM_LOOKUP = {};
+NHL_TEAMS.forEach(name => { NHL_TEAM_LOOKUP[normalize(name)] = name; });
+Object.keys(NHL_TEAM_ALIASES).forEach(k => { NHL_TEAM_LOOKUP[normalize(k)] = NHL_TEAM_ALIASES[k]; });
+
+const MLB_TEAM_LOOKUP = {};
+MLB_TEAMS.forEach(name => { MLB_TEAM_LOOKUP[normalize(name)] = name; });
+Object.keys(MLB_TEAM_ALIASES).forEach(k => { MLB_TEAM_LOOKUP[normalize(k)] = MLB_TEAM_ALIASES[k]; });
+
+const nbaGame = new FreeRecallGame({
+  id: 'nba',
+  title: 'NBA Teams',
+  items: NBA_TEAMS,
+  lookup: NBA_TEAM_LOOKUP,
+  duration: 10*60,
+  finalTitle: 'Full roll — all 30 NBA teams',
+  rulesHTML: `
+    &middot; Every NBA team counts once — 30 total<br>
+    &middot; City, nickname, or common short forms are all accepted<br>
+    &middot; When time expires, the full roll is revealed with your hits marked
+  `
+});
+
+const mlbGame = new FreeRecallGame({
+  id: 'mlb',
+  title: 'MLB Teams',
+  items: MLB_TEAMS,
+  lookup: MLB_TEAM_LOOKUP,
+  duration: 10*60,
+  finalTitle: 'Full roll — all 30 MLB teams',
+  rulesHTML: `
+    &middot; Every MLB team counts once — 30 total<br>
+    &middot; City, nickname, or common short forms are all accepted<br>
+    &middot; When time expires, the full roll is revealed with your hits marked
+  `
+});
+
+const nhlGame = new FreeRecallGame({
+  id: 'nhl',
+  title: 'NHL Teams',
+  items: NHL_TEAMS,
+  lookup: NHL_TEAM_LOOKUP,
+  duration: 12*60,
+  finalTitle: 'Full roll — all 32 NHL teams',
+  rulesHTML: `
+    &middot; Every NHL team counts once — 32 total<br>
+    &middot; City, nickname, or common short forms are all accepted<br>
+    &middot; When time expires, the full roll is revealed with your hits marked
+  `
+});
+
+const nflGame = new FreeRecallGame({
+  id: 'nfl',
+  title: 'NFL Teams',
+  items: NFL_TEAMS,
+  lookup: NFL_TEAM_LOOKUP,
+  duration: 12*60,
+  finalTitle: 'Full roll — all 32 NFL teams',
+  rulesHTML: `
+    &middot; Every NFL team counts once — 32 total<br>
+    &middot; City, nickname, or common short forms are all accepted<br>
+    &middot; When time expires, the full roll is revealed with your hits marked
+  `
+});
+
 /* ============================================================
    US STATES SHOWCASE — REGISTRY
    ============================================================
