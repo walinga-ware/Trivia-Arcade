@@ -42,15 +42,13 @@
       "display": "Four-spotted skimmer dragonfly"
     },
     {
-      "q": "What two celestial features, forming a constellation and the North Star, appear together on Alaska's state flag?",
+      "q": "What constellation appears alongside the North Star on Alaska's state flag?",
       "accepted": [
-        "big dipper and north star",
-        "big dipper north star",
         "big dipper",
-        "ursa major and north star",
-        "the great bear and north star"
+        "ursa major",
+        "the great bear"
       ],
-      "display": "The Big Dipper and the North Star"
+      "display": "The Big Dipper"
     },
     {
       "q": "Sailing up the Inside Passage, what's the northernmost city you'd reach?",
