@@ -347,7 +347,7 @@ const CANADA_SHOWCASE_QUIZZES = [
 ];
 
 /* ---- generator: turns the registry above into cards + screens + quizzes ---- */
-const canadaShowcaseQuizInstances = initStateShowcase(CANADA_SHOWCASE_QUIZZES);
+const canadaShowcaseQuizInstances = initCanadaShowcase(CANADA_SHOWCASE_QUIZZES);
 const populationMinefield = new MinefieldQuiz({
   id: 'popmine',
   items: STATE_POPULATION_RANKING,
