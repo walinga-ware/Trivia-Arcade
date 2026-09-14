@@ -237,7 +237,9 @@
     {
       "q": "What sturdy tree is Maryland's official state tree?",
       "accepted": [
-        "white oak"
+        "white oak",
+        "oak",
+        "oak tree"
       ],
       "display": "White Oak"
     },
@@ -253,21 +255,24 @@
       "q": "What massive estuary is the largest body of water in Maryland?",
       "accepted": [
         "chesapeake bay",
-        "the chesapeake bay"
+        "the chesapeake bay",
+        "chesapeake"
       ],
       "display": "Chesapeake Bay"
     },
     {
       "q": "What traditional oyster-dredging sailboat is Maryland's official state boat?",
       "accepted": [
-        "skipjack"
+        "skipjack",
+        "skip jack"
       ],
       "display": "Skipjack"
     },
     {
       "q": "What pinchy, seafood-famous creature is Maryland's official state crustacean?",
       "accepted": [
-        "blue crab"
+        "blue crab",
+        "crab"
       ],
       "display": "Blue Crab"
     },
@@ -275,7 +280,9 @@
       "q": "Maryland takes its name from which 17th-century English queen?",
       "accepted": [
         "queen henrietta maria",
-        "henrietta maria"
+        "henrietta maria",
+        "maria",
+        "queen maria"
       ],
       "display": "Queen Henrietta Maria, wife of King Charles I"
     },
@@ -293,7 +300,9 @@
       "accepted": [
         "delaware blue hen",
         "blue hen chicken",
-        "blue hen"
+        "blue hen",
+        "hen",
+        "chicken"
       ],
       "display": "Delaware Blue Hen"
     },
@@ -301,7 +310,8 @@
       "q": "What evergreen, known for its bright winter berries, is Delaware's official state tree?",
       "accepted": [
         "american holly",
-        "holly"
+        "holly",
+        "holly tree"
       ],
       "display": "American Holly"
     },
