@@ -341,7 +341,7 @@ const stateShowcaseQuizInstances = initStateShowcase(STATE_SHOWCASE_QUIZZES);
      questions - the JSON question array (KEEP this format)
    ============================================================ */
 const CANADA_SHOWCASE_QUIZZES = [
-  { id: 'newbrunswick', state: 'New Brunswick', subtitle: 'Picture Province Puzzler', questions: NEW_BRUNSWICK_TRIVIA },
+  { id: 'newbrunswick', state: 'New Brunswick', subtitle: 'Bay of Fundy Facts', questions: NEW_BRUNSWICK_TRIVIA },
   { id: 'ontario',      state: 'Ontario',       subtitle: 'Trillium Trivia',           questions: ONTARIO_TRIVIA },
   { id: 'yukon',        state: 'Yukon',         subtitle: 'North of 60',               questions: YUKON_TRIVIA },
 ];
