@@ -101,7 +101,7 @@
       "display": "Nine-spotted ladybug"
     },
     {
-      "q": "To the nearest percent, how much of New York state is covered in water?",
+      "q": "To the nearest percent, how much of New York state's surface area consists of water?",
       "accepted": [
         "13",
         "14",
@@ -115,7 +115,9 @@
     {
       "q": "Near present-day Albany, what was the very first Dutch settlement in New York state?",
       "accepted": [
-        "fort nassau"
+        "fort nassau",
+        "ft nassau",
+        "nassau"
       ],
       "display": "Fort Nassau"
     }
