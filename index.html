@@ -494,7 +494,7 @@ SCREEN_IDS.forEach(id => {
 Promise.all([
   fetch('geography.json').then(r => r.json()),
   fetch('history.json').then(r => r.json()),
-  fetch('general-knowledge.json').then(r => r.json()),
+  fetch('us-state-showcase.json').then(r => r.json()),
   fetch('sports.json').then(r => r.json())
 ])
   .then(([geography, history, generalKnowledge, sports]) => {
