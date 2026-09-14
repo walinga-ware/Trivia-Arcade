@@ -42,15 +42,15 @@
       "display": "Four-spotted skimmer dragonfly"
     },
     {
-      "q": "Uncle Sam got quite a deal — to the nearest million dollars, how much did the US pay to purchase Alaska?",
+      "q": "What two celestial features, forming a constellation and the North Star, appear together on Alaska's state flag?",
       "accepted": [
-        "7",
-        "7 million",
-        "$7 million",
-        "seven million",
-        "7m"
+        "big dipper and north star",
+        "big dipper north star",
+        "big dipper",
+        "ursa major and north star",
+        "the great bear and north star"
       ],
-      "display": "$7 million (actual price: $7.2 million)"
+      "display": "The Big Dipper and the North Star"
     },
     {
       "q": "Sailing up the Inside Passage, what's the northernmost city you'd reach?",
@@ -101,16 +101,12 @@
       "display": "Nine-spotted ladybug"
     },
     {
-      "q": "To the nearest percent, how much of New York state's surface area consists of water?",
+      "q": "What thundering waterfall, shared with Canada, draws millions of visitors to western New York state each year?",
       "accepted": [
-        "13",
-        "14",
-        "13%",
-        "14%",
-        "thirteen",
-        "fourteen"
+        "niagara falls",
+        "niagara"
       ],
-      "display": "14 percent (exact: 13.6%)"
+      "display": "Niagara Falls"
     },
     {
       "q": "Near present-day Albany, what was the very first Dutch settlement in New York state?",
@@ -468,11 +464,11 @@
       "display": "California dogface butterfly"
     },
     {
-      "q": "In what year did California officially join the union as a US state?",
+      "q": "What scorching California valley holds the record as the lowest and hottest point in North America?",
       "accepted": [
-        "1850"
+        "death valley"
       ],
-      "display": "1850"
+      "display": "Death Valley"
     },
     {
       "q": "What golden-orange bloom is California's official state flower?",
