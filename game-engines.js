@@ -1110,14 +1110,14 @@ function initStateShowcase(quizzes){
 
 // Same pattern as initStateShowcase above, wired to the Canada showcase
 // section's mount points (canada-showcase-card-grid / -screens / -quiz-count)
-// and keyed off each quiz's `province` field instead of `state`.
+// and keyed off each quiz's `state` field.
 function initCanadaShowcase(quizzes){
   const cardGrid = document.getElementById('canada-showcase-card-grid');
   const screenHost = document.getElementById('canada-showcase-screens');
   const instances = {};
 
   // Alphabetize automatically — no manual ordering required in the registry above.
-  const sorted = [...quizzes].sort((a, b) => a.province.localeCompare(b.province));
+  const sorted = [...quizzes].sort((a, b) => a.state.localeCompare(b.state));
 
   const countEl = document.getElementById('canada-showcase-quiz-count');
   if (countEl) countEl.textContent = `${sorted.length} quiz${sorted.length === 1 ? '' : 'zes'}`;
@@ -1129,7 +1129,7 @@ function initCanadaShowcase(quizzes){
     cardGrid.insertAdjacentHTML('beforeend', `
       <div class="card">
         <div class="tag">Trivia quiz &middot; ${count} questions</div>
-        <h3>${quiz.province}: ${quiz.subtitle}</h3>
+        <h3>${quiz.state}: ${quiz.subtitle}</h3>
         <div class="meta">~${estMinutes(count)} minutes</div>
         <button class="btn-primary" onclick="showScreen('${quiz.id}')">Play</button>
       </div>
@@ -1147,7 +1147,7 @@ function initCanadaShowcase(quizzes){
     instances[quiz.id] = new TriviaQuiz({
       id: quiz.id,
       questions: quiz.questions,
-      rulesHTML: quiz.rulesHTML || stateTriviaRulesHTML(quiz.province, count)
+      rulesHTML: quiz.rulesHTML || stateTriviaRulesHTML(quiz.state, count)
     });
   });
 
