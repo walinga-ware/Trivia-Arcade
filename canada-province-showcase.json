@@ -82,11 +82,11 @@
       "display": "Purple Violet"
     },
     {
-      "q": "What official nickname, evoking its scenic landscapes, is New Brunswick known by?",
+      "q": "After splitting from Nova Scotia in 1784, what name referencing a European country, was New Brunswick initially called?",
       "accepted": [
-        "picture province"
+        "new ireland"
       ],
-      "display": "The Picture Province"
+      "display": "New Ireland"
     },
     {
       "q": "What famous New Brunswick bay is known for having the highest tides in the world?",
@@ -105,11 +105,11 @@
       "display": "Officially bilingual (English and French)"
     },
     {
-      "q": "What city serves as New Brunswick's provincial capital?",
+      "q": "Which US State does New Brunswick border?",
       "accepted": [
-        "fredericton"
+        "maine"
       ],
-      "display": "Fredericton"
+      "display": "Maine"
     }
   ],
   "YUKON_TRIVIA": [
