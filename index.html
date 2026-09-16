@@ -441,16 +441,28 @@
     <div class="category">
     <h2 class="category-title">General Knowledge</h2>
 
+    <!-- ============ CANADA PROVINCE SHOWCASE ============ -->
+    <!-- Cards below are generated automatically from CANADA_SHOWCASE_QUIZZES — see script at bottom of file. -->
+    <details class="section">
+      <summary class="section-summary"><span><span class="chevron">▸</span>Canada Showcase 🍁</span><span class="quiz-count" id="canada-showcase-quiz-count"></span></summary>
+    <p class="section-note">Fun-sized quiz games for individual provinces and territories. Each offers trivia, facts, and local knowledge.</p>
+    <div class="card-grid" id="canada-showcase-card-grid"></div>
+    </details>
+    <!-- ============ /CANADA PROVINCE SHOWCASE ============ -->
+
     <!-- ============ US STATES SHOWCASE ============ -->
     <!-- Cards below are generated automatically from STATE_SHOWCASE_QUIZZES — see script at bottom of file. -->
     <details class="section">
-      <summary class="section-summary"><span><span class="chevron">▸</span>US States Showcase 🏆</span><span class="quiz-count" id="showcase-quiz-count"></span></summary>
+      <summary class="section-summary"><span><span class="chevron">▸</span>US States Showcase 🗽</span><span class="quiz-count" id="showcase-quiz-count"></span></summary>
     <p class="section-note">Fun-sized quiz games for individual states. Each offers trivia, facts, and local knowledge.</p>
     <div class="card-grid" id="showcase-card-grid"></div>
     </details>
     </div>
     <!-- ============ /GENERAL KNOWLEDGE ============ -->
   </div>
+
+  <!-- ============ CANADA PROVINCE SHOWCASE — SCREENS (generated automatically) ============ -->
+  <div id="canada-showcase-screens"></div>
 
   <!-- ============ US STATES SHOWCASE — SCREENS (generated automatically) ============ -->
   <div id="showcase-screens"></div>
@@ -494,11 +506,12 @@ SCREEN_IDS.forEach(id => {
 Promise.all([
   fetch('geography.json').then(r => r.json()),
   fetch('history.json').then(r => r.json()),
-  fetch('general-knowledge.json').then(r => r.json()),
+  fetch('us-state-showcase.json').then(r => r.json()),
+  fetch('canada-province-showcase.json').then(r => r.json()),
   fetch('sports.json').then(r => r.json())
 ])
-  .then(([geography, history, generalKnowledge, sports]) => {
-    window.QUIZ_DATA = { ...geography, ...history, ...generalKnowledge, ...sports };
+  .then(([geography, history, generalKnowledge, canadaShowcase, sports]) => {
+    window.QUIZ_DATA = { ...geography, ...history, ...generalKnowledge, ...canadaShowcase, ...sports };
     const s = document.createElement('script');
     s.src = 'app-init.js';
     document.body.appendChild(s);

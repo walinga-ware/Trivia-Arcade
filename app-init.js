@@ -30,6 +30,9 @@ const {
   DELAWARE_TRIVIA,
   CONNECTICUT_TRIVIA,
   CALIFORNIA_TRIVIA,
+  ONTARIO_TRIVIA,
+  NEW_BRUNSWICK_TRIVIA,
+  YUKON_TRIVIA,
   NBA_TEAMS,
   NBA_TEAM_ALIASES,
   NFL_TEAMS,
@@ -314,6 +317,37 @@ const STATE_SHOWCASE_QUIZZES = [
 
 /* ---- generator: turns the registry above into cards + screens + quizzes ---- */
 const stateShowcaseQuizInstances = initStateShowcase(STATE_SHOWCASE_QUIZZES);
+
+/* ============================================================
+   CANADA PROVINCES SHOWCASE — REGISTRY
+   ============================================================
+   Same pattern as the US States Showcase above. To add a new
+   province/territory quiz:
+     1. Add a `const XYZ_TRIVIA = [ {q, accepted, display}, ... ]`
+        array above (or anywhere before this block) — same JSON-array
+        shape as the existing ones.
+     2. Add ONE entry to CANADA_SHOWCASE_QUIZZES below.
+   That's it. The home-page card, its alphabetical position, the
+   screen markup, the mount point, the rules text, and the
+   TriviaQuiz instance are all generated automatically just below.
+
+   Fields:
+     id        - unique, no spaces (used for URL-free screen id)
+     state     - province/territory name, used for sorting + default
+                 rules text
+     subtitle  - short flavor text for the card title, e.g.
+                 state "Yukon" + subtitle "North of 60"
+                 -> card reads "Yukon: North of 60"
+     questions - the JSON question array (KEEP this format)
+   ============================================================ */
+const CANADA_SHOWCASE_QUIZZES = [
+  { id: 'newbrunswick', state: 'New Brunswick', subtitle: 'Bay of Fundy Facts', questions: NEW_BRUNSWICK_TRIVIA },
+  { id: 'ontario',      state: 'Ontario',       subtitle: 'Trillium Trivia',           questions: ONTARIO_TRIVIA },
+  { id: 'yukon',        state: 'Yukon',         subtitle: 'North of 60',               questions: YUKON_TRIVIA },
+];
+
+/* ---- generator: turns the registry above into cards + screens + quizzes ---- */
+const canadaShowcaseQuizInstances = initCanadaShowcase(CANADA_SHOWCASE_QUIZZES);
 const populationMinefield = new MinefieldQuiz({
   id: 'popmine',
   items: STATE_POPULATION_RANKING,

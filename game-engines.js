@@ -1108,6 +1108,52 @@ function initStateShowcase(quizzes){
   return instances;
 }
 
+// Same pattern as initStateShowcase above, wired to the Canada showcase
+// section's mount points (canada-showcase-card-grid / -screens / -quiz-count)
+// and keyed off each quiz's `state` field.
+function initCanadaShowcase(quizzes){
+  const cardGrid = document.getElementById('canada-showcase-card-grid');
+  const screenHost = document.getElementById('canada-showcase-screens');
+  const instances = {};
+
+  // Alphabetize automatically — no manual ordering required in the registry above.
+  const sorted = [...quizzes].sort((a, b) => a.state.localeCompare(b.state));
+
+  const countEl = document.getElementById('canada-showcase-quiz-count');
+  if (countEl) countEl.textContent = `${sorted.length} quiz${sorted.length === 1 ? '' : 'zes'}`;
+
+  sorted.forEach(quiz => {
+    const count = quiz.questions.length;
+
+    // Home page card
+    cardGrid.insertAdjacentHTML('beforeend', `
+      <div class="card">
+        <div class="tag">Trivia quiz &middot; ${count} questions</div>
+        <h3>${quiz.state}: ${quiz.subtitle}</h3>
+        <div class="meta">~${estMinutes(count)} minutes</div>
+        <button class="btn-primary" onclick="showScreen('${quiz.id}')">Play</button>
+      </div>
+    `);
+
+    // Screen + mount point
+    screenHost.insertAdjacentHTML('beforeend', `
+      <div class="screen" id="screen-${quiz.id}">
+        <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
+        <div id="${quiz.id}-mount"></div>
+      </div>
+    `);
+
+    // Quiz instance
+    instances[quiz.id] = new TriviaQuiz({
+      id: quiz.id,
+      questions: quiz.questions,
+      rulesHTML: quiz.rulesHTML || stateTriviaRulesHTML(quiz.state, count)
+    });
+  });
+
+  return instances;
+}
+
 /* ============================================================
    MINEFIELD ENGINE (guess items in strict descending order —
    one wrong guess ends the round)
