@@ -273,7 +273,7 @@
 
     <!-- ============ GEOGRAPHICAL FEATURES ============ -->
     <details class="section">
-      <summary class="section-summary"><span><span class="chevron">▸</span>Geographical features 🏔️</span><span class="quiz-count">3 quizzes</span></summary>
+      <summary class="section-summary"><span><span class="chevron">▸</span>Geographical features 🏔️</span><span class="quiz-count">4 quizzes</span></summary>
     <div class="card-grid">
       <div class="card">
         <div class="tag">Minefield &middot; 15 items</div>
@@ -286,6 +286,12 @@
         <h3>Longest Rivers</h3>
         <div class="meta">one wrong guess ends it</div>
         <button class="btn-primary" onclick="showScreen('rivermine')">Play</button>
+      </div>
+      <div class="card">
+        <div class="tag">Minefield &middot; 15 items</div>
+        <h3>Highest Waterfalls</h3>
+        <div class="meta">one wrong guess ends it</div>
+        <button class="btn-primary" onclick="showScreen('waterfallmine')">Play</button>
       </div>
       <div class="card">
         <div class="tag">Free recall &middot; 5 items</div>
@@ -484,7 +490,7 @@
    of ids. To add a new screen here, just add its id to this array —
    the actual game instance (in app-init.js) is what gives it content.
    ============================================================ */
-const SCREEN_IDS = ['countries', 'worldpopmine', 'states', 'abbr', 'worldcap', 'statecap', 'popmine', 'statemap', 'findstate', 'findstate-hard', 'provinces', 'provincecap', 'provpopmine', 'mountainmine', 'rivermine', 'oceans', 'presidents', 'pms', 'monarchs', 'nba', 'mlb', 'nhl', 'nfl'];
+const SCREEN_IDS = ['countries', 'worldpopmine', 'states', 'abbr', 'worldcap', 'statecap', 'popmine', 'statemap', 'findstate', 'findstate-hard', 'provinces', 'provincecap', 'provpopmine', 'mountainmine', 'rivermine', 'waterfallmine', 'oceans', 'presidents', 'pms', 'monarchs', 'nba', 'mlb', 'nhl', 'nfl'];
 
 const screenHost = document.getElementById('dynamic-screens');
 SCREEN_IDS.forEach(id => {
