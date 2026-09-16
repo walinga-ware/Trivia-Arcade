@@ -131,11 +131,12 @@
       "display": "Common Raven"
     },
     {
-      "q": "What rare azure-blue mineral is Yukon's official gemstone?",
+      "q": "Spanning only 2.6 square kilometres, ahat sourhern Yukon collection of sand dunes is sometimes called 'The World's Smallest Desert'?",
       "accepted": [
-        "lazulite"
+        "carcross desert",
+        "carcross"
       ],
-      "display": "Lazulite"
+      "display": "Carcross Desert"
     },
     {
       "q": "What hardy mountain evergreen, used by First Nations for its medicinal sap, is Yukon's official tree?",
@@ -166,7 +167,8 @@
       "q": "What Yukon peak is the highest mountain in all of Canada?",
       "accepted": [
         "mount logan",
-        "mt logan"
+        "mt logan",
+        "logan"
       ],
       "display": "Mount Logan"
     }
