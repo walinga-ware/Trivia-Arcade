@@ -14,8 +14,6 @@ const {
   MOUNTAIN_ALIASES,
   RIVER_RANKING,
   RIVER_ALIASES,
-  WATERFALL_RANKING,
-  WATERFALL_ALIASES,
   OCEANS,
   OCEAN_ALIASES,
   PRESIDENTS_TERMS,
@@ -51,9 +49,6 @@ Object.keys(MOUNTAIN_ALIASES).forEach(k => { MOUNTAIN_LOOKUP[normalize(k)] = MOU
 const RIVER_LOOKUP = {};
 RIVER_RANKING.forEach(([name]) => { RIVER_LOOKUP[normalize(name)] = name; });
 Object.keys(RIVER_ALIASES).forEach(k => { RIVER_LOOKUP[normalize(k)] = RIVER_ALIASES[k]; });
-const WATERFALL_LOOKUP = {};
-WATERFALL_RANKING.forEach(([name]) => { WATERFALL_LOOKUP[normalize(name)] = name; });
-Object.keys(WATERFALL_ALIASES).forEach(k => { WATERFALL_LOOKUP[normalize(k)] = WATERFALL_ALIASES[k]; });
 const OCEAN_LOOKUP = {};
 OCEANS.forEach(name => { OCEAN_LOOKUP[normalize(name)] = name; });
 Object.keys(OCEAN_ALIASES).forEach(k => { OCEAN_LOOKUP[normalize(k)] = OCEAN_ALIASES[k]; });
@@ -433,23 +428,6 @@ const riverMinefield = new MinefieldQuiz({
     &middot; Name the world's 15 longest rivers (or river systems) in order from longest to shortest<br>
     &middot; One wrong guess — including a real river in the wrong order — ends the round immediately<br>
     &middot; Each correct guess shows that river's length<br>
-    &middot; No clock here — just don't miss
-  `
-});
-
-const waterfallMinefield = new MinefieldQuiz({
-  id: 'waterfallmine',
-  items: WATERFALL_RANKING,
-  lookup: WATERFALL_LOOKUP,
-  fmtPop: fmtElev,
-  itemNoun: 'waterfall',
-  itemNounPlural: 'waterfalls',
-  startHint: 'highest',
-  metricLabel: 'height',
-  rulesHTML: `
-    &middot; Name the world's 15 highest waterfalls in order from highest to lowest<br>
-    &middot; One wrong guess — including a real waterfall in the wrong order — ends the round immediately<br>
-    &middot; Each correct guess shows that waterfall's height<br>
     &middot; No clock here — just don't miss
   `
 });
