@@ -1048,7 +1048,10 @@
       "answer": "Luanda"
     },
     "Antigua and Barbuda": {
-      "answer": "Saint John's"
+      "answer": "Saint John's",
+      "aliases": [
+        "St Johns"
+      ]
     },
     "Argentina": {
       "answer": "Buenos Aires"
