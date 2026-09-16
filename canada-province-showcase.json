@@ -1,63 +1,4 @@
 {
-  "ONTARIO_TRIVIA": [
-    {
-      "q": "What purple-hued gemstone is Ontario's official mineral emblem?",
-      "accepted": [
-        "amethyst"
-      ],
-      "display": "Amethyst"
-    },
-    {
-      "q": "What haunting-voiced waterbird, also pictured on the Canadian dollar coin, is Ontario's official bird?",
-      "accepted": [
-        "common loon",
-        "loon"
-      ],
-      "display": "Common Loon"
-    },
-    {
-      "q": "What three-petaled woodland bloom is Ontario's official flower?",
-      "accepted": [
-        "white trillium",
-        "trillium"
-      ],
-      "display": "White Trillium"
-    },
-    {
-      "q": "What towering evergreen, once prized by the Royal Navy for ship masts, is Ontario's official tree?",
-      "accepted": [
-        "eastern white pine",
-        "white pine",
-        "pine"
-      ],
-      "display": "Eastern White Pine"
-    },
-    {
-      "q": "What National Park in southwestern Ontario marks Canada's southern-most point?",
-      "accepted": [
-        "point pelee",
-        "pelee",
-        "middle island"
-      ],
-      "display": "Point Pelee"
-    },
-    {
-      "q": "What Toronto landmark was the tallest freestanding structure in the Western Hemisphere for over three decades?",
-      "accepted": [
-        "cn tower",
-        "the cn tower"
-      ],
-      "display": "The CN Tower"
-    },
-    {
-      "q": "Ontario touches four of the five Great Lakes — which one does it NOT border?",
-      "accepted": [
-        "lake michigan",
-        "michigan"
-      ],
-      "display": "Lake Michigan"
-    }
-  ],
   "NEW_BRUNSWICK_TRIVIA": [
     {
       "q": "What fragrant evergreen, the backbone of the province's Christmas tree industry, is New Brunswick's official tree?",
@@ -112,6 +53,65 @@
         "maine"
       ],
       "display": "Maine"
+    }
+  ],
+  "ONTARIO_TRIVIA": [
+    {
+      "q": "What purple-hued gemstone is Ontario's official mineral emblem?",
+      "accepted": [
+        "amethyst"
+      ],
+      "display": "Amethyst"
+    },
+    {
+      "q": "What haunting-voiced waterbird, also pictured on the Canadian dollar coin, is Ontario's official bird?",
+      "accepted": [
+        "common loon",
+        "loon"
+      ],
+      "display": "Common Loon"
+    },
+    {
+      "q": "What three-petaled woodland bloom is Ontario's official flower?",
+      "accepted": [
+        "white trillium",
+        "trillium"
+      ],
+      "display": "White Trillium"
+    },
+    {
+      "q": "What towering evergreen, once prized by the Royal Navy for ship masts, is Ontario's official tree?",
+      "accepted": [
+        "eastern white pine",
+        "white pine",
+        "pine"
+      ],
+      "display": "Eastern White Pine"
+    },
+    {
+      "q": "What National Park in southwestern Ontario marks Canada's southern-most point?",
+      "accepted": [
+        "point pelee",
+        "pelee",
+        "middle island"
+      ],
+      "display": "Point Pelee"
+    },
+    {
+      "q": "What Toronto landmark was the tallest freestanding structure in the Western Hemisphere for over three decades?",
+      "accepted": [
+        "cn tower",
+        "the cn tower"
+      ],
+      "display": "The CN Tower"
+    },
+    {
+      "q": "Ontario touches four of the five Great Lakes \u2014 which one does it NOT border?",
+      "accepted": [
+        "lake michigan",
+        "michigan"
+      ],
+      "display": "Lake Michigan"
     }
   ],
   "YUKON_TRIVIA": [
