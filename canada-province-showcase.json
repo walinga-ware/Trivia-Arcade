@@ -131,7 +131,7 @@
       "display": "Common Raven"
     },
     {
-      "q": "Spanning only 2.6 square kilometres, ahat sourhern Yukon collection of sand dunes is sometimes called 'The World's Smallest Desert'?",
+      "q": "Spanning only 2.6 square kilometres, what cluster of sand dunes in southern Yukon is sometimes called 'The World's Smallest Desert'?",
       "accepted": [
         "carcross desert",
         "carcross"
@@ -148,11 +148,13 @@
       "display": "Subalpine Fir"
     },
     {
-      "q": "What city serves as Yukon's territorial capital?",
+      "q": "What celestial spectacle can often be viewed from the Yukon between mid-August and mid-April?",
       "accepted": [
-        "whitehorse"
+        "northern lights",
+        "aurora borealis",
+        "aurora"
       ],
-      "display": "Whitehorse"
+      "display": "The Northern Lights"
     },
     {
       "q": "What late-1890s stampede for precious metal put Dawson City and the Yukon on the map?",
