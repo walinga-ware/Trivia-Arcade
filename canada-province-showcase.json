@@ -33,11 +33,13 @@
       "display": "Eastern White Pine"
     },
     {
-      "q": "What city serves as Ontario's provincial capital?",
+      "q": "What National Park in southwestern Ontario marks Canada's southern-most point?",
       "accepted": [
-        "toronto"
+        "point pelee",
+        "pelee",
+        "middle island"
       ],
-      "display": "Toronto"
+      "display": "Point Pelee"
     },
     {
       "q": "What Toronto landmark was the tallest freestanding structure in the Western Hemisphere for over three decades?",
