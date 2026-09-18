@@ -1,4 +1,41 @@
 {
+  "ALBERTA_TRIVIA": [
+    {
+      "q": "What Alberta city hosts the Stampede, the rodeo and fair billed as \u201cThe Greatest Outdoor Show on Earth\u201d?",
+      "accepted": ["calgary"],
+      "display": "Calgary"
+    },
+    {
+      "q": "A nod to its provincial flower, Alberta license plates and tourism ads have long called it \u201c___ Country.\u201d Fill in the blank.",
+      "accepted": ["wild rose", "wildrose"],
+      "display": "Wild Rose Country"
+    },
+    {
+      "q": "Rising on the edge of the Columbia Icefield, what is the tallest mountain located entirely within Alberta?",
+      "accepted": ["mount columbia", "mt columbia", "columbia"],
+      "display": "Mount Columbia"
+    },
+    {
+      "q": "Near Drumheller, what UNESCO World Heritage badlands park is world-famous for its dinosaur fossil beds?",
+      "accepted": ["dinosaur provincial park", "dinosaur"],
+      "display": "Dinosaur Provincial Park"
+    },
+    {
+      "q": "Established in 1885 along a set of hot springs, what became Canada's very first national park?",
+      "accepted": ["banff", "banff national park"],
+      "display": "Banff National Park"
+    },
+    {
+      "q": "Which Edmonton mega-mall held the Guinness World Record for world's largest shopping mall for over two decades, complete with an indoor water park and roller coaster?",
+      "accepted": ["west edmonton mall", "wem", "west ed"],
+      "display": "West Edmonton Mall"
+    },
+    {
+      "q": "Northern Alberta holds one of the world's largest deposits of what heavy, unconventional petroleum resource, mined around Fort McMurray?",
+      "accepted": ["oil sands", "tar sands", "bitumen", "oil sand", "tar sand"],
+      "display": "Oil Sands (Bitumen)"
+    }
+  ],
   "NEW_BRUNSWICK_TRIVIA": [
     {
       "q": "What fragrant evergreen, the backbone of the province's Christmas tree industry, is New Brunswick's official tree?",
