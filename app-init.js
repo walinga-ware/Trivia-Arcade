@@ -2,6 +2,7 @@
 const {
   COUNTRIES,
   COUNTRY_ALIASES,
+  COUNTRY_FLAG_CODES,
   WORLD_POPULATION_RANKING,
   STATES,
   WORLD_CAPITALS,
@@ -30,7 +31,6 @@ const {
   DELAWARE_TRIVIA,
   CONNECTICUT_TRIVIA,
   CALIFORNIA_TRIVIA,
-  ALBERTA_TRIVIA,
   ONTARIO_TRIVIA,
   NEW_BRUNSWICK_TRIVIA,
   YUKON_TRIVIA,
@@ -162,6 +162,33 @@ const worldCapitalsQuiz = new PromptQuiz({
     &middot; Countries appear one at a time in random order — 193 total<br>
     &middot; Type the capital city for each<br>
     &middot; Use Skip if you're stuck; the round ends when time runs out
+  `
+});
+
+// Reverse of COUNTRY_ALIASES (alias -> canonical) into canonical -> [aliases],
+// so each flag's pair can list every accepted nickname/abbreviation.
+const COUNTRY_ALIASES_BY_NAME = {};
+Object.keys(COUNTRY_ALIASES).forEach(alias => {
+  const canonical = COUNTRY_ALIASES[alias];
+  if (!canonical) return; // null entries (e.g. Taiwan, Kosovo) aren't UN member states
+  (COUNTRY_ALIASES_BY_NAME[canonical] = COUNTRY_ALIASES_BY_NAME[canonical] || []).push(alias);
+});
+
+const flagsQuiz = new PromptQuiz({
+  id: 'flags',
+  pairs: COUNTRIES.map(name => ({
+    prompt: `https://flagcdn.com/w320/${COUNTRY_FLAG_CODES[name]}.png`,
+    answer: name,
+    aliases: COUNTRY_ALIASES_BY_NAME[name] || []
+  })),
+  duration: 20*60,
+  mode: 'flag',
+  promptLabel: "guess the country from its flag",
+  finalRollLabel: 'Full roll — all 193 countries',
+  rulesHTML: `
+    &middot; Flags appear one at a time in random order — 193 total<br>
+    &middot; Type the country name — common nicknames and abbreviations are accepted<br>
+    &middot; Use Skip if you're stuck; the round ends when you've been through all 193 or time runs out
   `
 });
 
@@ -342,7 +369,6 @@ const stateShowcaseQuizInstances = initStateShowcase(STATE_SHOWCASE_QUIZZES);
      questions - the JSON question array (KEEP this format)
    ============================================================ */
 const CANADA_SHOWCASE_QUIZZES = [
-  { id: 'alberta',      state: 'Alberta',       subtitle: 'Wild Rose Wisdom',          questions: ALBERTA_TRIVIA },
   { id: 'newbrunswick', state: 'New Brunswick', subtitle: 'Fundy Facts', questions: NEW_BRUNSWICK_TRIVIA },
   { id: 'ontario',      state: 'Ontario',       subtitle: 'Trillium Trivia',           questions: ONTARIO_TRIVIA },
   { id: 'yukon',        state: 'Yukon',         subtitle: 'North of 60',               questions: YUKON_TRIVIA },
