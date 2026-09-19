@@ -410,6 +410,16 @@ class PresidentsRecallGame{
 function quizHTML(id, promptLabel, mode){
   const inputAttrs = mode === 'short' ? 'maxlength="2"' : '';
   const rowClass = mode === 'short' ? 'quiz-input-row short' : 'quiz-input-row text';
+  const placeholder = mode === 'flag' ? 'placeholder="Type the country…"' : '';
+  const promptBlock = mode === 'flag'
+    ? `<div class="quiz-prompt flag-prompt">
+        <div class="prompt-label">${promptLabel}</div>
+        <img class="flag-image" id="${id}-promptValue" alt="Flag to identify" src="">
+      </div>`
+    : `<div class="quiz-prompt">
+        <div class="prompt-label">${promptLabel}</div>
+        <div class="prompt-value" id="${id}-promptValue">—</div>
+      </div>`;
   return `
     <div id="${id}-intro">
       <div class="plate" style="margin-bottom:18px;">
@@ -435,12 +445,9 @@ function quizHTML(id, promptLabel, mode){
         </div>
       </div>
 
-      <div class="quiz-prompt">
-        <div class="prompt-label">${promptLabel}</div>
-        <div class="prompt-value" id="${id}-promptValue">—</div>
-      </div>
+      ${promptBlock}
       <div class="${rowClass}">
-        <input type="text" id="${id}-guess" ${inputAttrs} autocomplete="off">
+        <input type="text" id="${id}-guess" ${inputAttrs} ${placeholder} autocomplete="off">
       </div>
       <div class="feedback" id="${id}-feedback" style="text-align:center;"></div>
       <div style="text-align:center;">
@@ -540,7 +547,11 @@ class PromptQuiz{
   showPrompt(){
     if (this.queue.length === 0){ this.end(); return; }
     const { prompt } = this.currentPair();
-    this.el('promptValue').textContent = prompt;
+    if (this.mode === 'flag'){
+      this.el('promptValue').src = prompt;
+    } else {
+      this.el('promptValue').textContent = prompt;
+    }
     this.el('progressValue').textContent = this.queue.length;
     this.el('guess').value = '';
     this.el('feedback').textContent = '';
@@ -590,10 +601,14 @@ class PromptQuiz{
     const pct = Math.round((this.score / this.pairs.length) * 100);
     this.el('finalScoreLine').textContent = `You got ${this.score} of ${this.pairs.length} correct (${pct}%).`;
 
-    const sorted = [...this.pairs].sort((a,b)=>a.prompt.localeCompare(b.prompt));
+    const sortKey = this.mode === 'flag' ? 'answer' : 'prompt';
+    const sorted = [...this.pairs].sort((a,b)=>a[sortKey].localeCompare(b[sortKey]));
     this.el('finalGrid').innerHTML = sorted.map(({prompt, answer}) => {
       const hit = this.results[prompt] === true;
-      return `<div class="item ${hit ? 'hit' : 'miss'}"><span>${prompt}</span><span>${answer} ${hit ? '✓' : '—'}</span></div>`;
+      const label = this.mode === 'flag'
+        ? `<img class="flag-thumb" src="${prompt}" alt="${answer} flag">`
+        : prompt;
+      return `<div class="item ${hit ? 'hit' : 'miss'}"><span>${label}</span><span>${answer} ${hit ? '✓' : '—'}</span></div>`;
     }).join('');
   }
 

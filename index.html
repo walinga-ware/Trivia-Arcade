@@ -166,6 +166,12 @@
   }
   .quiz-prompt .prompt-label{ font-size:12px; color:var(--paper-dim); margin-bottom:10px; }
   .quiz-prompt .prompt-value{ font-family:'IBM Plex Sans', sans-serif; font-size:clamp(26px,6vw,38px); color:var(--paper); }
+  .flag-prompt .flag-image{
+    display:block; margin:0 auto; max-width:280px; width:100%; height:auto;
+    border:1px solid var(--line); border-radius:3px; box-shadow:0 4px 14px rgba(0,0,0,0.35);
+    background:var(--ink);
+  }
+  .final-grid .flag-thumb{ width:28px; height:auto; vertical-align:middle; border-radius:2px; border:1px solid var(--line); }
   .quiz-input-row{ display:flex; gap:10px; justify-content:center; margin-bottom:8px; }
   .quiz-input-row.short input{
     text-align:center; text-transform:uppercase; max-width:140px; font-size:22px; letter-spacing:4px;
@@ -248,7 +254,7 @@
 
     <!-- ============ WORLD ============ -->
     <details class="section">
-      <summary class="section-summary"><span><span class="chevron">▸</span>World 🌎</span><span class="quiz-count">3 quizzes</span></summary>
+      <summary class="section-summary"><span><span class="chevron">▸</span>World 🌎</span><span class="quiz-count">4 quizzes</span></summary>
     <div class="card-grid">
       <div class="card">
         <div class="tag">Free recall &middot; 193 items</div>
@@ -261,6 +267,12 @@
         <h3>Capital Idea: World</h3>
         <div class="meta" id="worldcap-meta"></div>
         <button class="btn-primary" onclick="showScreen('worldcap')">Play</button>
+      </div>
+      <div class="card">
+        <div class="tag">Prompted quiz &middot; 193 items</div>
+        <h3>Guess the Flag</h3>
+        <div class="meta" id="flags-meta"></div>
+        <button class="btn-primary" onclick="showScreen('flags')">Play</button>
       </div>
       <div class="card">
         <div class="tag">Minefield &middot; 193 items</div>
@@ -484,7 +496,7 @@
    of ids. To add a new screen here, just add its id to this array —
    the actual game instance (in app-init.js) is what gives it content.
    ============================================================ */
-const SCREEN_IDS = ['countries', 'worldpopmine', 'states', 'abbr', 'worldcap', 'statecap', 'popmine', 'statemap', 'findstate', 'findstate-hard', 'provinces', 'provincecap', 'provpopmine', 'mountainmine', 'rivermine', 'oceans', 'presidents', 'pms', 'monarchs', 'nba', 'mlb', 'nhl', 'nfl'];
+const SCREEN_IDS = ['countries', 'worldpopmine', 'flags', 'states', 'abbr', 'worldcap', 'statecap', 'popmine', 'statemap', 'findstate', 'findstate-hard', 'provinces', 'provincecap', 'provpopmine', 'mountainmine', 'rivermine', 'oceans', 'presidents', 'pms', 'monarchs', 'nba', 'mlb', 'nhl', 'nfl'];
 
 const screenHost = document.getElementById('dynamic-screens');
 SCREEN_IDS.forEach(id => {
