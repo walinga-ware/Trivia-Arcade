@@ -187,7 +187,7 @@ const flagsQuiz = new PromptQuiz({
   promptLabel: "guess the country from its flag",
   finalRollLabel: 'Full roll — all 193 countries',
   rulesHTML: `
-    &middot; Flags appear one at a time in random order — 193 total<br> (Source: https://flagpedia.net)
+    &middot; Flags appear one at a time in random order — 193 total (Source: https://flagpedia.net)<br>
     &middot; Type the country name — common nicknames and abbreviations are accepted<br>
     &middot; Use Skip if you're stuck; the round ends when you've been through all 193 or time runs out
   `
