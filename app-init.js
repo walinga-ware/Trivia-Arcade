@@ -572,7 +572,7 @@ const elementsGame = new FreeRecallGame({
   rulesHTML: `
     &middot; Every element counts once — 118 total<br>
     &middot; Type the full element name — atomic symbols like "Na" or "Fe" don't count here<br>
-    &middot; Alternate spellings (e.g. Sulphur, Aluminium, Caesium) are accepted<br>
+    &middot; Some common alternate spellings are accepted<br>
     &middot; When time expires, the full roll is revealed in atomic-number order with your hits marked
   `
 });
