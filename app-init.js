@@ -546,6 +546,37 @@ const periodicTableQuiz = new PromptQuiz({
   `
 });
 
+// Full element names, in atomic-number order (ELEMENTS is already ordered
+// H=1 through Og=118), used both as the free-recall item list and to keep
+// the results grid in atomic-number order instead of alphabetical.
+const ELEMENT_FULL_NAMES = ELEMENTS.map(symbol => ELEMENT_NAMES[symbol].answer);
+const ELEMENT_LOOKUP = {};
+// Deliberately built from full names + aliases only — atomic symbols
+// (e.g. "Na", "Fe") are never added as keys, so abbreviations aren't accepted.
+ELEMENTS.forEach(symbol => {
+  const entry = ELEMENT_NAMES[symbol];
+  ELEMENT_LOOKUP[normalize(entry.answer)] = entry.answer;
+  (entry.aliases || []).forEach(alias => {
+    ELEMENT_LOOKUP[normalize(alias)] = entry.answer;
+  });
+});
+
+const elementsGame = new FreeRecallGame({
+  id: 'elements',
+  title: 'Periodic Table',
+  items: ELEMENT_FULL_NAMES,
+  lookup: ELEMENT_LOOKUP,
+  duration: 20*60,
+  preserveOrder: true,
+  finalTitle: 'Full roll — all 118 elements, by atomic number',
+  rulesHTML: `
+    &middot; Every element counts once — 118 total<br>
+    &middot; Type the full element name — atomic symbols like "Na" or "Fe" don't count here<br>
+    &middot; Some common alternate spellings are accepted<br>
+    &middot; When time expires, the full roll is revealed in atomic-number order with your hits marked
+  `
+});
+
 const stateMapQuiz = new StateMapQuiz({ id:'statemap', states:STATES.map(([name])=>name) });
 const findStateQuiz = new FindStateQuiz({ id:'findstate', states:STATES.map(([name])=>name) });
 const findStateHardQuiz = new FindStateQuiz({ id:'findstate-hard', states:STATES.map(([name])=>name), hardMode:true });
