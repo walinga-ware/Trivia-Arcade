@@ -42,7 +42,9 @@ const {
   NHL_TEAMS,
   NHL_TEAM_ALIASES,
   MLB_TEAMS,
-  MLB_TEAM_ALIASES
+  MLB_TEAM_ALIASES,
+  ELEMENTS,
+  ELEMENT_NAMES
 } = QUIZ_DATA;
 
 const MOUNTAIN_LOOKUP = {};
@@ -520,6 +522,27 @@ const monarchsGame = new PresidentsRecallGame({
     &middot; Some monarchs appear twice because of their separate reigns<br>
     &middot; Full names, regnal numbers, and common historical nicknames are accepted<br>
     &middot; When time expires, the full roster is revealed in chronological order with years served
+  `
+});
+
+/* ============================================================
+   SCIENCE — PERIODIC TABLE
+   ============================================================ */
+const periodicTableQuiz = new PromptQuiz({
+  id: 'periodic',
+  pairs: ELEMENTS.map(symbol => ({
+    prompt: symbol,
+    answer: ELEMENT_NAMES[symbol].answer,
+    aliases: ELEMENT_NAMES[symbol].aliases || []
+  })),
+  duration: 20*60,
+  mode: 'text',
+  promptLabel: "what element has the symbol",
+  finalRollLabel: 'Full roll — all 118 elements',
+  rulesHTML: `
+    &middot; Every element's atomic symbol appears once, in random order — 118 total<br>
+    &middot; Type the full element name for each<br>
+    &middot; Use Skip if you're stuck; the round ends when you've been through all 118 or time runs out
   `
 });
 

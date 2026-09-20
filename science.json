@@ -1,0 +1,493 @@
+{
+  "ELEMENTS": [
+    "H",
+    "He",
+    "Li",
+    "Be",
+    "B",
+    "C",
+    "N",
+    "O",
+    "F",
+    "Ne",
+    "Na",
+    "Mg",
+    "Al",
+    "Si",
+    "P",
+    "S",
+    "Cl",
+    "Ar",
+    "K",
+    "Ca",
+    "Sc",
+    "Ti",
+    "V",
+    "Cr",
+    "Mn",
+    "Fe",
+    "Co",
+    "Ni",
+    "Cu",
+    "Zn",
+    "Ga",
+    "Ge",
+    "As",
+    "Se",
+    "Br",
+    "Kr",
+    "Rb",
+    "Sr",
+    "Y",
+    "Zr",
+    "Nb",
+    "Mo",
+    "Tc",
+    "Ru",
+    "Rh",
+    "Pd",
+    "Ag",
+    "Cd",
+    "In",
+    "Sn",
+    "Sb",
+    "Te",
+    "I",
+    "Xe",
+    "Cs",
+    "Ba",
+    "La",
+    "Ce",
+    "Pr",
+    "Nd",
+    "Pm",
+    "Sm",
+    "Eu",
+    "Gd",
+    "Tb",
+    "Dy",
+    "Ho",
+    "Er",
+    "Tm",
+    "Yb",
+    "Lu",
+    "Hf",
+    "Ta",
+    "W",
+    "Re",
+    "Os",
+    "Ir",
+    "Pt",
+    "Au",
+    "Hg",
+    "Tl",
+    "Pb",
+    "Bi",
+    "Po",
+    "At",
+    "Rn",
+    "Fr",
+    "Ra",
+    "Ac",
+    "Th",
+    "Pa",
+    "U",
+    "Np",
+    "Pu",
+    "Am",
+    "Cm",
+    "Bk",
+    "Cf",
+    "Es",
+    "Fm",
+    "Md",
+    "No",
+    "Lr",
+    "Rf",
+    "Db",
+    "Sg",
+    "Bh",
+    "Hs",
+    "Mt",
+    "Ds",
+    "Rg",
+    "Cn",
+    "Nh",
+    "Fl",
+    "Mc",
+    "Lv",
+    "Ts",
+    "Og"
+  ],
+  "ELEMENT_NAMES": {
+    "H": {
+      "answer": "Hydrogen"
+    },
+    "He": {
+      "answer": "Helium"
+    },
+    "Li": {
+      "answer": "Lithium"
+    },
+    "Be": {
+      "answer": "Beryllium"
+    },
+    "B": {
+      "answer": "Boron"
+    },
+    "C": {
+      "answer": "Carbon"
+    },
+    "N": {
+      "answer": "Nitrogen"
+    },
+    "O": {
+      "answer": "Oxygen"
+    },
+    "F": {
+      "answer": "Fluorine"
+    },
+    "Ne": {
+      "answer": "Neon"
+    },
+    "Na": {
+      "answer": "Sodium"
+    },
+    "Mg": {
+      "answer": "Magnesium"
+    },
+    "Al": {
+      "answer": "Aluminum",
+      "aliases": [
+        "Aluminium"
+      ]
+    },
+    "Si": {
+      "answer": "Silicon"
+    },
+    "P": {
+      "answer": "Phosphorus"
+    },
+    "S": {
+      "answer": "Sulfur",
+      "aliases": [
+        "Sulphur"
+      ]
+    },
+    "Cl": {
+      "answer": "Chlorine"
+    },
+    "Ar": {
+      "answer": "Argon"
+    },
+    "K": {
+      "answer": "Potassium"
+    },
+    "Ca": {
+      "answer": "Calcium"
+    },
+    "Sc": {
+      "answer": "Scandium"
+    },
+    "Ti": {
+      "answer": "Titanium"
+    },
+    "V": {
+      "answer": "Vanadium"
+    },
+    "Cr": {
+      "answer": "Chromium"
+    },
+    "Mn": {
+      "answer": "Manganese"
+    },
+    "Fe": {
+      "answer": "Iron"
+    },
+    "Co": {
+      "answer": "Cobalt"
+    },
+    "Ni": {
+      "answer": "Nickel"
+    },
+    "Cu": {
+      "answer": "Copper"
+    },
+    "Zn": {
+      "answer": "Zinc"
+    },
+    "Ga": {
+      "answer": "Gallium"
+    },
+    "Ge": {
+      "answer": "Germanium"
+    },
+    "As": {
+      "answer": "Arsenic"
+    },
+    "Se": {
+      "answer": "Selenium"
+    },
+    "Br": {
+      "answer": "Bromine"
+    },
+    "Kr": {
+      "answer": "Krypton"
+    },
+    "Rb": {
+      "answer": "Rubidium"
+    },
+    "Sr": {
+      "answer": "Strontium"
+    },
+    "Y": {
+      "answer": "Yttrium"
+    },
+    "Zr": {
+      "answer": "Zirconium"
+    },
+    "Nb": {
+      "answer": "Niobium",
+      "aliases": [
+        "Columbium"
+      ]
+    },
+    "Mo": {
+      "answer": "Molybdenum"
+    },
+    "Tc": {
+      "answer": "Technetium"
+    },
+    "Ru": {
+      "answer": "Ruthenium"
+    },
+    "Rh": {
+      "answer": "Rhodium"
+    },
+    "Pd": {
+      "answer": "Palladium"
+    },
+    "Ag": {
+      "answer": "Silver"
+    },
+    "Cd": {
+      "answer": "Cadmium"
+    },
+    "In": {
+      "answer": "Indium"
+    },
+    "Sn": {
+      "answer": "Tin"
+    },
+    "Sb": {
+      "answer": "Antimony"
+    },
+    "Te": {
+      "answer": "Tellurium"
+    },
+    "I": {
+      "answer": "Iodine"
+    },
+    "Xe": {
+      "answer": "Xenon"
+    },
+    "Cs": {
+      "answer": "Cesium",
+      "aliases": [
+        "Caesium"
+      ]
+    },
+    "Ba": {
+      "answer": "Barium"
+    },
+    "La": {
+      "answer": "Lanthanum"
+    },
+    "Ce": {
+      "answer": "Cerium"
+    },
+    "Pr": {
+      "answer": "Praseodymium"
+    },
+    "Nd": {
+      "answer": "Neodymium"
+    },
+    "Pm": {
+      "answer": "Promethium"
+    },
+    "Sm": {
+      "answer": "Samarium"
+    },
+    "Eu": {
+      "answer": "Europium"
+    },
+    "Gd": {
+      "answer": "Gadolinium"
+    },
+    "Tb": {
+      "answer": "Terbium"
+    },
+    "Dy": {
+      "answer": "Dysprosium"
+    },
+    "Ho": {
+      "answer": "Holmium"
+    },
+    "Er": {
+      "answer": "Erbium"
+    },
+    "Tm": {
+      "answer": "Thulium"
+    },
+    "Yb": {
+      "answer": "Ytterbium"
+    },
+    "Lu": {
+      "answer": "Lutetium"
+    },
+    "Hf": {
+      "answer": "Hafnium"
+    },
+    "Ta": {
+      "answer": "Tantalum"
+    },
+    "W": {
+      "answer": "Tungsten",
+      "aliases": [
+        "Wolfram"
+      ]
+    },
+    "Re": {
+      "answer": "Rhenium"
+    },
+    "Os": {
+      "answer": "Osmium"
+    },
+    "Ir": {
+      "answer": "Iridium"
+    },
+    "Pt": {
+      "answer": "Platinum"
+    },
+    "Au": {
+      "answer": "Gold"
+    },
+    "Hg": {
+      "answer": "Mercury"
+    },
+    "Tl": {
+      "answer": "Thallium"
+    },
+    "Pb": {
+      "answer": "Lead"
+    },
+    "Bi": {
+      "answer": "Bismuth"
+    },
+    "Po": {
+      "answer": "Polonium"
+    },
+    "At": {
+      "answer": "Astatine"
+    },
+    "Rn": {
+      "answer": "Radon"
+    },
+    "Fr": {
+      "answer": "Francium"
+    },
+    "Ra": {
+      "answer": "Radium"
+    },
+    "Ac": {
+      "answer": "Actinium"
+    },
+    "Th": {
+      "answer": "Thorium"
+    },
+    "Pa": {
+      "answer": "Protactinium"
+    },
+    "U": {
+      "answer": "Uranium"
+    },
+    "Np": {
+      "answer": "Neptunium"
+    },
+    "Pu": {
+      "answer": "Plutonium"
+    },
+    "Am": {
+      "answer": "Americium"
+    },
+    "Cm": {
+      "answer": "Curium"
+    },
+    "Bk": {
+      "answer": "Berkelium"
+    },
+    "Cf": {
+      "answer": "Californium"
+    },
+    "Es": {
+      "answer": "Einsteinium"
+    },
+    "Fm": {
+      "answer": "Fermium"
+    },
+    "Md": {
+      "answer": "Mendelevium"
+    },
+    "No": {
+      "answer": "Nobelium"
+    },
+    "Lr": {
+      "answer": "Lawrencium"
+    },
+    "Rf": {
+      "answer": "Rutherfordium"
+    },
+    "Db": {
+      "answer": "Dubnium"
+    },
+    "Sg": {
+      "answer": "Seaborgium"
+    },
+    "Bh": {
+      "answer": "Bohrium"
+    },
+    "Hs": {
+      "answer": "Hassium"
+    },
+    "Mt": {
+      "answer": "Meitnerium"
+    },
+    "Ds": {
+      "answer": "Darmstadtium"
+    },
+    "Rg": {
+      "answer": "Roentgenium"
+    },
+    "Cn": {
+      "answer": "Copernicium"
+    },
+    "Nh": {
+      "answer": "Nihonium"
+    },
+    "Fl": {
+      "answer": "Flerovium"
+    },
+    "Mc": {
+      "answer": "Moscovium"
+    },
+    "Lv": {
+      "answer": "Livermorium"
+    },
+    "Ts": {
+      "answer": "Tennessine"
+    },
+    "Og": {
+      "answer": "Oganesson"
+    }
+  }
+}
