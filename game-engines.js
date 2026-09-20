@@ -120,6 +120,11 @@ class FreeRecallGame{
     this.duration = opts.duration;    // seconds
     this.rulesHTML = opts.rulesHTML;
     this.finalTitle = opts.finalTitle;
+    // By default, both the "guessed so far" list and the final results
+    // grid are sorted alphabetically. Pass `preserveOrder: true` when
+    // `items` already comes in a meaningful order (e.g. atomic number)
+    // that should be kept as-is instead of being re-sorted alphabetically.
+    this.preserveOrder = !!opts.preserveOrder;
 
     this.guessed = new Set();
     this.timeLeft = this.duration;
@@ -207,7 +212,9 @@ class FreeRecallGame{
   renderGuessed(){
     this.el('scoreValue').innerHTML = `${this.guessed.size} <span style="font-size:16px;color:var(--paper-dim);">/ ${this.items.length}</span>`;
     this.el('guessedCount').textContent = this.guessed.size;
-    const list = Array.from(this.guessed).sort((a,b)=>a.localeCompare(b));
+    const list = this.preserveOrder
+      ? this.items.filter(c => this.guessed.has(c))
+      : Array.from(this.guessed).sort((a,b)=>a.localeCompare(b));
     const container = this.el('guessedList');
     container.innerHTML = list.length
       ? list.map(c => `<div>${c}</div>`).join('')
@@ -226,7 +233,7 @@ class FreeRecallGame{
     const pct = Math.round((this.guessed.size / this.items.length) * 100);
     this.el('finalScoreLine').textContent = `You named ${this.guessed.size} of ${this.items.length} (${pct}%).`;
 
-    const sorted = [...this.items].sort((a,b)=>a.localeCompare(b));
+    const sorted = this.preserveOrder ? this.items.slice() : [...this.items].sort((a,b)=>a.localeCompare(b));
     this.el('finalGrid').innerHTML = sorted.map(c => {
       const hit = this.guessed.has(c);
       return `<div class="item ${hit ? 'hit' : 'miss'}"><span>${c}</span><span>${hit ? '✓' : '—'}</span></div>`;
