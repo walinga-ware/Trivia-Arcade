@@ -23,6 +23,8 @@ const {
   PM_ALIASES,
   ENGLISH_MONARCH_TERMS,
   ENGLISH_MONARCH_ALIASES,
+  PHARAOH_TERMS,
+  PHARAOH_ALIASES,
   ALASKA_TRIVIA,
   NEW_YORK_TRIVIA,
   MINNESOTA_TRIVIA,
@@ -77,6 +79,16 @@ const ENGLISH_MONARCH_NAMES = [...new Set(ENGLISH_MONARCH_TERMS.map(t => t[0]))]
 const ENGLISH_MONARCH_LOOKUP = {};
 ENGLISH_MONARCH_NAMES.forEach(name => { ENGLISH_MONARCH_LOOKUP[normalize(name)] = [name]; });
 Object.keys(ENGLISH_MONARCH_ALIASES).forEach(k => { ENGLISH_MONARCH_LOOKUP[normalize(k)] = ENGLISH_MONARCH_ALIASES[k]; });
+
+/* ============================================================
+   Data: Pharaohs of Egypt, from the unification of Upper and
+   Lower Egypt under Narmer through Cleopatra VII, the last
+   pharaoh before Roman annexation (c. 3100 BC – 30 BC).
+   ============================================================ */
+const PHARAOH_NAMES = [...new Set(PHARAOH_TERMS.map(t => t[0]))];
+const PHARAOH_LOOKUP = {};
+PHARAOH_NAMES.forEach(name => { PHARAOH_LOOKUP[normalize(name)] = [name]; });
+Object.keys(PHARAOH_ALIASES).forEach(k => { PHARAOH_LOOKUP[normalize(k)] = PHARAOH_ALIASES[k]; });
 
 /* ============================================================
    FREE-RECALL GAME ENGINE — US PRESIDENTS VARIANT
@@ -522,6 +534,21 @@ const monarchsGame = new PresidentsRecallGame({
     &middot; Some monarchs appear twice because of their separate reigns<br>
     &middot; Full names, regnal numbers, and common historical nicknames are accepted<br>
     &middot; When time expires, the full roster is revealed in chronological order with years served
+  `
+});
+
+const pharaohsGame = new PresidentsRecallGame({
+  id: 'pharaohs',
+  title: 'Pharaohs of Egypt',
+  terms: PHARAOH_TERMS,
+  lookup: PHARAOH_LOOKUP,
+  duration: 8*60,
+  peopleLabel: 'pharaohs',
+  finalTitle: 'Full roster — 37 pharaohs, from Narmer to Cleopatra',
+  rulesHTML: `
+    &middot; 37 pharaohs spanning c. 3100 BC to 30 BC, from Narmer to Cleopatra VII<br>
+    &middot; Full name with numeral (e.g. "Ramesses II"), and common alternate spellings or epithets, are accepted<br>
+    &middot; When time expires, the full roster is revealed in chronological order with approximate reign dates
   `
 });
 

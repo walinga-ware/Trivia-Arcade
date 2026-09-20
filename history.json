@@ -1378,5 +1378,466 @@
     "king charles iii": [
       "Charles III"
     ]
+  },
+  "PHARAOH_TERMS": [
+    [
+      "Narmer",
+      "c. 3100 BC"
+    ],
+    [
+      "Djoser",
+      "c. 2670–2649 BC"
+    ],
+    [
+      "Sneferu",
+      "c. 2613–2589 BC"
+    ],
+    [
+      "Khufu",
+      "c. 2589–2566 BC"
+    ],
+    [
+      "Khafre",
+      "c. 2558–2532 BC"
+    ],
+    [
+      "Menkaure",
+      "c. 2532–2503 BC"
+    ],
+    [
+      "Pepi II",
+      "c. 2278–2184 BC"
+    ],
+    [
+      "Mentuhotep II",
+      "c. 2061–2010 BC"
+    ],
+    [
+      "Amenemhat I",
+      "c. 1991–1962 BC"
+    ],
+    [
+      "Senusret I",
+      "c. 1971–1926 BC"
+    ],
+    [
+      "Senusret III",
+      "c. 1878–1839 BC"
+    ],
+    [
+      "Amenemhat III",
+      "c. 1860–1814 BC"
+    ],
+    [
+      "Sobekneferu",
+      "c. 1806–1802 BC"
+    ],
+    [
+      "Ahmose I",
+      "c. 1550–1525 BC"
+    ],
+    [
+      "Hatshepsut",
+      "c. 1479–1458 BC"
+    ],
+    [
+      "Thutmose III",
+      "c. 1479–1425 BC"
+    ],
+    [
+      "Amenhotep III",
+      "c. 1386–1349 BC"
+    ],
+    [
+      "Akhenaten",
+      "c. 1353–1336 BC"
+    ],
+    [
+      "Tutankhamun",
+      "c. 1332–1323 BC"
+    ],
+    [
+      "Ay",
+      "c. 1323–1319 BC"
+    ],
+    [
+      "Horemheb",
+      "c. 1319–1292 BC"
+    ],
+    [
+      "Ramesses I",
+      "c. 1292–1290 BC"
+    ],
+    [
+      "Seti I",
+      "c. 1290–1279 BC"
+    ],
+    [
+      "Ramesses II",
+      "c. 1279–1213 BC"
+    ],
+    [
+      "Merneptah",
+      "c. 1213–1203 BC"
+    ],
+    [
+      "Ramesses III",
+      "c. 1186–1155 BC"
+    ],
+    [
+      "Ramesses XI",
+      "c. 1107–1077 BC"
+    ],
+    [
+      "Shoshenq I",
+      "c. 943–922 BC"
+    ],
+    [
+      "Piye",
+      "c. 744–714 BC"
+    ],
+    [
+      "Taharqa",
+      "c. 690–664 BC"
+    ],
+    [
+      "Psamtik I",
+      "c. 664–610 BC"
+    ],
+    [
+      "Necho II",
+      "c. 610–595 BC"
+    ],
+    [
+      "Nectanebo II",
+      "c. 360–342 BC"
+    ],
+    [
+      "Ptolemy I Soter",
+      "c. 305–282 BC"
+    ],
+    [
+      "Ptolemy II Philadelphus",
+      "c. 283–246 BC"
+    ],
+    [
+      "Ptolemy V Epiphanes",
+      "c. 204–181 BC"
+    ],
+    [
+      "Cleopatra VII",
+      "51–30 BC"
+    ]
+  ],
+  "PHARAOH_ALIASES": {
+    "narmer": [
+      "Narmer"
+    ],
+    "menes": [
+      "Narmer"
+    ],
+    "king menes": [
+      "Narmer"
+    ],
+    "djoser": [
+      "Djoser"
+    ],
+    "zoser": [
+      "Djoser"
+    ],
+    "sneferu": [
+      "Sneferu"
+    ],
+    "snefru": [
+      "Sneferu"
+    ],
+    "khufu": [
+      "Khufu"
+    ],
+    "cheops": [
+      "Khufu"
+    ],
+    "khafre": [
+      "Khafre"
+    ],
+    "khafra": [
+      "Khafre"
+    ],
+    "chephren": [
+      "Khafre"
+    ],
+    "menkaure": [
+      "Menkaure"
+    ],
+    "menkaura": [
+      "Menkaure"
+    ],
+    "mycerinus": [
+      "Menkaure"
+    ],
+    "pepi ii": [
+      "Pepi II"
+    ],
+    "pepy ii": [
+      "Pepi II"
+    ],
+    "neferkare pepi ii": [
+      "Pepi II"
+    ],
+    "mentuhotep ii": [
+      "Mentuhotep II"
+    ],
+    "nebhepetre mentuhotep": [
+      "Mentuhotep II"
+    ],
+    "amenemhat i": [
+      "Amenemhat I"
+    ],
+    "amenemhet i": [
+      "Amenemhat I"
+    ],
+    "senusret i": [
+      "Senusret I"
+    ],
+    "senwosret i": [
+      "Senusret I"
+    ],
+    "sesostris i": [
+      "Senusret I"
+    ],
+    "senusret iii": [
+      "Senusret III"
+    ],
+    "senwosret iii": [
+      "Senusret III"
+    ],
+    "sesostris iii": [
+      "Senusret III"
+    ],
+    "amenemhat iii": [
+      "Amenemhat III"
+    ],
+    "amenemhet iii": [
+      "Amenemhat III"
+    ],
+    "sobekneferu": [
+      "Sobekneferu"
+    ],
+    "neferusobek": [
+      "Sobekneferu"
+    ],
+    "sobek-neferu": [
+      "Sobekneferu"
+    ],
+    "ahmose i": [
+      "Ahmose I"
+    ],
+    "ahmosis i": [
+      "Ahmose I"
+    ],
+    "amosis i": [
+      "Ahmose I"
+    ],
+    "hatshepsut": [
+      "Hatshepsut"
+    ],
+    "hatshepsowe": [
+      "Hatshepsut"
+    ],
+    "thutmose iii": [
+      "Thutmose III"
+    ],
+    "tuthmosis iii": [
+      "Thutmose III"
+    ],
+    "thutmosis iii": [
+      "Thutmose III"
+    ],
+    "thothmes iii": [
+      "Thutmose III"
+    ],
+    "amenhotep iii": [
+      "Amenhotep III"
+    ],
+    "amenophis iii": [
+      "Amenhotep III"
+    ],
+    "akhenaten": [
+      "Akhenaten"
+    ],
+    "akhenaton": [
+      "Akhenaten"
+    ],
+    "ikhnaton": [
+      "Akhenaten"
+    ],
+    "amenhotep iv": [
+      "Akhenaten"
+    ],
+    "amenophis iv": [
+      "Akhenaten"
+    ],
+    "tutankhamun": [
+      "Tutankhamun"
+    ],
+    "tutankhamen": [
+      "Tutankhamun"
+    ],
+    "tutankhaten": [
+      "Tutankhamun"
+    ],
+    "king tut": [
+      "Tutankhamun"
+    ],
+    "tut": [
+      "Tutankhamun"
+    ],
+    "ay": [
+      "Ay"
+    ],
+    "horemheb": [
+      "Horemheb"
+    ],
+    "harmhab": [
+      "Horemheb"
+    ],
+    "ramesses i": [
+      "Ramesses I"
+    ],
+    "ramses i": [
+      "Ramesses I"
+    ],
+    "rameses i": [
+      "Ramesses I"
+    ],
+    "seti i": [
+      "Seti I"
+    ],
+    "sethos i": [
+      "Seti I"
+    ],
+    "ramesses ii": [
+      "Ramesses II"
+    ],
+    "ramses ii": [
+      "Ramesses II"
+    ],
+    "rameses ii": [
+      "Ramesses II"
+    ],
+    "ramesses the great": [
+      "Ramesses II"
+    ],
+    "ramses the great": [
+      "Ramesses II"
+    ],
+    "ozymandias": [
+      "Ramesses II"
+    ],
+    "merneptah": [
+      "Merneptah"
+    ],
+    "merenptah": [
+      "Merneptah"
+    ],
+    "ramesses iii": [
+      "Ramesses III"
+    ],
+    "ramses iii": [
+      "Ramesses III"
+    ],
+    "rameses iii": [
+      "Ramesses III"
+    ],
+    "ramesses xi": [
+      "Ramesses XI"
+    ],
+    "ramses xi": [
+      "Ramesses XI"
+    ],
+    "rameses xi": [
+      "Ramesses XI"
+    ],
+    "shoshenq i": [
+      "Shoshenq I"
+    ],
+    "sheshonq i": [
+      "Shoshenq I"
+    ],
+    "shishak": [
+      "Shoshenq I"
+    ],
+    "piye": [
+      "Piye"
+    ],
+    "piankhi": [
+      "Piye"
+    ],
+    "piankhy": [
+      "Piye"
+    ],
+    "taharqa": [
+      "Taharqa"
+    ],
+    "taharka": [
+      "Taharqa"
+    ],
+    "tirhakah": [
+      "Taharqa"
+    ],
+    "psamtik i": [
+      "Psamtik I"
+    ],
+    "psammetichus i": [
+      "Psamtik I"
+    ],
+    "psamtek i": [
+      "Psamtik I"
+    ],
+    "necho ii": [
+      "Necho II"
+    ],
+    "neco ii": [
+      "Necho II"
+    ],
+    "nekau ii": [
+      "Necho II"
+    ],
+    "nectanebo ii": [
+      "Nectanebo II"
+    ],
+    "nakhthorheb": [
+      "Nectanebo II"
+    ],
+    "ptolemy i soter": [
+      "Ptolemy I Soter"
+    ],
+    "ptolemy i": [
+      "Ptolemy I Soter"
+    ],
+    "ptolemy soter": [
+      "Ptolemy I Soter"
+    ],
+    "ptolemy ii philadelphus": [
+      "Ptolemy II Philadelphus"
+    ],
+    "ptolemy ii": [
+      "Ptolemy II Philadelphus"
+    ],
+    "ptolemy v epiphanes": [
+      "Ptolemy V Epiphanes"
+    ],
+    "ptolemy v": [
+      "Ptolemy V Epiphanes"
+    ],
+    "cleopatra vii": [
+      "Cleopatra VII"
+    ],
+    "cleopatra": [
+      "Cleopatra VII"
+    ],
+    "queen cleopatra": [
+      "Cleopatra VII"
+    ]
   }
 }

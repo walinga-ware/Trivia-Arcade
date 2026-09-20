@@ -387,7 +387,7 @@
 
     <!-- ============ WORLD LEADERS ============ -->
     <details class="section">
-      <summary class="section-summary"><span><span class="chevron">▸</span>World Leaders 🏛️</span><span class="quiz-count">3 quizzes</span></summary>
+      <summary class="section-summary"><span><span class="chevron">▸</span>World Leaders 🏛️</span><span class="quiz-count">4 quizzes</span></summary>
     <div class="card-grid">
       <div class="card">
         <div class="tag">Free recall &middot; 47 terms</div>
@@ -406,6 +406,12 @@
         <h3>English &amp; British Monarchs</h3>
         <div class="meta" id="monarchs-meta"></div>
         <button class="btn-primary" onclick="showScreen('monarchs')">Play</button>
+      </div>
+      <div class="card">
+        <div class="tag">Free recall &middot; 37 pharaohs</div>
+        <h3>Pharaohs of Egypt</h3>
+        <div class="meta" id="pharaohs-meta"></div>
+        <button class="btn-primary" onclick="showScreen('pharaohs')">Play</button>
       </div>
     </div>
     </details>
@@ -521,7 +527,7 @@
    of ids. To add a new screen here, just add its id to this array —
    the actual game instance (in app-init.js) is what gives it content.
    ============================================================ */
-const SCREEN_IDS = ['countries', 'worldpopmine', 'flags', 'states', 'abbr', 'worldcap', 'statecap', 'popmine', 'statemap', 'findstate', 'findstate-hard', 'provinces', 'provincecap', 'provpopmine', 'mountainmine', 'rivermine', 'oceans', 'presidents', 'pms', 'monarchs', 'nba', 'mlb', 'nhl', 'nfl', 'periodic', 'elements'];
+const SCREEN_IDS = ['countries', 'worldpopmine', 'flags', 'states', 'abbr', 'worldcap', 'statecap', 'popmine', 'statemap', 'findstate', 'findstate-hard', 'provinces', 'provincecap', 'provpopmine', 'mountainmine', 'rivermine', 'oceans', 'presidents', 'pms', 'monarchs', 'pharaohs', 'nba', 'mlb', 'nhl', 'nfl', 'periodic', 'elements'];
 
 const screenHost = document.getElementById('dynamic-screens');
 SCREEN_IDS.forEach(id => {
