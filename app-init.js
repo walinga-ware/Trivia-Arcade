@@ -546,8 +546,8 @@ const pharaohsGame = new PresidentsRecallGame({
   peopleLabel: 'pharaohs',
   finalTitle: 'Full roster — 37 pharaohs, from Narmer to Cleopatra',
   rulesHTML: `
-    &middot; 37 pharaohs spanning c. 3100 BC to 30 BC, from Narmer to Cleopatra VII<br>
-    &middot; Full name with numeral (e.g. "Ramesses II"), and common alternate spellings or epithets, are accepted<br>
+    &middot; 37 pharaohs spanning c. 3100 BC to 30 BC<br>
+    &middot; Full name with numeral, or common alternate spellings or epithets, are accepted<br>
     &middot; When time expires, the full roster is revealed in chronological order with approximate reign dates
   `
 });
