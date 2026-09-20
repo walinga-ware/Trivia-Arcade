@@ -449,6 +449,25 @@
     </div>
     <!-- ============ /SPORTS ============ -->
 
+    <!-- ============ SCIENCE ============ -->
+    <div class="category">
+    <h2 class="category-title">Science</h2>
+
+    <!-- ============ PERIODIC TABLE ============ -->
+    <details class="section">
+      <summary class="section-summary"><span><span class="chevron">▸</span>Periodic Table ⚛️</span><span class="quiz-count">1 quiz</span></summary>
+    <div class="card-grid">
+      <div class="card">
+        <div class="tag">Prompted quiz &middot; 118 items</div>
+        <h3>Guess the Element</h3>
+        <div class="meta" id="periodic-meta"></div>
+        <button class="btn-primary" onclick="showScreen('periodic')">Play</button>
+      </div>
+    </div>
+    </details>
+    </div>
+    <!-- ============ /SCIENCE ============ -->
+
     <!-- ============ GENERAL KNOWLEDGE ============ -->
     <div class="category">
     <h2 class="category-title">General Knowledge</h2>
@@ -496,7 +515,7 @@
    of ids. To add a new screen here, just add its id to this array —
    the actual game instance (in app-init.js) is what gives it content.
    ============================================================ */
-const SCREEN_IDS = ['countries', 'worldpopmine', 'flags', 'states', 'abbr', 'worldcap', 'statecap', 'popmine', 'statemap', 'findstate', 'findstate-hard', 'provinces', 'provincecap', 'provpopmine', 'mountainmine', 'rivermine', 'oceans', 'presidents', 'pms', 'monarchs', 'nba', 'mlb', 'nhl', 'nfl'];
+const SCREEN_IDS = ['countries', 'worldpopmine', 'flags', 'states', 'abbr', 'worldcap', 'statecap', 'popmine', 'statemap', 'findstate', 'findstate-hard', 'provinces', 'provincecap', 'provpopmine', 'mountainmine', 'rivermine', 'oceans', 'presidents', 'pms', 'monarchs', 'nba', 'mlb', 'nhl', 'nfl', 'periodic'];
 
 const screenHost = document.getElementById('dynamic-screens');
 SCREEN_IDS.forEach(id => {
@@ -520,10 +539,11 @@ Promise.all([
   fetch('history.json').then(r => r.json()),
   fetch('us-state-showcase.json').then(r => r.json()),
   fetch('canada-province-showcase.json').then(r => r.json()),
-  fetch('sports.json').then(r => r.json())
+  fetch('sports.json').then(r => r.json()),
+  fetch('science.json').then(r => r.json())
 ])
-  .then(([geography, history, generalKnowledge, canadaShowcase, sports]) => {
-    window.QUIZ_DATA = { ...geography, ...history, ...generalKnowledge, ...canadaShowcase, ...sports };
+  .then(([geography, history, generalKnowledge, canadaShowcase, sports, science]) => {
+    window.QUIZ_DATA = { ...geography, ...history, ...generalKnowledge, ...canadaShowcase, ...sports, ...science };
     const s = document.createElement('script');
     s.src = 'app-init.js';
     document.body.appendChild(s);
