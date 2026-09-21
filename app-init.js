@@ -11,8 +11,8 @@ const {
   CANADA_PROVINCES,
   CANADA_PROVINCE_CAPITALS,
   CANADA_POPULATION_RANKING,
-  MOUNTAIN_RANKING,
-  MOUNTAIN_ALIASES,
+  CONTINENTS,
+  CONTINENT_HIGHEST_MOUNTAINS,
   RIVER_RANKING,
   RIVER_ALIASES,
   OCEANS,
@@ -47,9 +47,6 @@ const {
   ELEMENT_NAMES
 } = QUIZ_DATA;
 
-const MOUNTAIN_LOOKUP = {};
-MOUNTAIN_RANKING.forEach(([name]) => { MOUNTAIN_LOOKUP[normalize(name)] = name; });
-Object.keys(MOUNTAIN_ALIASES).forEach(k => { MOUNTAIN_LOOKUP[normalize(k)] = MOUNTAIN_ALIASES[k]; });
 const RIVER_LOOKUP = {};
 RIVER_RANKING.forEach(([name]) => { RIVER_LOOKUP[normalize(name)] = name; });
 Object.keys(RIVER_ALIASES).forEach(k => { RIVER_LOOKUP[normalize(k)] = RIVER_ALIASES[k]; });
@@ -430,20 +427,21 @@ const provincePopulationMinefield = new MinefieldQuiz({
   `
 });
 
-const mountainMinefield = new MinefieldQuiz({
-  id: 'mountainmine',
-  items: MOUNTAIN_RANKING,
-  lookup: MOUNTAIN_LOOKUP,
-  fmtPop: fmtElev,
-  itemNoun: 'mountain',
-  itemNounPlural: 'mountains',
-  startHint: 'tallest',
-  metricLabel: 'elevation',
+const mountainsByContinentQuiz = new PromptQuiz({
+  id: 'mountaincont',
+  pairs: CONTINENTS.map(name => ({
+    prompt: name,
+    answer: CONTINENT_HIGHEST_MOUNTAINS[name].answer,
+    aliases: CONTINENT_HIGHEST_MOUNTAINS[name].aliases || []
+  })),
+  duration: 5*60,
+  mode: 'text',
+  promptLabel: "what's the highest mountain in",
+  finalRollLabel: 'Full roll — all 7 continents',
   rulesHTML: `
-    &middot; Name the world's 15 highest mountains in order from tallest to shortest<br>
-    &middot; One wrong guess — including a real mountain in the wrong order — ends the round immediately<br>
-    &middot; Each correct guess shows that mountain's elevation<br>
-    &middot; No clock here — just don't miss
+    &middot; Continents appear one at a time in random order — 7 total<br>
+    &middot; Type that continent's highest mountain<br>
+    &middot; Use Skip if you're stuck; the round ends when you've been through all 7 or time runs out
   `
 });
 
