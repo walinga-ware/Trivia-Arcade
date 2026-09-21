@@ -20,7 +20,7 @@ const {
   PRESIDENTS_TERMS,
   PRESIDENT_ALIASES,
   PM_TERMS,
-  PM_ALIASES,
+  PRIME_MINISTER_ALIASES,
   ENGLISH_MONARCH_TERMS,
   ENGLISH_MONARCH_ALIASES,
   ALASKA_TRIVIA,
@@ -62,7 +62,7 @@ Object.keys(PRESIDENT_ALIASES).forEach(k => { PRESIDENT_LOOKUP[normalize(k)] = P
 const PM_NAMES = [...new Set(PM_TERMS.map(t => t[0]))];
 const PM_LOOKUP = {};
 PM_NAMES.forEach(name => { PM_LOOKUP[normalize(name)] = [name]; });
-Object.keys(PM_ALIASES).forEach(k => { PM_LOOKUP[normalize(k)] = PM_ALIASES[k]; });
+Object.keys(PRIME_MINISTER_ALIASES).forEach(k => { PM_LOOKUP[normalize(k)] = PRIME_MINISTER_ALIASES[k]; });
 
 /* ============================================================
    Data: English monarchs from the Norman Conquest, followed by monarchs
