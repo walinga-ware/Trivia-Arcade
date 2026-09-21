@@ -2374,6 +2374,45 @@
     "gosainthan": "Shishapangma",
     "gyachung kang": "Gyachung Kang"
   },
+  "CONTINENTS": [
+    "Africa",
+    "Antarctica",
+    "Asia",
+    "Australia",
+    "Europe",
+    "North America",
+    "South America"
+  ],
+  "CONTINENT_HIGHEST_MOUNTAINS": {
+    "Africa": {
+      "answer": "Kilimanjaro",
+      "aliases": ["mount kilimanjaro", "kibo"]
+    },
+    "Antarctica": {
+      "answer": "Vinson Massif",
+      "aliases": ["mount vinson", "vinson"]
+    },
+    "Asia": {
+      "answer": "Mount Everest",
+      "aliases": ["everest", "sagarmatha", "chomolungma", "qomolangma"]
+    },
+    "Australia": {
+      "answer": "Mount Kosciuszko",
+      "aliases": ["kosciuszko", "mount kosciusko", "kosciusko"]
+    },
+    "Europe": {
+      "answer": "Mount Elbrus",
+      "aliases": ["elbrus"]
+    },
+    "North America": {
+      "answer": "Denali",
+      "aliases": ["mount mckinley", "mckinley"]
+    },
+    "South America": {
+      "answer": "Aconcagua",
+      "aliases": ["mount aconcagua"]
+    }
+  },
   "RIVER_RANKING": [
     [
       "Nile",
