@@ -44,7 +44,9 @@ const {
   MLB_TEAMS,
   MLB_TEAM_ALIASES,
   ELEMENTS,
-  ELEMENT_NAMES
+  ELEMENT_NAMES,
+  PLANETS,
+  PLANET_BONUS
 } = QUIZ_DATA;
 
 const RIVER_LOOKUP = {};
@@ -572,6 +574,32 @@ const elementsGame = new FreeRecallGame({
     &middot; Type the full element name — atomic symbols like "Na" or "Fe" don't count here<br>
     &middot; Some common alternate spellings are accepted<br>
     &middot; When time expires, the full roll is revealed in atomic-number order with your hits marked
+  `
+});
+
+/* ============================================================
+   SCIENCE — OUTER SPACE
+   ============================================================ */
+const PLANET_LOOKUP = {};
+PLANETS.forEach(name => { PLANET_LOOKUP[normalize(name)] = name; });
+const PLANET_BONUS_LOOKUP = {};
+PLANET_BONUS_LOOKUP[normalize(PLANET_BONUS.name)] = PLANET_BONUS.name;
+
+const planetsGame = new FreeRecallGame({
+  id: 'planets',
+  title: 'Name the Planets',
+  items: PLANETS,
+  lookup: PLANET_LOOKUP,
+  duration: 3*60,
+  preserveOrder: true,
+  bonusItems: [PLANET_BONUS.name],
+  bonusLookup: PLANET_BONUS_LOOKUP,
+  bonusNote: PLANET_BONUS.note,
+  finalTitle: 'Full roll — all 8 planets, by distance from the Sun',
+  rulesHTML: `
+    &middot; Name all 8 planets in our solar system — order doesn't matter<br>
+    &middot; Pluto counts as a bonus answer if you name it, but it's ${PLANET_BONUS.note}, so it isn't one of the 8<br>
+    &middot; When time expires, the full roll is revealed in order from the Sun with your hits marked
   `
 });
 

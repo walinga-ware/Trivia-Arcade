@@ -1,4 +1,18 @@
 {
+  "PLANETS": [
+    "Mercury",
+    "Venus",
+    "Earth",
+    "Mars",
+    "Jupiter",
+    "Saturn",
+    "Uranus",
+    "Neptune"
+  ],
+  "PLANET_BONUS": {
+    "name": "Pluto",
+    "note": "reclassified as a dwarf planet in 2006"
+  },
   "ELEMENTS": [
     "H",
     "He",
