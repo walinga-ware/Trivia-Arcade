@@ -598,7 +598,6 @@ const planetsGame = new FreeRecallGame({
   finalTitle: 'Full roll — all 8 planets, by distance from the Sun',
   rulesHTML: `
     &middot; Name all 8 planets in our solar system — order doesn't matter<br>
-    &middot; Pluto counts as a bonus answer if you name it, but it's ${PLANET_BONUS.note}, so it isn't one of the 8<br>
     &middot; When time expires, the full roll is revealed in order from the Sun with your hits marked
   `
 });
