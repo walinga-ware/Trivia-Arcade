@@ -125,8 +125,17 @@ class FreeRecallGame{
     // `items` already comes in a meaningful order (e.g. atomic number)
     // that should be kept as-is instead of being re-sorted alphabetically.
     this.preserveOrder = !!opts.preserveOrder;
+    // Optional bonus items: guessable extras that don't count toward the
+    // main "X / N" total (e.g. Pluto in a "name the planets" game). Pass
+    // `bonusItems` (canonical names) + `bonusLookup` (normalized-key ->
+    // canonical bonus name) together; `bonusNote` is a short aside shown
+    // next to each bonus item (e.g. "now classified as a dwarf planet").
+    this.bonusItems = opts.bonusItems || [];
+    this.bonusLookup = opts.bonusLookup || {};
+    this.bonusNote = opts.bonusNote || '';
 
     this.guessed = new Set();
+    this.guessedBonus = new Set();
     this.timeLeft = this.duration;
     this.timerId = null;
     this.running = false;
@@ -148,7 +157,7 @@ class FreeRecallGame{
     this.el('guess').addEventListener('input', () => {
       if (!this.running) return;
       const key = normalize(this.el('guess').value);
-      if (key && this.lookup[key]) this.submit();
+      if (key && (this.lookup[key] || this.bonusLookup[key])) this.submit();
     });
 
     this.updateTimerDisplay();
@@ -182,6 +191,7 @@ class FreeRecallGame{
     if (!raw.trim()) return;
     const key = normalize(raw);
     const canonical = this.lookup[key];
+    const bonusCanonical = !canonical ? this.bonusLookup[key] : null;
 
     if (canonical && this.guessed.has(canonical)){
       const fb = this.el('feedback');
@@ -189,13 +199,16 @@ class FreeRecallGame{
       fb.className = 'feedback dup';
       return;
     }
+    if (bonusCanonical && this.guessedBonus.has(bonusCanonical)){
+      const fb = this.el('feedback');
+      fb.textContent = `${bonusCanonical} — already got that bonus one. Keep typing.`;
+      fb.className = 'feedback dup';
+      return;
+    }
 
     this.el('guess').value = '';
     const fb = this.el('feedback');
-    if (!canonical){
-      fb.textContent = `"${raw.trim()}" — not recognized.`;
-      fb.className = 'feedback bad';
-    } else {
+    if (canonical){
       this.guessed.add(canonical);
       fb.textContent = `${canonical} — correct!`;
       fb.className = 'feedback good';
@@ -205,19 +218,38 @@ class FreeRecallGame{
         this.end();
         return;
       }
+    } else if (bonusCanonical){
+      this.guessedBonus.add(bonusCanonical);
+      fb.textContent = `${bonusCanonical} — correct! (bonus${this.bonusNote ? ' — ' + this.bonusNote : ''})`;
+      fb.className = 'feedback good';
+      this.renderGuessed();
+
+      if (this.guessed.size >= this.items.length){
+        this.end();
+        return;
+      }
+    } else {
+      fb.textContent = `"${raw.trim()}" — not recognized.`;
+      fb.className = 'feedback bad';
     }
     this.el('guess').focus();
   }
 
   renderGuessed(){
-    this.el('scoreValue').innerHTML = `${this.guessed.size} <span style="font-size:16px;color:var(--paper-dim);">/ ${this.items.length}</span>`;
-    this.el('guessedCount').textContent = this.guessed.size;
+    const bonusTally = this.guessedBonus.size ? ` <span style="font-size:14px;color:var(--paper-dim);">+${this.guessedBonus.size} bonus</span>` : '';
+    this.el('scoreValue').innerHTML = `${this.guessed.size} <span style="font-size:16px;color:var(--paper-dim);">/ ${this.items.length}</span>${bonusTally}`;
+    this.el('guessedCount').textContent = this.guessed.size + this.guessedBonus.size;
     const list = this.preserveOrder
       ? this.items.filter(c => this.guessed.has(c))
       : Array.from(this.guessed).sort((a,b)=>a.localeCompare(b));
+    const bonusList = this.bonusItems.filter(c => this.guessedBonus.has(c));
     const container = this.el('guessedList');
-    container.innerHTML = list.length
-      ? list.map(c => `<div>${c}</div>`).join('')
+    const rows = [
+      ...list.map(c => `<div>${c}</div>`),
+      ...bonusList.map(c => `<div>${c} <span style="color:var(--paper-dim);">(bonus)</span></div>`)
+    ];
+    container.innerHTML = rows.length
+      ? rows.join('')
       : `<div class="empty-note">Nothing yet — start typing.</div>`;
   }
 
@@ -231,17 +263,27 @@ class FreeRecallGame{
     this.el('results').style.display = 'block';
 
     const pct = Math.round((this.guessed.size / this.items.length) * 100);
-    this.el('finalScoreLine').textContent = `You named ${this.guessed.size} of ${this.items.length} (${pct}%).`;
+    const bonusLine = this.bonusItems.length
+      ? ` Plus ${this.guessedBonus.size} of ${this.bonusItems.length} bonus.`
+      : '';
+    this.el('finalScoreLine').textContent = `You named ${this.guessed.size} of ${this.items.length} (${pct}%).${bonusLine}`;
 
     const sorted = this.preserveOrder ? this.items.slice() : [...this.items].sort((a,b)=>a.localeCompare(b));
-    this.el('finalGrid').innerHTML = sorted.map(c => {
+    const mainRows = sorted.map(c => {
       const hit = this.guessed.has(c);
       return `<div class="item ${hit ? 'hit' : 'miss'}"><span>${c}</span><span>${hit ? '✓' : '—'}</span></div>`;
-    }).join('');
+    });
+    const bonusRows = this.bonusItems.map(c => {
+      const hit = this.guessedBonus.has(c);
+      const note = this.bonusNote ? ` <span style="color:var(--paper-dim);">— ${this.bonusNote}</span>` : '';
+      return `<div class="item ${hit ? 'hit' : 'miss'}"><span>${c} <span style="color:var(--paper-dim);">(bonus)</span>${note}</span><span>${hit ? '✓' : '—'}</span></div>`;
+    });
+    this.el('finalGrid').innerHTML = [...mainRows, ...bonusRows].join('');
   }
 
   reset(){
     this.guessed = new Set();
+    this.guessedBonus = new Set();
     this.timeLeft = this.duration;
     this.running = false;
     this.el('guess').disabled = false;
