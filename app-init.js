@@ -46,7 +46,9 @@ const {
   ELEMENTS,
   ELEMENT_NAMES,
   PLANETS,
-  PLANET_BONUS
+  PLANET_BONUS,
+  JUPITER_MOONS,
+  JUPITER_MOON_HINTS
 } = QUIZ_DATA;
 
 const RIVER_LOOKUP = {};
@@ -598,8 +600,24 @@ const planetsGame = new FreeRecallGame({
   finalTitle: 'Full roll — all 8 planets, by distance from the Sun',
   rulesHTML: `
     &middot; Name all 8 planets in our solar system — order doesn't matter<br>
-    &middot; Pluto counts as a bonus answer if you name it, but it's ${PLANET_BONUS.note}, so it isn't one of the 8<br>
     &middot; When time expires, the full roll is revealed in order from the Sun with your hits marked
+  `
+});
+
+const JUPITER_MOON_LOOKUP = {};
+JUPITER_MOONS.forEach(name => { JUPITER_MOON_LOOKUP[normalize(name)] = name; });
+
+const moonsGame = new HintedFreeRecallGame({
+  id: 'moons',
+  title: 'Moons of Jupiter',
+  items: JUPITER_MOONS,
+  lookup: JUPITER_MOON_LOOKUP,
+  hints: JUPITER_MOON_HINTS,
+  duration: 8*60,
+  finalTitle: 'Full roll — 20 moons of Jupiter',
+  rulesHTML: `
+    &middot; Name as many of Jupiter's moons as you can — 20 total<br>
+    &middot; When time expires, the full roll is revealed with your hits marked
   `
 });
 
