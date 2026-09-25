@@ -48,7 +48,8 @@ const {
   PLANETS,
   PLANET_BONUS,
   JUPITER_MOONS,
-  JUPITER_MOON_HINTS
+  JUPITER_MOON_HINTS,
+  CATEGORY_CONNECTORS
 } = QUIZ_DATA;
 
 const RIVER_LOOKUP = {};
@@ -625,6 +626,31 @@ const moonsQuiz = new PromptQuiz({
     &middot; A clue about one of Jupiter's moons appears — 10 total<br>
     &middot; Type the name of the moon it describes<br>
     &middot; Use Skip if you're stuck; the round ends when you've been through all 10 or time runs out
+  `
+});
+
+/* ============================================================
+   GENERAL KNOWLEDGE — CATEGORY CONNECTORS
+   Each item pairs two clues from unrelated categories that both
+   point to the same unique answer (e.g. a mythology clue and a
+   business clue that both mean "Nike"). The two clues are joined
+   into one prompt string with a real line break between them.
+   ============================================================ */
+const connectorsQuiz = new PromptQuiz({
+  id: 'connectors',
+  pairs: CATEGORY_CONNECTORS.map(item => ({
+    prompt: item.clues.map(c => `${c.category} ${c.hint}`).join('\n'),
+    answer: item.answer,
+    aliases: item.aliases || []
+  })),
+  duration: 8*60,
+  mode: 'text',
+  promptLabel: "one answer links these two clues",
+  finalRollLabel: 'Full roll — all 12 category connectors',
+  rulesHTML: `
+    &middot; Two clues from unrelated categories appear together — both point to the same answer — 12 total<br>
+    &middot; Type the single word or name that connects them<br>
+    &middot; Use Skip if you're stuck; the round ends when you've been through all 12 or time runs out
   `
 });
 

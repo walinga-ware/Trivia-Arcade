@@ -1,0 +1,84 @@
+{
+  "CATEGORY_CONNECTORS": [
+    {
+      "answer": "Titania",
+      "aliases": [],
+      "clues": [
+        { "category": "📖", "hint": "Shakespearean queen of the fairies in \"A Midsummer Night's Dream\"" },
+        { "category": "🪐", "hint": "The largest moon of Uranus" }
+      ]
+    },
+    {
+      "answer": "Venus",
+      "aliases": [],
+      "clues": [
+        { "category": "🪉", "hint": "Roman goddess of love and beauty" },
+        { "category": "🎾", "hint": "Older of the two Williams sisters in tennis" }
+      ]
+    },
+    {
+      "answer": "Amazon",
+      "aliases": [],
+      "clues": [
+        { "category": "🧭", "hint": "The world's largest river by water discharge" },
+        { "category": "💼", "hint": "E-commerce giant founded by Jeff Bezos in 1994" }
+      ]
+    },
+    {
+      "answer": "Atlas",
+      "aliases": [],
+      "clues": [
+        { "category": "🪉", "hint": "A Titan condemned to hold up the sky for eternity" },
+        { "category": "📖", "hint": "A bound collection of maps" }
+      ]
+    },
+    {
+      "answer": "Phoenix",
+      "aliases": [],
+      "clues": [
+        { "category": "🪉", "hint": "A bird said to be reborn from its own ashes" },
+        { "category": "🧭", "hint": "Capital city of Arizona" }
+      ]
+    },
+    {
+      "answer": "Nike",
+      "aliases": [],
+      "clues": [
+        { "category": "🪉", "hint": "Greek goddess of victory" },
+        { "category": "💼", "hint": "Athletic apparel brand known for its swoosh logo" }
+      ]
+    },
+    {
+      "answer": "Pandora",
+      "aliases": [],
+      "clues": [
+        { "category": "🪉", "hint": "The first mortal woman, who opened a forbidden box" },
+        { "category": "📡", "hint": "A personalized internet radio streaming service" }
+      ]
+    },
+    {
+      "answer": "Apollo",
+      "aliases": [],
+      "clues": [
+        { "category": "🪉", "hint": "Greek god of music, prophecy, and the sun" },
+        { "category": "🪐", "hint": "NASA program that first landed astronauts on the Moon" }
+      ]
+    },
+    {
+      "answer": "Casablanca",
+      "aliases": [],
+      "clues": [
+        { "category": "📽️", "hint": "1942 romance starring Humphrey Bogart and Ingrid Bergman" },
+        { "category": "🧭", "hint": "The largest city in Morocco" }
+      ]
+    },
+    {
+      "answer": "Mercury",
+      "aliases": [],
+      "clues": [
+        { "category": "⚛️", "hint": "The only metal that is liquid at room temperature" },
+        { "category": "🪐", "hint": "The smallest and innermost planet in the solar system" }
+      ]
+    }
+  ]
+}
