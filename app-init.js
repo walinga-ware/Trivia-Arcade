@@ -46,7 +46,9 @@ const {
   ELEMENTS,
   ELEMENT_NAMES,
   PLANETS,
-  PLANET_BONUS
+  PLANET_BONUS,
+  JUPITER_MOONS,
+  JUPITER_MOON_HINTS
 } = QUIZ_DATA;
 
 const RIVER_LOOKUP = {};
@@ -599,6 +601,30 @@ const planetsGame = new FreeRecallGame({
   rulesHTML: `
     &middot; Name all 8 planets in our solar system — order doesn't matter<br>
     &middot; When time expires, the full roll is revealed in order from the Sun with your hits marked
+  `
+});
+
+// Trimmed to the 10 most recognizable/distinctive moons — the four Galileans,
+// the two closest inner moons, and four irregular moons with the most
+// memorable claims to fame — so every clue points to a well-known fact
+// rather than obscure trivia.
+const MOON_QUIZ_NAMES = [
+  'Io', 'Europa', 'Ganymede', 'Callisto',
+  'Metis', 'Amalthea',
+  'Himalia', 'Valetudo', 'Pasiphae', 'Sinope'
+];
+
+const moonsQuiz = new PromptQuiz({
+  id: 'moons',
+  pairs: MOON_QUIZ_NAMES.map(name => ({ prompt: JUPITER_MOON_HINTS[name], answer: name })),
+  duration: 5*60,
+  mode: 'text',
+  promptLabel: "guess the moon of Jupiter from the clue",
+  finalRollLabel: 'Full roll — 10 featured moons of Jupiter',
+  rulesHTML: `
+    &middot; A clue about one of Jupiter's moons appears — 10 total<br>
+    &middot; Type the name of the moon it describes<br>
+    &middot; Use Skip if you're stuck; the round ends when you've been through all 10 or time runs out
   `
 });
 

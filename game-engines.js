@@ -299,6 +299,231 @@ class FreeRecallGame{
 }
 
 /* ============================================================
+   FREE-RECALL GAME ENGINE, HINTED VARIANT (e.g. Moons of Jupiter)
+   Same rules as FreeRecallGame, but a hint panel is always on screen
+   showing a clue for one item you haven't guessed yet. Each item has
+   its own unique hint (opts.hints: canonical name -> hint text).
+   Whenever the hinted item gets guessed (or the round starts), a new
+   hint is drawn at random from whatever's still ungguessed, so a
+   fresh, always-a-clue experience runs the whole round.
+   ============================================================ */
+function hintedFreeRecallHTML(id, title){
+  return `
+    <div id="${id}-intro">
+      <div class="plate" style="margin-bottom:18px;">
+        <div class="label">rules</div>
+        <div style="font-size:14px; line-height:1.7; color:var(--paper);" id="${id}-rules"></div>
+      </div>
+      <button class="btn-primary" id="${id}-startBtn">Begin — start the clock</button>
+    </div>
+
+    <div class="game" id="${id}-game" style="display:none;">
+      <h3>${title}</h3>
+      <div class="top-row">
+        <div class="plate timer" id="${id}-timerPlate">
+          <div class="label">time remaining</div>
+          <div class="value" id="${id}-timerValue">--:--</div>
+        </div>
+        <div class="plate">
+          <div class="label">score</div>
+          <div class="value" id="${id}-scoreValue">0</div>
+        </div>
+      </div>
+      <div class="plate" id="${id}-hintPlate" style="margin-bottom:18px;">
+        <div class="label">hint — for something you haven't gotten yet</div>
+        <div id="${id}-hintValue" style="font-size:15px; line-height:1.5; color:var(--paper);">—</div>
+      </div>
+      <div class="entry">
+        <input type="text" id="${id}-guess" placeholder="Type an answer…" autocomplete="off">
+        <button id="${id}-endBtn" title="End the round now">End round</button>
+      </div>
+      <div class="feedback" id="${id}-feedback"></div>
+      <div class="section-title"><span>Guessed so far</span><span id="${id}-guessedCount">0</span></div>
+      <div id="${id}-guessedList" class="guessed-grid">
+        <div class="empty-note">Nothing yet — start typing.</div>
+      </div>
+    </div>
+
+    <div class="results" id="${id}-results" style="display:none;">
+      <button id="${id}-resetBtn" class="play-again-top">Play again</button>
+      <div class="final-score" id="${id}-finalScoreLine"></div>
+      <div class="section-title"><span id="${id}-finalTitle"></span><span>Your hits in green</span></div>
+      <div id="${id}-finalGrid" class="final-grid"></div>
+    </div>
+  `;
+}
+
+class HintedFreeRecallGame{
+  constructor(opts){
+    this.id = opts.id;
+    this.title = opts.title;
+    this.items = opts.items;          // canonical display list
+    this.lookup = opts.lookup;        // normalized-key -> canonical
+    this.hints = opts.hints;          // canonical name -> unique hint text
+    this.duration = opts.duration;    // seconds
+    this.rulesHTML = opts.rulesHTML;
+    this.finalTitle = opts.finalTitle;
+    this.preserveOrder = !!opts.preserveOrder;
+
+    this.guessed = new Set();
+    this.timeLeft = this.duration;
+    this.timerId = null;
+    this.running = false;
+    this.currentHintItem = null;
+
+    document.getElementById(`${this.id}-mount`).innerHTML = hintedFreeRecallHTML(this.id, this.title);
+    document.getElementById(`${this.id}-rules`).innerHTML = `
+      &middot; ${minutesLabel(this.duration)} on the clock, starting when you hit begin<br>
+      &middot; A hint for something you haven't found yet is always shown — get that one and a new hint appears<br>
+      ${this.rulesHTML}
+    `;
+    document.getElementById(`${this.id}-finalTitle`).textContent = this.finalTitle;
+    const metaEl = document.getElementById(`${this.id}-meta`);
+    if (metaEl) metaEl.textContent = minutesLabel(this.duration);
+
+    this.el = key => document.getElementById(`${this.id}-${key}`);
+    this.el('startBtn').addEventListener('click', () => this.start());
+    this.el('endBtn').addEventListener('click', () => this.end());
+    this.el('resetBtn').addEventListener('click', () => this.reset());
+    this.el('guess').addEventListener('keydown', e => { if (e.key === 'Enter') this.submit(); });
+    this.el('guess').addEventListener('input', () => {
+      if (!this.running) return;
+      const key = normalize(this.el('guess').value);
+      if (key && this.lookup[key]) this.submit();
+    });
+
+    this.updateTimerDisplay();
+  }
+
+  // Pick a fresh hint for a random item that hasn't been guessed yet.
+  // Avoids repeating the same item's hint twice in a row when another
+  // choice is available.
+  pickNewHint(){
+    const remaining = this.items.filter(c => !this.guessed.has(c));
+    if (!remaining.length){
+      this.currentHintItem = null;
+      this.el('hintValue').textContent = 'You found them all!';
+      return;
+    }
+    let pool = remaining;
+    if (remaining.length > 1 && this.currentHintItem){
+      const others = remaining.filter(c => c !== this.currentHintItem);
+      if (others.length) pool = others;
+    }
+    const pick = pool[Math.floor(Math.random() * pool.length)];
+    this.currentHintItem = pick;
+    this.el('hintValue').textContent = this.hints[pick] || '—';
+  }
+
+  start(){
+    this.el('intro').style.display = 'none';
+    this.el('game').style.display = 'block';
+    this.running = true;
+    this.timeLeft = this.duration;
+    this.updateTimerDisplay();
+    this.pickNewHint();
+    this.el('guess').disabled = false;
+    this.el('guess').focus();
+    this.timerId = setInterval(() => this.tick(), 1000);
+  }
+
+  tick(){
+    this.timeLeft--;
+    this.updateTimerDisplay();
+    if (this.timeLeft <= 0) this.end();
+  }
+
+  updateTimerDisplay(){
+    this.el('timerValue').textContent = fmtTime(this.timeLeft);
+    this.el('timerPlate').classList.toggle('low', this.timeLeft <= 60);
+  }
+
+  submit(){
+    if (!this.running) return;
+    const raw = this.el('guess').value;
+    if (!raw.trim()) return;
+    const key = normalize(raw);
+    const canonical = this.lookup[key];
+
+    if (canonical && this.guessed.has(canonical)){
+      const fb = this.el('feedback');
+      fb.textContent = `${canonical} — already got that one. Keep typing.`;
+      fb.className = 'feedback dup';
+      return;
+    }
+
+    this.el('guess').value = '';
+    const fb = this.el('feedback');
+    if (canonical){
+      this.guessed.add(canonical);
+      fb.textContent = `${canonical} — correct!`;
+      fb.className = 'feedback good';
+      this.renderGuessed();
+
+      if (this.guessed.size >= this.items.length){
+        this.end();
+        return;
+      }
+      // Only draw a new hint if the item the hint pointed to just got found;
+      // otherwise the existing hint is still unsolved and stays on screen.
+      if (canonical === this.currentHintItem) this.pickNewHint();
+    } else {
+      fb.textContent = `"${raw.trim()}" — not recognized.`;
+      fb.className = 'feedback bad';
+    }
+    this.el('guess').focus();
+  }
+
+  renderGuessed(){
+    this.el('scoreValue').innerHTML = `${this.guessed.size} <span style="font-size:16px;color:var(--paper-dim);">/ ${this.items.length}</span>`;
+    this.el('guessedCount').textContent = this.guessed.size;
+    const list = this.preserveOrder
+      ? this.items.filter(c => this.guessed.has(c))
+      : Array.from(this.guessed).sort((a,b)=>a.localeCompare(b));
+    const container = this.el('guessedList');
+    container.innerHTML = list.length
+      ? list.map(c => `<div>${c}</div>`).join('')
+      : `<div class="empty-note">Nothing yet — start typing.</div>`;
+  }
+
+  end(){
+    if (!this.running) return;
+    this.running = false;
+    clearInterval(this.timerId);
+    this.el('guess').disabled = true;
+    this.el('endBtn').disabled = true;
+    this.el('game').style.display = 'none';
+    this.el('results').style.display = 'block';
+
+    const pct = Math.round((this.guessed.size / this.items.length) * 100);
+    this.el('finalScoreLine').textContent = `You named ${this.guessed.size} of ${this.items.length} (${pct}%).`;
+
+    const sorted = this.preserveOrder ? this.items.slice() : [...this.items].sort((a,b)=>a.localeCompare(b));
+    this.el('finalGrid').innerHTML = sorted.map(c => {
+      const hit = this.guessed.has(c);
+      return `<div class="item ${hit ? 'hit' : 'miss'}"><span>${c}</span><span>${hit ? '✓' : '—'}</span></div>`;
+    }).join('');
+  }
+
+  reset(){
+    this.guessed = new Set();
+    this.timeLeft = this.duration;
+    this.running = false;
+    this.currentHintItem = null;
+    this.el('guess').disabled = false;
+    this.el('endBtn').disabled = false;
+    this.el('guess').value = '';
+    this.el('feedback').textContent = '';
+    this.el('feedback').className = 'feedback';
+    this.el('hintValue').textContent = '—';
+    this.renderGuessed();
+    this.el('results').style.display = 'none';
+    this.el('intro').style.display = 'block';
+    this.updateTimerDisplay();
+  }
+}
+
+/* ============================================================
    Data: US presidents (chronological, by term)
    Grover Cleveland and Donald Trump each served two non-consecutive
    terms, so each appears twice in the chronological list below.
