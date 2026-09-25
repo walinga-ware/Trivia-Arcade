@@ -646,11 +646,11 @@ const connectorsQuiz = new PromptQuiz({
   duration: 8*60,
   mode: 'text',
   promptLabel: "one answer links these two clues",
-  finalRollLabel: 'Full roll — all 12 category connectors',
+  finalRollLabel: 'Full roll — all 10 category connectors',
   rulesHTML: `
-    &middot; Two clues from unrelated categories appear together — both point to the same answer — 12 total<br>
+    &middot; Two clues from unrelated categories appear together — both point to the same answer — 10 total<br>
     &middot; Type the single word or name that connects them<br>
-    &middot; Use Skip if you're stuck; the round ends when you've been through all 12 or time runs out
+    &middot; Use Skip if you're stuck; the round ends when you've been through all 10 or time runs out
   `
 });
 
