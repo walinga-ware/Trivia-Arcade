@@ -65,22 +65,6 @@
       ]
     },
     {
-      "answer": "Neptune",
-      "aliases": [],
-      "clues": [
-        { "category": "🪐", "hint": "The most distant planet from the Sun" },
-        { "category": "🪉", "hint": "Roman god of the sea" }
-      ]
-    },
-    {
-      "answer": "Hercules",
-      "aliases": ["Heracles"],
-      "clues": [
-        { "category": "🪉", "hint": "Roman name for the Greek hero famed for his Twelve Labors" },
-        { "category": "📽️", "hint": "A 1997 Disney animated musical" }
-      ]
-    },
-    {
       "answer": "Casablanca",
       "aliases": [],
       "clues": [
