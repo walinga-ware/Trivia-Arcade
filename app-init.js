@@ -639,7 +639,7 @@ const moonsQuiz = new PromptQuiz({
 const connectorsQuiz = new PromptQuiz({
   id: 'connectors',
   pairs: CATEGORY_CONNECTORS.map(item => ({
-    prompt: item.clues.map(c => `(${c.category}) ${c.hint}`).join('\n'),
+    prompt: item.clues.map(c => `${c.category} ${c.hint}`).join('\n'),
     answer: item.answer,
     aliases: item.aliases || []
   })),
