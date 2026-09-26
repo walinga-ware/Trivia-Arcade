@@ -49,6 +49,7 @@ const {
   PLANET_BONUS,
   JUPITER_MOONS,
   JUPITER_MOON_HINTS,
+  LARGEST_MOONS,
   CONNECTORS_QUIZZES
 } = QUIZ_DATA;
 
@@ -626,6 +627,31 @@ const moonsQuiz = new PromptQuiz({
     &middot; A clue about one of Jupiter's moons appears — 10 total<br>
     &middot; Type the name of the moon it describes<br>
     &middot; Use Skip if you're stuck; the round ends when you've been through all 10 or time runs out
+  `
+});
+
+// Each moon's canonical display string bakes in its diameter and parent
+// planet (e.g. "Ganymede — 5,268 km — orbits Jupiter"), so the same string
+// used for scoring/lookup is also what's shown in "guessed so far" and in
+// the final results grid — no changes needed to FreeRecallGame itself.
+// LARGEST_MOONS is already ordered largest to smallest; preserveOrder
+// keeps that order in both lists instead of re-sorting alphabetically.
+const LARGEST_MOONS_DISPLAY = LARGEST_MOONS.map(m => `${m.name} — ${m.diameterKm.toLocaleString()} km — orbits ${m.planet}`);
+const LARGEST_MOONS_LOOKUP = {};
+LARGEST_MOONS.forEach((m, i) => { LARGEST_MOONS_LOOKUP[normalize(m.name)] = LARGEST_MOONS_DISPLAY[i]; });
+
+const largestMoonsGame = new FreeRecallGame({
+  id: 'largestmoons',
+  title: 'Largest Moons in the Solar System',
+  items: LARGEST_MOONS_DISPLAY,
+  lookup: LARGEST_MOONS_LOOKUP,
+  duration: 10*60,
+  preserveOrder: true,
+  finalTitle: 'Full roll — the 25 largest moons, largest to smallest',
+  rulesHTML: `
+    &middot; Name the 25 largest moons in the solar system — order doesn't matter while you play, 25 total<br>
+    &middot; Just type the moon's name — planet and size aren't needed to get credit<br>
+    &middot; When time expires, the full roll is revealed largest to smallest, with each moon's diameter and the planet it orbits
   `
 });
 
