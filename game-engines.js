@@ -1155,6 +1155,7 @@ class FindStateQuiz{
 
   handleClick(name){
     if(this.answered || !this.mapReady || !this.queue.length) return;
+    if(this.answers.some(a=>a.isCorrect && a.state===name)) return; // already-guessed state: treat like clicking the ocean
     const target=this.queue[this.idx]; const isCorrect=name===target;
     this.answered=true; if(isCorrect) this.score++;
     this.answers.push({state:target,yourClick:name,isCorrect});
