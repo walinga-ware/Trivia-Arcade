@@ -499,22 +499,15 @@
     <h2 class="category-title">General Knowledge</h2>
 
     <!-- ============ CATEGORY CONNECTORS ============ -->
+    <!-- Cards + screens below are generated automatically from the
+         CONNECTORS_QUIZZES array in connectors.json — see
+         initConnectorsShowcase() in the script at the bottom of this
+         file, and its call site in app-init.js. To add a new Category
+         Connectors quiz, add ONE entry to that JSON array (any id,
+         any title) — nothing on this page needs to change. -->
     <details class="section">
-      <summary class="section-summary"><span><span class="chevron">▸</span>Category Connectors 🔗</span><span class="quiz-count">2 quizzes</span></summary>
-    <div class="card-grid">
-      <div class="card">
-        <div class="tag">Prompted quiz &middot; 10 items</div>
-        <h3>Category Connectors #1</h3>
-        <div class="meta" id="connectors-meta"></div>
-        <button class="btn-primary" onclick="showScreen('connectors')">Play</button>
-      </div>
-      <div class="card">
-        <div class="tag">Prompted quiz &middot; 10 items</div>
-        <h3>Category Connectors #2</h3>
-        <div class="meta" id="connectors2-meta"></div>
-        <button class="btn-primary" onclick="showScreen('connectors2')">Play</button>
-      </div>
-    </div>
+      <summary class="section-summary"><span><span class="chevron">▸</span>Category Connectors 🔗</span><span class="quiz-count" id="connectors-quiz-count"></span></summary>
+    <div class="card-grid" id="connectors-card-grid"></div>
     </details>
     <!-- ============ /CATEGORY CONNECTORS ============ -->
 
@@ -544,6 +537,9 @@
   <!-- ============ US STATES SHOWCASE — SCREENS (generated automatically) ============ -->
   <div id="showcase-screens"></div>
 
+  <!-- ============ CATEGORY CONNECTORS — SCREENS (generated automatically) ============ -->
+  <div id="connectors-screens"></div>
+
   <!-- ============ ALL OTHER GAME SCREENS (generated automatically — see SCREEN_IDS below) ============ -->
   <div id="dynamic-screens"></div>
 
@@ -561,7 +557,7 @@
    of ids. To add a new screen here, just add its id to this array —
    the actual game instance (in app-init.js) is what gives it content.
    ============================================================ */
-const SCREEN_IDS = ['countries', 'worldpopmine', 'flags', 'states', 'abbr', 'worldcap', 'statecap', 'popmine', 'statemap', 'findstate', 'findstate-hard', 'provinces', 'provincecap', 'provpopmine', 'mountaincont', 'rivermine', 'oceans', 'presidents', 'pms', 'monarchs', 'nba', 'mlb', 'nhl', 'nfl', 'periodic', 'elements', 'planets', 'moons', 'connectors', 'connectors2'];
+const SCREEN_IDS = ['countries', 'worldpopmine', 'flags', 'states', 'abbr', 'worldcap', 'statecap', 'popmine', 'statemap', 'findstate', 'findstate-hard', 'provinces', 'provincecap', 'provpopmine', 'mountaincont', 'rivermine', 'oceans', 'presidents', 'pms', 'monarchs', 'nba', 'mlb', 'nhl', 'nfl', 'periodic', 'elements', 'planets', 'moons'];
 
 const screenHost = document.getElementById('dynamic-screens');
 SCREEN_IDS.forEach(id => {
@@ -572,6 +568,72 @@ SCREEN_IDS.forEach(id => {
     </div>
   `);
 });
+
+/* ============================================================
+   CATEGORY CONNECTORS — GENERIC SHOWCASE BUILDER
+   Same idea as the US States / Canada Provinces showcases: this page
+   only knows how to render *a list* of quiz-set definitions into
+   cards + screen shells + a PromptQuiz instance per set. To add a
+   new Category Connectors quiz:
+     1. Add ONE entry — { id, title, items } — to the
+        CONNECTORS_QUIZZES array in connectors.json. `id` must be
+        unique and URL-free; `title` can be anything you like
+        (naming is fully flexible, no "#3"/"#4" convention required).
+        Optional per-entry overrides: tag, duration, promptLabel,
+        finalRollLabel, rulesHTML.
+     2. That's it — no changes needed here or anywhere else in this
+        file. app-init.js just passes the array through to
+        initConnectorsShowcase() below.
+   ============================================================ */
+function initConnectorsShowcase(quizDefs) {
+  const cardGrid = document.getElementById('connectors-card-grid');
+  const screenHost = document.getElementById('connectors-screens');
+  const countEl = document.getElementById('connectors-quiz-count');
+  if (!cardGrid || !screenHost || !quizDefs) return {};
+
+  if (countEl) countEl.textContent = `${quizDefs.length} quiz${quizDefs.length === 1 ? '' : 'zes'}`;
+
+  const instances = {};
+  quizDefs.forEach(def => {
+    const itemCount = def.items.length;
+
+    cardGrid.insertAdjacentHTML('beforeend', `
+      <div class="card">
+        <div class="tag">${def.tag || 'Prompted quiz'} &middot; ${itemCount} items</div>
+        <h3>${def.title}</h3>
+        <div class="meta" id="${def.id}-meta"></div>
+        <button class="btn-primary" onclick="showScreen('${def.id}')">Play</button>
+      </div>
+    `);
+
+    screenHost.insertAdjacentHTML('beforeend', `
+      <div class="screen" id="screen-${def.id}">
+        <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
+        <div id="${def.id}-mount"></div>
+      </div>
+    `);
+
+    instances[def.id] = new PromptQuiz({
+      id: def.id,
+      pairs: def.items.map(item => ({
+        prompt: item.clues.map(c => `${c.category} ${c.hint}`).join('\n'),
+        answer: item.answer,
+        aliases: item.aliases || []
+      })),
+      duration: def.duration || 8 * 60,
+      mode: 'text',
+      promptLabel: def.promptLabel || "one answer links these two clues",
+      finalRollLabel: def.finalRollLabel || `Full roll — all ${itemCount} category connectors`,
+      rulesHTML: def.rulesHTML || `
+        &middot; Two clues from unrelated categories appear together — both point to the same answer — ${itemCount} total<br>
+        &middot; Type the single word or name that connects them<br>
+        &middot; Use Skip if you're stuck; the round ends when you've been through all ${itemCount} or time runs out
+      `
+    });
+  });
+
+  return instances;
+}
 
 /* ============================================================
    Data + wiring

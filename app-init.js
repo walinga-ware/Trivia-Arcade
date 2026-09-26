@@ -49,8 +49,7 @@ const {
   PLANET_BONUS,
   JUPITER_MOONS,
   JUPITER_MOON_HINTS,
-  CATEGORY_CONNECTORS,
-  CATEGORY_CONNECTORS_2
+  CONNECTORS_QUIZZES
 } = QUIZ_DATA;
 
 const RIVER_LOOKUP = {};
@@ -631,47 +630,21 @@ const moonsQuiz = new PromptQuiz({
 });
 
 /* ============================================================
-   GENERAL KNOWLEDGE — CATEGORY CONNECTORS
-   Each item pairs two clues from unrelated categories that both
+   GENERAL KNOWLEDGE — CATEGORY CONNECTORS — REGISTRY
+   ============================================================
+   Each quiz set pairs two clues from unrelated categories that both
    point to the same unique answer (e.g. a mythology clue and a
    business clue that both mean "Nike"). The two clues are joined
    into one prompt string with a real line break between them.
-   ============================================================ */
-const connectorsQuiz = new PromptQuiz({
-  id: 'connectors',
-  pairs: CATEGORY_CONNECTORS.map(item => ({
-    prompt: item.clues.map(c => `${c.category} ${c.hint}`).join('\n'),
-    answer: item.answer,
-    aliases: item.aliases || []
-  })),
-  duration: 8*60,
-  mode: 'text',
-  promptLabel: "one answer links these two clues",
-  finalRollLabel: 'Full roll — all 10 category connectors',
-  rulesHTML: `
-    &middot; Two clues from unrelated categories appear together — both point to the same answer — 10 total<br>
-    &middot; Type the single word or name that connects them<br>
-    &middot; Use Skip if you're stuck; the round ends when you've been through all 10 or time runs out
-  `
-});
 
-const connectorsQuiz2 = new PromptQuiz({
-  id: 'connectors2',
-  pairs: CATEGORY_CONNECTORS_2.map(item => ({
-    prompt: item.clues.map(c => `${c.category} ${c.hint}`).join('\n'),
-    answer: item.answer,
-    aliases: item.aliases || []
-  })),
-  duration: 8*60,
-  mode: 'text',
-  promptLabel: "one answer links these two clues",
-  finalRollLabel: 'Full roll — all 10 category connectors',
-  rulesHTML: `
-    &middot; Two clues from unrelated categories appear together — both point to the same answer — 10 total<br>
-    &middot; Type the single word or name that connects them<br>
-    &middot; Use Skip if you're stuck; the round ends when you've been through all 10 or time runs out
-  `
-});
+   To add a new Category Connectors quiz, add ONE entry — with any
+   id and any title — to CONNECTORS_QUIZZES in connectors.json.
+   That's it. The home-page card, the quiz-set count, the screen
+   markup, the mount point, and the PromptQuiz instance are all
+   generated automatically by initConnectorsShowcase() (defined in
+   index.html), so nothing here or in index.html needs to change.
+   ============================================================ */
+const connectorsQuizInstances = initConnectorsShowcase(CONNECTORS_QUIZZES);
 
 const stateMapQuiz = new StateMapQuiz({ id:'statemap', states:STATES.map(([name])=>name) });
 const findStateQuiz = new FindStateQuiz({ id:'findstate', states:STATES.map(([name])=>name) });

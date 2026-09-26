@@ -1,284 +1,174 @@
 {
-  "CATEGORY_CONNECTORS": [
+  "CONNECTORS_QUIZZES": [
     {
-      "answer": "Titania",
-      "aliases": [],
-      "clues": [
+      "id": "connectors",
+      "title": "Category Connectors #1",
+      "items": [
         {
-          "category": "📖",
-          "hint": "Shakespearean queen of the fairies in \"A Midsummer Night's Dream\""
+          "answer": "Titania",
+          "aliases": [],
+          "clues": [
+            { "category": "📖", "hint": "Shakespearean queen of the fairies in \"A Midsummer Night's Dream\"" },
+            { "category": "🪐", "hint": "The largest moon of Uranus" }
+          ]
         },
         {
-          "category": "🪐",
-          "hint": "The largest moon of Uranus"
+          "answer": "Venus",
+          "aliases": [],
+          "clues": [
+            { "category": "🔱", "hint": "Roman goddess of love and beauty" },
+            { "category": "🎾", "hint": "Older of the two Williams sisters in tennis" }
+          ]
+        },
+        {
+          "answer": "Amazon",
+          "aliases": [],
+          "clues": [
+            { "category": "🧭", "hint": "The world's largest river by water discharge" },
+            { "category": "💼", "hint": "E-commerce giant founded by Jeff Bezos in 1994" }
+          ]
+        },
+        {
+          "answer": "Atlas",
+          "aliases": [],
+          "clues": [
+            { "category": "🔱", "hint": "A Titan condemned to hold up the sky for eternity" },
+            { "category": "📖", "hint": "A bound collection of maps" }
+          ]
+        },
+        {
+          "answer": "Phoenix",
+          "aliases": [],
+          "clues": [
+            { "category": "🔱", "hint": "A bird said to be reborn from its own ashes" },
+            { "category": "🧭", "hint": "Capital city of Arizona" }
+          ]
+        },
+        {
+          "answer": "Nike",
+          "aliases": [],
+          "clues": [
+            { "category": "🔱", "hint": "Greek goddess of victory" },
+            { "category": "💼", "hint": "Athletic apparel brand known for its swoosh logo" }
+          ]
+        },
+        {
+          "answer": "Pandora",
+          "aliases": [],
+          "clues": [
+            { "category": "🔱", "hint": "The first mortal woman, in a Greek myth, who opened a forbidden box" },
+            { "category": "📡", "hint": "A personalized internet radio streaming service" }
+          ]
+        },
+        {
+          "answer": "Apollo",
+          "aliases": [],
+          "clues": [
+            { "category": "📽️", "hint": "Fictional boxer portrayed by Carl Weathers" },
+            { "category": "🪐", "hint": "NASA program that first landed astronauts on the Moon" }
+          ]
+        },
+        {
+          "answer": "Casablanca",
+          "aliases": [],
+          "clues": [
+            { "category": "📽️", "hint": "1942 romance starring Humphrey Bogart and Ingrid Bergman" },
+            { "category": "🧭", "hint": "The largest city in Morocco" }
+          ]
+        },
+        {
+          "answer": "Mercury",
+          "aliases": [],
+          "clues": [
+            { "category": "⚛️", "hint": "The only metal that is liquid at room temperature" },
+            { "category": "🪐", "hint": "The smallest and innermost planet in the solar system" }
+          ]
         }
       ]
     },
     {
-      "answer": "Venus",
-      "aliases": [],
-      "clues": [
+      "id": "connectors2",
+      "title": "Category Connectors #2",
+      "items": [
         {
-          "category": "🔱",
-          "hint": "Roman goddess of love and beauty"
+          "answer": "Jaguar",
+          "aliases": [],
+          "clues": [
+            { "category": "🐆", "hint": "The largest big cat native to the Americas" },
+            { "category": "🚗", "hint": "British luxury car brand known for its leaping-cat logo" }
+          ]
         },
         {
-          "category": "🎾",
-          "hint": "Older of the two Williams sisters in tennis"
-        }
-      ]
-    },
-    {
-      "answer": "Amazon",
-      "aliases": [],
-      "clues": [
-        {
-          "category": "🧭",
-          "hint": "The world's largest river by water discharge"
+          "answer": "Colt",
+          "aliases": [],
+          "clues": [
+            { "category": "🐴", "hint": "A young male horse, typically under four years old" },
+            { "category": "🏈", "hint": "NFL franchise now based in Indianapolis, formerly of Baltimore" }
+          ]
         },
         {
-          "category": "💼",
-          "hint": "E-commerce giant founded by Jeff Bezos in 1994"
-        }
-      ]
-    },
-    {
-      "answer": "Atlas",
-      "aliases": [],
-      "clues": [
-        {
-          "category": "🔱",
-          "hint": "A Titan condemned to hold up the sky for eternity"
+          "answer": "Falcon",
+          "aliases": [],
+          "clues": [
+            { "category": "🦅", "hint": "Bird of prey whose peregrine variety is the fastest animal on Earth" },
+            { "category": "🚀", "hint": "SpaceX's family of reusable rockets, including a \"Heavy\" variant" }
+          ]
         },
         {
-          "category": "📖",
-          "hint": "A bound collection of maps"
-        }
-      ]
-    },
-    {
-      "answer": "Phoenix",
-      "aliases": [],
-      "clues": [
-        {
-          "category": "🔱",
-          "hint": "A bird said to be reborn from its own ashes"
+          "answer": "Sphinx",
+          "aliases": [],
+          "clues": [
+            { "category": "🏛️", "hint": "Ancient limestone monument near Cairo with a lion's body and a human head" },
+            { "category": "🦋", "hint": "A family of moths nicknamed for the pose their caterpillars strike when at rest" }
+          ]
         },
         {
-          "category": "🧭",
-          "hint": "Capital city of Arizona"
-        }
-      ]
-    },
-    {
-      "answer": "Nike",
-      "aliases": [],
-      "clues": [
-        {
-          "category": "🔱",
-          "hint": "Greek goddess of victory"
+          "answer": "Colossus",
+          "aliases": [],
+          "clues": [
+            { "category": "🏛️", "hint": "Giant bronze statue that once stood in the harbor of Rhodes, one of the Seven Wonders" },
+            { "category": "🦸", "hint": "Marvel superhero and X-Men member whose skin turns to organic steel" }
+          ]
         },
         {
-          "category": "💼",
-          "hint": "Athletic apparel brand known for its swoosh logo"
-        }
-      ]
-    },
-    {
-      "answer": "Pandora",
-      "aliases": [],
-      "clues": [
-        {
-          "category": "🔱",
-          "hint": "The first mortal woman, in a Greek myth, who opened a forbidden box"
+          "answer": "Miranda",
+          "aliases": [],
+          "clues": [
+            { "category": "🪐", "hint": "A moon of Uranus named for a character in Shakespeare's \"The Tempest\"" },
+            { "category": "⚖️", "hint": "The rights read to a suspect upon arrest, named for a 1966 US Supreme Court case" }
+          ]
         },
         {
-          "category": "📡",
-          "hint": "A personalized internet radio streaming service"
-        }
-      ]
-    },
-    {
-      "answer": "Apollo",
-      "aliases": [],
-      "clues": [
-        {
-          "category": "📽️",
-          "hint": "Fictional boxer portrayed by Carl Weathers"
+          "answer": "Marathon",
+          "aliases": [],
+          "clues": [
+            { "category": "🏃", "hint": "Long-distance race of 26.2 miles, named for a Greek battle site" },
+            { "category": "🍫", "hint": "The original UK and Ireland name for what's now sold as Snickers, until a 1990 rebrand" }
+          ]
         },
         {
-          "category": "🪐",
-          "hint": "NASA program that first landed astronauts on the Moon"
-        }
-      ]
-    },
-    {
-      "answer": "Casablanca",
-      "aliases": [],
-      "clues": [
-        {
-          "category": "📽️",
-          "hint": "1942 romance starring Humphrey Bogart and Ingrid Bergman"
+          "answer": "Delta",
+          "aliases": [],
+          "clues": [
+            { "category": "🧭", "hint": "Landform created where a river meets the sea" },
+            { "category": "✈️", "hint": "Major U.S. airline headquartered in Atlanta" }
+          ]
         },
         {
-          "category": "🧭",
-          "hint": "The largest city in Morocco"
-        }
-      ]
-    },
-    {
-      "answer": "Mercury",
-      "aliases": [],
-      "clues": [
-        {
-          "category": "⚛️",
-          "hint": "The only metal that is liquid at room temperature"
+          "answer": "Midas",
+          "aliases": [],
+          "clues": [
+            { "category": "🔱", "hint": "Mythical king whose touch turned everything to gold" },
+            { "category": "🔧", "hint": "Auto shop chain known for mufflers and brakes" }
+          ]
         },
         {
-          "category": "🪐",
-          "hint": "The smallest and innermost planet in the solar system"
-        }
-      ]
-    }
-  ],
-  "CATEGORY_CONNECTORS_2": [
-    {
-      "answer": "Jaguar",
-      "aliases": [],
-      "clues": [
-        {
-          "category": "🐆",
-          "hint": "The largest big cat native to the Americas"
-        },
-        {
-          "category": "🚗",
-          "hint": "British luxury car brand known for its leaping-cat logo"
-        }
-      ]
-    },
-    {
-      "answer": "Colt",
-      "aliases": [],
-      "clues": [
-        {
-          "category": "🐴",
-          "hint": "A young male horse, typically under four years old"
-        },
-        {
-          "category": "🏈",
-          "hint": "NFL franchise now based in Indianapolis, formerly of Baltimore"
-        }
-      ]
-    },
-    {
-      "answer": "Falcon",
-      "aliases": [],
-      "clues": [
-        {
-          "category": "🦅",
-          "hint": "Bird of prey whose peregrine variety is the fastest animal on Earth"
-        },
-        {
-          "category": "🚀",
-          "hint": "SpaceX's family of reusable rockets, including a \"Heavy\" variant"
-        }
-      ]
-    },
-    {
-      "answer": "Sphinx",
-      "aliases": [],
-      "clues": [
-        {
-          "category": "🏛️",
-          "hint": "Ancient limestone monument near Cairo with a lion's body and a human head"
-        },
-        {
-          "category": "🦋",
-          "hint": "A family of moths nicknamed for the pose their caterpillars strike when at rest"
-        }
-      ]
-    },
-    {
-      "answer": "Colossus",
-      "aliases": [],
-      "clues": [
-        {
-          "category": "🏛️",
-          "hint": "Giant bronze statue that once stood in the harbor of Rhodes, one of the Seven Wonders"
-        },
-        {
-          "category": "🦸",
-          "hint": "Marvel superhero and X-Men member whose skin turns to organic steel"
-        }
-      ]
-    },
-    {
-      "answer": "Miranda",
-      "aliases": [],
-      "clues": [
-        {
-          "category": "🪐",
-          "hint": "A moon of Uranus named for a character in Shakespeare's \"The Tempest\""
-        },
-        {
-          "category": "⚖️",
-          "hint": "The rights read to a suspect upon arrest, named for a 1966 US Supreme Court case"
-        }
-      ]
-    },
-    {
-      "answer": "Marathon",
-      "aliases": [],
-      "clues": [
-        {
-          "category": "🏃",
-          "hint": "Long-distance race of 26.2 miles, named for a Greek battle site"
-        },
-        {
-          "category": "🍫",
-          "hint": "The original UK and Ireland name for what's now sold as Snickers, until a 1990 rebrand"
-        }
-      ]
-    },
-    {
-      "answer": "Delta",
-      "aliases": [],
-      "clues": [
-        {
-          "category": "🧭",
-          "hint": "Landform created where a river meets the sea"
-        },
-        {
-          "category": "✈️",
-          "hint": "Major U.S. airline headquartered in Atlanta"
-        }
-      ]
-    },
-    {
-      "answer": "Midas",
-      "aliases": [],
-      "clues": [
-        {
-          "category": "🔱",
-          "hint": "Mythical king whose touch turned everything to gold"
-        },
-        {
-          "category": "🔧",
-          "hint": "Auto shop chain known for mufflers and brakes"
-        }
-      ]
-    },
-    {
-      "answer": "Trojan",
-      "aliases": [],
-      "clues": [
-        {
-          "category": "📖",
-          "hint": "Native of the ancient city besieged for ten years in Homer's epic"
-        },
-        {
-          "category": "💻",
-          "hint": "Malware that disguises itself as legitimate software"
+          "answer": "Trojan",
+          "aliases": [],
+          "clues": [
+            { "category": "📖", "hint": "Native of the ancient city besieged for ten years in Homer's epic" },
+            { "category": "💻", "hint": "Malware that disguises itself as legitimate software" }
+          ]
         }
       ]
     }
