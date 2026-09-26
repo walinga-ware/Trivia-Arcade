@@ -187,7 +187,7 @@ const flagsQuiz = new PromptQuiz({
     answer: name,
     aliases: COUNTRY_ALIASES_BY_NAME[name] || []
   })),
-  duration: 20*60,
+  duration: 25*60,
   mode: 'flag',
   promptLabel: "guess the country from its flag",
   finalRollLabel: 'Full roll — all 193 countries',
