@@ -1630,3 +1630,26 @@ class MinefieldQuiz{
   }
 }
 
+/* ============================================================
+   Node/CommonJS export shim — enables unit testing with Jest.
+   Has no effect in the browser (module is undefined there), so
+   the app's normal <script> loading is unaffected.
+   ============================================================ */
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    normalize,
+    fmtTime,
+    minutesLabel,
+    shuffled,
+    fmtPopWorld,
+    fmtPop,
+    fmtPopCA,
+    fmtElev,
+    fmtLen,
+    FreeRecallGame,
+    HintedFreeRecallGame,
+    PresidentsRecallGame,
+    MinefieldQuiz,
+    PromptQuiz,
+  };
+}
