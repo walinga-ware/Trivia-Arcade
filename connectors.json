@@ -80,5 +80,87 @@
         { "category": "🪐", "hint": "The smallest and innermost planet in the solar system" }
       ]
     }
+  ],
+  "CATEGORY_CONNECTORS_2": [
+    {
+      "answer": "Jaguar",
+      "aliases": [],
+      "clues": [
+        { "category": "🐆", "hint": "The largest big cat native to the Americas" },
+        { "category": "🚗", "hint": "British luxury car brand known for its leaping-cat logo" }
+      ]
+    },
+    {
+      "answer": "Colt",
+      "aliases": [],
+      "clues": [
+        { "category": "🐴", "hint": "A young male horse, typically under four years old" },
+        { "category": "🏈", "hint": "NFL franchise now based in Indianapolis, formerly of Baltimore" }
+      ]
+    },
+    {
+      "answer": "Falcon",
+      "aliases": [],
+      "clues": [
+        { "category": "🦅", "hint": "Bird of prey whose peregrine variety is the fastest animal on Earth" },
+        { "category": "🚀", "hint": "SpaceX's family of reusable rockets, including a \"Heavy\" variant" }
+      ]
+    },
+    {
+      "answer": "Everest",
+      "aliases": [],
+      "clues": [
+        { "category": "🏔️", "hint": "The highest mountain above sea level, straddling Nepal and Tibet" },
+        { "category": "🎬", "hint": "2015 film starring Jason Clarke dramatizing a deadly 1996 climbing expedition" }
+      ]
+    },
+    {
+      "answer": "Orion",
+      "aliases": [],
+      "clues": [
+        { "category": "🚀", "hint": "NASA's crew capsule built to carry astronauts to the Moon under the Artemis program" },
+        { "category": "⭐", "hint": "Winter constellation famous for the three stars forming its \"belt\"" }
+      ]
+    },
+    {
+      "answer": "Sphinx",
+      "aliases": [],
+      "clues": [
+        { "category": "🏛️", "hint": "Ancient limestone monument near Cairo with a lion's body and a human head" },
+        { "category": "🦋", "hint": "A family of moths nicknamed for the pose their caterpillars strike when at rest" }
+      ]
+    },
+    {
+      "answer": "Colossus",
+      "aliases": [],
+      "clues": [
+        { "category": "🏛️", "hint": "Giant bronze statue that once stood in the harbor of Rhodes, one of the Seven Wonders" },
+        { "category": "🦸", "hint": "Marvel superhero and X-Men member whose skin turns to organic steel" }
+      ]
+    },
+    {
+      "answer": "Miranda",
+      "aliases": [],
+      "clues": [
+        { "category": "🪐", "hint": "A moon of Uranus named for a character in Shakespeare's \"The Tempest\"" },
+        { "category": "⚖️", "hint": "The rights read to a suspect upon arrest, named for a 1966 US Supreme Court case" }
+      ]
+    },
+    {
+      "answer": "Trident",
+      "aliases": [],
+      "clues": [
+        { "category": "🍬", "hint": "Chewing gum brand named and logoed for a three-pronged spear" },
+        { "category": "🚗", "hint": "The three-pronged emblem on the grille of every Maserati" }
+      ]
+    },
+    {
+      "answer": "Marathon",
+      "aliases": [],
+      "clues": [
+        { "category": "🏃", "hint": "Long-distance race of 26.2 miles, named for a Greek battle site" },
+        { "category": "🍫", "hint": "The original UK and Ireland name for what's now sold as Snickers, until a 1990 rebrand" }
+      ]
+    }
   ]
 }
