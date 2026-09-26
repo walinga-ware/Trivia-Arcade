@@ -650,7 +650,6 @@ const largestMoonsGame = new FreeRecallGame({
   finalTitle: 'Full roll — the 25 largest moons, largest to smallest',
   rulesHTML: `
     &middot; Name the 25 largest moons in the solar system — order doesn't matter while you play, 25 total<br>
-    &middot; Just type the moon's name — planet and size aren't needed to get credit<br>
     &middot; When time expires, the full roll is revealed largest to smallest, with each moon's diameter and the planet it orbits
   `
 });
