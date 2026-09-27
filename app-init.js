@@ -447,7 +447,7 @@ const mountainsByContinentQuiz = new PromptQuiz({
   rulesHTML: `
     &middot; Continents appear one at a time in random order — 7 total<br>
     &middot; Type that continent's highest mountain<br>
-    &middot; Use Skip if you're stuck; the round ends when you've been through all 7 or time runs out
+    &middot; Use Skip if you're stuck; the round ends when time runs out
   `
 });
 
