@@ -194,7 +194,7 @@ const flagsQuiz = new PromptQuiz({
   rulesHTML: `
     &middot; Flags appear one at a time in random order — 193 total (Source: https://flagpedia.net)<br>
     &middot; Type the country name — common nicknames and abbreviations are accepted<br>
-    &middot; Use Skip if you're stuck; the round ends when you've been through all 193 or time runs out
+    &middot; Use Skip if you're stuck; the round ends when time runs out
   `
 });
 
@@ -208,7 +208,7 @@ const stateCapitalsQuiz = new PromptQuiz({
   rulesHTML: `
     &middot; States appear one at a time in random order — 50 total<br>
     &middot; Type the capital city for each<br>
-    &middot; Use Skip if you're stuck; the round ends when you've been through all 50 or time runs out
+    &middot; Use Skip if you're stuck; the round ends when time runs out
   `
 });
 
@@ -240,7 +240,7 @@ const provinceCapitalsQuiz = new PromptQuiz({
   rulesHTML: `
     &middot; Provinces and territories appear one at a time in random order — 13 total<br>
     &middot; Type the capital city for each<br>
-    &middot; Use Skip if you're stuck; the round ends when you've been through all 13 or time runs out
+    &middot; Use Skip if you're stuck; the round ends when time runs out
   `
 });
 /* ============================================================
@@ -546,7 +546,7 @@ const periodicTableQuiz = new PromptQuiz({
   rulesHTML: `
     &middot; Every element's atomic symbol appears once, in random order — 118 total<br>
     &middot; Type the full element name for each<br>
-    &middot; Use Skip if you're stuck; the round ends when you've been through all 118 or time runs out
+    &middot; Use Skip if you're stuck; the round ends when time runs out
   `
 });
 
@@ -626,7 +626,7 @@ const moonsQuiz = new PromptQuiz({
   rulesHTML: `
     &middot; A clue about one of Jupiter's moons appears — 10 total<br>
     &middot; Type the name of the moon it describes<br>
-    &middot; Use Skip if you're stuck; the round ends when you've been through all 10 or time runs out
+    &middot; Use Skip if you're stuck; the round ends when time runs out
   `
 });
 
