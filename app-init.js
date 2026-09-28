@@ -616,17 +616,21 @@ const MOON_QUIZ_NAMES = [
   'Himalia', 'Valetudo', 'Pasiphae', 'Sinope'
 ];
 
-const moonsQuiz = new PromptQuiz({
+const moonsQuiz = new MultipleChoiceQuiz({
   id: 'moons',
   pairs: MOON_QUIZ_NAMES.map(name => ({ prompt: JUPITER_MOON_HINTS[name], answer: name })),
+  // Distractors come from the full list of real Jupiter moons, so all 4
+  // options on every question are genuine moons of Jupiter.
+  distractorPool: JUPITER_MOONS,
+  optionCount: 4,
   duration: 5*60,
-  mode: 'text',
-  promptLabel: "guess the moon of Jupiter from the clue",
+  promptLabel: "which moon of Jupiter does this clue describe?",
   finalRollLabel: 'Full roll — 10 featured moons of Jupiter',
   rulesHTML: `
     &middot; A clue about one of Jupiter's moons appears — 10 total<br>
-    &middot; Type the name of the moon it describes<br>
-    &middot; Use Skip if you're stuck; the round ends when time runs out
+    &middot; Pick the matching moon from 4 options — all four are real moons of Jupiter<br>
+    &middot; No skipping: keep picking until you find the right one, but only first-try answers score<br>
+    &middot; The round ends when you finish all 10 or time runs out
   `
 });
 
