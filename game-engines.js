@@ -903,6 +903,208 @@ class PromptQuiz{
 }
 
 /* ============================================================
+   MULTIPLE-CHOICE PROMPT QUIZ ENGINE (e.g. Moons of Jupiter)
+   Each question shows a clue plus 4 options: the correct answer and
+   3 distractors drawn at random from opts.distractorPool (which should
+   contain only real members of the category). There is no skip — the
+   question stays up until the correct option is picked. Wrong picks are
+   disabled and struck out; a question only scores if it is answered
+   correctly on the FIRST try. The round ends when every question is
+   answered, the timer runs out, or you end it.
+   ============================================================ */
+function multipleChoiceHTML(id, promptLabel){
+  return `
+    <div id="${id}-intro">
+      <div class="plate" style="margin-bottom:18px;">
+        <div class="label">rules</div>
+        <div style="font-size:14px; line-height:1.7; color:var(--paper);" id="${id}-rules"></div>
+      </div>
+      <button class="btn-primary" id="${id}-startBtn">Begin — start the clock</button>
+    </div>
+
+    <div class="game" id="${id}-game" style="display:none;">
+      <div class="top-row">
+        <div class="plate timer" id="${id}-timerPlate">
+          <div class="label">time remaining</div>
+          <div class="value" id="${id}-timerValue">--:--</div>
+        </div>
+        <div class="plate">
+          <div class="label">score</div>
+          <div class="value" id="${id}-scoreValue">0</div>
+        </div>
+        <div class="plate">
+          <div class="label">remaining</div>
+          <div class="value" id="${id}-progressValue">0</div>
+        </div>
+      </div>
+
+      <div class="quiz-prompt">
+        <div class="prompt-label">${promptLabel}</div>
+        <div class="prompt-value mc-clue" id="${id}-promptValue">—</div>
+      </div>
+      <div class="mc-options" id="${id}-options"></div>
+      <div class="feedback" id="${id}-feedback" style="text-align:center;"></div>
+      <div style="text-align:center;">
+        <button id="${id}-endBtn" title="End the round now">End round</button>
+      </div>
+    </div>
+
+    <div class="results" id="${id}-results" style="display:none;">
+      <button id="${id}-resetBtn" class="play-again-top">Play again</button>
+      <div class="final-score" id="${id}-finalScoreLine"></div>
+      <div class="section-title"><span id="${id}-finalRollLabel"></span><span>Correct on first try in green</span></div>
+      <div id="${id}-finalGrid" class="final-grid"></div>
+    </div>
+  `;
+}
+
+class MultipleChoiceQuiz{
+  constructor(opts){
+    this.id = opts.id;
+    this.pairs = opts.pairs;                     // [{ prompt, answer }, ...]
+    this.distractorPool = opts.distractorPool;   // real members of the category
+    this.optionCount = opts.optionCount || 4;
+    this.duration = opts.duration;
+    this.rulesHTML = opts.rulesHTML;
+    this.promptLabel = opts.promptLabel;
+    this.finalRollLabel = opts.finalRollLabel;
+
+    this.queue = [];
+    this.score = 0;
+    this.results = {};      // prompt -> true (only if right on first try)
+    this.missed = false;    // has the current question already had a wrong pick?
+    this.locked = false;    // true while the "correct!" flash is showing
+    this.timeLeft = this.duration;
+    this.timerId = null;
+    this.running = false;
+
+    document.getElementById(`${this.id}-mount`).innerHTML = multipleChoiceHTML(this.id, this.promptLabel);
+    document.getElementById(`${this.id}-rules`).innerHTML = `
+      &middot; ${minutesLabel(this.duration)} on the clock, starting when you hit begin<br>
+      ${this.rulesHTML}
+    `;
+    document.getElementById(`${this.id}-finalRollLabel`).textContent = this.finalRollLabel;
+    const metaEl = document.getElementById(`${this.id}-meta`);
+    if (metaEl) metaEl.textContent = minutesLabel(this.duration);
+
+    this.el = key => document.getElementById(`${this.id}-${key}`);
+    this.el('startBtn').addEventListener('click', () => this.start());
+    this.el('endBtn').addEventListener('click', () => this.end());
+    this.el('resetBtn').addEventListener('click', () => this.reset());
+    this.updateTimerDisplay();
+  }
+
+  start(){
+    this.el('intro').style.display = 'none';
+    this.el('game').style.display = 'block';
+    this.running = true;
+    this.timeLeft = this.duration;
+    this.score = 0;
+    this.results = {};
+    this.queue = shuffled(this.pairs.map((_,i)=>i));
+    this.updateTimerDisplay();
+    this.showPrompt();
+    this.timerId = setInterval(() => this.tick(), 1000);
+  }
+
+  tick(){
+    this.timeLeft--;
+    this.updateTimerDisplay();
+    if (this.timeLeft <= 0) this.end();
+  }
+
+  updateTimerDisplay(){
+    this.el('timerValue').textContent = fmtTime(this.timeLeft);
+    this.el('timerPlate').classList.toggle('low', this.timeLeft <= 60);
+  }
+
+  currentPair(){ return this.pairs[this.queue[0]]; }
+
+  showPrompt(){
+    if (this.queue.length === 0){ this.end(); return; }
+    const { prompt, answer } = this.currentPair();
+    this.missed = false;
+    this.locked = false;
+
+    // Correct answer + (optionCount-1) distinct distractors, all from the real pool.
+    const distractors = shuffled(this.distractorPool.filter(n => n !== answer)).slice(0, this.optionCount - 1);
+    const options = shuffled([answer, ...distractors]);
+
+    this.el('promptValue').textContent = prompt;
+    this.el('progressValue').textContent = this.queue.length;
+    this.el('feedback').textContent = '';
+    this.el('feedback').className = 'feedback';
+
+    const box = this.el('options');
+    box.innerHTML = '';
+    options.forEach(name => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'mc-option';
+      btn.textContent = name;
+      btn.addEventListener('click', () => this.choose(btn, name));
+      box.appendChild(btn);
+    });
+  }
+
+  choose(btn, name){
+    if (!this.running || this.locked || btn.disabled) return;
+    const { prompt, answer } = this.currentPair();
+    if (name === answer){
+      this.locked = true;
+      btn.classList.add('correct');
+      if (!this.missed){
+        this.results[prompt] = true;
+        this.score++;
+        this.el('scoreValue').textContent = this.score;
+      }
+      this.el('feedback').textContent = this.missed ? `${answer} — got it.` : `${answer} — correct!`;
+      this.el('feedback').className = this.missed ? 'feedback dup' : 'feedback good';
+      this.queue.shift();
+      setTimeout(() => { if (this.running) this.showPrompt(); }, 700);
+    } else {
+      this.missed = true;
+      btn.classList.add('wrong');
+      btn.disabled = true;
+      this.el('feedback').textContent = 'Not quite — pick again.';
+      this.el('feedback').className = 'feedback bad';
+    }
+  }
+
+  end(){
+    if (!this.running) return;
+    this.running = false;
+    clearInterval(this.timerId);
+    this.el('endBtn').disabled = true;
+    this.el('game').style.display = 'none';
+    this.el('results').style.display = 'block';
+
+    const pct = Math.round((this.score / this.pairs.length) * 100);
+    this.el('finalScoreLine').textContent = `You got ${this.score} of ${this.pairs.length} correct on the first try (${pct}%).`;
+
+    const sorted = [...this.pairs].sort((a,b)=>a.prompt.localeCompare(b.prompt));
+    this.el('finalGrid').innerHTML = sorted.map(({prompt, answer}) => {
+      const hit = this.results[prompt] === true;
+      return `<div class="item ${hit ? 'hit' : 'miss'}"><span>${prompt}</span><span>${answer} ${hit ? '✓' : '—'}</span></div>`;
+    }).join('');
+  }
+
+  reset(){
+    this.running = false;
+    clearInterval(this.timerId);
+    this.timeLeft = this.duration;
+    this.score = 0;
+    this.results = {};
+    this.queue = [];
+    this.el('endBtn').disabled = false;
+    this.el('scoreValue').textContent = '0';
+    this.el('results').style.display = 'none';
+    this.el('intro').style.display = 'block';
+    this.updateTimerDisplay();
+  }
+}
+
+/* ============================================================
    STATE MAP QUIZ
    Uses us-atlas state boundaries derived from U.S. Census Bureau
    cartographic boundaries, rendered with d3.geoAlbersUsa.

@@ -179,6 +179,13 @@
   .quiz-input-row.text input{
     text-align:center; max-width:320px; font-size:18px;
   }
+  /* ---- multiple choice ---- */
+  .mc-clue{ font-size:clamp(18px,4vw,24px); }
+  .mc-options{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px; }
+  .mc-option{ padding:16px 12px; font-size:16px; }
+  .mc-option.correct{ background:var(--sage); border-color:var(--sage); color:var(--ink); }
+  .mc-option.wrong:disabled{ opacity:0.55; border-color:var(--rust); color:var(--rust); text-decoration:line-through; }
+  @media(max-width:600px){ .mc-options{ grid-template-columns:1fr; } }
   ::selection{ background:var(--brass); color:var(--ink); }
 
   /* ---- trivia-specific ---- */
@@ -483,7 +490,7 @@
         <button class="btn-primary" onclick="showScreen('planets')">Play</button>
       </div>
       <div class="card">
-        <div class="tag">Prompted quiz &middot; 10 items</div>
+        <div class="tag">Multiple choice &middot; 10 items</div>
         <h3>Moons of Jupiter</h3>
         <div class="meta" id="moons-meta"></div>
         <button class="btn-primary" onclick="showScreen('moons')">Play</button>
