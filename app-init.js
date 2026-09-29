@@ -198,9 +198,19 @@ const flagsQuiz = new PromptQuiz({
   `
 });
 
+// Extra accepted spellings for state capitals (state -> [aliases]).
+// normalize() already drops periods, so "St. Paul" and "st paul" both match.
+const STATE_CAPITAL_ALIASES = {
+  'Minnesota': ['St Paul']
+};
+
 const stateCapitalsQuiz = new PromptQuiz({
   id: 'statecap',
-  pairs: STATES.map(([name]) => ({ prompt: name, answer: STATE_CAPITALS[name] })),
+  pairs: STATES.map(([name]) => ({
+    prompt: name,
+    answer: STATE_CAPITALS[name],
+    aliases: STATE_CAPITAL_ALIASES[name] || []
+  })),
   duration: 15*60,
   mode: 'text',
   promptLabel: "what's the capital of",
