@@ -968,8 +968,13 @@ class MultipleChoiceQuiz{
     this.rulesHTML = opts.rulesHTML;
     this.promptLabel = opts.promptLabel;
     this.finalRollLabel = opts.finalRollLabel;
+    // Optional: ask only this many questions per round, drawn at random from
+    // `pairs` (so a big pool of clues stays fresh across plays). Omit to ask
+    // every pair, as before.
+    this.questionCount = opts.questionCount || null;
 
     this.queue = [];
+    this.roundIdx = [];     // indices into `pairs` used in the current round
     this.score = 0;
     this.results = {};      // prompt -> true (only if right on first try)
     this.missed = false;    // has the current question already had a wrong pick?
@@ -1001,7 +1006,9 @@ class MultipleChoiceQuiz{
     this.timeLeft = this.duration;
     this.score = 0;
     this.results = {};
-    this.queue = shuffled(this.pairs.map((_,i)=>i));
+    const all = shuffled(this.pairs.map((_,i)=>i));
+    this.roundIdx = this.questionCount ? all.slice(0, this.questionCount) : all;
+    this.queue = this.roundIdx.slice();
     this.updateTimerDisplay();
     this.showPrompt();
     this.timerId = setInterval(() => this.tick(), 1000);
@@ -1079,10 +1086,11 @@ class MultipleChoiceQuiz{
     this.el('game').style.display = 'none';
     this.el('results').style.display = 'block';
 
-    const pct = Math.round((this.score / this.pairs.length) * 100);
-    this.el('finalScoreLine').textContent = `You got ${this.score} of ${this.pairs.length} correct on the first try (${pct}%).`;
+    const roundPairs = this.roundIdx.map(i => this.pairs[i]);
+    const pct = Math.round((this.score / roundPairs.length) * 100);
+    this.el('finalScoreLine').textContent = `You got ${this.score} of ${roundPairs.length} correct on the first try (${pct}%).`;
 
-    const sorted = [...this.pairs].sort((a,b)=>a.prompt.localeCompare(b.prompt));
+    const sorted = [...roundPairs].sort((a,b)=>a.prompt.localeCompare(b.prompt));
     this.el('finalGrid').innerHTML = sorted.map(({prompt, answer}) => {
       const hit = this.results[prompt] === true;
       return `<div class="item ${hit ? 'hit' : 'miss'}"><span>${prompt}</span><span>${answer} ${hit ? '✓' : '—'}</span></div>`;
@@ -1096,6 +1104,7 @@ class MultipleChoiceQuiz{
     this.score = 0;
     this.results = {};
     this.queue = [];
+    this.roundIdx = [];
     this.el('endBtn').disabled = false;
     this.el('scoreValue').textContent = '0';
     this.el('results').style.display = 'none';

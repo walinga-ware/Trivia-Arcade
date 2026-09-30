@@ -58,31 +58,131 @@
     "Callirrhoe": "One of the first irregular moons found by automated sky surveys, discovered in 1999"
   },
   "LARGEST_MOONS": [
-    { "name": "Ganymede", "diameterKm": 5268, "planet": "Jupiter" },
-    { "name": "Titan", "diameterKm": 5149, "planet": "Saturn" },
-    { "name": "Callisto", "diameterKm": 4821, "planet": "Jupiter" },
-    { "name": "Io", "diameterKm": 3643, "planet": "Jupiter" },
-    { "name": "Moon", "diameterKm": 3474, "planet": "Earth" },
-    { "name": "Europa", "diameterKm": 3122, "planet": "Jupiter" },
-    { "name": "Triton", "diameterKm": 2707, "planet": "Neptune" },
-    { "name": "Titania", "diameterKm": 1578, "planet": "Uranus" },
-    { "name": "Rhea", "diameterKm": 1527, "planet": "Saturn" },
-    { "name": "Oberon", "diameterKm": 1523, "planet": "Uranus" },
-    { "name": "Iapetus", "diameterKm": 1469, "planet": "Saturn" },
-    { "name": "Charon", "diameterKm": 1212, "planet": "Pluto" },
-    { "name": "Umbriel", "diameterKm": 1169, "planet": "Uranus" },
-    { "name": "Ariel", "diameterKm": 1158, "planet": "Uranus" },
-    { "name": "Dione", "diameterKm": 1123, "planet": "Saturn" },
-    { "name": "Tethys", "diameterKm": 1062, "planet": "Saturn" },
-    { "name": "Enceladus", "diameterKm": 504, "planet": "Saturn" },
-    { "name": "Miranda", "diameterKm": 472, "planet": "Uranus" },
-    { "name": "Proteus", "diameterKm": 420, "planet": "Neptune" },
-    { "name": "Mimas", "diameterKm": 396, "planet": "Saturn" },
-    { "name": "Nereid", "diameterKm": 340, "planet": "Neptune" },
-    { "name": "Hyperion", "diameterKm": 270, "planet": "Saturn" },
-    { "name": "Phoebe", "diameterKm": 213, "planet": "Saturn" },
-    { "name": "Janus", "diameterKm": 179, "planet": "Saturn" },
-    { "name": "Amalthea", "diameterKm": 167, "planet": "Jupiter" }
+    {
+      "name": "Ganymede",
+      "diameterKm": 5268,
+      "planet": "Jupiter"
+    },
+    {
+      "name": "Titan",
+      "diameterKm": 5149,
+      "planet": "Saturn"
+    },
+    {
+      "name": "Callisto",
+      "diameterKm": 4821,
+      "planet": "Jupiter"
+    },
+    {
+      "name": "Io",
+      "diameterKm": 3643,
+      "planet": "Jupiter"
+    },
+    {
+      "name": "Moon",
+      "diameterKm": 3474,
+      "planet": "Earth"
+    },
+    {
+      "name": "Europa",
+      "diameterKm": 3122,
+      "planet": "Jupiter"
+    },
+    {
+      "name": "Triton",
+      "diameterKm": 2707,
+      "planet": "Neptune"
+    },
+    {
+      "name": "Titania",
+      "diameterKm": 1578,
+      "planet": "Uranus"
+    },
+    {
+      "name": "Rhea",
+      "diameterKm": 1527,
+      "planet": "Saturn"
+    },
+    {
+      "name": "Oberon",
+      "diameterKm": 1523,
+      "planet": "Uranus"
+    },
+    {
+      "name": "Iapetus",
+      "diameterKm": 1469,
+      "planet": "Saturn"
+    },
+    {
+      "name": "Charon",
+      "diameterKm": 1212,
+      "planet": "Pluto"
+    },
+    {
+      "name": "Umbriel",
+      "diameterKm": 1169,
+      "planet": "Uranus"
+    },
+    {
+      "name": "Ariel",
+      "diameterKm": 1158,
+      "planet": "Uranus"
+    },
+    {
+      "name": "Dione",
+      "diameterKm": 1123,
+      "planet": "Saturn"
+    },
+    {
+      "name": "Tethys",
+      "diameterKm": 1062,
+      "planet": "Saturn"
+    },
+    {
+      "name": "Enceladus",
+      "diameterKm": 504,
+      "planet": "Saturn"
+    },
+    {
+      "name": "Miranda",
+      "diameterKm": 472,
+      "planet": "Uranus"
+    },
+    {
+      "name": "Proteus",
+      "diameterKm": 420,
+      "planet": "Neptune"
+    },
+    {
+      "name": "Mimas",
+      "diameterKm": 396,
+      "planet": "Saturn"
+    },
+    {
+      "name": "Nereid",
+      "diameterKm": 340,
+      "planet": "Neptune"
+    },
+    {
+      "name": "Hyperion",
+      "diameterKm": 270,
+      "planet": "Saturn"
+    },
+    {
+      "name": "Phoebe",
+      "diameterKm": 213,
+      "planet": "Saturn"
+    },
+    {
+      "name": "Janus",
+      "diameterKm": 179,
+      "planet": "Saturn"
+    },
+    {
+      "name": "Amalthea",
+      "diameterKm": 167,
+      "planet": "Jupiter"
+    }
   ],
   "ELEMENTS": [
     "H",
@@ -204,6 +304,28 @@
     "Ts",
     "Og"
   ],
+  "ELEMENT_HINTS": {
+    "H": "The lightest element and a nonmetal, it is the most abundant element in the universe",
+    "He": "A noble gas and the second-lightest element, it was first detected in the Sun before being found on Earth",
+    "Li": "An alkali metal and the lightest solid element, it is widely used in rechargeable batteries",
+    "Ne": "A noble gas, it produces the familiar bright red-orange glow used in traditional advertising signs",
+    "Na": "An alkali metal, it reacts violently with water and gives table salt its sodium component",
+    "Mg": "An alkaline earth metal, it burns with an intense white light and is used in some fireworks and flares",
+    "Al": "A post-transition metal and the most abundant metal in Earth's crust, it is valued for being lightweight and corrosion-resistant",
+    "Si": "A metalloid and semiconductor, it is the key material used in most modern computer chips",
+    "Cl": "A halogen and highly reactive nonmetal, it is widely used to disinfect drinking water",
+    "Ar": "A noble gas and chemically inert element, it is commonly used to provide an unreactive atmosphere for welding",
+    "K": "An alkali metal, it is essential to living cells and gives bananas and other foods their potassium content",
+    "Fe": "A transition metal and the main component of steel, it is also the element that makes blood's hemoglobin able to carry oxygen",
+    "Cu": "A transition metal, it is one of the best electrical conductors and has given its name to the color copper",
+    "Br": "A halogen and the only nonmetal that is liquid at room temperature, it is a dark reddish-brown liquid",
+    "Kr": "A noble gas, its name comes from a Greek word meaning 'hidden'",
+    "Ag": "A transition metal and the best electrical conductor of any element, it is the shiny metal used in many pieces of jewelry",
+    "W": "A transition metal with the highest melting point of any element, its symbol comes from the name wolfram",
+    "Au": "A transition metal and noble metal, it is famously resistant to corrosion and has the chemical symbol Au from its Latin name",
+    "Hg": "A transition metal and the only metallic element that is liquid at room temperature, it was historically used in thermometers",
+    "U": "An actinide and naturally radioactive metal, it is the element most associated with the fuel used in nuclear fission reactors"
+  },
   "ELEMENT_NAMES": {
     "H": {
       "answer": "Hydrogen"
