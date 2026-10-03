@@ -45,6 +45,7 @@ const {
   MLB_TEAM_ALIASES,
   ELEMENTS,
   ELEMENT_NAMES,
+  ELEMENT_HINTS,
   PLANETS,
   PLANET_BONUS,
   JUPITER_MOONS,
@@ -588,6 +589,32 @@ const elementsGame = new FreeRecallGame({
     &middot; Type the full element name — atomic symbols like "Na" or "Fe" don't count here<br>
     &middot; Some common alternate spellings are accepted<br>
     &middot; When time expires, the full roll is revealed in atomic-number order with your hits marked
+  `
+});
+
+// Multiple-choice "Guess the element": 10 random clues per round, drawn from
+// ELEMENT_HINTS. Any clue that spells out its own answer (e.g. a Na clue that
+// says "sodium") is skipped automatically, so no question gives itself away.
+const ELEMENT_GUESS_PAIRS = Object.keys(ELEMENT_HINTS)
+  .filter(symbol => ELEMENT_NAMES[symbol] &&
+    !ELEMENT_HINTS[symbol].toLowerCase().includes(ELEMENT_NAMES[symbol].answer.toLowerCase()))
+  .map(symbol => ({ prompt: ELEMENT_HINTS[symbol], answer: ELEMENT_NAMES[symbol].answer }));
+
+const elementGuessQuiz = new MultipleChoiceQuiz({
+  id: 'elementguess',
+  pairs: ELEMENT_GUESS_PAIRS,
+  questionCount: 10,
+  // Distractors come from all 118 real elements, so every option is a genuine element.
+  distractorPool: ELEMENT_FULL_NAMES,
+  optionCount: 4,
+  duration: 5*60,
+  promptLabel: "which element does this clue describe?",
+  finalRollLabel: 'Full roll — the 10 elements in this round',
+  rulesHTML: `
+    &middot; A clue about one element appears — 10 questions per round<br>
+    &middot; Pick the matching element from 4 options<br>
+    &middot; No skipping: keep picking until you find the right one, but only first-try answers score<br>
+    &middot; The round ends when you finish all 10 or time runs out
   `
 });
 

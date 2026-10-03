@@ -462,7 +462,7 @@
 
     <!-- ============ PERIODIC TABLE ============ -->
     <details class="section">
-      <summary class="section-summary"><span><span class="chevron">▸</span>Periodic Table ⚛️</span><span class="quiz-count">2 quizzes</span></summary>
+      <summary class="section-summary"><span><span class="chevron">▸</span>Periodic Table ⚛️</span><span class="quiz-count">3 quizzes</span></summary>
     <div class="card-grid">
       <div class="card">
         <div class="tag">Prompted quiz &middot; 118 items</div>
@@ -475,6 +475,12 @@
         <h3>Name the Elements</h3>
         <div class="meta" id="elements-meta"></div>
         <button class="btn-primary" onclick="showScreen('elements')">Play</button>
+      </div>
+      <div class="card">
+        <div class="tag">Multiple choice &middot; 10 questions</div>
+        <h3>Guess the Element</h3>
+        <div class="meta" id="elementguess-meta"></div>
+        <button class="btn-primary" onclick="showScreen('elementguess')">Play</button>
       </div>
     </div>
     </details>
@@ -570,7 +576,7 @@
    of ids. To add a new screen here, just add its id to this array —
    the actual game instance (in app-init.js) is what gives it content.
    ============================================================ */
-const SCREEN_IDS = ['countries', 'worldpopmine', 'flags', 'states', 'abbr', 'worldcap', 'statecap', 'popmine', 'statemap', 'findstate', 'findstate-hard', 'provinces', 'provincecap', 'provpopmine', 'mountaincont', 'rivermine', 'oceans', 'presidents', 'pms', 'monarchs', 'nba', 'mlb', 'nhl', 'nfl', 'periodic', 'elements', 'planets', 'moons', 'largestmoons'];
+const SCREEN_IDS = ['countries', 'worldpopmine', 'flags', 'states', 'abbr', 'worldcap', 'statecap', 'popmine', 'statemap', 'findstate', 'findstate-hard', 'provinces', 'provincecap', 'provpopmine', 'mountaincont', 'rivermine', 'oceans', 'presidents', 'pms', 'monarchs', 'nba', 'mlb', 'nhl', 'nfl', 'periodic', 'elements', 'elementguess', 'planets', 'moons', 'largestmoons'];
 
 const screenHost = document.getElementById('dynamic-screens');
 SCREEN_IDS.forEach(id => {
