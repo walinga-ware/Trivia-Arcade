@@ -421,6 +421,20 @@
               "hint": "Jack ___, late leader of Canada's New Democratic Party"
             }
           ]
+        },
+        {
+           "answer": "Eagle",
+           "aliases": [],
+           "clues": [
+             {
+                "category": "🪐",
+                "hint": "Distant nebula famous for a stunning Hubble photo titled \"Pillars of Creation\""
+             },
+             {
+               "category": "🇺🇸",
+               "hint": "Its bald variety is the national bird of the USA"
+             }
+           ]
         }
       ]
     }
