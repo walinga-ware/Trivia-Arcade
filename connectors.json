@@ -152,7 +152,9 @@
       "items": [
         {
           "answer": "Jaguar",
-          "aliases": [],
+          "aliases": [
+            "Jaguars"
+          ],
           "clues": [
             {
               "category": "🐆",
@@ -166,7 +168,9 @@
         },
         {
           "answer": "Colt",
-          "aliases": [],
+          "aliases": [
+            "Colts"
+          ],
           "clues": [
             {
               "category": "🐴",
@@ -174,17 +178,19 @@
             },
             {
               "category": "🏈",
-              "hint": "Indianapolis NFL player"
+              "hint": "Member of Indianapolis's NFL team"
             }
           ]
         },
         {
           "answer": "Falcon",
-          "aliases": [],
+          "aliases": [
+            "Falcons"
+          ],
           "clues": [
             {
               "category": "🦅",
-              "hint": "Bird of prey whose peregrine variety is the fastest animal on Earth"
+              "hint": "Bird of prey whose peregrine species is the fastest animal on Earth"
             },
             {
               "category": "🚀",
@@ -194,7 +200,9 @@
         },
         {
           "answer": "Sphinx",
-          "aliases": [],
+          "aliases": [
+            "Sphynx"
+          ],
           "clues": [
             {
               "category": "🏛️",
@@ -278,7 +286,9 @@
         },
         {
           "answer": "Trojan",
-          "aliases": [],
+          "aliases": [
+            "Trojans"
+          ],
           "clues": [
             {
               "category": "📖",
@@ -306,13 +316,15 @@
             },
             {
               "category": "📽️",
-              "hint": "Troy Bolton's basketball-captain best friend in High School Musical"
+              "hint": "Troy Bolton's best friend and fellow East High Wildcats basketball star in High School Musical"
             }
           ]
         },
         {
           "answer": "Titan",
-          "aliases": [],
+          "aliases": [
+            "Titans"
+          ],
           "clues": [
             {
               "category": "🪐",
@@ -354,7 +366,12 @@
         },
         {
           "answer": "Bullseye",
-          "aliases": [],
+          "aliases": [
+            "Bull's-eye",
+            "Bull's eye",
+            "Bulls-eye",
+            "Bulls eye"
+          ],
           "clues": [
             {
               "category": "💼",
@@ -390,7 +407,7 @@
             },
             {
               "category": "🚗",
-              "hint": "Detroit automaker behind the Mustang and F-150"
+              "hint": "Michigan automaker behind the Mustang and F-150"
             }
           ]
         },
@@ -414,7 +431,7 @@
           "clues": [
             {
               "category": "🎮",
-              "hint": "Top-hatted puzzle-solving professor of a Nintendo mystery game series"
+              "hint": "Top-hatted puzzle-solving professor of a Level-5 mystery game series on Nintendo handhelds"
             },
             {
               "category": "🍁",
@@ -423,18 +440,20 @@
           ]
         },
         {
-           "answer": "Eagle",
-           "aliases": [],
-           "clues": [
-             {
-                "category": "🪐",
-                "hint": "Distant nebula famous for a stunning Hubble photo titled \"Pillars of Creation\""
-             },
-             {
-               "category": "🏈",
-               "hint": "Philadelphia NFL player"
-             }
-           ]
+          "answer": "Eagle",
+          "aliases": [
+            "Eagles"
+          ],
+          "clues": [
+            {
+              "category": "🪐",
+              "hint": "Distant nebula famous for a stunning Hubble photo titled \"Pillars of Creation\""
+            },
+            {
+              "category": "🏈",
+              "hint": "Member of Philadelphia's NFL team"
+            }
+          ]
         }
       ]
     }
