@@ -780,3 +780,38 @@ const CANADA_CITY_DOTS = [
   { name:'Regina',       lon:-104.6189, lat:50.4452, target:true },
 ];
 const findCityQuiz = new FindCityQuiz({ id:'findcity', cities:CANADA_CITY_DOTS });
+
+// On the Map: World — 20 random countries per round. World-atlas names differ
+// from our canonical names for a handful of countries, so map those explicitly;
+// anything that still can't be matched is drawn but never quizzed.
+const WORLD_MAP_NAME_FIXES = {
+  'United States of America':'United States', 'Bosnia and Herz.':'Bosnia and Herzegovina',
+  'Central African Rep.':'Central African Republic', 'Dem. Rep. Congo':'Congo, Democratic Republic of the',
+  'Congo':'Congo, Republic of the', 'Dominican Rep.':'Dominican Republic', 'Eq. Guinea':'Equatorial Guinea',
+  'Czechia':'Czech Republic', 'Macedonia':'North Macedonia', 'eSwatini':'Eswatini', 'Solomon Is.':'Solomon Islands',
+  'S. Sudan':'South Sudan'
+};
+const worldMapQuiz = new StateMapQuiz({
+  id:'worldmap',
+  states:COUNTRIES,
+  lookup:COUNTRY_LOOKUP,
+  sampleSize:20,
+  cfg:{
+    noun:'country', nounPlural:'countries', regionLabel:'the world', allLabel:'The 20 countries in this round',
+    viewBox:'0 0 975 520', ringSmall:12,
+    sampleNote:'20 randomly chosen countries appear one at a time'
+  },
+  loader: async () => {
+    const world = await d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json');
+    const features = topojson.feature(world, world.objects.countries).features
+      .filter(f => f.properties.name !== 'Antarctica' && f.properties.name !== 'Fr. S. Antarctic Lands')
+      .map(f => {
+        const raw = f.properties.name;
+        const canonical = WORLD_MAP_NAME_FIXES[raw] || COUNTRY_LOOKUP[normalize(raw)] || raw;
+        return { ...f, properties:{ name: canonical } };
+      });
+    const projection = d3.geoNaturalEarth1()
+      .fitExtent([[5,5],[970,515]], { type:'FeatureCollection', features });
+    return { features, path: d3.geoPath(projection) };
+  }
+});

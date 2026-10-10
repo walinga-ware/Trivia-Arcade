@@ -234,6 +234,7 @@
   .state-map .state.wrong{ fill:var(--rust); }
   .state-map.clickable:not(.answered) .state{ cursor:pointer; }
   .state-map.clickable:not(.answered) .state:hover{ fill:rgba(201,154,82,0.4); }
+  .state-map .target-ring{ fill:none; stroke:var(--brass); stroke-width:2px; pointer-events:none; }
   .map-question{ text-align:center; margin:10px 0 16px; }
   .map-question .label{ font-size:11px; color:var(--paper-dim); text-transform:uppercase; letter-spacing:.5px; margin-bottom:6px; }
   .map-question h3{ font-family:'IBM Plex Sans', sans-serif; font-size:clamp(24px,5vw,34px); margin:0; color:var(--paper); }
@@ -276,7 +277,7 @@
 
     <!-- ============ WORLD ============ -->
     <details class="section">
-      <summary class="section-summary"><span><span class="chevron">▸</span>World 🌎</span><span class="quiz-count">4 quizzes</span></summary>
+      <summary class="section-summary"><span><span class="chevron">▸</span>World 🌎</span><span class="quiz-count">5 quizzes</span></summary>
     <div class="card-grid">
       <div class="card">
         <div class="tag">Free recall &middot; 193 items</div>
@@ -301,6 +302,12 @@
         <h3>Countries by Population</h3>
         <div class="meta">one wrong guess ends it</div>
         <button class="btn-primary" onclick="showScreen('worldpopmine')">Play</button>
+      </div>
+      <div class="card">
+        <div class="tag">Map quiz &middot; 20 random items</div>
+        <h3>On the Map: World</h3>
+        <div class="meta">name 20 random countries from their shapes</div>
+        <button class="btn-primary" onclick="showScreen('worldmap')">Play</button>
       </div>
     </div>
     </details>
@@ -609,7 +616,7 @@
    of ids. To add a new screen here, just add its id to this array —
    the actual game instance (in app-init.js) is what gives it content.
    ============================================================ */
-const SCREEN_IDS = ['countries', 'worldpopmine', 'flags', 'states', 'abbr', 'worldcap', 'statecap', 'popmine', 'statemap', 'canadamap', 'findcity', 'findstate', 'findstate-hard', 'provinces', 'provincecap', 'provabbr', 'provpopmine', 'mountaincont', 'rivermine', 'oceans', 'presidents', 'pms', 'monarchs', 'nba', 'mlb', 'nhl', 'nfl', 'periodic', 'elements', 'elementguess', 'planets', 'moons', 'largestmoons'];
+const SCREEN_IDS = ['countries', 'worldpopmine', 'flags', 'states', 'abbr', 'worldcap', 'statecap', 'popmine', 'statemap', 'canadamap', 'worldmap', 'findcity', 'findstate', 'findstate-hard', 'provinces', 'provincecap', 'provabbr', 'provpopmine', 'mountaincont', 'rivermine', 'oceans', 'presidents', 'pms', 'monarchs', 'nba', 'mlb', 'nhl', 'nfl', 'periodic', 'elements', 'elementguess', 'planets', 'moons', 'largestmoons'];
 
 const screenHost = document.getElementById('dynamic-screens');
 SCREEN_IDS.forEach(id => {
