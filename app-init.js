@@ -777,6 +777,6 @@ const CANADA_CITY_DOTS = [
   { name:'Kingston',     lon: -76.4860, lat:44.2312, target:true },
   { name:'Fredericton',  lon: -66.6431, lat:45.9636, target:true },
   { name:'Charlottetown',lon: -63.1311, lat:46.2382, target:true },
-  { name:"St. John's",   lon: -52.7126, lat:47.5615, target:true },
+  { name:'Regina',       lon:-104.6189, lat:50.4452, target:true },
 ];
 const findCityQuiz = new FindCityQuiz({ id:'findcity', cities:CANADA_CITY_DOTS });
