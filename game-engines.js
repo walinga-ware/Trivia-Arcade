@@ -1119,15 +1119,17 @@ class MultipleChoiceQuiz{
    cartographic boundaries, rendered with d3.geoAlbersUsa.
    ============================================================ */
 
-function stateMapHTML(id){
+function stateMapHTML(id, cfg={}){
+  const N=cfg.count||50, noun=cfg.noun||'state', nounPl=cfg.nounPlural||'states', region=cfg.regionLabel||'the United States', allLabel=cfg.allLabel||'All 50 states', vb=cfg.viewBox||'0 0 975 610';
+  const Cap=noun.charAt(0).toUpperCase()+noun.slice(1);
   return `
     <div id="${id}-intro">
       <div class="plate" style="margin-bottom:18px;">
         <div class="label">rules</div>
         <div style="font-size:14px; line-height:1.7; color:var(--paper);">
-          &middot; 50 states appear one at a time in random order<br>
-          &middot; A single state is highlighted on the map — name it<br>
-          &middot; Type the full state name; common spelling variations are accepted<br>
+          &middot; ${N} ${nounPl} appear one at a time in random order<br>
+          &middot; A single ${noun} is highlighted on the map — name it<br>
+          &middot; Type the full ${noun} name; common spelling variations are accepted<br>
           &middot; No clock — take your time and see how many you can get
         </div>
       </div>
@@ -1137,28 +1139,28 @@ function stateMapHTML(id){
     <div class="game map-quiz" id="${id}-game" style="display:none;">
       <div class="top-row">
         <div class="plate"><div class="label">score</div><div class="value" id="${id}-scoreValue">0</div></div>
-        <div class="plate"><div class="label">progress</div><div class="value" id="${id}-progressValue">0 / 50</div></div>
+        <div class="plate"><div class="label">progress</div><div class="value" id="${id}-progressValue">0 / ${N}</div></div>
       </div>
       <div class="map-question">
-        <div class="label">which state is highlighted?</div>
-        <h3>Name this state</h3>
+        <div class="label">which ${noun} is highlighted?</div>
+        <h3>Name this ${noun}</h3>
       </div>
       <div class="state-map-wrap">
-        <svg class="state-map" id="${id}-map" viewBox="0 0 975 610" role="img" aria-label="Map of the United States with one highlighted state"></svg>
+        <svg class="state-map" id="${id}-map" viewBox="${vb}" role="img" aria-label="Map of ${region} with one highlighted ${noun}"></svg>
       </div>
       <div class="map-progress" id="${id}-progressText"></div>
       <div class="map-answer-row">
-        <input type="text" id="${id}-guess" placeholder="Type the state name…" autocomplete="off" spellcheck="false">
+        <input type="text" id="${id}-guess" placeholder="Type the ${noun} name…" autocomplete="off" spellcheck="false">
         <button class="btn-primary" id="${id}-submitBtn">Submit</button>
       </div>
       <div class="map-feedback" id="${id}-feedback"></div>
-      <div class="map-next-row"><button id="${id}-nextBtn" style="display:none;">Next state &rarr;</button></div>
+      <div class="map-next-row"><button id="${id}-nextBtn" style="display:none;">Next ${noun} &rarr;</button></div>
     </div>
 
     <div class="results" id="${id}-results" style="display:none;">
       <button id="${id}-resetBtn" class="play-again-top">Play again</button>
       <div class="final-score" id="${id}-finalScoreLine"></div>
-      <div class="section-title"><span>All 50 states</span><span>Your hits in green</span></div>
+      <div class="section-title"><span>${allLabel}</span><span>Your hits in green</span></div>
       <div id="${id}-finalGrid" class="final-grid"></div>
     </div>
   `;
@@ -1166,9 +1168,10 @@ function stateMapHTML(id){
 
 class StateMapQuiz{
   constructor(opts){
-    this.id=opts.id; this.states=opts.states;
+    this.id=opts.id; this.states=opts.states; this.cfg=opts.cfg||{}; this.N=this.states.length; this.noun=this.cfg.noun||'state'; this.nounPl=this.cfg.nounPlural||'states';
+    this.lookup=opts.lookup||null; this.loader=opts.loader||null;
     this.queue=[]; this.idx=0; this.score=0; this.answers=[]; this.answered=false; this.mapReady=false;
-    document.getElementById(`${this.id}-mount`).innerHTML=stateMapHTML(this.id);
+    document.getElementById(`${this.id}-mount`).innerHTML=stateMapHTML(this.id,{...this.cfg,count:this.states.length});
     this.el=key=>document.getElementById(`${this.id}-${key}`);
     this.el('startBtn').addEventListener('click',()=>this.start());
     this.el('submitBtn').addEventListener('click',()=>this.submit());
@@ -1180,10 +1183,13 @@ class StateMapQuiz{
 
   async loadMap(){
     try{
-      const us=await d3.json('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json');
-      const features=topojson.feature(us,us.objects.states).features;
-      const projection=d3.geoAlbersUsa().scale(1300).translate([487.5,305]);
-      const path=d3.geoPath(projection);
+      let features, path;
+      if(this.loader){ ({features,path}=await this.loader()); }
+      else{
+        const us=await d3.json('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json');
+        features=topojson.feature(us,us.objects.states).features;
+        path=d3.geoPath(d3.geoAlbersUsa().scale(1300).translate([487.5,305]));
+      }
       d3.select(this.el('map')).selectAll('path').data(features).join('path')
         .attr('class','state').attr('d',path).attr('data-name',d=>d.properties.name);
       this.mapReady=true;
@@ -1202,8 +1208,8 @@ class StateMapQuiz{
 
   showQuestion(){
     this.answered=false;
-    this.el('progressValue').textContent=`${this.idx} / 50`;
-    this.el('progressText').textContent=`State ${this.idx+1} of 50`;
+    this.el('progressValue').textContent=`${this.idx} / ${this.N}`;
+    this.el('progressText').textContent=`${this.noun.charAt(0).toUpperCase()+this.noun.slice(1)} ${this.idx+1} of ${this.N}`;
     this.el('guess').value=''; this.el('guess').disabled=false; this.el('submitBtn').style.display='inline-block'; this.el('nextBtn').style.display='none';
     this.el('feedback').textContent=''; this.el('feedback').className='map-feedback'; this.renderTarget(); this.el('guess').focus();
   }
@@ -1220,7 +1226,7 @@ class StateMapQuiz{
   submit(){
     if(this.answered) return;
     const raw=this.el('guess').value.trim(); if(!raw) return;
-    const target=this.queue[this.idx]; const isCorrect=normalize(raw)===normalize(target);
+    const target=this.queue[this.idx]; const isCorrect=(this.lookup?this.lookup[normalize(raw)]:normalize(raw))===(this.lookup?target:normalize(target));
     this.answered=true; if(isCorrect) this.score++; this.answers.push({state:target,yourAnswer:raw,isCorrect});
     this.el('scoreValue').textContent=this.score; this.el('guess').disabled=true; this.el('submitBtn').style.display='none';
     this.el('feedback').textContent=isCorrect ? `${target} — correct!` : `Not quite — the answer is ${target}.`;
@@ -1229,14 +1235,14 @@ class StateMapQuiz{
       .classed('target',false)
       .classed('correct',d=>this.answers.some(a=>a.state===d.properties.name && a.isCorrect))
       .classed('wrong',d=>d.properties.name===target && !isCorrect);
-    this.el('nextBtn').textContent=this.idx===49 ? 'See results →' : 'Next state →'; this.el('nextBtn').style.display='inline-block'; this.el('nextBtn').focus();
+    this.el('nextBtn').textContent=this.idx===this.N-1 ? 'See results →' : `Next ${this.noun} →`; this.el('nextBtn').style.display='inline-block'; this.el('nextBtn').focus();
   }
 
   next(){ if(!this.answered) return; this.idx++; if(this.idx>=this.queue.length){ this.end(); return; } this.showQuestion(); }
 
   end(){
     this.el('game').style.display='none'; this.el('results').style.display='block';
-    this.el('finalScoreLine').textContent=`You identified ${this.score} of 50 states (${Math.round(this.score/50*100)}%).`;
+    this.el('finalScoreLine').textContent=`You identified ${this.score} of ${this.N} ${this.nounPl} (${Math.round(this.score/this.N*100)}%).`;
     const byState=new Map(this.answers.map(a=>[a.state,a]));
     this.el('finalGrid').innerHTML=this.states.slice().sort((a,b)=>a.localeCompare(b)).map(state=>{
       const a=byState.get(state), hit=a?.isCorrect;
@@ -1308,7 +1314,8 @@ function findStateHTML(id, hardMode=false){
 
 class FindStateQuiz{
   constructor(opts){
-    this.id=opts.id; this.states=opts.states; this.hardMode=!!opts.hardMode;
+    this.id=opts.id; this.states=opts.states; this.cfg=opts.cfg||{}; this.N=this.states.length; this.noun=this.cfg.noun||'state'; this.nounPl=this.cfg.nounPlural||'states';
+    this.lookup=opts.lookup||null; this.loader=opts.loader||null; this.hardMode=!!opts.hardMode;
     this.queue=[]; this.idx=0; this.score=0; this.answers=[]; this.answered=false; this.mapReady=false;
     document.getElementById(`${this.id}-mount`).innerHTML=findStateHTML(this.id, this.hardMode);
     this.el=key=>document.getElementById(`${this.id}-${key}`);

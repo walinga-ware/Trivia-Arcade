@@ -739,5 +739,19 @@ const largestMoonsGame = new FreeRecallGame({
 const connectorsQuizInstances = initConnectorsShowcase(CONNECTORS_QUIZZES);
 
 const stateMapQuiz = new StateMapQuiz({ id:'statemap', states:STATES.map(([name])=>name) });
+const canadaMapQuiz = new StateMapQuiz({
+  id:'canadamap',
+  states:CANADA_PROVINCES,
+  lookup:CANADA_PROVINCE_LOOKUP,
+  cfg:{ noun:'province or territory', nounPlural:'provinces and territories', regionLabel:'Canada', allLabel:'All 13 provinces & territories', viewBox:'0 0 975 610' },
+  loader: async () => {
+    const geo = await d3.json('https://cdn.jsdelivr.net/gh/codeforgermany/click_that_hood@main/public/data/canada.geojson');
+    const fix = {'Yukon Territory':'Yukon'};
+    const features = geo.features.map(f => ({ ...f, properties:{ name: fix[f.properties.name] || f.properties.name } }));
+    const projection = d3.geoConicConformal().parallels([49,77]).rotate([96,0]).center([0,63])
+      .fitExtent([[10,10],[965,600]], { type:'FeatureCollection', features });
+    return { features, path: d3.geoPath(projection) };
+  }
+});
 const findStateQuiz = new FindStateQuiz({ id:'findstate', states:STATES.map(([name])=>name) });
 const findStateHardQuiz = new FindStateQuiz({ id:'findstate-hard', states:STATES.map(([name])=>name), hardMode:true });
