@@ -263,7 +263,7 @@ class FreeRecallGame{
     this.el('results').style.display = 'block';
 
     const pct = Math.round((this.guessed.size / this.items.length) * 100);
-    const bonusLine = this.bonusItems.length
+    const bonusLine = this.guessedBonus.size
       ? ` Plus ${this.guessedBonus.size} of ${this.bonusItems.length} bonus.`
       : '';
     this.el('finalScoreLine').textContent = `You named ${this.guessed.size} of ${this.items.length} (${pct}%).${bonusLine}`;
@@ -273,7 +273,7 @@ class FreeRecallGame{
       const hit = this.guessed.has(c);
       return `<div class="item ${hit ? 'hit' : 'miss'}"><span>${c}</span><span>${hit ? '✓' : '—'}</span></div>`;
     });
-    const bonusRows = this.bonusItems.map(c => {
+    const bonusRows = this.bonusItems.filter(c => this.guessedBonus.has(c)).map(c => {
       const hit = this.guessedBonus.has(c);
       const note = this.bonusNote ? ` <span style="color:var(--paper-dim);">— ${this.bonusNote}</span>` : '';
       return `<div class="item ${hit ? 'hit' : 'miss'}"><span>${c} <span style="color:var(--paper-dim);">(bonus)</span>${note}</span><span>${hit ? '✓' : '—'}</span></div>`;
