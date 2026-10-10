@@ -1127,7 +1127,7 @@ function stateMapHTML(id, cfg={}){
       <div class="plate" style="margin-bottom:18px;">
         <div class="label">rules</div>
         <div style="font-size:14px; line-height:1.7; color:var(--paper);">
-          &middot; ${N} ${nounPl} appear one at a time in random order<br>
+          &middot; ${cfg.sampleNote ? cfg.sampleNote : `${N} ${nounPl} appear one at a time in random order`}<br>
           &middot; A single ${noun} is highlighted on the map — name it<br>
           &middot; Type the full ${noun} name; common spelling variations are accepted<br>
           &middot; No clock — take your time and see how many you can get
@@ -1168,10 +1168,10 @@ function stateMapHTML(id, cfg={}){
 
 class StateMapQuiz{
   constructor(opts){
-    this.id=opts.id; this.states=opts.states; this.cfg=opts.cfg||{}; this.N=this.states.length; this.noun=this.cfg.noun||'state'; this.nounPl=this.cfg.nounPlural||'states';
-    this.lookup=opts.lookup||null; this.loader=opts.loader||null;
+    this.id=opts.id; this.states=opts.states; this.cfg=opts.cfg||{}; this.sampleSize=opts.sampleSize||null; this.roundStates=this.states; this.N=this.sampleSize||this.states.length; this.noun=this.cfg.noun||'state'; this.nounPl=this.cfg.nounPlural||'states';
+    this.lookup=opts.lookup||null; this.loader=opts.loader||null; this.mapNames=null; this.path=null;
     this.queue=[]; this.idx=0; this.score=0; this.answers=[]; this.answered=false; this.mapReady=false;
-    document.getElementById(`${this.id}-mount`).innerHTML=stateMapHTML(this.id,{...this.cfg,count:this.states.length});
+    document.getElementById(`${this.id}-mount`).innerHTML=stateMapHTML(this.id,{...this.cfg,count:this.N});
     this.el=key=>document.getElementById(`${this.id}-${key}`);
     this.el('startBtn').addEventListener('click',()=>this.start());
     this.el('submitBtn').addEventListener('click',()=>this.submit());
@@ -1190,6 +1190,7 @@ class StateMapQuiz{
         features=topojson.feature(us,us.objects.states).features;
         path=d3.geoPath(d3.geoAlbersUsa().scale(1300).translate([487.5,305]));
       }
+      this.path=path; this.mapNames=new Set(features.map(f=>f.properties.name));
       d3.select(this.el('map')).selectAll('path').data(features).join('path')
         .attr('class','state').attr('d',path).attr('data-name',d=>d.properties.name);
       this.mapReady=true;
@@ -1203,7 +1204,13 @@ class StateMapQuiz{
 
   start(){
     this.el('intro').style.display='none'; this.el('results').style.display='none'; this.el('game').style.display='block';
-    this.queue=shuffled(this.states); this.idx=0; this.score=0; this.answers=[]; this.el('scoreValue').textContent='0'; this.showQuestion();
+    if(this.sampleSize){
+      // Only countries actually drawn on the map are eligible, so every prompt has a visible target.
+      const pool=this.mapNames?this.states.filter(s=>this.mapNames.has(s)):this.states;
+      this.queue=shuffled(pool).slice(0,this.sampleSize);
+    } else this.queue=shuffled(this.states);
+    this.roundStates=this.queue.slice(); this.N=this.queue.length;
+    this.idx=0; this.score=0; this.answers=[]; this.el('scoreValue').textContent='0'; this.showQuestion();
   }
 
   showQuestion(){
@@ -1214,9 +1221,24 @@ class StateMapQuiz{
     this.el('feedback').textContent=''; this.el('feedback').className='map-feedback'; this.renderTarget(); this.el('guess').focus();
   }
 
+  clearRing(){ d3.select(this.el('map')).selectAll('.target-ring').remove(); }
+
+  // Tiny countries are only a few pixels wide on a world map, so circle the target.
+  drawRing(target){
+    this.clearRing();
+    if(!this.cfg.ringSmall) return;
+    const node=d3.select(this.el('map')).selectAll('.state').filter(d=>d.properties.name===target).datum();
+    if(!node) return;
+    const [[x0,y0],[x1,y1]]=this.path.bounds(node);
+    if(Math.max(x1-x0,y1-y0)>=this.cfg.ringSmall) return;
+    d3.select(this.el('map')).append('circle').attr('class','target-ring')
+      .attr('cx',(x0+x1)/2).attr('cy',(y0+y1)/2).attr('r',14);
+  }
+
   renderTarget(){
     if(!this.mapReady || !this.queue.length) return;
     const target=this.queue[this.idx];
+    this.drawRing(target);
     d3.select(this.el('map')).selectAll('.state')
       .classed('target',d=>d.properties.name===target)
       .classed('correct',d=>this.answers.some(a=>a.state===d.properties.name && a.isCorrect))
@@ -1227,7 +1249,7 @@ class StateMapQuiz{
     if(this.answered) return;
     const raw=this.el('guess').value.trim(); if(!raw) return;
     const target=this.queue[this.idx]; const isCorrect=(this.lookup?this.lookup[normalize(raw)]:normalize(raw))===(this.lookup?target:normalize(target));
-    this.answered=true; if(isCorrect) this.score++; this.answers.push({state:target,yourAnswer:raw,isCorrect});
+    this.answered=true; this.clearRing(); if(isCorrect) this.score++; this.answers.push({state:target,yourAnswer:raw,isCorrect});
     this.el('scoreValue').textContent=this.score; this.el('guess').disabled=true; this.el('submitBtn').style.display='none';
     this.el('feedback').textContent=isCorrect ? `${target} — correct!` : `Not quite — the answer is ${target}.`;
     this.el('feedback').className=`map-feedback ${isCorrect?'good':'bad'}`;
@@ -1244,7 +1266,7 @@ class StateMapQuiz{
     this.el('game').style.display='none'; this.el('results').style.display='block';
     this.el('finalScoreLine').textContent=`You identified ${this.score} of ${this.N} ${this.nounPl} (${Math.round(this.score/this.N*100)}%).`;
     const byState=new Map(this.answers.map(a=>[a.state,a]));
-    this.el('finalGrid').innerHTML=this.states.slice().sort((a,b)=>a.localeCompare(b)).map(state=>{
+    this.el('finalGrid').innerHTML=this.roundStates.slice().sort((a,b)=>a.localeCompare(b)).map(state=>{
       const a=byState.get(state), hit=a?.isCorrect;
       return `<div class="item ${hit?'hit':'miss'}"><span>${state}</span><span>${hit?'✓':'—'}</span></div>`;
     }).join('');
@@ -1252,7 +1274,7 @@ class StateMapQuiz{
 
   reset(){
     this.el('results').style.display='none'; this.el('intro').style.display='block'; this.el('game').style.display='none';
-    this.queue=[]; this.idx=0; this.score=0; this.answers=[];
+    this.queue=[]; this.idx=0; this.score=0; this.answers=[]; this.clearRing();
     if(this.mapReady) d3.select(this.el('map')).selectAll('.state').attr('class','state');
   }
 }
