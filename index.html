@@ -317,7 +317,7 @@
 
     <!-- ============ CANADA (GENERAL) ============ -->
     <details class="section">
-      <summary class="section-summary"><span><span class="chevron">▸</span>Canada (general) 🇨🇦</span><span class="quiz-count">4 quizzes</span></summary>
+      <summary class="section-summary"><span><span class="chevron">▸</span>Canada (general) 🇨🇦</span><span class="quiz-count">5 quizzes</span></summary>
     <div class="card-grid">
       <div class="card">
         <div class="tag">Free recall &middot; 13 items</div>
@@ -342,6 +342,12 @@
         <h3>Provinces by Population</h3>
         <div class="meta">one wrong guess ends it</div>
         <button class="btn-primary" onclick="showScreen('provpopmine')">Play</button>
+      </div>
+      <div class="card">
+        <div class="tag">Map quiz &middot; 13 items</div>
+        <h3>On the Map: Canada</h3>
+        <div class="meta">name each province or territory from its shape</div>
+        <button class="btn-primary" onclick="showScreen('canadamap')">Play</button>
       </div>
     </div>
     </details>
@@ -582,7 +588,7 @@
    of ids. To add a new screen here, just add its id to this array —
    the actual game instance (in app-init.js) is what gives it content.
    ============================================================ */
-const SCREEN_IDS = ['countries', 'worldpopmine', 'flags', 'states', 'abbr', 'worldcap', 'statecap', 'popmine', 'statemap', 'findstate', 'findstate-hard', 'provinces', 'provincecap', 'provabbr', 'provpopmine', 'mountaincont', 'rivermine', 'oceans', 'presidents', 'pms', 'monarchs', 'nba', 'mlb', 'nhl', 'nfl', 'periodic', 'elements', 'elementguess', 'planets', 'moons', 'largestmoons'];
+const SCREEN_IDS = ['countries', 'worldpopmine', 'flags', 'states', 'abbr', 'worldcap', 'statecap', 'popmine', 'statemap', 'canadamap', 'findstate', 'findstate-hard', 'provinces', 'provincecap', 'provabbr', 'provpopmine', 'mountaincont', 'rivermine', 'oceans', 'presidents', 'pms', 'monarchs', 'nba', 'mlb', 'nhl', 'nfl', 'periodic', 'elements', 'elementguess', 'planets', 'moons', 'largestmoons'];
 
 const screenHost = document.getElementById('dynamic-screens');
 SCREEN_IDS.forEach(id => {
