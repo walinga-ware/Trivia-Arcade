@@ -1439,7 +1439,6 @@ function findCityHTML(id, N){
         <div style="font-size:14px; line-height:1.7; color:var(--paper);">
           &middot; ${N} cities appear one at a time in random order<br>
           &middot; You're given a city's name — click its dot on the map<br>
-          &middot; Some dots are red herrings; only the dots can be clicked<br>
           &middot; Zoom with the + / − buttons (or Ctrl/Cmd + scroll, or pinch) and drag to pan<br>
           &middot; One click per city; the correct location is revealed either way<br>
           &middot; No clock — take your time and see how many you can get
