@@ -1390,6 +1390,15 @@ class FindStateQuiz{
       this.end();
       return;
     }
+    if(isCorrect){
+      // Correct guess: go straight to the next clue (no Continue button).
+      this.idx++;
+      if(this.idx>=this.queue.length){ this.end(); return; }
+      this.showQuestion();
+      this.el('feedback').textContent=`Correct — that's ${target}.`;
+      this.el('feedback').className='map-feedback good';
+      return;
+    }
     this.el('nextBtn').textContent=this.idx===49 ? 'See results →' : 'Next state →';
     this.el('nextBtn').style.display='inline-block'; this.el('nextBtn').focus();
   }
@@ -1587,6 +1596,15 @@ class FindCityQuiz{
       .classed('correct',d=>this.isFound(d.name))
       .classed('labeled',d=>d.name===target || d.name===city.name)
       .filter(d=>d.name===target || d.name===city.name).raise();
+    if(isCorrect){
+      // Correct guess: go straight to the next clue (no Continue button).
+      this.idx++;
+      if(this.idx>=this.queue.length){ this.end(); return; }
+      this.showQuestion();
+      this.el('feedback').textContent=`Correct — that's ${target}.`;
+      this.el('feedback').className='map-feedback good';
+      return;
+    }
     this.el('nextBtn').textContent=this.idx===this.N-1 ? 'See results →' : 'Next city →';
     this.el('nextBtn').style.display='inline-block'; this.el('nextBtn').focus();
   }
