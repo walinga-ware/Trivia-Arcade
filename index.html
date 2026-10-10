@@ -255,9 +255,10 @@
   .city-dot.target circle{ fill:var(--brass); stroke:var(--paper); stroke-width:2px; }
   .city-dot.wrong circle{ fill:var(--rust); }
   .find-city.answered .city-dot circle{ cursor:default; }
-  .map-zoom-wrap{ position:relative; }
-  .map-zoom-controls{ position:absolute; top:18px; right:18px; display:flex; flex-direction:column; gap:6px; }
-  .map-zoom-controls button{ width:34px; height:34px; padding:0; font-size:18px; line-height:1; background:var(--ink-2); display:flex; align-items:center; justify-content:center; }
+  /* Zoom buttons sit in a toolbar below the map so they never cover cities */
+  .map-zoom-wrap{ margin-bottom:8px; }
+  .map-zoom-controls{ display:flex; justify-content:center; gap:8px; margin:0 0 12px; }
+  .map-zoom-controls button{ width:44px; height:40px; padding:0; font-size:20px; line-height:1; background:var(--ink-2); display:flex; align-items:center; justify-content:center; }
   @media(max-width:600px){ .map-answer-row{ flex-direction:column; } .map-answer-row button{ width:100%; } .state-map-wrap{ padding:5px; } }
 </style>
 </head>

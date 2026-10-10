@@ -1448,7 +1448,7 @@ function findCityHTML(id, N){
         <div style="font-size:14px; line-height:1.7; color:var(--paper);">
           &middot; ${N} cities appear one at a time in random order<br>
           &middot; You're given a city's name — click its dot on the map<br>
-          &middot; Zoom with the + / − buttons (or Ctrl/Cmd + scroll, or pinch) and drag to pan<br>
+          &middot; Zoom with the + / − buttons below the map (or Ctrl/Cmd + scroll, or pinch) and drag to pan<br>
           &middot; One click per city; the correct location is revealed either way<br>
           &middot; No clock — take your time and see how many you can get
         </div>
@@ -1467,11 +1467,18 @@ function findCityHTML(id, N){
       </div>
       <div class="state-map-wrap map-zoom-wrap">
         <svg class="state-map find-city" id="${id}-map" viewBox="0 0 975 400" role="img" aria-label="Map of southern Canada — click the dot for the named city"></svg>
-        <div class="map-zoom-controls">
-          <button id="${id}-zoomIn" aria-label="Zoom in" title="Zoom in">+</button>
-          <button id="${id}-zoomOut" aria-label="Zoom out" title="Zoom out">&minus;</button>
-          <button id="${id}-zoomReset" aria-label="Reset zoom" title="Reset zoom">&#8634;</button>
-        </div>
+      </div>
+      <div class="map-zoom-controls">
+        <button id="${id}-zoomIn" aria-label="Zoom in" title="Zoom in">+</button>
+        <button id="${id}-zoomOut" aria-label="Zoom out" title="Zoom out">&minus;</button>
+        <button id="${id}-zoomReset" aria-label="Zoom all the way out" title="Zoom all the way out">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M15 3h6v6"/><path d="M21 3l-7 7"/>
+            <path d="M9 3H3v6"/><path d="M3 3l7 7"/>
+            <path d="M15 21h6v-6"/><path d="M21 21l-7-7"/>
+            <path d="M9 21H3v-6"/><path d="M3 21l7-7"/>
+          </svg>
+        </button>
       </div>
       <div class="map-progress" id="${id}-progressText"></div>
       <div class="map-feedback" id="${id}-feedback"></div>
