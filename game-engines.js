@@ -1423,6 +1423,258 @@ class FindStateQuiz{
 }
 
 /* ============================================================
+   FIND THE CITY QUIZ
+   Given a city's name, click where it is on a map of southern Canada.
+   Provinces: click_that_hood canada.geojson (same source as "On the Map:
+   Canada"). Faint US-state backdrop: us-atlas, for orientation only.
+
+   Scoring is distance-based, since a city is a point rather than a shape:
+   a click is a HIT when the named city is the nearest quiz city to the
+   click AND the click is within `radiusKm` of it. The "nearest" rule keeps
+   the close-together Greater Toronto Area cities (Toronto, Mississauga,
+   Brampton, Hamilton) fair to tell apart.
+
+   Those same GTA cities sit only 15-45 km apart, so the map is zoomable
+   (mouse wheel, pinch, +/- buttons; drag to pan).
+   ============================================================ */
+
+function findCityHTML(id, N, radiusKm){
+  return `
+    <div id="${id}-intro">
+      <div class="plate" style="margin-bottom:18px;">
+        <div class="label">rules</div>
+        <div style="font-size:14px; line-height:1.7; color:var(--paper);">
+          &middot; The ${N} largest Canadian cities by population appear one at a time in random order<br>
+          &middot; You're given a city's name — click where it is on the map<br>
+          &middot; Within ${radiusKm} km of the city (and closer to it than to any other city in the quiz) counts as a hit<br>
+          &middot; Zoom with the scroll wheel, pinch, or the + / − buttons, and drag to pan — some of these cities are close neighbours<br>
+          &middot; One click per city; the true location is revealed either way. No clock
+        </div>
+      </div>
+      <button class="btn-primary" id="${id}-startBtn">Begin</button>
+    </div>
+
+    <div class="game map-quiz" id="${id}-game" style="display:none;">
+      <div class="top-row">
+        <div class="plate"><div class="label">score</div><div class="value" id="${id}-scoreValue">0</div></div>
+        <div class="plate"><div class="label">progress</div><div class="value" id="${id}-progressValue">0 / ${N}</div></div>
+      </div>
+      <div class="map-question">
+        <div class="label">click this city on the map</div>
+        <h3 id="${id}-promptValue"></h3>
+      </div>
+      <div class="state-map-wrap">
+        <div class="city-map-box">
+          <svg class="city-map" id="${id}-map" viewBox="0 0 975 480" role="img" aria-label="Map of southern Canada — click where the named city is"></svg>
+          <div class="map-zoom">
+            <button id="${id}-zoomIn" aria-label="Zoom in" title="Zoom in">+</button>
+            <button id="${id}-zoomOut" aria-label="Zoom out" title="Zoom out">&minus;</button>
+            <button id="${id}-zoomReset" aria-label="Reset view" title="Reset view">&#8634;</button>
+          </div>
+        </div>
+      </div>
+      <div class="map-progress" id="${id}-progressText"></div>
+      <div class="map-feedback" id="${id}-feedback"></div>
+      <div class="map-next-row"><button id="${id}-nextBtn" style="display:none;">Next city &rarr;</button></div>
+    </div>
+
+    <div class="results" id="${id}-results" style="display:none;">
+      <button id="${id}-resetBtn" class="play-again-top">Play again</button>
+      <div class="final-score" id="${id}-finalScoreLine"></div>
+      <div class="section-title"><span>All ${N} cities, largest first</span><span>Your hits in green</span></div>
+      <div id="${id}-finalGrid" class="final-grid"></div>
+    </div>
+  `;
+}
+
+class FindCityQuiz{
+  constructor(opts){
+    this.id=opts.id;
+    this.cities=opts.cities.map(([name,lat,lon])=>({name,lat,lon}));   // ordered largest → smallest
+    this.N=this.cities.length;
+    this.radiusKm=opts.radiusKm||75;
+    this.W=975; this.H=480;
+    this.queue=[]; this.idx=0; this.score=0; this.answers=[]; this.answered=false; this.mapReady=false;
+    this.t=d3.zoomIdentity;
+    document.getElementById(`${this.id}-mount`).innerHTML=findCityHTML(this.id,this.N,this.radiusKm);
+    this.el=key=>document.getElementById(`${this.id}-${key}`);
+    this.el('startBtn').addEventListener('click',()=>this.start());
+    this.el('nextBtn').addEventListener('click',()=>this.next());
+    this.el('resetBtn').addEventListener('click',()=>this.reset());
+    document.addEventListener('keydown',e=>{ if(e.key==='Enter' && this.answered && this.el('game').style.display!=='none') this.next(); });
+    this.loadMap();
+  }
+
+  async loadMap(){
+    try{
+      const [geo,us]=await Promise.all([
+        d3.json('https://cdn.jsdelivr.net/gh/codeforgermany/click_that_hood@main/public/data/canada.geojson'),
+        d3.json('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json').catch(()=>null)   // backdrop is optional
+      ]);
+      // Frame the map around the quiz cities (all in the south), not the whole country incl. the Arctic.
+      const pts={type:'MultiPoint',coordinates:this.cities.map(c=>[c.lon,c.lat])};
+      this.projection=d3.geoConicConformal().parallels([49,60]).rotate([96,0]).center([0,55])
+        .fitExtent([[55,70],[this.W-55,this.H-70]],pts);
+      const path=this.path=d3.geoPath(this.projection);
+
+      const svg=this.svg=d3.select(this.el('map'));
+      this.layer=svg.append('g');                                  // everything inside here pans/zooms
+      if(us){
+        this.layer.append('g').selectAll('path').data(topojson.feature(us,us.objects.states).features).join('path')
+          .attr('class','neighbor').attr('d',path);
+      }
+      this.layer.append('g').selectAll('path').data(geo.features).join('path').attr('class','prov').attr('d',path);
+      this.gReach=this.layer.append('g');
+      this.gMarks=this.layer.append('g');
+
+      this.zoom=d3.zoom().scaleExtent([1,40]).clickDistance(4)
+        .extent([[0,0],[this.W,this.H]]).translateExtent([[0,0],[this.W,this.H]])
+        .on('zoom',e=>{ this.t=e.transform; this.layer.attr('transform',this.t); this.scaleMarks(); });
+      svg.call(this.zoom).on('dblclick.zoom',null);                // dblclick-zoom would fight with fast clicking
+      svg.on('click',e=>this.handleClick(e));
+      this.el('zoomIn').addEventListener('click',()=>svg.transition().duration(250).call(this.zoom.scaleBy,2));
+      this.el('zoomOut').addEventListener('click',()=>svg.transition().duration(250).call(this.zoom.scaleBy,0.5));
+      this.el('zoomReset').addEventListener('click',()=>svg.transition().duration(350).call(this.zoom.transform,d3.zoomIdentity));
+      this.mapReady=true;
+    }catch(err){
+      this.el('feedback').textContent='The map could not be loaded. Please refresh and try again.';
+      this.el('feedback').className='map-feedback bad';
+      console.error(err);
+    }
+  }
+
+  /* ---------- geometry helpers ---------- */
+  km(a,b){ return d3.geoDistance(a,b)*6371; }                       // [lon,lat] pairs → km
+  xy(c){ return this.projection([c.lon,c.lat]); }
+
+  /* ---------- markers (kept a constant on-screen size while zooming) ---------- */
+  addMarker(x,y,cls,r,label){
+    const g=this.gMarks.append('g').attr('class','marker').datum({x,y,label:!!label});
+    g.append('circle').attr('class',`pin ${cls}`).attr('r',r);
+    if(label) g.append('text').attr('class','pin-label').attr('y',4).text(label);
+    this.scaleMarks();
+    return g;
+  }
+  scaleMarks(){
+    if(!this.gMarks) return;
+    const k=this.t.k, t=this.t, W=this.W;
+    this.gMarks.selectAll('.marker').attr('transform',d=>`translate(${d.x},${d.y}) scale(${1/k})`);
+    // keep labels on-screen: flip to the left of the pin when it's near the right edge
+    this.gMarks.selectAll('.marker text').each(function(){
+      const d=d3.select(this.parentNode).datum(), flip=t.applyX(d.x)>W-140;
+      d3.select(this).attr('x',flip?-11:11).attr('text-anchor',flip?'end':'start');
+    });
+  }
+
+  /* ---------- game flow ---------- */
+  start(){
+    this.el('intro').style.display='none'; this.el('results').style.display='none'; this.el('game').style.display='block';
+    this.queue=shuffled(this.cities); this.idx=0; this.score=0; this.answers=[]; this.el('scoreValue').textContent='0';
+    if(this.mapReady){ this.svg.interrupt(); this.svg.call(this.zoom.transform,d3.zoomIdentity); }
+    this.showQuestion();
+  }
+
+  showQuestion(){
+    this.answered=false;
+    this.el('map').classList.remove('answered');
+    this.el('progressValue').textContent=`${this.idx} / ${this.N}`;
+    this.el('progressText').textContent=`City ${this.idx+1} of ${this.N}`;
+    this.el('promptValue').textContent=this.queue[this.idx].name;
+    this.el('feedback').textContent=''; this.el('feedback').className='map-feedback';
+    this.el('nextBtn').style.display='none';
+    this.renderMarks();
+  }
+
+  // Cities found so far stay on the map as small green dots; the current reveal is drawn on top by handleClick.
+  renderMarks(){
+    if(!this.mapReady) return;
+    this.gReach.selectAll('*').remove(); this.gMarks.selectAll('*').remove();
+    this.answers.filter(a=>a.isCorrect).forEach(a=>{
+      const [x,y]=this.xy(a.city);
+      this.addMarker(x,y,'done',4).append('title').text(a.city.name);
+    });
+  }
+
+  handleClick(event){
+    if(this.answered || !this.mapReady || !this.queue.length) return;
+    const [mx,my]=d3.pointer(event,this.layer.node());           // map coordinates, undoing the current pan/zoom
+    const ll=this.projection.invert([mx,my]); if(!ll) return;
+    const target=this.queue[this.idx];
+
+    let nearest=null, nearestKm=Infinity;
+    for(const c of this.cities){ const d=this.km(ll,[c.lon,c.lat]); if(d<nearestKm){ nearestKm=d; nearest=c; } }
+    const dist=this.km(ll,[target.lon,target.lat]);
+    const isCorrect=nearest===target && dist<=this.radiusKm;
+
+    this.answered=true; if(isCorrect) this.score++;
+    this.answers.push({city:target,isCorrect,distKm:Math.round(dist)});
+    this.el('scoreValue').textContent=this.score;
+    this.el('map').classList.add('answered');
+
+    const kmTxt=Math.round(dist).toLocaleString();
+    if(isCorrect){
+      this.el('feedback').textContent=`Correct — that's ${target.name}, and you were ${kmTxt} km off.`;
+    }else{
+      const other=(nearest!==target && nearestKm<=this.radiusKm) ? ` — that's closer to ${nearest.name}` : '';
+      this.el('feedback').textContent=`Not quite — your click was ${kmTxt} km from ${target.name}${other}. The true location is marked in gold.`;
+    }
+    this.el('feedback').className=`map-feedback ${isCorrect?'good':'bad'}`;
+
+    // reveal: tolerance ring, true location, and (on a miss) your click with a line to it
+    const [tx,ty]=this.xy(target);
+    this.gReach.append('path').attr('class',`reach${isCorrect?'':' miss'}`)
+      .attr('d',this.path(d3.geoCircle().center([target.lon,target.lat]).radius(this.radiusKm/6371*180/Math.PI).precision(2)()));
+    if(!isCorrect){
+      this.gReach.append('line').attr('class','link').attr('x1',mx).attr('y1',my).attr('x2',tx).attr('y2',ty);
+      this.addMarker(mx,my,'click',5);
+    }
+    this.addMarker(tx,ty,isCorrect?'hit':'truth',6.5,target.name);
+
+    // If you were zoomed in somewhere else, bring both points into view so the answer is never off-screen.
+    this.ensureVisible(isCorrect?[[tx,ty]]:[[tx,ty],[mx,my]]);
+
+    this.el('nextBtn').textContent=this.idx===this.N-1 ? 'See results →' : 'Next city →';
+    this.el('nextBtn').style.display='inline-block'; this.el('nextBtn').focus();
+  }
+
+  ensureVisible(points){
+    const {W,H,t}=this, m=40;
+    const inView=points.every(([x,y])=>{ const sx=t.applyX(x), sy=t.applyY(y); return sx>=m && sx<=W-m && sy>=m && sy<=H-m; });
+    if(inView) return;
+    const xs=points.map(p=>p[0]), ys=points.map(p=>p[1]);
+    const x0=Math.min(...xs), x1=Math.max(...xs), y0=Math.min(...ys), y1=Math.max(...ys);
+    const k=Math.max(1,Math.min(t.k,(W-2*m*2)/Math.max(x1-x0,1),(H-2*m*2)/Math.max(y1-y0,1)));  // fit both, never zoom IN further
+    const cx=(x0+x1)/2, cy=(y0+y1)/2;
+    const tx=Math.min(0,Math.max(W-W*k,W/2-k*cx)), ty=Math.min(0,Math.max(H-H*k,H/2-k*cy));
+    this.svg.transition().duration(600).call(this.zoom.transform,d3.zoomIdentity.translate(tx,ty).scale(k));
+  }
+
+  next(){
+    if(!this.answered) return;
+    this.idx++;
+    if(this.idx>=this.queue.length){ this.end(); return; }
+    this.showQuestion();
+  }
+
+  end(){
+    this.el('game').style.display='none'; this.el('results').style.display='block';
+    this.el('finalScoreLine').textContent=`You located ${this.score} of ${this.N} cities (${Math.round(this.score/this.N*100)}%).`;
+    const byCity=new Map(this.answers.map(a=>[a.city.name,a]));
+    this.el('finalGrid').innerHTML=this.cities.map(c=>{
+      const a=byCity.get(c.name), hit=a?.isCorrect;
+      const right=a ? `${hit?'✓ ':''}${a.distKm.toLocaleString()} km` : '—';
+      return `<div class="item ${hit?'hit':'miss'}"><span>${c.name}</span><span>${right}</span></div>`;
+    }).join('');
+  }
+
+  reset(){
+    this.el('results').style.display='none'; this.el('intro').style.display='block'; this.el('game').style.display='none';
+    this.queue=[]; this.idx=0; this.score=0; this.answers=[];
+    if(this.mapReady){ this.svg.interrupt(); this.svg.call(this.zoom.transform,d3.zoomIdentity); this.renderMarks(); }
+  }
+}
+
+/* ============================================================
    Build lookups & instantiate games
    ============================================================ */
 

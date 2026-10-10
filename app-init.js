@@ -12,6 +12,7 @@ const {
   CANADA_PROVINCE_CAPITALS,
   CANADA_PROVINCE_CODES,
   CANADA_POPULATION_RANKING,
+  CANADA_CITIES,
   CONTINENTS,
   CONTINENT_HIGHEST_MOUNTAINS,
   RIVER_RANKING,
@@ -753,5 +754,6 @@ const canadaMapQuiz = new StateMapQuiz({
     return { features, path: d3.geoPath(projection) };
   }
 });
+const findCityQuiz = new FindCityQuiz({ id:'findcity', cities:CANADA_CITIES, radiusKm:75 });
 const findStateQuiz = new FindStateQuiz({ id:'findstate', states:STATES.map(([name])=>name) });
 const findStateHardQuiz = new FindStateQuiz({ id:'findstate-hard', states:STATES.map(([name])=>name), hardMode:true });
