@@ -10,6 +10,7 @@ const {
   STATE_POPULATION_RANKING,
   CANADA_PROVINCES,
   CANADA_PROVINCE_CAPITALS,
+  CANADA_PROVINCE_CODES,
   CANADA_POPULATION_RANKING,
   CONTINENTS,
   CONTINENT_HIGHEST_MOUNTAINS,
@@ -254,6 +255,31 @@ const provinceCapitalsQuiz = new PromptQuiz({
     &middot; Use Skip if you're stuck; the round ends when time runs out
   `
 });
+// Older postal codes still accepted as correct answers (province -> [codes]).
+const PROVINCE_CODE_ALIASES = {
+  'Newfoundland and Labrador': ['NF'],
+  'Quebec': ['PQ']
+};
+
+const provinceCodesQuiz = new PromptQuiz({
+  id: 'provabbr',
+  pairs: CANADA_PROVINCE_CODES.map(([name, code]) => ({
+    prompt: name,
+    answer: code,
+    aliases: PROVINCE_CODE_ALIASES[name] || []
+  })),
+  duration: 4*60,
+  mode: 'short',
+  maxLength: 2,
+  promptLabel: "what's the postal code for",
+  finalRollLabel: 'Full roll — all 13 provinces and territories',
+  rulesHTML: `
+    &middot; Provinces and territories appear one at a time in random order — 13 total<br>
+    &middot; Type the two-letter postal code for each<br>
+    &middot; Use Skip if you're stuck; the round ends when time runs out
+  `
+});
+
 /* ============================================================
    SPORTS — PRO LEAGUE TEAM FREE RECALL QUIZZES
    ============================================================ */
