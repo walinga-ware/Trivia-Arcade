@@ -244,6 +244,20 @@
   .map-feedback.good{ color:var(--sage); }
   .map-feedback.bad{ color:var(--rust); }
   .map-next-row{ text-align:center; min-height:48px; }
+  .state-map.find-city{ overflow:hidden; touch-action:none; cursor:grab; }
+  .state-map.find-city:active{ cursor:grabbing; }
+  .state-map.find-city .state{ vector-effect:non-scaling-stroke; }
+  .city-dot circle{ fill:var(--paper); stroke:var(--ink); stroke-width:1.5px; cursor:pointer; transition:fill 120ms ease; }
+  .city-dot text{ display:none; font-family:'IBM Plex Sans', sans-serif; font-size:13px; font-weight:600; fill:var(--paper); stroke:var(--ink); stroke-width:3px; paint-order:stroke; pointer-events:none; }
+  .city-dot.labeled text{ display:block; }
+  .find-city:not(.answered) .city-dot:not(.correct):hover circle{ fill:var(--brass); }
+  .city-dot.correct circle{ fill:var(--sage); cursor:default; }
+  .city-dot.target circle{ fill:var(--brass); stroke:var(--paper); stroke-width:2px; }
+  .city-dot.wrong circle{ fill:var(--rust); }
+  .find-city.answered .city-dot circle{ cursor:default; }
+  .map-zoom-wrap{ position:relative; }
+  .map-zoom-controls{ position:absolute; top:18px; right:18px; display:flex; flex-direction:column; gap:6px; }
+  .map-zoom-controls button{ width:34px; height:34px; padding:0; font-size:18px; line-height:1; background:var(--ink-2); display:flex; align-items:center; justify-content:center; }
   @media(max-width:600px){ .map-answer-row{ flex-direction:column; } .map-answer-row button{ width:100%; } .state-map-wrap{ padding:5px; } }
 </style>
 </head>
@@ -317,7 +331,7 @@
 
     <!-- ============ CANADA (GENERAL) ============ -->
     <details class="section">
-      <summary class="section-summary"><span><span class="chevron">▸</span>Canada (general) 🇨🇦</span><span class="quiz-count">5 quizzes</span></summary>
+      <summary class="section-summary"><span><span class="chevron">▸</span>Canada (general) 🇨🇦</span><span class="quiz-count">6 quizzes</span></summary>
     <div class="card-grid">
       <div class="card">
         <div class="tag">Free recall &middot; 13 items</div>
@@ -348,6 +362,12 @@
         <h3>On the Map: Canada</h3>
         <div class="meta">name each province or territory from its shape</div>
         <button class="btn-primary" onclick="showScreen('canadamap')">Play</button>
+      </div>
+      <div class="card">
+        <div class="tag">Map quiz &middot; 10 items</div>
+        <h3>Find the Canadian City</h3>
+        <div class="meta">click the named city's dot on the map</div>
+        <button class="btn-primary" onclick="showScreen('findcity')">Play</button>
       </div>
     </div>
     </details>
@@ -588,7 +608,7 @@
    of ids. To add a new screen here, just add its id to this array —
    the actual game instance (in app-init.js) is what gives it content.
    ============================================================ */
-const SCREEN_IDS = ['countries', 'worldpopmine', 'flags', 'states', 'abbr', 'worldcap', 'statecap', 'popmine', 'statemap', 'canadamap', 'findstate', 'findstate-hard', 'provinces', 'provincecap', 'provabbr', 'provpopmine', 'mountaincont', 'rivermine', 'oceans', 'presidents', 'pms', 'monarchs', 'nba', 'mlb', 'nhl', 'nfl', 'periodic', 'elements', 'elementguess', 'planets', 'moons', 'largestmoons'];
+const SCREEN_IDS = ['countries', 'worldpopmine', 'flags', 'states', 'abbr', 'worldcap', 'statecap', 'popmine', 'statemap', 'canadamap', 'findcity', 'findstate', 'findstate-hard', 'provinces', 'provincecap', 'provabbr', 'provpopmine', 'mountaincont', 'rivermine', 'oceans', 'presidents', 'pms', 'monarchs', 'nba', 'mlb', 'nhl', 'nfl', 'periodic', 'elements', 'elementguess', 'planets', 'moons', 'largestmoons'];
 
 const screenHost = document.getElementById('dynamic-screens');
 SCREEN_IDS.forEach(id => {

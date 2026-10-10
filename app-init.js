@@ -755,3 +755,31 @@ const canadaMapQuiz = new StateMapQuiz({
 });
 const findStateQuiz = new FindStateQuiz({ id:'findstate', states:STATES.map(([name])=>name) });
 const findStateHardQuiz = new FindStateQuiz({ id:'findstate-hard', states:STATES.map(([name])=>name), hardMode:true });
+
+// Find the Canadian City — target:true cities are quizzed; target:false are red-herring dots.
+const CANADA_CITY_DOTS = [
+  { name:'Vancouver',   lon:-123.1207, lat:49.2827, target:true },
+  { name:'Edmonton',    lon:-113.4938, lat:53.5461, target:true },
+  { name:'Calgary',     lon:-114.0719, lat:51.0447, target:true },
+  { name:'Winnipeg',    lon: -97.1384, lat:49.8951, target:true },
+  { name:'Ottawa',      lon: -75.6972, lat:45.4215, target:true },
+  { name:'Toronto',     lon: -79.3832, lat:43.6532, target:true },
+  { name:'Hamilton',    lon: -79.8711, lat:43.2557, target:true },
+  { name:'Montreal',    lon: -73.5673, lat:45.5017, target:true },
+  { name:'Quebec City', lon: -71.2080, lat:46.8139, target:true },
+  { name:'Halifax',     lon: -63.5752, lat:44.6488, target:true },
+  // red herrings
+  { name:'Victoria',     lon:-123.3656, lat:48.4284, target:false },
+  { name:'Kelowna',      lon:-119.4960, lat:49.8880, target:false },
+  { name:'Saskatoon',    lon:-106.6702, lat:52.1332, target:false },
+  { name:'Regina',       lon:-104.6189, lat:50.4452, target:false },
+  { name:'Thunder Bay',  lon: -89.2477, lat:48.3809, target:false },
+  { name:'Sudbury',      lon: -80.9930, lat:46.4917, target:false },
+  { name:'London',       lon: -81.2453, lat:42.9849, target:false },
+  { name:'Kingston',     lon: -76.4860, lat:44.2312, target:false },
+  { name:'Sherbrooke',   lon: -71.8929, lat:45.4042, target:false },
+  { name:'Fredericton',  lon: -66.6431, lat:45.9636, target:false },
+  { name:'Charlottetown',lon: -63.1311, lat:46.2382, target:false },
+  { name:"St. John's",   lon: -52.7126, lat:47.5615, target:false },
+];
+const findCityQuiz = new FindCityQuiz({ id:'findcity', cities:CANADA_CITY_DOTS });

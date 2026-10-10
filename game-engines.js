@@ -1423,6 +1423,200 @@ class FindStateQuiz{
 }
 
 /* ============================================================
+   FIND THE CITY QUIZ
+   Given a city's name, click its dot on the map. Only the dots are
+   clickable (targets + red herrings); clicks anywhere else are ignored.
+   Uses the same Canada boundaries as the "On the Map: Canada" quiz,
+   with zoom/pan so closely-spaced cities (e.g. Toronto/Hamilton) are
+   easy to pick. Wheel-zoom needs Ctrl/Cmd so page scrolling still works.
+   ============================================================ */
+
+function findCityHTML(id, N){
+  return `
+    <div id="${id}-intro">
+      <div class="plate" style="margin-bottom:18px;">
+        <div class="label">rules</div>
+        <div style="font-size:14px; line-height:1.7; color:var(--paper);">
+          &middot; ${N} cities appear one at a time in random order<br>
+          &middot; You're given a city's name — click its dot on the map<br>
+          &middot; Some dots are red herrings; only the dots can be clicked<br>
+          &middot; Zoom with the + / − buttons (or Ctrl/Cmd + scroll, or pinch) and drag to pan<br>
+          &middot; One click per city; the correct location is revealed either way<br>
+          &middot; No clock — take your time and see how many you can get
+        </div>
+      </div>
+      <button class="btn-primary" id="${id}-startBtn">Begin</button>
+    </div>
+
+    <div class="game map-quiz" id="${id}-game" style="display:none;">
+      <div class="top-row">
+        <div class="plate"><div class="label">score</div><div class="value" id="${id}-scoreValue">0</div></div>
+        <div class="plate"><div class="label">progress</div><div class="value" id="${id}-progressValue">0 / ${N}</div></div>
+      </div>
+      <div class="map-question">
+        <div class="label">click this city on the map</div>
+        <h3 id="${id}-promptValue"></h3>
+      </div>
+      <div class="state-map-wrap map-zoom-wrap">
+        <svg class="state-map find-city" id="${id}-map" viewBox="0 0 975 400" role="img" aria-label="Map of southern Canada — click the dot for the named city"></svg>
+        <div class="map-zoom-controls">
+          <button id="${id}-zoomIn" aria-label="Zoom in" title="Zoom in">+</button>
+          <button id="${id}-zoomOut" aria-label="Zoom out" title="Zoom out">&minus;</button>
+          <button id="${id}-zoomReset" aria-label="Reset zoom" title="Reset zoom">&#8634;</button>
+        </div>
+      </div>
+      <div class="map-progress" id="${id}-progressText"></div>
+      <div class="map-feedback" id="${id}-feedback"></div>
+      <div class="map-next-row"><button id="${id}-nextBtn" style="display:none;">Next city &rarr;</button></div>
+    </div>
+
+    <div class="results" id="${id}-results" style="display:none;">
+      <button id="${id}-resetBtn" class="play-again-top">Play again</button>
+      <div class="final-score" id="${id}-finalScoreLine"></div>
+      <div class="section-title"><span>All ${N} cities</span><span>Your hits in green</span></div>
+      <div id="${id}-finalGrid" class="final-grid"></div>
+    </div>
+  `;
+}
+
+class FindCityQuiz{
+  // opts.cities: [{ name, lon, lat, target:true|false }, ...]  (target:false = red herring)
+  constructor(opts){
+    this.id=opts.id; this.cities=opts.cities.map(c=>({...c}));
+    this.targets=this.cities.filter(c=>c.target).map(c=>c.name); this.N=this.targets.length;
+    this.W=975; this.H=400; this.k=1;
+    this.queue=[]; this.idx=0; this.score=0; this.answers=[]; this.answered=false; this.mapReady=false;
+    document.getElementById(`${this.id}-mount`).innerHTML=findCityHTML(this.id, this.N);
+    this.el=key=>document.getElementById(`${this.id}-${key}`);
+    this.el('startBtn').addEventListener('click',()=>this.start());
+    this.el('nextBtn').addEventListener('click',()=>this.next());
+    this.el('resetBtn').addEventListener('click',()=>this.reset());
+    document.addEventListener('keydown',e=>{
+      const screen=document.getElementById(`screen-${this.id}`);
+      if(e.key==='Enter' && this.answered && screen && screen.classList.contains('active') && this.el('game').style.display!=='none') this.next();
+    });
+    this.loadMap();
+  }
+
+  async loadMap(){
+    try{
+      const geo=await d3.json('https://cdn.jsdelivr.net/gh/codeforgermany/click_that_hood@main/public/data/canada.geojson');
+      const pts={ type:'MultiPoint', coordinates:this.cities.map(c=>[c.lon,c.lat]) };
+      const projection=d3.geoConicConformal().parallels([49,62]).rotate([96,0])
+        .fitExtent([[35,30],[this.W-35,this.H-30]], pts);
+      const path=d3.geoPath(projection);
+      this.cities.forEach(c=>{ [c.x,c.y]=projection([c.lon,c.lat]); });
+
+      const svg=d3.select(this.el('map'));
+      const layer=svg.append('g');
+      layer.append('g').selectAll('path').data(geo.features).join('path').attr('class','state').attr('d',path);
+      this.dots=layer.append('g').selectAll('g').data(this.cities).join('g').attr('class','city-dot')
+        .attr('transform',d=>`translate(${d.x},${d.y})`)
+        .on('click',(event,d)=>this.handleClick(d));
+      this.dots.append('circle').attr('r',5);
+      this.dots.append('text').attr('x',d=>d.x>this.W-140?-9:9).attr('y',4)
+        .attr('text-anchor',d=>d.x>this.W-140?'end':'start').text(d=>d.name);
+
+      this.zoom=d3.zoom().scaleExtent([1,20])
+        .extent([[0,0],[this.W,this.H]]).translateExtent([[0,0],[this.W,this.H]])
+        .filter(e=>e.type==='wheel' ? (e.ctrlKey||e.metaKey) : !e.button)
+        .on('zoom',e=>{
+          this.k=e.transform.k; layer.attr('transform',e.transform);
+          // keep dots and labels a constant on-screen size while zooming
+          this.dots.attr('transform',d=>`translate(${d.x},${d.y}) scale(${1/this.k})`);
+        });
+      svg.call(this.zoom).on('dblclick.zoom',null);
+      this.el('zoomIn').addEventListener('click',()=>svg.transition().duration(200).call(this.zoom.scaleBy,1.8));
+      this.el('zoomOut').addEventListener('click',()=>svg.transition().duration(200).call(this.zoom.scaleBy,1/1.8));
+      this.el('zoomReset').addEventListener('click',()=>this.resetZoom(true));
+
+      this.mapReady=true;
+      if(this.queue.length) this.renderDots();
+    }catch(err){
+      this.el('feedback').textContent='The map could not be loaded. Please refresh and try again.';
+      this.el('feedback').className='map-feedback bad';
+      console.error(err);
+    }
+  }
+
+  resetZoom(animate){
+    if(!this.mapReady) return;
+    const svg=d3.select(this.el('map'));
+    (animate ? svg.transition().duration(250) : svg).call(this.zoom.transform,d3.zoomIdentity);
+  }
+
+  start(){
+    this.el('intro').style.display='none'; this.el('results').style.display='none'; this.el('game').style.display='block';
+    this.queue=shuffled(this.targets); this.idx=0; this.score=0; this.answers=[]; this.el('scoreValue').textContent='0';
+    this.resetZoom(false);
+    this.showQuestion();
+  }
+
+  isFound(name){ return this.answers.some(a=>a.isCorrect && a.city===name); }
+
+  showQuestion(){
+    this.answered=false;
+    this.el('map').classList.remove('answered');
+    this.el('progressValue').textContent=`${this.idx} / ${this.N}`;
+    this.el('progressText').textContent=`City ${this.idx+1} of ${this.N}`;
+    this.el('promptValue').textContent=this.queue[this.idx];
+    this.el('feedback').textContent=''; this.el('feedback').className='map-feedback';
+    this.el('nextBtn').style.display='none';
+    this.renderDots();
+  }
+
+  renderDots(){
+    if(!this.mapReady || !this.queue.length) return;
+    this.dots.classed('target',false).classed('wrong',false).classed('labeled',false)
+      .classed('correct',d=>this.isFound(d.name));
+  }
+
+  handleClick(city){
+    // Only dots are clickable. Ignore if already answered, or if this city was already found.
+    if(this.answered || !this.mapReady || !this.queue.length) return;
+    if(this.isFound(city.name)) return;
+    const target=this.queue[this.idx]; const isCorrect=city.name===target;
+    this.answered=true; if(isCorrect) this.score++;
+    this.answers.push({city:target,yourClick:city.name,isCorrect});
+    this.el('scoreValue').textContent=this.score;
+    this.el('map').classList.add('answered');
+    this.el('feedback').textContent=isCorrect ? `Correct — that's ${target}.` : `Not quite — you clicked ${city.name}. ${target} is highlighted on the map.`;
+    this.el('feedback').className=`map-feedback ${isCorrect?'good':'bad'}`;
+    this.dots
+      .classed('wrong',d=>!isCorrect && d.name===city.name)
+      .classed('target',d=>!isCorrect && d.name===target)
+      .classed('correct',d=>this.isFound(d.name))
+      .classed('labeled',d=>d.name===target || d.name===city.name)
+      .filter(d=>d.name===target || d.name===city.name).raise();
+    this.el('nextBtn').textContent=this.idx===this.N-1 ? 'See results →' : 'Next city →';
+    this.el('nextBtn').style.display='inline-block'; this.el('nextBtn').focus();
+  }
+
+  next(){
+    if(!this.answered) return;
+    this.idx++;
+    if(this.idx>=this.queue.length){ this.end(); return; }
+    this.showQuestion();
+  }
+
+  end(){
+    this.el('game').style.display='none'; this.el('results').style.display='block';
+    this.el('finalScoreLine').textContent=`You found ${this.score} of ${this.N} cities (${Math.round(this.score/this.N*100)}%).`;
+    const byCity=new Map(this.answers.map(a=>[a.city,a]));
+    this.el('finalGrid').innerHTML=this.targets.slice().sort((a,b)=>a.localeCompare(b)).map(name=>{
+      const hit=byCity.get(name)?.isCorrect;
+      return `<div class="item ${hit?'hit':'miss'}"><span>${name}</span><span>${hit?'✓':'—'}</span></div>`;
+    }).join('');
+  }
+
+  reset(){
+    this.el('results').style.display='none'; this.el('intro').style.display='block'; this.el('game').style.display='none';
+    this.queue=[]; this.idx=0; this.score=0; this.answers=[];
+    if(this.mapReady){ this.renderDots(); this.dots.classed('correct',false); this.resetZoom(false); }
+  }
+}
+
+/* ============================================================
    Build lookups & instantiate games
    ============================================================ */
 
