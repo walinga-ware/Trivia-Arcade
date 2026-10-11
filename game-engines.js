@@ -1137,6 +1137,7 @@ function stateMapHTML(id, cfg={}){
     </div>
 
     <div class="game map-quiz" id="${id}-game" style="display:none;">
+      <div class="map-fit" id="${id}-fit">
       <div class="top-row">
         <div class="plate"><div class="label">score</div><div class="value" id="${id}-scoreValue">0</div></div>
         <div class="plate"><div class="label">progress</div><div class="value" id="${id}-progressValue">0 / ${N}</div></div>
@@ -1155,6 +1156,7 @@ function stateMapHTML(id, cfg={}){
       </div>
       <div class="map-feedback" id="${id}-feedback"></div>
       <div class="map-next-row"><button id="${id}-nextBtn" style="display:none;">Next ${noun} &rarr;</button></div>
+      </div>
     </div>
 
     <div class="results" id="${id}-results" style="display:none;">
@@ -1178,7 +1180,30 @@ class StateMapQuiz{
     this.el('nextBtn').addEventListener('click',()=>this.next());
     this.el('resetBtn').addEventListener('click',()=>this.reset());
     this.el('guess').addEventListener('keydown',e=>{ if(e.key==='Enter') this.answered ? this.next() : this.submit(); });
+    this.setupFit();
     this.loadMap();
+  }
+
+  // Mobile: size the game area to the *visible* viewport (i.e. above the on-screen
+  // keyboard) so the whole map + input always fit with no extra scrolling or gap.
+  setupFit(){
+    this.fitMQ=window.matchMedia('(max-width:600px)');
+    let raf=0;
+    const run=()=>{ cancelAnimationFrame(raf); raf=requestAnimationFrame(()=>this.fit()); };
+    window.addEventListener('resize',run);
+    if(window.visualViewport){ visualViewport.addEventListener('resize',run); visualViewport.addEventListener('scroll',run); }
+    this.el('guess').addEventListener('focus',()=>{ run(); setTimeout(run,300); });
+  }
+
+  fit(){
+    const game=this.el('game'), box=this.el('fit');
+    if(!box) return;
+    if(!this.fitMQ.matches || game.style.display==='none'){ box.style.height=''; return; }
+    const vv=window.visualViewport, vh=vv?vv.height:window.innerHeight, off=vv?vv.offsetTop:0, pad=6;
+    box.style.height=Math.max(280,Math.floor(vh-pad*2))+'px';
+    // bring the top of the game area to the top of the visible area
+    const delta=box.getBoundingClientRect().top-off-pad;
+    if(Math.abs(delta)>1) window.scrollBy(0,delta);
   }
 
   async loadMap(){
@@ -1203,7 +1228,7 @@ class StateMapQuiz{
   }
 
   start(){
-    this.el('intro').style.display='none'; this.el('results').style.display='none'; this.el('game').style.display='block';
+    this.el('intro').style.display='none'; this.el('results').style.display='none'; this.el('game').style.display='block'; this.fit();
     if(this.sampleSize){
       // Only countries actually drawn on the map are eligible, so every prompt has a visible target.
       const pool=this.mapNames?this.states.filter(s=>this.mapNames.has(s)):this.states;
@@ -1218,7 +1243,7 @@ class StateMapQuiz{
     this.el('progressValue').textContent=`${this.idx} / ${this.N}`;
     this.el('progressText').textContent=`${this.noun.charAt(0).toUpperCase()+this.noun.slice(1)} ${this.idx+1} of ${this.N}`;
     this.el('guess').value=''; this.el('guess').disabled=false; this.el('submitBtn').style.display='inline-block'; this.el('nextBtn').style.display='none';
-    this.el('feedback').textContent=''; this.el('feedback').className='map-feedback'; this.renderTarget(); this.el('guess').focus();
+    this.el('feedback').textContent=''; this.el('feedback').className='map-feedback'; this.renderTarget(); this.fit(); this.el('guess').focus({preventScroll:true});
   }
 
   clearRing(){ d3.select(this.el('map')).selectAll('.target-ring').remove(); }
@@ -1263,7 +1288,7 @@ class StateMapQuiz{
   next(){ if(!this.answered) return; this.idx++; if(this.idx>=this.queue.length){ this.end(); return; } this.showQuestion(); }
 
   end(){
-    this.el('game').style.display='none'; this.el('results').style.display='block';
+    this.el('game').style.display='none'; this.el('results').style.display='block'; this.fit();
     this.el('finalScoreLine').textContent=`You identified ${this.score} of ${this.N} ${this.nounPl} (${Math.round(this.score/this.N*100)}%).`;
     const byState=new Map(this.answers.map(a=>[a.state,a]));
     this.el('finalGrid').innerHTML=this.roundStates.slice().sort((a,b)=>a.localeCompare(b)).map(state=>{
@@ -1273,7 +1298,7 @@ class StateMapQuiz{
   }
 
   reset(){
-    this.el('results').style.display='none'; this.el('intro').style.display='block'; this.el('game').style.display='none';
+    this.el('results').style.display='none'; this.el('intro').style.display='block'; this.el('game').style.display='none'; this.fit();
     this.queue=[]; this.idx=0; this.score=0; this.answers=[]; this.clearRing();
     if(this.mapReady) d3.select(this.el('map')).selectAll('.state').attr('class','state');
   }

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content">
 <title>Walinga Trivia Arcade</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22%3E%3Ctext%20y=%22.9em%22%20font-size=%2290%22%3E🎟️%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -261,6 +261,27 @@
   .map-zoom-controls{ display:flex; justify-content:center; gap:8px; margin:0 0 12px; }
   .map-zoom-controls button{ width:44px; height:40px; padding:0; font-size:20px; line-height:1; background:var(--ink-2); display:flex; align-items:center; justify-content:center; }
   @media(max-width:600px){ .map-answer-row{ flex-direction:column; } .map-answer-row button{ width:100%; } .state-map-wrap{ padding:5px; } }
+
+  /* ---- "On the Map" typing quizzes on phones: fit map + input in the visible area ---- */
+  @media(max-width:600px){
+    .map-fit{ display:flex; flex-direction:column; }
+    .map-fit .top-row{ flex-wrap:nowrap; gap:8px; margin-bottom:6px; flex:none; }
+    .map-fit .plate{ min-width:0; padding:6px 10px; display:flex; align-items:baseline; justify-content:space-between; gap:8px; }
+    .map-fit .plate .label{ margin:0; }
+    .map-fit .plate .value{ font-size:20px; }
+    .map-fit .map-question{ margin:2px 0 6px; flex:none; }
+    .map-fit .map-question .label{ margin-bottom:2px; }
+    .map-fit .map-question h3{ font-size:22px; }
+    .map-fit .state-map-wrap{ flex:1 1 0; min-height:0; margin:0 0 6px; padding:0; position:relative; }
+    .map-fit .state-map{ position:absolute; top:5px; left:5px; width:calc(100% - 10px); height:calc(100% - 10px); }
+    .map-fit .map-progress{ margin:0 0 6px; flex:none; }
+    .map-fit .map-answer-row{ flex-direction:row; width:100%; gap:8px; flex:none; }
+    .map-fit .map-answer-row input{ min-width:0; padding:10px 12px; }
+    .map-fit .map-answer-row button{ width:auto; padding:10px 16px; }
+    .map-fit .map-feedback{ min-height:20px; margin:6px 0 0; flex:none; }
+    .map-fit .map-next-row{ min-height:0; flex:none; }
+    .map-fit .map-next-row button{ margin-top:6px; }
+  }
 </style>
 </head>
 <body>
