@@ -502,7 +502,7 @@ const riverGame = new FreeRecallGame({
   finalTitle: 'Full ranking — the 15 longest rivers, by length',
   rulesHTML: `
     &middot; Name the world's 15 longest rivers (or river systems) — any order<br>
-    &middot; Common alternate names are accepted (e.g. Huang He, Chang Jiang)<br>
+    &middot; Common alternate names are accepted<br>
     &middot; When time expires, the full ranking is revealed with each river's continent and length
   `
 });
