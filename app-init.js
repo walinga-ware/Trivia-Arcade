@@ -15,6 +15,7 @@ const {
   CONTINENTS,
   CONTINENT_HIGHEST_MOUNTAINS,
   RIVER_RANKING,
+  RIVER_CONTINENTS,
   RIVER_ALIASES,
   OCEANS,
   OCEAN_ALIASES,
@@ -56,7 +57,9 @@ const {
 } = QUIZ_DATA;
 
 const RIVER_LOOKUP = {};
-RIVER_RANKING.forEach(([name]) => { RIVER_LOOKUP[normalize(name)] = name; });
+const RIVER_NAMES = RIVER_RANKING.map(([name]) => name);
+const RIVER_LENGTHS = Object.fromEntries(RIVER_RANKING);
+RIVER_NAMES.forEach(name => { RIVER_LOOKUP[normalize(name)] = name; });
 Object.keys(RIVER_ALIASES).forEach(k => { RIVER_LOOKUP[normalize(k)] = RIVER_ALIASES[k]; });
 const OCEAN_LOOKUP = {};
 OCEANS.forEach(name => { OCEAN_LOOKUP[normalize(name)] = name; });
@@ -488,20 +491,19 @@ const mountainsByContinentQuiz = new PromptQuiz({
   `
 });
 
-const riverMinefield = new MinefieldQuiz({
+const riverGame = new FreeRecallGame({
   id: 'rivermine',
-  items: RIVER_RANKING,
+  title: 'Name the Longest Rivers',
+  items: RIVER_NAMES,            // already sorted longest -> shortest
   lookup: RIVER_LOOKUP,
-  fmtPop: fmtLen,
-  itemNoun: 'river',
-  itemNounPlural: 'rivers',
-  startHint: 'longest',
-  metricLabel: 'length',
+  duration: 5*60,
+  preserveOrder: true,           // keep results sorted by length
+  itemDetail: name => `${RIVER_CONTINENTS[name]} &middot; ${fmtLen(RIVER_LENGTHS[name])}`,
+  finalTitle: 'Full ranking — the 15 longest rivers, by length',
   rulesHTML: `
-    &middot; Name the world's 15 longest rivers (or river systems) in order from longest to shortest<br>
-    &middot; One wrong guess — including a real river in the wrong order — ends the round immediately<br>
-    &middot; Each correct guess shows that river's length<br>
-    &middot; No clock here — just don't miss
+    &middot; Name the world's 15 longest rivers (or river systems) — any order<br>
+    &middot; Common alternate names are accepted<br>
+    &middot; When time expires, the full ranking is revealed with each river's continent and length
   `
 });
 

@@ -125,6 +125,10 @@ class FreeRecallGame{
     // `items` already comes in a meaningful order (e.g. atomic number)
     // that should be kept as-is instead of being re-sorted alphabetically.
     this.preserveOrder = !!opts.preserveOrder;
+    // Optional `itemDetail(name)` -> string shown on the right side of each
+    // row in the final results grid (e.g. a river's length and continent).
+    // When omitted, rows show just the hit/miss mark as before.
+    this.itemDetail = opts.itemDetail || null;
     // Optional bonus items: guessable extras that don't count toward the
     // main "X / N" total (e.g. Pluto in a "name the planets" game). Pass
     // `bonusItems` (canonical names) + `bonusLookup` (normalized-key ->
@@ -271,7 +275,8 @@ class FreeRecallGame{
     const sorted = this.preserveOrder ? this.items.slice() : [...this.items].sort((a,b)=>a.localeCompare(b));
     const mainRows = sorted.map(c => {
       const hit = this.guessed.has(c);
-      return `<div class="item ${hit ? 'hit' : 'miss'}"><span>${c}</span><span>${hit ? '✓' : '—'}</span></div>`;
+      const detail = this.itemDetail ? `${this.itemDetail(c)} ` : '';
+      return `<div class="item ${hit ? 'hit' : 'miss'}"><span>${c}</span><span>${detail}${hit ? '✓' : '—'}</span></div>`;
     });
     const bonusRows = this.bonusItems.filter(c => this.guessedBonus.has(c)).map(c => {
       const hit = this.guessedBonus.has(c);
