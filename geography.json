@@ -2490,6 +2490,23 @@
       3969
     ]
   ],
+  "RIVER_CONTINENTS": {
+    "Nile": "Africa",
+    "Amazon": "South America",
+    "Yangtze": "Asia",
+    "Mississippi": "North America",
+    "Yenisei": "Asia",
+    "Yellow River": "Asia",
+    "Ob": "Asia",
+    "Rio de la Plata–Paraná": "South America",
+    "Congo": "Africa",
+    "Amur": "Asia",
+    "Lena": "Asia",
+    "Mekong": "Asia",
+    "Mackenzie": "North America",
+    "Niger": "Africa",
+    "Brahmaputra": "Asia"
+  },
   "RIVER_ALIASES": {
     "nile": "Nile",
     "river nile": "Nile",
