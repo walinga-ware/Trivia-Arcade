@@ -817,3 +817,19 @@ const worldMapQuiz = new StateMapQuiz({
     return { features, path: d3.geoPath(projection) };
   }
 });
+
+// Find the Country — quizzes every country in COUNTRIES (the same 193 as "Countries of the World").
+// The 50m atlas uses a few different names from the 110m one; Somaliland and Northern Cyprus are
+// de-facto parts of Somalia / Cyprus for this quiz. Tuvalu has no shape in the atlas, so it gets a dot.
+const FIND_COUNTRY_NAME_FIXES = {
+  ...WORLD_MAP_NAME_FIXES,
+  'Marshall Is.':'Marshall Islands', 'St. Vin. and Gren.':'Saint Vincent and the Grenadines',
+  'Antigua and Barb.':'Antigua and Barbuda', 'Somaliland':'Somalia', 'N. Cyprus':'Cyprus'
+};
+const findCountryQuiz = new FindCountryQuiz({
+  id:'findcountry',
+  countries:COUNTRIES,
+  lookup:COUNTRY_LOOKUP,
+  nameFixes:FIND_COUNTRY_NAME_FIXES,
+  points:{ 'Tuvalu':[179.19,-8.52] }
+});
