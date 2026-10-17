@@ -590,10 +590,10 @@ const romanEmperorsGame = new PresidentsRecallGame({
   peopleLabel: 'emperors',
   finalTitle: 'Full roster — all 50 emperors, chronological from Augustus to Constantine',
   rulesHTML: `
-    &middot; Name the 50 Roman emperors from Augustus (27 BC) through Constantine the Great (AD 337), including co-emperors like Lucius Verus and Maximian<br>
+    &middot; Name the 50 Roman emperors from 27 BC through AD 337, including co-emperors<br>
     &middot; Very brief usurpers and child-Caesars are not included<br>
     &middot; Single names, full names, and common nicknames are accepted<br>
-    &middot; A shared name gives you credit for every emperor with that name (e.g. Gordian, Claudius, Severus)<br>
+    &middot; A shared name gives you credit for every emperor with that name<br>
     &middot; When time expires, the full roster is revealed in chronological order with years of reign
   `
 });
