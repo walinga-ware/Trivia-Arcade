@@ -1378,5 +1378,827 @@
     "king charles iii": [
       "Charles III"
     ]
+  },
+  "ROMAN_EMPEROR_TERMS": [
+    [
+      "Augustus",
+      "27 BC–AD 14"
+    ],
+    [
+      "Tiberius",
+      "14–37"
+    ],
+    [
+      "Caligula",
+      "37–41"
+    ],
+    [
+      "Claudius",
+      "41–54"
+    ],
+    [
+      "Nero",
+      "54–68"
+    ],
+    [
+      "Galba",
+      "68–69"
+    ],
+    [
+      "Otho",
+      "69"
+    ],
+    [
+      "Vitellius",
+      "69"
+    ],
+    [
+      "Vespasian",
+      "69–79"
+    ],
+    [
+      "Titus",
+      "79–81"
+    ],
+    [
+      "Domitian",
+      "81–96"
+    ],
+    [
+      "Nerva",
+      "96–98"
+    ],
+    [
+      "Trajan",
+      "98–117"
+    ],
+    [
+      "Hadrian",
+      "117–138"
+    ],
+    [
+      "Antoninus Pius",
+      "138–161"
+    ],
+    [
+      "Marcus Aurelius",
+      "161–180"
+    ],
+    [
+      "Lucius Verus",
+      "161–169"
+    ],
+    [
+      "Commodus",
+      "180–192"
+    ],
+    [
+      "Pertinax",
+      "193"
+    ],
+    [
+      "Didius Julianus",
+      "193"
+    ],
+    [
+      "Septimius Severus",
+      "193–211"
+    ],
+    [
+      "Caracalla",
+      "198–217"
+    ],
+    [
+      "Geta",
+      "209–211"
+    ],
+    [
+      "Macrinus",
+      "217–218"
+    ],
+    [
+      "Elagabalus",
+      "218–222"
+    ],
+    [
+      "Severus Alexander",
+      "222–235"
+    ],
+    [
+      "Maximinus Thrax",
+      "235–238"
+    ],
+    [
+      "Gordian I",
+      "238"
+    ],
+    [
+      "Gordian II",
+      "238"
+    ],
+    [
+      "Pupienus",
+      "238"
+    ],
+    [
+      "Balbinus",
+      "238"
+    ],
+    [
+      "Gordian III",
+      "238–244"
+    ],
+    [
+      "Philip the Arab",
+      "244–249"
+    ],
+    [
+      "Decius",
+      "249–251"
+    ],
+    [
+      "Trebonianus Gallus",
+      "251–253"
+    ],
+    [
+      "Aemilian",
+      "253"
+    ],
+    [
+      "Valerian",
+      "253–260"
+    ],
+    [
+      "Gallienus",
+      "253–268"
+    ],
+    [
+      "Claudius Gothicus",
+      "268–270"
+    ],
+    [
+      "Aurelian",
+      "270–275"
+    ],
+    [
+      "Tacitus",
+      "275–276"
+    ],
+    [
+      "Probus",
+      "276–282"
+    ],
+    [
+      "Carus",
+      "282–283"
+    ],
+    [
+      "Numerian",
+      "283–284"
+    ],
+    [
+      "Carinus",
+      "283–285"
+    ],
+    [
+      "Diocletian",
+      "284–305"
+    ],
+    [
+      "Maximian",
+      "286–305"
+    ],
+    [
+      "Constantius I",
+      "293–306"
+    ],
+    [
+      "Galerius",
+      "293–311"
+    ],
+    [
+      "Constantine the Great",
+      "306–337"
+    ]
+  ],
+  "ROMAN_EMPEROR_ALIASES": {
+    "augustus": [
+      "Augustus"
+    ],
+    "caesar augustus": [
+      "Augustus"
+    ],
+    "augustus caesar": [
+      "Augustus"
+    ],
+    "octavian": [
+      "Augustus"
+    ],
+    "octavianus": [
+      "Augustus"
+    ],
+    "gaius octavius": [
+      "Augustus"
+    ],
+    "gaius julius caesar octavianus": [
+      "Augustus"
+    ],
+    "tiberius": [
+      "Tiberius"
+    ],
+    "tiberius caesar": [
+      "Tiberius"
+    ],
+    "tiberius claudius nero": [
+      "Tiberius"
+    ],
+    "caligula": [
+      "Caligula"
+    ],
+    "gaius": [
+      "Caligula"
+    ],
+    "gaius caesar": [
+      "Caligula"
+    ],
+    "gaius caligula": [
+      "Caligula"
+    ],
+    "gaius julius caesar germanicus": [
+      "Caligula"
+    ],
+    "claudius": [
+      "Claudius",
+      "Claudius Gothicus"
+    ],
+    "claudius i": [
+      "Claudius"
+    ],
+    "claudius the first": [
+      "Claudius"
+    ],
+    "tiberius claudius": [
+      "Claudius"
+    ],
+    "tiberius claudius caesar": [
+      "Claudius"
+    ],
+    "tiberius claudius caesar augustus germanicus": [
+      "Claudius"
+    ],
+    "claudius ii": [
+      "Claudius Gothicus"
+    ],
+    "claudius the second": [
+      "Claudius Gothicus"
+    ],
+    "claudius gothicus": [
+      "Claudius Gothicus"
+    ],
+    "claudius goth": [
+      "Claudius Gothicus"
+    ],
+    "gothicus": [
+      "Claudius Gothicus"
+    ],
+    "nero": [
+      "Nero"
+    ],
+    "nero claudius caesar": [
+      "Nero"
+    ],
+    "lucius domitius ahenobarbus": [
+      "Nero"
+    ],
+    "galba": [
+      "Galba"
+    ],
+    "servius galba": [
+      "Galba"
+    ],
+    "servius sulpicius galba": [
+      "Galba"
+    ],
+    "otho": [
+      "Otho"
+    ],
+    "marcus otho": [
+      "Otho"
+    ],
+    "marcus salvius otho": [
+      "Otho"
+    ],
+    "salvius otho": [
+      "Otho"
+    ],
+    "vitellius": [
+      "Vitellius"
+    ],
+    "aulus vitellius": [
+      "Vitellius"
+    ],
+    "vespasian": [
+      "Vespasian"
+    ],
+    "titus flavius vespasianus": [
+      "Vespasian"
+    ],
+    "vespasianus": [
+      "Vespasian"
+    ],
+    "flavius vespasian": [
+      "Vespasian"
+    ],
+    "titus": [
+      "Titus"
+    ],
+    "titus flavius vespasianus titus": [
+      "Titus"
+    ],
+    "titus vespasianus": [
+      "Titus"
+    ],
+    "domitian": [
+      "Domitian"
+    ],
+    "titus flavius domitianus": [
+      "Domitian"
+    ],
+    "domitianus": [
+      "Domitian"
+    ],
+    "flavius domitian": [
+      "Domitian"
+    ],
+    "nerva": [
+      "Nerva"
+    ],
+    "marcus cocceius nerva": [
+      "Nerva"
+    ],
+    "cocceius nerva": [
+      "Nerva"
+    ],
+    "trajan": [
+      "Trajan"
+    ],
+    "marcus ulpius traianus": [
+      "Trajan"
+    ],
+    "traianus": [
+      "Trajan"
+    ],
+    "ulpius trajan": [
+      "Trajan"
+    ],
+    "hadrian": [
+      "Hadrian"
+    ],
+    "publius aelius hadrianus": [
+      "Hadrian"
+    ],
+    "hadrianus": [
+      "Hadrian"
+    ],
+    "aelius hadrian": [
+      "Hadrian"
+    ],
+    "antoninus pius": [
+      "Antoninus Pius"
+    ],
+    "antoninus": [
+      "Antoninus Pius"
+    ],
+    "pius": [
+      "Antoninus Pius"
+    ],
+    "titus aurelius antoninus": [
+      "Antoninus Pius"
+    ],
+    "marcus aurelius": [
+      "Marcus Aurelius"
+    ],
+    "aurelius": [
+      "Marcus Aurelius"
+    ],
+    "marcus aurelius antoninus": [
+      "Marcus Aurelius"
+    ],
+    "marcus annius verus": [
+      "Marcus Aurelius"
+    ],
+    "lucius verus": [
+      "Lucius Verus"
+    ],
+    "verus": [
+      "Lucius Verus"
+    ],
+    "lucius aurelius verus": [
+      "Lucius Verus"
+    ],
+    "commodus": [
+      "Commodus"
+    ],
+    "lucius aurelius commodus": [
+      "Commodus"
+    ],
+    "marcus aurelius commodus": [
+      "Commodus"
+    ],
+    "pertinax": [
+      "Pertinax"
+    ],
+    "publius helvius pertinax": [
+      "Pertinax"
+    ],
+    "helvius pertinax": [
+      "Pertinax"
+    ],
+    "didius julianus": [
+      "Didius Julianus"
+    ],
+    "julianus": [
+      "Didius Julianus"
+    ],
+    "didius": [
+      "Didius Julianus"
+    ],
+    "marcus didius julianus": [
+      "Didius Julianus"
+    ],
+    "didius severus julianus": [
+      "Didius Julianus"
+    ],
+    "septimius severus": [
+      "Septimius Severus"
+    ],
+    "septimius": [
+      "Septimius Severus"
+    ],
+    "lucius septimius severus": [
+      "Septimius Severus"
+    ],
+    "severus alexander": [
+      "Severus Alexander"
+    ],
+    "alexander severus": [
+      "Severus Alexander"
+    ],
+    "marcus aurelius severus alexander": [
+      "Severus Alexander"
+    ],
+    "severus": [
+      "Septimius Severus",
+      "Severus Alexander"
+    ],
+    "alexander": [
+      "Severus Alexander"
+    ],
+    "caracalla": [
+      "Caracalla"
+    ],
+    "antoninus caracalla": [
+      "Caracalla"
+    ],
+    "marcus aurelius antoninus caracalla": [
+      "Caracalla"
+    ],
+    "bassianus": [
+      "Caracalla"
+    ],
+    "caracallus": [
+      "Caracalla"
+    ],
+    "geta": [
+      "Geta"
+    ],
+    "publius septimius geta": [
+      "Geta"
+    ],
+    "septimius geta": [
+      "Geta"
+    ],
+    "macrinus": [
+      "Macrinus"
+    ],
+    "marcus opellius macrinus": [
+      "Macrinus"
+    ],
+    "opellius macrinus": [
+      "Macrinus"
+    ],
+    "elagabalus": [
+      "Elagabalus"
+    ],
+    "heliogabalus": [
+      "Elagabalus"
+    ],
+    "varius avitus bassianus": [
+      "Elagabalus"
+    ],
+    "elagabal": [
+      "Elagabalus"
+    ],
+    "maximinus thrax": [
+      "Maximinus Thrax"
+    ],
+    "maximinus": [
+      "Maximinus Thrax"
+    ],
+    "thrax": [
+      "Maximinus Thrax"
+    ],
+    "maximinus i": [
+      "Maximinus Thrax"
+    ],
+    "gaius julius verus maximinus": [
+      "Maximinus Thrax"
+    ],
+    "gordian i": [
+      "Gordian I"
+    ],
+    "gordian the first": [
+      "Gordian I"
+    ],
+    "gordian 1": [
+      "Gordian I"
+    ],
+    "gordianus i": [
+      "Gordian I"
+    ],
+    "gordian africanus": [
+      "Gordian I"
+    ],
+    "gordian the elder": [
+      "Gordian I"
+    ],
+    "gordian ii": [
+      "Gordian II"
+    ],
+    "gordian the second": [
+      "Gordian II"
+    ],
+    "gordian 2": [
+      "Gordian II"
+    ],
+    "gordianus ii": [
+      "Gordian II"
+    ],
+    "gordian the younger": [
+      "Gordian II"
+    ],
+    "gordian iii": [
+      "Gordian III"
+    ],
+    "gordian the third": [
+      "Gordian III"
+    ],
+    "gordian 3": [
+      "Gordian III"
+    ],
+    "gordianus iii": [
+      "Gordian III"
+    ],
+    "gordian pius": [
+      "Gordian III"
+    ],
+    "gordian": [
+      "Gordian I",
+      "Gordian II",
+      "Gordian III"
+    ],
+    "gordianus": [
+      "Gordian I",
+      "Gordian II",
+      "Gordian III"
+    ],
+    "pupienus": [
+      "Pupienus"
+    ],
+    "pupienus maximus": [
+      "Pupienus"
+    ],
+    "marcus clodius pupienus maximus": [
+      "Pupienus"
+    ],
+    "maximus pupienus": [
+      "Pupienus"
+    ],
+    "balbinus": [
+      "Balbinus"
+    ],
+    "decimus caelius calvinus balbinus": [
+      "Balbinus"
+    ],
+    "caelius balbinus": [
+      "Balbinus"
+    ],
+    "decimus balbinus": [
+      "Balbinus"
+    ],
+    "philip the arab": [
+      "Philip the Arab"
+    ],
+    "philip": [
+      "Philip the Arab"
+    ],
+    "philip i": [
+      "Philip the Arab"
+    ],
+    "philippus arabs": [
+      "Philip the Arab"
+    ],
+    "philip arabian": [
+      "Philip the Arab"
+    ],
+    "marcus julius philippus": [
+      "Philip the Arab"
+    ],
+    "philippus": [
+      "Philip the Arab"
+    ],
+    "decius": [
+      "Decius"
+    ],
+    "trajan decius": [
+      "Decius"
+    ],
+    "gaius messius quintus decius": [
+      "Decius"
+    ],
+    "trajanus decius": [
+      "Decius"
+    ],
+    "trebonianus gallus": [
+      "Trebonianus Gallus"
+    ],
+    "gallus": [
+      "Trebonianus Gallus"
+    ],
+    "trebonianus": [
+      "Trebonianus Gallus"
+    ],
+    "gaius vibius trebonianus gallus": [
+      "Trebonianus Gallus"
+    ],
+    "aemilian": [
+      "Aemilian"
+    ],
+    "aemilianus": [
+      "Aemilian"
+    ],
+    "aemilius aemilianus": [
+      "Aemilian"
+    ],
+    "marcus aemilius aemilianus": [
+      "Aemilian"
+    ],
+    "valerian": [
+      "Valerian"
+    ],
+    "valerianus": [
+      "Valerian"
+    ],
+    "publius licinius valerianus": [
+      "Valerian"
+    ],
+    "valerian i": [
+      "Valerian"
+    ],
+    "gallienus": [
+      "Gallienus"
+    ],
+    "publius licinius egnatius gallienus": [
+      "Gallienus"
+    ],
+    "licinius gallienus": [
+      "Gallienus"
+    ],
+    "aurelian": [
+      "Aurelian"
+    ],
+    "aurelianus": [
+      "Aurelian"
+    ],
+    "lucius domitius aurelianus": [
+      "Aurelian"
+    ],
+    "domitius aurelianus": [
+      "Aurelian"
+    ],
+    "tacitus": [
+      "Tacitus"
+    ],
+    "marcus claudius tacitus": [
+      "Tacitus"
+    ],
+    "claudius tacitus": [
+      "Tacitus"
+    ],
+    "probus": [
+      "Probus"
+    ],
+    "marcus aurelius probus": [
+      "Probus"
+    ],
+    "aurelius probus": [
+      "Probus"
+    ],
+    "carus": [
+      "Carus"
+    ],
+    "marcus aurelius carus": [
+      "Carus"
+    ],
+    "aurelius carus": [
+      "Carus"
+    ],
+    "numerian": [
+      "Numerian"
+    ],
+    "numerianus": [
+      "Numerian"
+    ],
+    "marcus aurelius numerius numerianus": [
+      "Numerian"
+    ],
+    "carinus": [
+      "Carinus"
+    ],
+    "marcus aurelius carinus": [
+      "Carinus"
+    ],
+    "diocletian": [
+      "Diocletian"
+    ],
+    "diocletianus": [
+      "Diocletian"
+    ],
+    "gaius aurelius valerius diocletianus": [
+      "Diocletian"
+    ],
+    "diocles": [
+      "Diocletian"
+    ],
+    "maximian": [
+      "Maximian"
+    ],
+    "maximianus": [
+      "Maximian"
+    ],
+    "marcus aurelius valerius maximianus": [
+      "Maximian"
+    ],
+    "maximian herculius": [
+      "Maximian"
+    ],
+    "herculius": [
+      "Maximian"
+    ],
+    "constantius i": [
+      "Constantius I"
+    ],
+    "constantius": [
+      "Constantius I"
+    ],
+    "constantius chlorus": [
+      "Constantius I"
+    ],
+    "chlorus": [
+      "Constantius I"
+    ],
+    "constantius the first": [
+      "Constantius I"
+    ],
+    "flavius valerius constantius": [
+      "Constantius I"
+    ],
+    "galerius": [
+      "Galerius"
+    ],
+    "gaius galerius valerius maximianus": [
+      "Galerius"
+    ],
+    "galerius maximianus": [
+      "Galerius"
+    ],
+    "constantine the great": [
+      "Constantine the Great"
+    ],
+    "constantine": [
+      "Constantine the Great"
+    ],
+    "constantine i": [
+      "Constantine the Great"
+    ],
+    "constantine the first": [
+      "Constantine the Great"
+    ],
+    "flavius valerius constantinus": [
+      "Constantine the Great"
+    ],
+    "great constantine": [
+      "Constantine the Great"
+    ]
   }
 }

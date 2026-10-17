@@ -25,6 +25,8 @@ const {
   PM_ALIASES,
   ENGLISH_MONARCH_TERMS,
   ENGLISH_MONARCH_ALIASES,
+  ROMAN_EMPEROR_TERMS,
+  ROMAN_EMPEROR_ALIASES,
   ALASKA_TRIVIA,
   NEW_YORK_TRIVIA,
   MINNESOTA_TRIVIA,
@@ -85,6 +87,17 @@ const ENGLISH_MONARCH_NAMES = [...new Set(ENGLISH_MONARCH_TERMS.map(t => t[0]))]
 const ENGLISH_MONARCH_LOOKUP = {};
 ENGLISH_MONARCH_NAMES.forEach(name => { ENGLISH_MONARCH_LOOKUP[normalize(name)] = [name]; });
 Object.keys(ENGLISH_MONARCH_ALIASES).forEach(k => { ENGLISH_MONARCH_LOOKUP[normalize(k)] = ENGLISH_MONARCH_ALIASES[k]; });
+
+/* ============================================================
+   Data: Roman emperors from Augustus through Constantine the Great
+   (27 BC–AD 337), in chronological order. Includes the main line of
+   emperors and co-emperors (e.g. Lucius Verus, Maximian, Galerius);
+   very brief usurpers and child-Caesars are not included.
+   ============================================================ */
+const ROMAN_EMPEROR_NAMES = [...new Set(ROMAN_EMPEROR_TERMS.map(t => t[0]))];
+const ROMAN_EMPEROR_LOOKUP = {};
+ROMAN_EMPEROR_NAMES.forEach(name => { ROMAN_EMPEROR_LOOKUP[normalize(name)] = [name]; });
+Object.keys(ROMAN_EMPEROR_ALIASES).forEach(k => { ROMAN_EMPEROR_LOOKUP[normalize(k)] = ROMAN_EMPEROR_ALIASES[k]; });
 
 /* ============================================================
    FREE-RECALL GAME ENGINE — US PRESIDENTS VARIANT
@@ -565,6 +578,23 @@ const monarchsGame = new PresidentsRecallGame({
     &middot; Some monarchs appear twice because of their separate reigns<br>
     &middot; Full names, regnal numbers, and common historical nicknames are accepted<br>
     &middot; When time expires, the full roster is revealed in chronological order with years served
+  `
+});
+
+const romanEmperorsGame = new PresidentsRecallGame({
+  id: 'romanemperors',
+  title: 'Roman Emperors',
+  terms: ROMAN_EMPEROR_TERMS,
+  lookup: ROMAN_EMPEROR_LOOKUP,
+  duration: 10*60,
+  peopleLabel: 'emperors',
+  finalTitle: 'Full roster — all 50 emperors, chronological from Augustus to Constantine',
+  rulesHTML: `
+    &middot; Name the 50 Roman emperors from Augustus (27 BC) through Constantine the Great (AD 337), including co-emperors like Lucius Verus and Maximian<br>
+    &middot; Very brief usurpers and child-Caesars are not included<br>
+    &middot; Single names, full names, and common nicknames are accepted<br>
+    &middot; A shared name gives you credit for every emperor with that name (e.g. Gordian, Claudius, Severus)<br>
+    &middot; When time expires, the full roster is revealed in chronological order with years of reign
   `
 });
 
