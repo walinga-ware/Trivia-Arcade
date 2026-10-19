@@ -1378,5 +1378,228 @@
     "king charles iii": [
       "Charles III"
     ]
+  },
+  "ROMAN_EMPEROR_TERMS": [
+    [
+      "Augustus",
+      "27 BC–AD 14"
+    ],
+    [
+      "Tiberius",
+      "14–37"
+    ],
+    [
+      "Caligula",
+      "37–41"
+    ],
+    [
+      "Claudius",
+      "41–54"
+    ],
+    [
+      "Nero",
+      "54–68"
+    ],
+    [
+      "Galba",
+      "68–69"
+    ],
+    [
+      "Otho",
+      "69"
+    ],
+    [
+      "Vitellius",
+      "69"
+    ],
+    [
+      "Vespasian",
+      "69–79"
+    ],
+    [
+      "Titus",
+      "79–81"
+    ],
+    [
+      "Domitian",
+      "81–96"
+    ],
+    [
+      "Nerva",
+      "96–98"
+    ],
+    [
+      "Trajan",
+      "98–117"
+    ],
+    [
+      "Hadrian",
+      "117–138"
+    ],
+    [
+      "Antoninus Pius",
+      "138–161"
+    ],
+    [
+      "Marcus Aurelius",
+      "161–180"
+    ],
+    [
+      "Lucius Verus",
+      "161–169"
+    ],
+    [
+      "Commodus",
+      "180–192"
+    ],
+    [
+      "Pertinax",
+      "193"
+    ],
+    [
+      "Didius Julianus",
+      "193"
+    ],
+    [
+      "Septimius Severus",
+      "193–211"
+    ],
+    [
+      "Caracalla",
+      "198–217"
+    ],
+    [
+      "Geta",
+      "209–211"
+    ],
+    [
+      "Macrinus",
+      "217–218"
+    ],
+    [
+      "Elagabalus",
+      "218–222"
+    ],
+    [
+      "Severus Alexander",
+      "222–235"
+    ],
+    [
+      "Maximinus Thrax",
+      "235–238"
+    ],
+    [
+      "Gordian I",
+      "238"
+    ],
+    [
+      "Gordian II",
+      "238"
+    ],
+    [
+      "Pupienus",
+      "238"
+    ],
+    [
+      "Balbinus",
+      "238"
+    ],
+    [
+      "Gordian III",
+      "238–244"
+    ],
+    [
+      "Philip the Arab",
+      "244–249"
+    ],
+    [
+      "Decius",
+      "249–251"
+    ],
+    [
+      "Trebonianus Gallus",
+      "251–253"
+    ],
+    [
+      "Aemilian",
+      "253"
+    ],
+    [
+      "Valerian",
+      "253–260"
+    ],
+    [
+      "Gallienus",
+      "253–268"
+    ],
+    [
+      "Claudius Gothicus",
+      "268–270"
+    ],
+    [
+      "Aurelian",
+      "270–275"
+    ],
+    [
+      "Tacitus",
+      "275–276"
+    ],
+    [
+      "Probus",
+      "276–282"
+    ],
+    [
+      "Carus",
+      "282–283"
+    ],
+    [
+      "Numerian",
+      "283–284"
+    ],
+    [
+      "Carinus",
+      "283–285"
+    ],
+    [
+      "Diocletian",
+      "284–305"
+    ],
+    [
+      "Maximian",
+      "286–305"
+    ],
+    [
+      "Constantius I",
+      "293–306"
+    ],
+    [
+      "Galerius",
+      "293–311"
+    ],
+    [
+      "Constantine the Great",
+      "306–337"
+    ]
+  ],
+  "ROMAN_EMPEROR_CLUES": {
+    "Augustus": "Great-nephew and adopted heir of Julius Caesar who ended the civil wars and became Rome's first emperor in 27 BC",
+    "Tiberius": "Augustus's stepson and successor, who spent his last years ruling from the island of Capri",
+    "Caligula": "Nicknamed \"Little Boots\" as a child among the legions; assassinated by his own Praetorian Guard in AD 41",
+    "Claudius": "Scholarly, limping emperor found hiding by the Praetorians after Caligula's murder; ordered the conquest of Britain in AD 43",
+    "Nero": "Last emperor of the Julio-Claudian dynasty; blamed the Christians for the Great Fire of Rome in AD 64",
+    "Vespasian": "Won the Year of the Four Emperors, founded the Flavian dynasty, and began building the Colosseum",
+    "Titus": "Captured Jerusalem as a general, then as emperor oversaw the Colosseum's opening and the aftermath of Vesuvius's eruption in AD 79",
+    "Domitian": "Last of the Flavian emperors and younger brother of Titus; assassinated in AD 96 after an increasingly autocratic reign",
+    "Trajan": "First emperor born outside Italy (in Hispania); conquered Dacia and presided over the empire's greatest territorial extent",
+    "Hadrian": "Trajan's successor, a devoted admirer of Greek culture who ordered a great wall built across northern Britain",
+    "Antoninus Pius": "Presided over an unusually peaceful 23-year reign, and was adopted by Hadrian on condition that he adopt Marcus Aurelius",
+    "Marcus Aurelius": "Stoic \"philosopher-emperor\" who wrote the Meditations while campaigning on the Danube frontier",
+    "Commodus": "Son of Marcus Aurelius who fought as a gladiator in the arena and was murdered in AD 192, ending the era of the \"Five Good Emperors\"",
+    "Septimius Severus": "North African-born emperor who won the civil war of AD 193 and founded the Severan dynasty; died at York while campaigning in Britain",
+    "Caracalla": "Granted Roman citizenship to nearly all free inhabitants of the empire in AD 212 and murdered his co-emperor brother Geta",
+    "Elagabalus": "Teenage emperor from Syria, a priest of a sun god, whose scandalous reign ended in his murder at about age 18",
+    "Aurelian": "Reunited the empire by defeating Zenobia's Palmyrene Empire and the Gallic Empire, and built the walls that still ring Rome",
+    "Diocletian": "Created the Tetrarchy to share rule among four men, launched the Great Persecution of Christians, and retired voluntarily in AD 305",
+    "Constantine the Great": "Won the Battle of the Milvian Bridge in AD 312, favored Christianity, and refounded Byzantium as his new capital"
   }
 }

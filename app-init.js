@@ -25,6 +25,8 @@ const {
   PM_ALIASES,
   ENGLISH_MONARCH_TERMS,
   ENGLISH_MONARCH_ALIASES,
+  ROMAN_EMPEROR_TERMS,
+  ROMAN_EMPEROR_CLUES,
   ALASKA_TRIVIA,
   NEW_YORK_TRIVIA,
   MINNESOTA_TRIVIA,
@@ -85,6 +87,15 @@ const ENGLISH_MONARCH_NAMES = [...new Set(ENGLISH_MONARCH_TERMS.map(t => t[0]))]
 const ENGLISH_MONARCH_LOOKUP = {};
 ENGLISH_MONARCH_NAMES.forEach(name => { ENGLISH_MONARCH_LOOKUP[normalize(name)] = [name]; });
 Object.keys(ENGLISH_MONARCH_ALIASES).forEach(k => { ENGLISH_MONARCH_LOOKUP[normalize(k)] = ENGLISH_MONARCH_ALIASES[k]; });
+
+/* ============================================================
+   Data: Roman emperors from Augustus through Constantine the Great
+   (27 BC–AD 337), in chronological order. ROMAN_EMPEROR_NAMES is the
+   full roster of 50 and serves as the distractor pool for the multiple-
+   choice quiz; ROMAN_EMPEROR_CLUES holds a clue for each of the most
+   famous emperors (the quiz's question pool).
+   ============================================================ */
+const ROMAN_EMPEROR_NAMES = [...new Set(ROMAN_EMPEROR_TERMS.map(t => t[0]))];
 
 /* ============================================================
    FREE-RECALL GAME ENGINE — US PRESIDENTS VARIANT
@@ -565,6 +576,26 @@ const monarchsGame = new PresidentsRecallGame({
     &middot; Some monarchs appear twice because of their separate reigns<br>
     &middot; Full names, regnal numbers, and common historical nicknames are accepted<br>
     &middot; When time expires, the full roster is revealed in chronological order with years served
+  `
+});
+
+// Multiple-choice quiz: 10 random clues per round, drawn from the clues for the
+// most famous emperors. Distractors come from the full roster of 50 real
+// emperors, so every option is a genuine Roman emperor.
+const romanEmperorsGame = new MultipleChoiceQuiz({
+  id: 'romanemperors',
+  pairs: Object.entries(ROMAN_EMPEROR_CLUES).map(([name, clue]) => ({ prompt: clue, answer: name })),
+  questionCount: 10,
+  distractorPool: ROMAN_EMPEROR_NAMES,
+  optionCount: 4,
+  duration: 5*60,
+  promptLabel: "which Roman emperor does this clue describe?",
+  finalRollLabel: 'Full roll — the 10 emperors in this round',
+  rulesHTML: `
+    &middot; A clue about one Roman emperor appears — 10 questions per round, drawn from the most famous emperors<br>
+    &middot; Pick the matching emperor from 4 options — all four are real emperors between Augustus and Constantine<br>
+    &middot; No skipping: keep picking until you find the right one, but only first-try answers score<br>
+    &middot; The round ends when you finish all 10 or time runs out
   `
 });
 
