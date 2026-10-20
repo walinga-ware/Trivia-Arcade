@@ -1669,6 +1669,281 @@ class FindCityQuiz{
 }
 
 /* ============================================================
+   FIND THE COUNTRY QUIZ
+   Given a country's name, click it on a zoomable world map. Every country
+   passed in opts.countries is quizzed (the app passes the full COUNTRIES
+   list used by "Countries of the World"), so every country must be
+   clickable:
+     - Uses the 50m world-atlas boundaries, which have far more detail
+       than the 110m file used by "On the Map: World".
+     - Countries too small to hit comfortably at full zoom-out get a
+       dot marker (same look as the Canadian city dots). Clicking either
+       the shape or the dot counts as clicking that country.
+     - Countries with no shape in the atlas at all (opts.points, e.g. Tuvalu)
+       are dot-only.
+     - Territories / disputed areas that aren't in the country list are
+       drawn dimmed and ignore clicks, like clicking the ocean.
+   Zoom/pan works like Find the Canadian City: +/− buttons beneath the map,
+   drag to pan, pinch or Ctrl/Cmd+scroll to zoom.
+   ============================================================ */
+
+function zoomControlsHTML(id){
+  return `
+      <div class="map-zoom-controls">
+        <button id="${id}-zoomIn" aria-label="Zoom in" title="Zoom in">+</button>
+        <button id="${id}-zoomOut" aria-label="Zoom out" title="Zoom out">&minus;</button>
+        <button id="${id}-zoomReset" aria-label="Zoom all the way out" title="Zoom all the way out">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M15 3h6v6"/><path d="M21 3l-7 7"/>
+            <path d="M9 3H3v6"/><path d="M3 3l7 7"/>
+            <path d="M15 21h6v-6"/><path d="M21 21l-7-7"/>
+            <path d="M9 21H3v-6"/><path d="M3 21l7-7"/>
+          </svg>
+        </button>
+      </div>`;
+}
+
+function findCountryHTML(id, N){
+  return `
+    <div id="${id}-intro">
+      <div class="plate" style="margin-bottom:18px;">
+        <div class="label">rules</div>
+        <div style="font-size:14px; line-height:1.7; color:var(--paper);">
+          &middot; All ${N} countries appear one at a time in random order<br>
+          &middot; You're given a country's name — click it on the map<br>
+          &middot; Zoom with the + / − buttons below the map (or pinch / Ctrl+scroll) and drag to pan<br>
+          &middot; Very small countries are marked with a dot — click the dot<br>
+          &middot; One click per country; the correct location is revealed either way<br>
+          &middot; No clock — take your time and see how many you can get
+        </div>
+      </div>
+      <button class="btn-primary" id="${id}-startBtn">Begin</button>
+    </div>
+
+    <div class="game map-quiz" id="${id}-game" style="display:none;">
+      <div class="top-row">
+        <div class="plate"><div class="label">score</div><div class="value" id="${id}-scoreValue">0</div></div>
+        <div class="plate"><div class="label">progress</div><div class="value" id="${id}-progressValue">0 / ${N}</div></div>
+      </div>
+      <div class="map-question">
+        <div class="label">click this country on the map</div>
+        <h3 id="${id}-promptValue"></h3>
+      </div>
+      <div class="state-map-wrap map-zoom-wrap">
+        <svg class="state-map find-city clickable" id="${id}-map" viewBox="0 0 975 440" role="img" aria-label="World map — click the named country"></svg>
+      </div>${zoomControlsHTML(id)}
+      <div class="map-progress" id="${id}-progressText"></div>
+      <div class="map-feedback" id="${id}-feedback"></div>
+      <div class="map-next-row"><button id="${id}-nextBtn" style="display:none;">Next country &rarr;</button></div>
+    </div>
+
+    <div class="results" id="${id}-results" style="display:none;">
+      <button id="${id}-resetBtn" class="play-again-top">Play again</button>
+      <div class="final-score" id="${id}-finalScoreLine"></div>
+      <div class="section-title"><span>All ${N} countries</span><span>Your hits in green</span></div>
+      <div id="${id}-finalGrid" class="final-grid"></div>
+    </div>
+  `;
+}
+
+class FindCountryQuiz{
+  // opts.countries : canonical country names (all are quizzed)
+  // opts.lookup    : normalize(map name) -> canonical name (e.g. COUNTRY_LOOKUP)
+  // opts.nameFixes : exact atlas name -> canonical name, checked before lookup
+  // opts.points    : { canonicalName: [lon, lat] } for countries with no shape in the atlas
+  // opts.markerArea: countries whose projected area (px² at full zoom-out) is below this get a dot
+  constructor(opts){
+    this.id=opts.id; this.countries=opts.countries.slice(); this.lookup=opts.lookup||{}; this.nameFixes=opts.nameFixes||{};
+    this.points=opts.points||{}; this.markerArea=opts.markerArea||15;
+    this.N=this.countries.length; this.W=975; this.H=440; this.k=1;
+    this.queue=[]; this.idx=0; this.score=0; this.answers=[]; this.answered=false; this.mapReady=false;
+    document.getElementById(`${this.id}-mount`).innerHTML=findCountryHTML(this.id, this.N);
+    this.el=key=>document.getElementById(`${this.id}-${key}`);
+    this.el('startBtn').addEventListener('click',()=>this.start());
+    this.el('nextBtn').addEventListener('click',()=>this.next());
+    this.el('resetBtn').addEventListener('click',()=>this.reset());
+    document.addEventListener('keydown',e=>{
+      const screen=document.getElementById(`screen-${this.id}`);
+      if(e.key==='Enter' && this.answered && screen && screen.classList.contains('active') && this.el('game').style.display!=='none') this.next();
+    });
+    this.loadMap();
+  }
+
+  async loadMap(){
+    try{
+      const world=await d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json');
+      const known=new Set(this.countries);
+      const features=topojson.feature(world,world.objects.countries).features
+        .filter(f=>f.properties.name!=='Antarctica' && f.properties.name!=='Fr. S. Antarctic Lands')
+        .map(f=>{
+          const raw=f.properties.name;
+          const canonical=this.nameFixes[raw] || this.lookup[normalize(raw)];
+          return { ...f, properties:{ name: known.has(canonical) ? canonical : null } };
+        });
+      const projection=d3.geoNaturalEarth1().fitExtent([[14,6],[this.W-14,this.H-6]],{ type:'FeatureCollection', features }); // side padding keeps edge dots (Tuvalu, Samoa…) fully inside
+      const path=d3.geoPath(projection);
+
+      // One anchor per country: centroid of its largest piece (so island nations
+      // like Kiribati or the Maldives aren't anchored in open water), or a
+      // supplied lon/lat when the atlas has no shape for it.
+      const byName=new Map();
+      features.forEach(f=>{ const n=f.properties.name; if(n){ if(!byName.has(n)) byName.set(n,[]); byName.get(n).push(f); } });
+      this.pts=this.countries.map(name=>{
+        let total=0, best=null, bestArea=-1;
+        (byName.get(name)||[]).forEach(f=>{
+          const polys=f.geometry.type==='MultiPolygon' ? f.geometry.coordinates.map(c=>({type:'Polygon',coordinates:c})) : [f.geometry];
+          polys.forEach(g=>{ const a=Math.abs(path.area(g)); total+=a; if(a>bestArea){ bestArea=a; best=g; } });
+        });
+        let xy=null;
+        if(best){ xy=path.centroid(best); if(!xy.every(Number.isFinite)){ const [[x0,y0],[x1,y1]]=path.bounds(best); xy=[(x0+x1)/2,(y0+y1)/2]; } }
+        else if(this.points[name]){ xy=projection(this.points[name]); }
+        if(!xy || !xy.every(Number.isFinite)){ console.warn('FindCountryQuiz: no map location for', name); return null; }
+        return { name, x:xy[0], y:xy[1], marker: !best || total<this.markerArea };
+      }).filter(Boolean);
+
+      const svg=d3.select(this.el('map'));
+      const layer=svg.append('g');
+      layer.append('g').selectAll('path').data(features.filter(f=>!f.properties.name)).join('path')
+        .attr('class','territory').attr('d',path);
+      this.shapes=layer.append('g').selectAll('path').data(features.filter(f=>f.properties.name)).join('path')
+        .attr('class','state').attr('d',path)
+        .on('click',(event,d)=>this.handleClick(d.properties.name));
+      // Dots/labels sit on top: markers are clickable, the rest only show a label after an answer.
+      this.dots=layer.append('g').selectAll('g').data(this.pts).join('g')
+        .attr('class',d=>`city-dot country-pt${d.marker?' marker':''}`)
+        .attr('transform',d=>`translate(${d.x},${d.y})`)
+        .on('click',(event,d)=>this.handleClick(d.name));
+      this.dots.append('circle').attr('r',5);
+      this.dots.append('text').attr('y',-11)
+        .attr('text-anchor',d=>{ const half=d.name.length*3.8+4; return d.x<half?'start':(d.x>this.W-half?'end':'middle'); })
+        .text(d=>d.name);
+
+      this.zoom=d3.zoom().scaleExtent([1,30])
+        .extent([[0,0],[this.W,this.H]]).translateExtent([[0,0],[this.W,this.H]])
+        .filter(e=>e.type==='wheel' ? (e.ctrlKey||e.metaKey) : !e.button)
+        .on('zoom',e=>{
+          this.k=e.transform.k; layer.attr('transform',e.transform);
+          // keep dots and labels a constant on-screen size while zooming
+          this.dots.attr('transform',d=>`translate(${d.x},${d.y}) scale(${1/this.k})`);
+        });
+      svg.call(this.zoom).on('dblclick.zoom',null);
+      this.el('zoomIn').addEventListener('click',()=>svg.transition().duration(200).call(this.zoom.scaleBy,1.8));
+      this.el('zoomOut').addEventListener('click',()=>svg.transition().duration(200).call(this.zoom.scaleBy,1/1.8));
+      this.el('zoomReset').addEventListener('click',()=>this.resetZoom(true));
+
+      this.mapReady=true;
+      if(this.queue.length) this.renderMap();
+    }catch(err){
+      this.el('feedback').textContent='The map could not be loaded. Please refresh and try again.';
+      this.el('feedback').className='map-feedback bad';
+      console.error(err);
+    }
+  }
+
+  resetZoom(animate){
+    if(!this.mapReady) return;
+    const svg=d3.select(this.el('map'));
+    (animate ? svg.transition().duration(250) : svg).call(this.zoom.transform,d3.zoomIdentity);
+  }
+
+  // After a wrong answer the correct country gets highlighted; if the player is
+  // zoomed in somewhere else, zoom back out so they can actually see it.
+  ensureVisible(name){
+    const pt=this.pts.find(p=>p.name===name); if(!pt) return;
+    const [tx,ty]=d3.zoomTransform(this.el('map')).apply([pt.x,pt.y]);
+    if(tx<0||tx>this.W||ty<0||ty>this.H) this.resetZoom(true);
+  }
+
+  start(){
+    this.el('intro').style.display='none'; this.el('results').style.display='none'; this.el('game').style.display='block';
+    this.queue=shuffled(this.countries); this.idx=0; this.score=0; this.answers=[]; this.el('scoreValue').textContent='0';
+    this.resetZoom(false);
+    this.showQuestion();
+  }
+
+  isFound(name){ return this.answers.some(a=>a.isCorrect && a.country===name); }
+
+  showQuestion(){
+    this.answered=false;
+    this.el('map').classList.remove('answered');
+    this.el('progressValue').textContent=`${this.idx} / ${this.N}`;
+    this.el('progressText').textContent=`Country ${this.idx+1} of ${this.N}`;
+    this.el('promptValue').textContent=this.queue[this.idx];
+    this.el('feedback').textContent=''; this.el('feedback').className='map-feedback';
+    this.el('nextBtn').style.display='none';
+    this.renderMap();
+  }
+
+  renderMap(){
+    if(!this.mapReady || !this.queue.length) return;
+    this.shapes.classed('target',false).classed('wrong',false).classed('correct',d=>this.isFound(d.properties.name));
+    this.dots.classed('target',false).classed('wrong',false).classed('labeled',false).classed('correct',d=>this.isFound(d.name));
+  }
+
+  handleClick(name){
+    // Ignore if already answered, or if this country was already found.
+    if(this.answered || !this.mapReady || !this.queue.length) return;
+    if(this.isFound(name)) return;
+    const target=this.queue[this.idx]; const isCorrect=name===target;
+    this.answered=true; if(isCorrect) this.score++;
+    this.answers.push({country:target,yourClick:name,isCorrect});
+    this.el('scoreValue').textContent=this.score;
+    this.el('map').classList.add('answered');
+    this.el('feedback').textContent=isCorrect ? `Correct — that's ${target}.` : `Not quite — you clicked ${name}. ${target} is highlighted on the map.`;
+    this.el('feedback').className=`map-feedback ${isCorrect?'good':'bad'}`;
+    this.shapes
+      .classed('wrong',d=>!isCorrect && d.properties.name===name)
+      .classed('target',d=>!isCorrect && d.properties.name===target)
+      .classed('correct',d=>this.isFound(d.properties.name));
+    this.dots
+      .classed('wrong',d=>!isCorrect && d.name===name)
+      .classed('target',d=>!isCorrect && d.name===target)
+      .classed('correct',d=>this.isFound(d.name))
+      .classed('labeled',d=>!isCorrect && (d.name===target || d.name===name))
+      .filter(d=>d.name===target || d.name===name).raise();
+    if(isCorrect){
+      // Correct guess: go straight to the next clue (no Continue button).
+      this.idx++;
+      if(this.idx>=this.queue.length){ this.end(); return; }
+      this.showQuestion();
+      this.el('feedback').textContent=`Correct — that's ${target}.`;
+      this.el('feedback').className='map-feedback good';
+      return;
+    }
+    this.ensureVisible(target);
+    this.el('nextBtn').textContent=this.idx===this.N-1 ? 'See results →' : 'Next country →';
+    this.el('nextBtn').style.display='inline-block'; this.el('nextBtn').focus();
+  }
+
+  next(){
+    if(!this.answered) return;
+    this.idx++;
+    if(this.idx>=this.queue.length){ this.end(); return; }
+    this.showQuestion();
+  }
+
+  end(){
+    this.el('game').style.display='none'; this.el('results').style.display='block';
+    this.el('finalScoreLine').textContent=`You found ${this.score} of ${this.N} countries (${Math.round(this.score/this.N*100)}%).`;
+    const byCountry=new Map(this.answers.map(a=>[a.country,a]));
+    this.el('finalGrid').innerHTML=this.countries.slice().sort((a,b)=>a.localeCompare(b)).map(name=>{
+      const hit=byCountry.get(name)?.isCorrect;
+      return `<div class="item ${hit?'hit':'miss'}"><span>${name}</span><span>${hit?'✓':'—'}</span></div>`;
+    }).join('');
+  }
+
+  reset(){
+    this.el('results').style.display='none'; this.el('intro').style.display='block'; this.el('game').style.display='none';
+    this.queue=[]; this.idx=0; this.score=0; this.answers=[];
+    if(this.mapReady){
+      this.shapes.classed('target',false).classed('wrong',false).classed('correct',false);
+      this.dots.classed('target',false).classed('wrong',false).classed('labeled',false).classed('correct',false);
+      this.resetZoom(false);
+    }
+  }
+}
+
+/* ============================================================
    Build lookups & instantiate games
    ============================================================ */
 
