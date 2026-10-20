@@ -545,6 +545,7 @@ class PresidentsRecallGame{
     this.rulesHTML = opts.rulesHTML;
     this.finalTitle = opts.finalTitle;
     this.peopleLabel = opts.peopleLabel || 'presidents';
+    this.termLabel = opts.termLabel || 'terms';   // noun for the second count in the results line
 
     this.guessed = new Set();
     this.timeLeft = this.duration;
@@ -658,7 +659,7 @@ class PresidentsRecallGame{
 
     const hitTerms = this.terms.filter(([name]) => this.guessed.has(name)).length;
     const pct = Math.round((hitTerms / this.terms.length) * 100);
-    this.el('finalScoreLine').textContent = `You named ${this.guessed.size} of ${this.names.length} ${this.peopleLabel} — ${hitTerms} of ${this.terms.length} terms (${pct}%).`;
+    this.el('finalScoreLine').textContent = `You named ${this.guessed.size} of ${this.names.length} ${this.peopleLabel} — ${hitTerms} of ${this.terms.length} ${this.termLabel} (${pct}%).`;
 
     this.el('finalGrid').innerHTML = this.terms.map(([name, years]) => {
       const hit = this.guessed.has(name);

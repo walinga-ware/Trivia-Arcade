@@ -1601,5 +1601,246 @@
     "Aurelian": "Reunited the empire by defeating Zenobia's Palmyrene Empire and the Gallic Empire, and built the walls that still ring Rome",
     "Diocletian": "Formed the Tetrarchy to share rule among four men, launched the Great Persecution of Christians, and retired voluntarily in AD 305",
     "Constantine the Great": "Won the Battle of the Milvian Bridge in AD 312 and founded Constantinople as his new capital"
+  },
+  "CHINESE_DYNASTY_TERMS": [
+    [
+      "Xia",
+      "c. 2070–1600 BC"
+    ],
+    [
+      "Shang",
+      "c. 1600–1046 BC"
+    ],
+    [
+      "Zhou",
+      "1046–256 BC"
+    ],
+    [
+      "Qin",
+      "221–206 BC"
+    ],
+    [
+      "Han",
+      "206 BC–AD 220"
+    ],
+    [
+      "Three Kingdoms",
+      "220–280"
+    ],
+    [
+      "Jin",
+      "266–420"
+    ],
+    [
+      "Northern and Southern Dynasties",
+      "420–589"
+    ],
+    [
+      "Sui",
+      "581–618"
+    ],
+    [
+      "Tang",
+      "618–907"
+    ],
+    [
+      "Five Dynasties and Ten Kingdoms",
+      "907–960"
+    ],
+    [
+      "Song",
+      "960–1279"
+    ],
+    [
+      "Yuan",
+      "1271–1368"
+    ],
+    [
+      "Ming",
+      "1368–1644"
+    ],
+    [
+      "Qing",
+      "1644–1912"
+    ]
+  ],
+  "CHINESE_DYNASTY_ALIASES": {
+    "xia": [
+      "Xia"
+    ],
+    "hsia": [
+      "Xia"
+    ],
+    "xia dynasty": [
+      "Xia"
+    ],
+    "shang": [
+      "Shang"
+    ],
+    "shang dynasty": [
+      "Shang"
+    ],
+    "zhou": [
+      "Zhou"
+    ],
+    "chou": [
+      "Zhou"
+    ],
+    "eastern zhou": [
+      "Zhou"
+    ],
+    "western zhou": [
+      "Zhou"
+    ],
+    "zhou dynasty": [
+      "Zhou"
+    ],
+    "qin": [
+      "Qin"
+    ],
+    "qin dynasty": [
+      "Qin"
+    ],
+    "han": [
+      "Han"
+    ],
+    "eastern han": [
+      "Han"
+    ],
+    "former han": [
+      "Han"
+    ],
+    "han dynasty": [
+      "Han"
+    ],
+    "later han": [
+      "Han"
+    ],
+    "western han": [
+      "Han"
+    ],
+    "three kingdoms": [
+      "Three Kingdoms"
+    ],
+    "san guo": [
+      "Three Kingdoms"
+    ],
+    "sanguo": [
+      "Three Kingdoms"
+    ],
+    "three kingdoms period": [
+      "Three Kingdoms"
+    ],
+    "jin": [
+      "Jin"
+    ],
+    "eastern jin": [
+      "Jin"
+    ],
+    "jin dynasty": [
+      "Jin"
+    ],
+    "western jin": [
+      "Jin"
+    ],
+    "northern and southern dynasties": [
+      "Northern and Southern Dynasties"
+    ],
+    "nan bei chao": [
+      "Northern and Southern Dynasties"
+    ],
+    "nanbeichao": [
+      "Northern and Southern Dynasties"
+    ],
+    "northern & southern": [
+      "Northern and Southern Dynasties"
+    ],
+    "northern & southern dynasties": [
+      "Northern and Southern Dynasties"
+    ],
+    "northern and southern": [
+      "Northern and Southern Dynasties"
+    ],
+    "southern and northern": [
+      "Northern and Southern Dynasties"
+    ],
+    "southern and northern dynasties": [
+      "Northern and Southern Dynasties"
+    ],
+    "sui": [
+      "Sui"
+    ],
+    "sui dynasty": [
+      "Sui"
+    ],
+    "tang": [
+      "Tang"
+    ],
+    "tang dynasty": [
+      "Tang"
+    ],
+    "five dynasties and ten kingdoms": [
+      "Five Dynasties and Ten Kingdoms"
+    ],
+    "five dynasties": [
+      "Five Dynasties and Ten Kingdoms"
+    ],
+    "five dynasties & ten kingdoms": [
+      "Five Dynasties and Ten Kingdoms"
+    ],
+    "five dynasties ten kingdoms": [
+      "Five Dynasties and Ten Kingdoms"
+    ],
+    "ten kingdoms": [
+      "Five Dynasties and Ten Kingdoms"
+    ],
+    "wudai": [
+      "Five Dynasties and Ten Kingdoms"
+    ],
+    "song": [
+      "Song"
+    ],
+    "northern song": [
+      "Song"
+    ],
+    "song dynasty": [
+      "Song"
+    ],
+    "southern song": [
+      "Song"
+    ],
+    "sung": [
+      "Song"
+    ],
+    "yuan": [
+      "Yuan"
+    ],
+    "mongol dynasty": [
+      "Yuan"
+    ],
+    "yuan dynasty": [
+      "Yuan"
+    ],
+    "ming": [
+      "Ming"
+    ],
+    "ming dynasty": [
+      "Ming"
+    ],
+    "qing": [
+      "Qing"
+    ],
+    "ching": [
+      "Qing"
+    ],
+    "manchu": [
+      "Qing"
+    ],
+    "manchu dynasty": [
+      "Qing"
+    ],
+    "qing dynasty": [
+      "Qing"
+    ]
   }
 }

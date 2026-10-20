@@ -27,6 +27,8 @@ const {
   ENGLISH_MONARCH_ALIASES,
   ROMAN_EMPEROR_TERMS,
   ROMAN_EMPEROR_CLUES,
+  CHINESE_DYNASTY_TERMS,
+  CHINESE_DYNASTY_ALIASES,
   ALASKA_TRIVIA,
   NEW_YORK_TRIVIA,
   MINNESOTA_TRIVIA,
@@ -96,6 +98,16 @@ Object.keys(ENGLISH_MONARCH_ALIASES).forEach(k => { ENGLISH_MONARCH_LOOKUP[norma
    famous emperors (the quiz's question pool).
    ============================================================ */
 const ROMAN_EMPEROR_NAMES = [...new Set(ROMAN_EMPEROR_TERMS.map(t => t[0]))];
+
+/* ============================================================
+   Data: the major Chinese dynasties/periods in chronological order,
+   from the Xia (traditional date) through the Qing (1912). Reuses the
+   PresidentsRecallGame engine (ordered list + years), like the monarchs.
+   ============================================================ */
+const CHINESE_DYNASTY_NAMES = [...new Set(CHINESE_DYNASTY_TERMS.map(t => t[0]))];
+const CHINESE_DYNASTY_LOOKUP = {};
+CHINESE_DYNASTY_NAMES.forEach(name => { CHINESE_DYNASTY_LOOKUP[normalize(name)] = [name]; });
+Object.keys(CHINESE_DYNASTY_ALIASES).forEach(k => { CHINESE_DYNASTY_LOOKUP[normalize(k)] = CHINESE_DYNASTY_ALIASES[k]; });
 
 /* ============================================================
    FREE-RECALL GAME ENGINE — US PRESIDENTS VARIANT
@@ -576,6 +588,23 @@ const monarchsGame = new PresidentsRecallGame({
     &middot; Some monarchs appear twice because of their separate reigns<br>
     &middot; Full names, regnal numbers, and common historical nicknames are accepted<br>
     &middot; When time expires, the full roster is revealed in chronological order with years served
+  `
+});
+
+const chineseDynastiesGame = new PresidentsRecallGame({
+  id: 'chinesedynasties',
+  title: 'Chinese Dynasties',
+  terms: CHINESE_DYNASTY_TERMS,
+  lookup: CHINESE_DYNASTY_LOOKUP,
+  duration: 4*60,
+  peopleLabel: 'dynasties',
+  termLabel: 'entries',
+  finalTitle: 'Full roster — Chinese dynasties from the Xia to the Qing',
+  rulesHTML: `
+    &middot; Name the 15 major dynasties and periods of imperial China in any order<br>
+    &middot; Divided eras count as one entry<br>
+    &middot; Three entries are periods rather than single dynasties<br>
+    &middot; When time expires, the full roster is revealed in chronological order with approximate dates
   `
 });
 
