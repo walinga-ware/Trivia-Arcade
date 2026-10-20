@@ -601,7 +601,7 @@ const chineseDynastiesGame = new PresidentsRecallGame({
   termLabel: 'entries',
   finalTitle: 'Full roster — Chinese dynasties from the Xia to the Qing',
   rulesHTML: `
-    &middot; Name the 15 major dynasties and periods of imperial Chin in any order<br>
+    &middot; Name the 15 major dynasties and periods of imperial China in any order<br>
     &middot; Divided eras count as one entry<br>
     &middot; Three entries are periods rather than single dynasties<br>
     &middot; When time expires, the full roster is revealed in chronological order with approximate dates
