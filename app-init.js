@@ -601,10 +601,9 @@ const chineseDynastiesGame = new PresidentsRecallGame({
   termLabel: 'entries',
   finalTitle: 'Full roster — Chinese dynasties from the Xia to the Qing',
   rulesHTML: `
-    &middot; Name the 15 major dynasties and periods of imperial China, from the Xia to the Qing — any order<br>
-    &middot; With or without the word &ldquo;dynasty&rdquo; — &ldquo;Han&rdquo; and &ldquo;Han dynasty&rdquo; both count<br>
-    &middot; Divided eras count as one entry: Han covers the Western and Eastern Han, Jin covers the Western and Eastern Jin, and Song covers the Northern and Southern Song<br>
-    &middot; Three entries are periods rather than single dynasties: the Three Kingdoms, the Northern and Southern Dynasties, and the Five Dynasties and Ten Kingdoms<br>
+    &middot; Name the 15 major dynasties and periods of imperial Chin in any order<br>
+    &middot; Divided eras count as one entry<br>
+    &middot; Three entries are periods rather than single dynasties<br>
     &middot; When time expires, the full roster is revealed in chronological order with approximate dates
   `
 });
