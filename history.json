@@ -1602,6 +1602,278 @@
     "Diocletian": "Formed the Tetrarchy to share rule among four men, launched the Great Persecution of Christians, and retired voluntarily in AD 305",
     "Constantine the Great": "Won the Battle of the Milvian Bridge in AD 312 and founded Constantinople as his new capital"
   },
+  "ANCIENT_EGYPT_QUIZ": [
+    {
+      "label": "Great Pyramid latitude",
+      "prompt": "Coincidence? The Great Pyramid of Giza sits at roughly 29.979° N latitude. Which famous number do those digits echo?",
+      "answer": "The speed of light (299,792,458 m/s)",
+      "distractors": [
+        "Earth's circumference (40,075 km)",
+        "The speed of sound at sea level (343 m/s)",
+        "Pi to eight decimal places (3.14159265)"
+      ]
+    },
+    {
+      "label": "Tallest until 1311",
+      "prompt": "For roughly 3,800 years the Great Pyramid was the tallest human-made structure on Earth, until a spire finally topped it around 1311 AD. Which building?",
+      "answer": "Lincoln Cathedral, England",
+      "distractors": [
+        "Salisbury Cathedral, England",
+        "Notre-Dame de Paris",
+        "Hagia Sophia, Constantinople"
+      ]
+    },
+    {
+      "label": "Khufu's only statue",
+      "prompt": "Khufu built the largest pyramid ever raised, yet the only known statue of him, found at Abydos in 1903, is remarkably small. How tall is it?",
+      "answer": "About 7.5 cm (3 inches)",
+      "distractors": [
+        "About 75 cm (2.5 feet)",
+        "About 2.5 m (8 feet)",
+        "About 7.5 m (25 feet)"
+      ]
+    },
+    {
+      "label": "Herodotus and the vegetables",
+      "prompt": "Herodotus claimed that an inscription on the Great Pyramid recorded the huge sum spent feeding its workers. Which three vegetables did he say it named?",
+      "answer": "Radishes, onions and garlic",
+      "distractors": [
+        "Lentils, leeks and cucumbers",
+        "Lettuce, beans and melons",
+        "Turnips, cabbage and lotus roots"
+      ]
+    },
+    {
+      "label": "Sphinx's dream stele",
+      "prompt": "A stele between the Great Sphinx's paws tells of a prince who napped in its shadow and dreamed it promised him the crown if he cleared away the sand. Which pharaoh?",
+      "answer": "Thutmose IV",
+      "distractors": [
+        "Thutmose III",
+        "Amenhotep II",
+        "Amenhotep III"
+      ]
+    },
+    {
+      "label": "Sphinx's missing nose",
+      "prompt": "Napoleon's troops often get blamed for the Great Sphinx's missing nose, but sketches predating his 1798 invasion already show it gone. Who is the medieval culprit named by the historian al-Maqrizi?",
+      "answer": "Muhammad Sa'im al-Dahr, a Sufi zealot",
+      "distractors": [
+        "Cambyses II, the Persian conqueror",
+        "A Roman governor under Augustus",
+        "A British officer during the 1801 campaign"
+      ]
+    },
+    {
+      "label": "Ramesses II's passport",
+      "prompt": "When Ramesses II's mummy flew to Paris in 1976 for treatment against fungus, Egyptian authorities issued him which document, listing his occupation as 'King (deceased)'?",
+      "answer": "A passport",
+      "distractors": [
+        "A vaccination certificate",
+        "A customs bond",
+        "A press accreditation badge"
+      ]
+    },
+    {
+      "label": "Ramesses II's heir",
+      "prompt": "Ramesses II reigned about 66 years and outlived a dozen of his sons. Which son, his thirteenth, finally succeeded him?",
+      "answer": "Merneptah",
+      "distractors": [
+        "Khaemwaset",
+        "Amunherkhepeshef",
+        "Ramesses III"
+      ]
+    },
+    {
+      "label": "Kadesh peace treaty",
+      "prompt": "After the Battle of Kadesh, Ramesses II signed what is often called the earliest surviving peace treaty with the Hittites. A replica of it hangs today in the headquarters of which organization?",
+      "answer": "The United Nations",
+      "distractors": [
+        "NATO",
+        "The Arab League",
+        "The European Parliament"
+      ]
+    },
+    {
+      "label": "Tut's meteorite dagger",
+      "prompt": "Iron was rarer than gold in Tutankhamun's day. Analysis of the iron dagger buried with him revealed its blade came from where?",
+      "answer": "A meteorite",
+      "distractors": [
+        "Bog iron from the Nile Delta",
+        "Hematite ore from Sinai",
+        "Reforged Hyksos weapons"
+      ]
+    },
+    {
+      "label": "Tut's cause of death",
+      "prompt": "In 2010, DNA analysis of Tutankhamun's mummy found traces of which disease, possibly contributing to his death around age 19?",
+      "answer": "Malaria",
+      "distractors": [
+        "Smallpox",
+        "Tuberculosis",
+        "Leprosy"
+      ]
+    },
+    {
+      "label": "Tut's golden headcloth",
+      "prompt": "The striped royal headcloth on Tutankhamun's famous gold mask has a specific name. What is it?",
+      "answer": "Nemes",
+      "distractors": [
+        "Khepresh",
+        "Pschent",
+        "Atef"
+      ]
+    },
+    {
+      "label": "Cleopatra's languages",
+      "prompt": "Cleopatra VII was a Greek-speaking Macedonian by heritage. Which of these did she do that none of the earlier Ptolemaic rulers had bothered to do?",
+      "answer": "Learn to speak Egyptian",
+      "distractors": [
+        "Marry her own brother",
+        "Present herself as the goddess Isis",
+        "Rule jointly with a sibling"
+      ]
+    },
+    {
+      "label": "Cleopatra and the pyramid",
+      "prompt": "Cleopatra VII lived closer in time to the 1969 Moon landing than to the building of the Great Pyramid. About how many years passed between the pyramid's completion and her birth?",
+      "answer": "About 2,500 years",
+      "distractors": [
+        "About 600 years",
+        "About 1,200 years",
+        "About 4,000 years"
+      ]
+    },
+    {
+      "label": "Cleopatra's pearl",
+      "prompt": "Legend says Cleopatra won a bet with Mark Antony over the most expensive banquet by dissolving a pearl in a drink. In what, according to Pliny the Elder?",
+      "answer": "Vinegar",
+      "distractors": [
+        "Red wine",
+        "Honey",
+        "Milk"
+      ]
+    },
+    {
+      "label": "Hatshepsut's tooth",
+      "prompt": "Hatshepsut's mummy was finally identified in 2007 when a missing tooth was matched to a jaw. Where had the tooth been sitting?",
+      "answer": "In a small box bearing her name",
+      "distractors": [
+        "In the sarcophagus of Thutmose III",
+        "Sealed in her temple's foundation deposit",
+        "In a canopic jar of her chief steward"
+      ]
+    },
+    {
+      "label": "Hatshepsut's Punt trees",
+      "prompt": "Hatshepsut's temple at Deir el-Bahri celebrates an expedition to the land of Punt, which returned with living trees of what?",
+      "answer": "Myrrh",
+      "distractors": [
+        "Cedar",
+        "Cinnamon",
+        "Olive"
+      ]
+    },
+    {
+      "label": "Abu Simbel's sun festival",
+      "prompt": "Twice a year the rising sun floods the inner sanctuary of Abu Simbel and lights up the statues seated there. One of the four always stays in shadow. Which?",
+      "answer": "Ptah",
+      "distractors": [
+        "Ramesses II",
+        "Amun-Ra",
+        "Ra-Horakhty"
+      ]
+    },
+    {
+      "label": "Imhotep as a god",
+      "prompt": "Imhotep, architect of the Step Pyramid, was later worshipped as a god of healing. The Greeks equated him with which of their deities?",
+      "answer": "Asclepius",
+      "distractors": [
+        "Apollo",
+        "Hermes",
+        "Hephaestus"
+      ]
+    },
+    {
+      "label": "Rosetta Stone's decree",
+      "prompt": "The Rosetta Stone carries a priestly decree from 196 BC. Which ruler does it honor?",
+      "answer": "Ptolemy V",
+      "distractors": [
+        "Ptolemy I",
+        "Cleopatra VII",
+        "Alexander the Great"
+      ]
+    },
+    {
+      "label": "Champollion's reaction",
+      "prompt": "In 1822, after cracking the hieroglyphic code, Jean-François Champollion burst into his brother's office shouting 'I've got it!' and then did what?",
+      "answer": "Collapsed in a faint",
+      "distractors": [
+        "Challenged Thomas Young to a duel",
+        "Booked passage to Egypt that night",
+        "Burned his working notes"
+      ]
+    },
+    {
+      "label": "Pyramid-rich country",
+      "prompt": "Which African country has roughly twice as many ancient pyramids as Egypt, built by its Kushite kings?",
+      "answer": "Sudan",
+      "distractors": [
+        "Ethiopia",
+        "Libya",
+        "Chad"
+      ]
+    },
+    {
+      "label": "Meaning of 'pharaoh'",
+      "prompt": "The word 'pharaoh' comes from Egyptian per-aa. What did it originally mean?",
+      "answer": "Great House",
+      "distractors": [
+        "Son of Ra",
+        "Lord of the Two Lands",
+        "Living Horus"
+      ]
+    },
+    {
+      "label": "Kemet",
+      "prompt": "Ancient Egyptians called their homeland Kemet, a name referring to the dark, fertile soil left by the Nile flood. What does it mean?",
+      "answer": "The Black Land",
+      "distractors": [
+        "The Red Land",
+        "The Gift of the Nile",
+        "The Land of Two Crowns"
+      ]
+    },
+    {
+      "label": "Mummy brown",
+      "prompt": "In the 1800s, artists prized a rich pigment called 'mummy brown.' What was it actually made from?",
+      "answer": "Ground-up Egyptian mummies",
+      "distractors": [
+        "Roasted papyrus reeds",
+        "Nile silt and tomb dust",
+        "Crushed scarab shells"
+      ]
+    },
+    {
+      "label": "Pharos of Alexandria",
+      "prompt": "After earthquakes toppled the Pharos Lighthouse of Alexandria, its stones were reused around 1477 to build what?",
+      "answer": "The Citadel of Qaitbay",
+      "distractors": [
+        "The Cairo Citadel",
+        "The Mosque of Ibn Tulun",
+        "The Al-Azhar Mosque"
+      ]
+    },
+    {
+      "label": "Mummification and the heart",
+      "prompt": "Embalmers pulled the brain out through the nose and discarded it, but deliberately left one organ in the body, believing it was the seat of thought. Which?",
+      "answer": "The heart",
+      "distractors": [
+        "The liver",
+        "The lungs",
+        "The stomach"
+      ]
+    }
+  ],
   "CHINESE_DYNASTY_TERMS": [
     [
       "Xia",

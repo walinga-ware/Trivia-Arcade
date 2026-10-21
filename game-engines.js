@@ -912,7 +912,11 @@ class PromptQuiz{
    MULTIPLE-CHOICE PROMPT QUIZ ENGINE (e.g. Moons of Jupiter)
    Each question shows a clue plus 4 options: the correct answer and
    3 distractors drawn at random from opts.distractorPool (which should
-   contain only real members of the category). There is no skip — the
+   contain only real members of the category). Alternatively, a pair can
+   carry its own `distractors` array (hand-written wrong answers tailored to
+   that one question) — used for mixed-subject quizzes where no shared pool
+   makes sense. A pair may also carry a short `label`, shown in the end-of-round
+   results grid in place of the (possibly long) prompt. There is no skip — the
    question stays up until the correct option is picked. Wrong picks are
    disabled and struck out; a question only scores if it is answered
    correctly on the FIRST try. The round ends when every question is
@@ -967,8 +971,8 @@ function multipleChoiceHTML(id, promptLabel){
 class MultipleChoiceQuiz{
   constructor(opts){
     this.id = opts.id;
-    this.pairs = opts.pairs;                     // [{ prompt, answer }, ...]
-    this.distractorPool = opts.distractorPool;   // real members of the category
+    this.pairs = opts.pairs;                     // [{ prompt, answer, distractors?, label? }, ...]
+    this.distractorPool = opts.distractorPool || [];   // real members of the category (optional if every pair has its own distractors)
     this.optionCount = opts.optionCount || 4;
     this.duration = opts.duration;
     this.rulesHTML = opts.rulesHTML;
@@ -1035,12 +1039,14 @@ class MultipleChoiceQuiz{
 
   showPrompt(){
     if (this.queue.length === 0){ this.end(); return; }
-    const { prompt, answer } = this.currentPair();
+    const { prompt, answer, distractors: own } = this.currentPair();
     this.missed = false;
     this.locked = false;
 
-    // Correct answer + (optionCount-1) distinct distractors, all from the real pool.
-    const distractors = shuffled(this.distractorPool.filter(n => n !== answer)).slice(0, this.optionCount - 1);
+    // Correct answer + (optionCount-1) distinct distractors: either this
+    // question's own hand-written ones, or random picks from the shared pool.
+    const candidates = (own && own.length) ? own : this.distractorPool;
+    const distractors = shuffled(candidates.filter(n => n !== answer)).slice(0, this.optionCount - 1);
     const options = shuffled([answer, ...distractors]);
 
     this.el('promptValue').textContent = prompt;
@@ -1096,10 +1102,12 @@ class MultipleChoiceQuiz{
     const pct = Math.round((this.score / roundPairs.length) * 100);
     this.el('finalScoreLine').textContent = `You got ${this.score} of ${roundPairs.length} correct on the first try (${pct}%).`;
 
-    const sorted = [...roundPairs].sort((a,b)=>a.prompt.localeCompare(b.prompt));
-    this.el('finalGrid').innerHTML = sorted.map(({prompt, answer}) => {
+    const shown = p => p.label || p.prompt;
+    const sorted = [...roundPairs].sort((a,b)=>shown(a).localeCompare(shown(b)));
+    this.el('finalGrid').innerHTML = sorted.map(p => {
+      const { prompt, answer } = p;
       const hit = this.results[prompt] === true;
-      return `<div class="item ${hit ? 'hit' : 'miss'}"><span>${prompt}</span><span>${answer} ${hit ? '✓' : '—'}</span></div>`;
+      return `<div class="item ${hit ? 'hit' : 'miss'}"><span>${shown(p)}</span><span>${answer} ${hit ? '✓' : '—'}</span></div>`;
     }).join('');
   }
 
