@@ -643,8 +643,8 @@ const ancientEgyptQuiz = new MultipleChoiceQuiz({
   promptLabel: "ancient egypt — what's the answer?",
   finalRollLabel: 'Full roll — the 10 questions in this round',
   rulesHTML: `
-    &middot; A lesser-known fact about a famous piece of ancient Egypt appears — 10 questions per round, drawn from a larger pool<br>
-    &middot; Questions cover many different subjects, so each one has its own set of 4 options<br>
+    &middot; 10 questions per round, drawn from a larger pool<br>
+    &middot; Questions cover a variety of subjects and themes related to Anicent Egypt<br>
     &middot; No skipping: keep picking until you find the right one, but only first-try answers score<br>
     &middot; The round ends when you finish all 10 or time runs out
   `
