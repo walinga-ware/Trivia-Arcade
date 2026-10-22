@@ -469,8 +469,14 @@
 
     <!-- ============ ANCIENT CIVILIZATIONS ============ -->
     <details class="section">
-      <summary class="section-summary"><span><span class="chevron">▸</span>Ancient Civilizations 🏛️</span><span class="quiz-count">2 quizzes</span></summary>
+      <summary class="section-summary"><span><span class="chevron">▸</span>Ancient Civilizations 🏛️</span><span class="quiz-count">3 quizzes</span></summary>
     <div class="card-grid">
+      <div class="card">
+        <div class="tag">Multiple choice &middot; 10 questions</div>
+        <h3>Ancient Egypt</h3>
+        <div class="meta" id="ancientegypt-meta"></div>
+        <button class="btn-primary" onclick="showScreen('ancientegypt')">Play</button>
+      </div>
       <div class="card">
         <div class="tag">Multiple choice &middot; 10 questions</div>
         <h3>Roman Emperors</h3>
@@ -645,7 +651,7 @@
    of ids. To add a new screen here, just add its id to this array —
    the actual game instance (in app-init.js) is what gives it content.
    ============================================================ */
-const SCREEN_IDS = ['countries', 'worldpopmine', 'flags', 'states', 'abbr', 'worldcap', 'statecap', 'popmine', 'statemap', 'canadamap', 'worldmap', 'findcountry', 'findcity', 'findstate', 'findstate-hard', 'provinces', 'provincecap', 'provabbr', 'provpopmine', 'mountaincont', 'rivermine', 'oceans', 'presidents', 'pms', 'monarchs', 'romanemperors', 'chinesedynasties', 'nba', 'mlb', 'nhl', 'nfl', 'periodic', 'elements', 'elementguess', 'planets', 'moons', 'largestmoons'];
+const SCREEN_IDS = ['countries', 'worldpopmine', 'flags', 'states', 'abbr', 'worldcap', 'statecap', 'popmine', 'statemap', 'canadamap', 'worldmap', 'findcountry', 'findcity', 'findstate', 'findstate-hard', 'provinces', 'provincecap', 'provabbr', 'provpopmine', 'mountaincont', 'rivermine', 'oceans', 'presidents', 'pms', 'monarchs', 'ancientegypt', 'romanemperors', 'chinesedynasties', 'nba', 'mlb', 'nhl', 'nfl', 'periodic', 'elements', 'elementguess', 'planets', 'moons', 'largestmoons'];
 
 const screenHost = document.getElementById('dynamic-screens');
 SCREEN_IDS.forEach(id => {

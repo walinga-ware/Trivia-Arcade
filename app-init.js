@@ -27,6 +27,7 @@ const {
   ENGLISH_MONARCH_ALIASES,
   ROMAN_EMPEROR_TERMS,
   ROMAN_EMPEROR_CLUES,
+  ANCIENT_EGYPT_QUIZ,
   CHINESE_DYNASTY_TERMS,
   CHINESE_DYNASTY_ALIASES,
   ALASKA_TRIVIA,
@@ -623,6 +624,27 @@ const romanEmperorsGame = new MultipleChoiceQuiz({
   rulesHTML: `
     &middot; A clue about one Roman emperor appears — 10 questions per round, drawn from the most famous emperors<br>
     &middot; Pick the matching emperor from 4 options — all four are real emperors between Augustus and Constantine<br>
+    &middot; No skipping: keep picking until you find the right one, but only first-try answers score<br>
+    &middot; The round ends when you finish all 10 or time runs out
+  `
+});
+
+// Multiple-choice quiz: 10 random questions per round, drawn from a pool in
+// history.json (ANCIENT_EGYPT_QUIZ). Unlike the quizzes above, the questions
+// span unrelated subjects (pyramids, the Sphinx, Ramesses II, Tutankhamun,
+// Cleopatra, ...), so there is no shared distractor pool — each question
+// carries its own hand-written distractors.
+const ancientEgyptQuiz = new MultipleChoiceQuiz({
+  id: 'ancientegypt',
+  pairs: ANCIENT_EGYPT_QUIZ,   // [{ label, prompt, answer, distractors: [3] }, ...]
+  questionCount: 10,
+  optionCount: 4,
+  duration: 6*60,
+  promptLabel: "ancient egypt — what's the answer?",
+  finalRollLabel: 'Full roll — the 10 questions in this round',
+  rulesHTML: `
+    &middot; 10 questions per round, drawn from a larger pool<br>
+    &middot; Questions cover a variety of subjects and themes related to Anicent Egypt<br>
     &middot; No skipping: keep picking until you find the right one, but only first-try answers score<br>
     &middot; The round ends when you finish all 10 or time runs out
   `
