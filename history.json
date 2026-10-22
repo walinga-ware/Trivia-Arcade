@@ -1614,26 +1614,6 @@
       ]
     },
     {
-      "label": "Khufu's only statue",
-      "prompt": "Khufu built the largest pyramid ever raised, yet the only known statue of him, found at Abydos in 1903, is remarkably small. How tall is it?",
-      "answer": "About 7.5 cm (3 inches)",
-      "distractors": [
-        "About 75 cm (2.5 feet)",
-        "About 2.5 m (8 feet)",
-        "About 7.5 m (25 feet)"
-      ]
-    },
-    {
-      "label": "Herodotus and the vegetables",
-      "prompt": "Herodotus claimed that an inscription on the Great Pyramid recorded the huge sum spent feeding its workers. Which three vegetables did he say it named?",
-      "answer": "Radishes, onions and garlic",
-      "distractors": [
-        "Lentils, leeks and cucumbers",
-        "Lettuce, beans and melons",
-        "Turnips, cabbage and lotus roots"
-      ]
-    },
-    {
       "label": "Sphinx's dream stele",
       "prompt": "A stele between the Great Sphinx's paws tells of a prince who napped in its shadow and dreamed it promised him the crown if he cleared away the sand. Which pharaoh?",
       "answer": "Thutmose IV",
@@ -1654,7 +1634,7 @@
       ]
     },
     {
-      "label": "Ramesses II's passport",
+      "label": "Ramesses II's flight",
       "prompt": "When Ramesses II's mummy flew to Paris in 1976 for treatment against fungus, Egyptian authorities issued him which document, listing his occupation as 'King (deceased)'?",
       "answer": "A passport",
       "distractors": [
@@ -1684,7 +1664,7 @@
       ]
     },
     {
-      "label": "Tut's meteorite dagger",
+      "label": "King Tut's dagger",
       "prompt": "Iron was rarer than gold in Tutankhamun's day. Analysis of the iron dagger buried with him revealed its blade came from where?",
       "answer": "A meteorite",
       "distractors": [
@@ -1704,17 +1684,7 @@
       ]
     },
     {
-      "label": "Tut's golden headcloth",
-      "prompt": "The striped royal headcloth on Tutankhamun's famous gold mask has a specific name. What is it?",
-      "answer": "Nemes",
-      "distractors": [
-        "Khepresh",
-        "Pschent",
-        "Atef"
-      ]
-    },
-    {
-      "label": "Cleopatra's languages",
+      "label": "Cleopatra's skill",
       "prompt": "Cleopatra VII was a Greek-speaking Macedonian by heritage. Which of these did she do that none of the earlier Ptolemaic rulers had bothered to do?",
       "answer": "Learn to speak Egyptian",
       "distractors": [
@@ -1771,16 +1741,6 @@
         "Ramesses II",
         "Amun-Ra",
         "Ra-Horakhty"
-      ]
-    },
-    {
-      "label": "Imhotep as a god",
-      "prompt": "Imhotep, architect of the Step Pyramid, was later worshipped as a god of healing. The Greeks equated him with which of their deities?",
-      "answer": "Asclepius",
-      "distractors": [
-        "Apollo",
-        "Hermes",
-        "Hephaestus"
       ]
     },
     {
@@ -1854,7 +1814,7 @@
       ]
     },
     {
-      "label": "Mummification and the heart",
+      "label": "Mummification thought organ",
       "prompt": "Embalmers pulled the brain out through the nose and discarded it, but deliberately left one organ in the body, believing it was the seat of thought. Which?",
       "answer": "The heart",
       "distractors": [
