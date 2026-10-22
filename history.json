@@ -1604,16 +1604,6 @@
   },
   "ANCIENT_EGYPT_QUIZ": [
     {
-      "label": "Great Pyramid latitude",
-      "prompt": "Coincidence? The Great Pyramid of Giza sits at roughly 29.979° N latitude. Which famous number do those digits echo?",
-      "answer": "The speed of light (299,792,458 m/s)",
-      "distractors": [
-        "Earth's circumference (40,075 km)",
-        "The speed of sound at sea level (343 m/s)",
-        "Pi to eight decimal places (3.14159265)"
-      ]
-    },
-    {
       "label": "Tallest until 1311",
       "prompt": "For roughly 3,800 years the Great Pyramid was the tallest human-made structure on Earth, until a spire finally topped it around 1311 AD. Which building?",
       "answer": "Lincoln Cathedral, England",
