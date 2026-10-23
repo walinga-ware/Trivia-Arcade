@@ -1142,7 +1142,7 @@ function stateMapHTML(id, cfg={}){
         <div class="label">rules</div>
         <div style="font-size:14px; line-height:1.7; color:var(--paper);">
           &middot; ${cfg.sampleNote ? cfg.sampleNote : `${N} ${nounPl} appear one at a time in random order`}<br>
-          &middot; A single ${noun} is highlighted on the map — name it<br>
+          &middot; ${cfg.highlightNote || `A single ${noun} is highlighted on the map — name it`}<br>
           &middot; Type the full ${noun} name; common spelling variations are accepted<br>
           &middot; No clock — take your time and see how many you can get
         </div>
@@ -1156,11 +1156,11 @@ function stateMapHTML(id, cfg={}){
         <div class="plate"><div class="label">progress</div><div class="value" id="${id}-progressValue">0 / ${N}</div></div>
       </div>
       <div class="map-question">
-        <div class="label">which ${noun} is highlighted?</div>
+        <div class="label">${cfg.questionLabel || `which ${noun} is highlighted?`}</div>
         <h3>Name this ${noun}</h3>
       </div>
       <div class="state-map-wrap">
-        <svg class="state-map" id="${id}-map" viewBox="${vb}" role="img" aria-label="Map of ${region} with one highlighted ${noun}"></svg>
+        <svg class="state-map" id="${id}-map" viewBox="${vb}" role="img" aria-label="${cfg.ariaLabel || `Map of ${region} with one highlighted ${noun}`}"></svg>
       </div>
       <div class="map-progress" id="${id}-progressText"></div>
       <div class="map-answer-row">
@@ -1182,6 +1182,7 @@ function stateMapHTML(id, cfg={}){
 
 class StateMapQuiz{
   constructor(opts){
+    this.opts=opts;
     this.id=opts.id; this.states=opts.states; this.cfg=opts.cfg||{}; this.sampleSize=opts.sampleSize||null; this.roundStates=this.states; this.N=this.sampleSize||this.states.length; this.noun=this.cfg.noun||'state'; this.nounPl=this.cfg.nounPlural||'states';
     this.lookup=opts.lookup||null; this.loader=opts.loader||null; this.mapNames=null; this.path=null;
     this.queue=[]; this.idx=0; this.score=0; this.answers=[]; this.answered=false; this.mapReady=false;
@@ -1291,6 +1292,102 @@ class StateMapQuiz{
     this.queue=[]; this.idx=0; this.score=0; this.answers=[]; this.clearRing();
     if(this.mapReady) d3.select(this.el('map')).selectAll('.state').attr('class','state');
   }
+}
+
+/* ============================================================
+   COUNTRY OUTLINE QUIZ  (puzzle-piece variant of "On the Map: World")
+   Same rules/scoring as StateMapQuiz, but instead of highlighting a country
+   on the world map, only that country's outline is shown, re-projected and
+   scaled so it fills (roughly) the same square regardless of real-world size.
+   ============================================================ */
+class CountryOutlineQuiz extends StateMapQuiz{
+  constructor(opts){
+    super(opts);
+    this.S=opts.boxSize||400;        // square side, in SVG units
+    this.pad=opts.boxPadding||24;
+    this.gapDeg=opts.gapDeg||6;      // pieces further than this from the main landmass are dropped
+    this.shapeCache=new Map();
+    const svg=this.el('map'); svg.style.maxWidth='460px'; svg.style.margin='0 auto';
+  }
+
+  async loadMap(){
+    try{
+      const o=this.opts, known=new Set(this.states), fixes=o.nameFixes||{}, lookup=this.lookup||{};
+      const world=await d3.json(o.topoUrl||'https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json');
+      this.groups=new Map();   // canonical name -> [features]  (e.g. Somalia + Somaliland)
+      topojson.feature(world,world.objects.countries).features.forEach(f=>{
+        const raw=f.properties.name; if(raw==='Antarctica'||raw==='Fr. S. Antarctic Lands') return;
+        const name=fixes[raw]||lookup[normalize(raw)];
+        if(!known.has(name)) return;
+        if(!this.groups.has(name)) this.groups.set(name,[]);
+        this.groups.get(name).push(f);
+      });
+      this.mapNames=new Set(this.groups.keys());
+      this.mapReady=true;
+      if(this.queue.length) this.renderTarget();
+    }catch(err){
+      this.el('feedback').textContent='The map could not be loaded. Please refresh and try again.';
+      this.el('feedback').className='map-feedback bad';
+      console.error(err);
+    }
+  }
+
+  // Split the country into polygons and keep the main landmass plus nearby islands,
+  // so far-flung territories (Hawaii, French Guiana, Svalbard…) don't shrink the outline.
+  shapeFor(name){
+    if(this.shapeCache.has(name)) return this.shapeCache.get(name);
+    let polys=[];
+    this.groups.get(name).forEach(f=>{
+      const g=f.geometry;
+      (g.type==='Polygon'?[g.coordinates]:g.coordinates).forEach(c=>{
+        const feature={type:'Feature',properties:{name},geometry:{type:'Polygon',coordinates:c}};
+        polys.push({feature,area:d3.geoArea(feature),centroid:d3.geoCentroid(feature)});
+      });
+    });
+    // Countries whose famous outline excludes remote pieces that would otherwise chain on via small islands.
+    const MAINLAND={
+      'United States':c=>c[1]>24&&c[1]<50&&c[0]>-126&&c[0]<-66,   // contiguous 48 only
+      'Norway':c=>c[1]<72&&c[0]>3                                  // no Svalbard / Jan Mayen
+    };
+    if(MAINLAND[name]){ const c=polys.filter(p=>MAINLAND[name](p.centroid)); if(c.length) polys=c; }
+    polys.sort((a,b)=>b.area-a.area);
+    const total=polys.reduce((t,p)=>t+p.area,0);
+    polys=polys.filter((p,i)=>i===0||p.area>=total*0.0002);   // drop specks
+    polys.forEach(p=>{   // thin the outer ring by spatial spacing (not index) so no close approach is skipped
+      const ring=p.feature.geometry.coordinates[0], step=this.gapDeg*Math.PI/180/4;
+      p.pts=[ring[0]]; let last=ring[0];
+      for(const v of ring){ if(d3.geoDistance(last,v)>step){ p.pts.push(v); last=v; } }
+    });
+    const gap=this.gapDeg*Math.PI/180;
+    const near=(a,b)=>a.pts.some(x=>b.pts.some(y=>d3.geoDistance(x,y)<gap));
+    const kept=[polys[0]], rest=polys.slice(1); let frontier=[polys[0]];
+    while(frontier.length&&rest.length){
+      const next=[];
+      for(let i=rest.length-1;i>=0;i--){
+        if(frontier.some(k=>near(k,rest[i]))){ next.push(rest[i]); rest.splice(i,1); }
+      }
+      kept.push(...next); frontier=next;
+    }
+    const features=kept.map(p=>p.feature);
+    const fc={type:'FeatureCollection',features};
+    const [lon]=d3.geoCentroid(fc);
+    const projection=d3.geoMercator().rotate([-lon,0])
+      .fitExtent([[this.pad,this.pad],[this.S-this.pad,this.S-this.pad]],fc);
+    const shape={features,path:d3.geoPath(projection)};
+    this.shapeCache.set(name,shape);
+    return shape;
+  }
+
+  drawRing(){}   // not needed — the country always fills the square
+
+  renderTarget(){
+    if(!this.mapReady||!this.queue.length) return;
+    const target=this.queue[this.idx], {features,path}=this.shapeFor(target);
+    d3.select(this.el('map')).selectAll('path').data(features).join('path')
+      .attr('class','state target').attr('d',path).attr('data-name',target);
+  }
+
+  reset(){ super.reset(); if(this.mapReady) d3.select(this.el('map')).selectAll('path').remove(); }
 }
 
 /* ============================================================
