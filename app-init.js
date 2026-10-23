@@ -915,3 +915,22 @@ const findCountryQuiz = new FindCountryQuiz({
   nameFixes:FIND_COUNTRY_NAME_FIXES,
   points:{ 'Tuvalu':[179.19,-8.52] }
 });
+
+// On the Map: World — Outline. Same 20-random-country round, but only the target's outline is
+// shown, scaled to fill the same square. Reuses the 50m atlas and name fixes from Find the Country
+// (so small countries have usable detail); Somaliland / N. Cyprus are merged into Somalia / Cyprus.
+const worldOutlineQuiz = new CountryOutlineQuiz({
+  id:'worldoutline',
+  states:COUNTRIES,
+  lookup:COUNTRY_LOOKUP,
+  nameFixes:FIND_COUNTRY_NAME_FIXES,
+  sampleSize:20,
+  cfg:{
+    noun:'country', nounPlural:'countries', regionLabel:'the world', allLabel:'The 20 countries in this round',
+    viewBox:'0 0 400 400',
+    sampleNote:'20 randomly chosen countries appear one at a time',
+    highlightNote:'Only the country&rsquo;s outline is shown, enlarged to fill the frame — name it',
+    questionLabel:'which country has this outline?',
+    ariaLabel:'Outline of a single country, scaled to fill the frame'
+  }
+});
