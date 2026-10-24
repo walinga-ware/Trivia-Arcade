@@ -5,6 +5,7 @@
     "test": "jest"
   },
   "devDependencies": {
+    "d3": "^7.9.0",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0"
   },
