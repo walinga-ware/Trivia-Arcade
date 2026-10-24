@@ -499,7 +499,7 @@
             },
             {
               "category": "💬",
-              "hint": "North Germanic language with 2 official written forms called Bokmal and Nynorsk"
+              "hint": "North Germanic language with 2 official written forms called Bokmål and Nynorsk"
             }
           ]
         },
@@ -568,12 +568,12 @@
           ],
           "clues": [
             {
-              "category": "🏀",
-              "hint": "Toronto basketball franchise"
-            },
-            {
               "category": "📽️",
               "hint": "Pack of dinosaurs who are the main antagonists in \"Jurassic Park\""
+            },
+            {
+              "category": "🏀",
+              "hint": "Toronto basketball franchise"
             }
           ]
         },
