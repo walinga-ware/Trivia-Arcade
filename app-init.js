@@ -597,7 +597,7 @@ const chineseDynastiesGame = new PresidentsRecallGame({
   title: 'Chinese Dynasties',
   terms: CHINESE_DYNASTY_TERMS,
   lookup: CHINESE_DYNASTY_LOOKUP,
-  duration: 4*60,
+  duration: 5*60,
   peopleLabel: 'dynasties',
   termLabel: 'entries',
   finalTitle: 'Full roster — Chinese dynasties from the Xia to the Qing',
@@ -639,7 +639,7 @@ const ancientEgyptQuiz = new MultipleChoiceQuiz({
   pairs: ANCIENT_EGYPT_QUIZ,   // [{ label, prompt, answer, distractors: [3] }, ...]
   questionCount: 10,
   optionCount: 4,
-  duration: 6*60,
+  duration: 10*60,
   promptLabel: "ancient egypt — what's the answer?",
   finalRollLabel: 'Full roll — the 10 questions in this round',
   rulesHTML: `
