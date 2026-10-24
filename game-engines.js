@@ -2445,11 +2445,11 @@ class MinefieldQuiz{
     const total = this.items.length;
     let line;
     if (reason === 'complete'){
-      line = `Perfect run — you named all ${total} states in order!`;
+      line = `Perfect run — you named all ${total} ${this.itemNounPlural} in order!`;
     } else if (reason === 'wrong'){
       line = details.canonical
-        ? `Game over — you got ${n} of ${total} right. "${details.typed}" is a real state, but it wasn't next — ${details.targetName} was.`
-        : `Game over — you got ${n} of ${total} right. "${details.typed}" wasn't recognized; the next state was ${details.targetName}.`;
+        ? `Game over — you got ${n} of ${total} right. "${details.typed}" is a real ${this.itemNoun}, but it wasn't next — ${details.targetName} was.`
+        : `Game over — you got ${n} of ${total} right. "${details.typed}" wasn't recognized; the next ${this.itemNoun} was ${details.targetName}.`;
     } else {
       line = `You stopped after ${n} of ${total} correct.`;
     }
