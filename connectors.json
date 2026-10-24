@@ -456,6 +456,158 @@
           ]
         }
       ]
+    },
+    {
+      "id": "connectors4",
+      "title": "Category Connectors #4",
+      "items": [
+        {
+          "answer": "Java",
+          "aliases": [],
+          "clues": [
+            {
+              "category": "🧭",
+              "hint": "Indonesian island known for its coffee"
+            },
+            {
+              "category": "💻",
+              "hint": "Popular programming language with a coffee-themed logo"
+            }
+          ]
+        },
+        {
+          "answer": "Patagonia",
+          "aliases": [],
+          "clues": [
+            {
+              "category": "🧭",
+              "hint": "Mountainous region of South America, spanning parts of Argentina and Chile"
+            },
+            {
+              "category": "💼",
+              "hint": "Outdoor clothing and gear retailer"
+            }
+          ]
+        },
+        {
+          "answer": "Viking",
+          "aliases": [
+            "Vikings"
+          ],
+          "clues": [
+            {
+              "category": "💼",
+              "hint": ""
+            },
+            {
+              "category": "🏈",
+              "hint": ""
+            }
+          ]
+        },
+        {
+          "answer": "TODO",
+          "aliases": [
+            "Sphynx"
+          ],
+          "clues": [
+            {
+              "category": "🏛️",
+              "hint": "Ancient limestone monument near Cairo with a lion's body and a human head"
+            },
+            {
+              "category": "🦋",
+              "hint": "A family of moths nicknamed for the pose their caterpillars strike when at rest"
+            }
+          ]
+        },
+        {
+          "answer": "TODO",
+          "aliases": [],
+          "clues": [
+            {
+              "category": "🏛️",
+              "hint": "Giant bronze statue that once stood in the harbor of Rhodes, one of the Seven Wonders"
+            },
+            {
+              "category": "🦸",
+              "hint": "Marvel superhero and X-Men member whose skin turns to organic steel"
+            }
+          ]
+        },
+        {
+          "answer": "TODO",
+          "aliases": [],
+          "clues": [
+            {
+              "category": "🪐",
+              "hint": "A moon of Uranus named for a character in Shakespeare's \"The Tempest\""
+            },
+            {
+              "category": "⚖️",
+              "hint": "The rights read to a suspect upon arrest, named for a 1966 US Supreme Court case"
+            }
+          ]
+        },
+        {
+          "answer": "TODO",
+          "aliases": [],
+          "clues": [
+            {
+              "category": "🏃",
+              "hint": "Long-distance race of 26.2 miles, named for a Greek battle site"
+            },
+            {
+              "category": "🍫",
+              "hint": "The original UK and Ireland name for what's now sold as Snickers, until a 1990 rebrand"
+            }
+          ]
+        },
+        {
+          "answer": "TODO",
+          "aliases": [],
+          "clues": [
+            {
+              "category": "🧭",
+              "hint": "Landform created where a river meets the sea"
+            },
+            {
+              "category": "✈️",
+              "hint": "Major U.S. airline headquartered in Atlanta"
+            }
+          ]
+        },
+        {
+          "answer": "TODO",
+          "aliases": [],
+          "clues": [
+            {
+              "category": "🔱",
+              "hint": "Mythical king whose touch turned everything to gold"
+            },
+            {
+              "category": "🔧",
+              "hint": "Auto shop chain known for mufflers and brakes"
+            }
+          ]
+        },
+        {
+          "answer": "TODO",
+          "aliases": [
+            "Trojans"
+          ],
+          "clues": [
+            {
+              "category": "📖",
+              "hint": "Native of the ancient city besieged for ten years in Homer's epic"
+            },
+            {
+              "category": "💻",
+              "hint": "Malware that disguises itself as legitimate software"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
