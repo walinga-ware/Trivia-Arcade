@@ -471,7 +471,7 @@
             },
             {
               "category": "💻",
-              "hint": "Popular programming language with a coffee-themed logo"
+              "hint": "Popular programming language with a coffee cup logo"
             }
           ]
         },
@@ -485,125 +485,123 @@
             },
             {
               "category": "💼",
-              "hint": "Outdoor clothing and gear retailer"
+              "hint": "Outdoor clothing and gear retailer based in Ventura, California"
             }
           ]
         },
         {
-          "answer": "Viking",
-          "aliases": [
-            "Vikings"
-          ],
-          "clues": [
-            {
-              "category": "💼",
-              "hint": ""
-            },
-            {
-              "category": "🏈",
-              "hint": ""
-            }
-          ]
-        },
-        {
-          "answer": "TODO",
-          "aliases": [
-            "Sphynx"
-          ],
-          "clues": [
-            {
-              "category": "🏛️",
-              "hint": "Ancient limestone monument near Cairo with a lion's body and a human head"
-            },
-            {
-              "category": "🦋",
-              "hint": "A family of moths nicknamed for the pose their caterpillars strike when at rest"
-            }
-          ]
-        },
-        {
-          "answer": "TODO",
+          "answer": "Norwegian",
           "aliases": [],
           "clues": [
             {
-              "category": "🏛️",
-              "hint": "Giant bronze statue that once stood in the harbor of Rhodes, one of the Seven Wonders"
+              "category": "💼",
+              "hint": "4th largest cruise line in the world by passengers"
             },
             {
-              "category": "🦸",
-              "hint": "Marvel superhero and X-Men member whose skin turns to organic steel"
+              "category": "<internet>",
+              "hint": "North Germanic language with 2 official written forms called Bokmal and Nynorsk"
             }
           ]
         },
         {
-          "answer": "TODO",
+          "answer": "Angel",
+          "aliases": [
+            "Angels"
+          ],
+          "clues": [
+            {
+              "category": "<Baseball>",
+              "hint": "Member of a particular LA baseball team"
+            },
+            {
+              "category": "<Mountain>",
+              "hint": "Tallest waterfall in the world, located in Venezuela: ___ Falls"
+            }
+          ]
+        },
+        {
+          "answer": "Ariel",
           "aliases": [],
           "clues": [
             {
               "category": "🪐",
-              "hint": "A moon of Uranus named for a character in Shakespeare's \"The Tempest\""
+              "hint": "Brightest and 4th largest moon of Uranus"
             },
             {
-              "category": "⚖️",
-              "hint": "The rights read to a suspect upon arrest, named for a 1966 US Supreme Court case"
+              "category": "<book>",
+              "hint": "Title character of \"The Little Mermaid\""
             }
           ]
         },
         {
-          "answer": "TODO",
+          "answer": "Sirius",
           "aliases": [],
           "clues": [
             {
-              "category": "🏃",
-              "hint": "Long-distance race of 26.2 miles, named for a Greek battle site"
+              "category": "🪐",
+              "hint": "The brightest star in the night sky"
             },
             {
-              "category": "🍫",
-              "hint": "The original UK and Ireland name for what's now sold as Snickers, until a 1990 rebrand"
+              "category": "💼",
+              "hint": "___ XM, satellite radio and audio entertainment company"
             }
           ]
         },
         {
-          "answer": "TODO",
+          "answer": "Victoria",
+          "aliases": [],
+          "clues": [
+            {
+              "category": "<mountain>",
+              "hint": "Huge waterfall on the border of Zambia and Zimbabwe: ___ Falls"
+            },
+            {
+              "category": "<crown>",
+              "hint": "British Queen who reigned from 1837-1901"
+            }
+          ]
+        },
+        {
+          "answer": "Raptors",
+          "aliases": [
+            "The Raptors"
+          ],
+          "clues": [
+            {
+              "category": "<basketball>",
+              "hint": "Toronto basketball franchise"
+            },
+            {
+              "category": "<film>",
+              "hint": "Pack of dinosaurs who are the main antagonists in \"Jurassic Park\""
+            }
+          ]
+        },
+        {
+          "answer": "Mackenzie",
+          "aliases": [],
+          "clues": [
+            {
+              "category": "<rive>",
+              "hint": "2nd longest river in North America"
+            },
+            {
+              "category": "🍁",
+              "hint": "3-time Canadian Prime Minister, William Lyon ___ King"
+            }
+          ]
+        },
+        {
+          "answer": "Florence",
           "aliases": [],
           "clues": [
             {
               "category": "🧭",
-              "hint": "Landform created where a river meets the sea"
+              "hint": "Capital of the Italian region of Tuscany"
             },
             {
-              "category": "✈️",
-              "hint": "Major U.S. airline headquartered in Atlanta"
-            }
-          ]
-        },
-        {
-          "answer": "TODO",
-          "aliases": [],
-          "clues": [
-            {
-              "category": "🔱",
-              "hint": "Mythical king whose touch turned everything to gold"
-            },
-            {
-              "category": "🔧",
-              "hint": "Auto shop chain known for mufflers and brakes"
-            }
-          ]
-        },
-        {
-          "answer": "TODO",
-          "aliases": [
-            "Trojans"
-          ],
-          "clues": [
-            {
-              "category": "📖",
-              "hint": "Native of the ancient city besieged for ten years in Homer's epic"
-            },
-            {
-              "category": "💻",
-              "hint": "Malware that disguises itself as legitimate software"
+              "category": "<medical>",
+              "hint": "Founder of modern nursing: ___ Nightingale"
             }
           ]
         }
