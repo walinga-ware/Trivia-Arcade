@@ -5,16 +5,16 @@
       "title": "Category Connectors #1",
       "items": [
         {
-          "answer": "Titania",
+          "answer": "Oberon",
           "aliases": [],
           "clues": [
             {
               "category": "📖",
-              "hint": "Queen of the fairies in Shakespeare's \"A Midsummer Night's Dream\""
+              "hint": "King of the fairies in Shakespeare's \"A Midsummer Night's Dream\""
             },
             {
               "category": "🪐",
-              "hint": "The largest moon of Uranus"
+              "hint": "The 2nd largest moon of Uranus"
             }
           ]
         },
@@ -97,8 +97,8 @@
               "hint": "The first mortal woman, in a Greek myth, who opened a forbidden box"
             },
             {
-              "category": "📡",
-              "hint": "A personalized internet radio streaming service"
+              "category": "📽️",
+              "hint": "Home planet of the Na'vi in the 2009 movie Avatar"
             }
           ]
         },
