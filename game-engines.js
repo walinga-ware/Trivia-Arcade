@@ -2498,5 +2498,7 @@ if (typeof module !== 'undefined' && module.exports) {
     PresidentsRecallGame,
     MinefieldQuiz,
     PromptQuiz,
+    StateMapQuiz,
+    CountryOutlineQuiz,
   };
 }
