@@ -456,6 +456,156 @@
           ]
         }
       ]
+    },
+    {
+      "id": "connectors4",
+      "title": "Category Connectors #4",
+      "items": [
+        {
+          "answer": "Java",
+          "aliases": [],
+          "clues": [
+            {
+              "category": "🧭",
+              "hint": "Indonesian island known for its coffee"
+            },
+            {
+              "category": "💻",
+              "hint": "Popular programming language with a coffee cup logo"
+            }
+          ]
+        },
+        {
+          "answer": "Patagonia",
+          "aliases": [],
+          "clues": [
+            {
+              "category": "🧭",
+              "hint": "Mountainous region of South America, spanning parts of Argentina and Chile"
+            },
+            {
+              "category": "💼",
+              "hint": "Outdoor clothing and gear retailer based in Ventura, California"
+            }
+          ]
+        },
+        {
+          "answer": "Norwegian",
+          "aliases": [],
+          "clues": [
+            {
+              "category": "💼",
+              "hint": "4th largest cruise line in the world by passengers"
+            },
+            {
+              "category": "💬",
+              "hint": "North Germanic language with 2 official written forms called Bokmål and Nynorsk"
+            }
+          ]
+        },
+        {
+          "answer": "Angel",
+          "aliases": [
+            "Angels"
+          ],
+          "clues": [
+            {
+              "category": "⚾",
+              "hint": "Member of a particular LA baseball team"
+            },
+            {
+              "category": "🌊",
+              "hint": "Tallest waterfall in the world, located in Venezuela: ___ Falls"
+            }
+          ]
+        },
+        {
+          "answer": "Ariel",
+          "aliases": [],
+          "clues": [
+            {
+              "category": "🪐",
+              "hint": "Brightest and 4th largest moon of Uranus"
+            },
+            {
+              "category": "📖",
+              "hint": "Title character of \"The Little Mermaid\""
+            }
+          ]
+        },
+        {
+          "answer": "Sirius",
+          "aliases": [],
+          "clues": [
+            {
+              "category": "🪐",
+              "hint": "The brightest star in the night sky"
+            },
+            {
+              "category": "💼",
+              "hint": "___ XM, satellite radio and audio entertainment company"
+            }
+          ]
+        },
+        {
+          "answer": "Victoria",
+          "aliases": [],
+          "clues": [
+            {
+              "category": "🌊",
+              "hint": "Huge waterfall on the border of Zambia and Zimbabwe: ___ Falls"
+            },
+            {
+              "category": "👑",
+              "hint": "British Queen who reigned from 1837-1901"
+            }
+          ]
+        },
+        {
+          "answer": "Raptors",
+          "aliases": [
+            "The Raptors"
+          ],
+          "clues": [
+            {
+              "category": "📽️",
+              "hint": "Pack of dinosaurs who are the main antagonists in \"Jurassic Park\""
+            },
+            {
+              "category": "🏀",
+              "hint": "Toronto basketball franchise"
+            }
+          ]
+        },
+        {
+          "answer": "Mackenzie",
+          "aliases": [],
+          "clues": [
+            {
+              "category": "🌊",
+              "hint": "2nd longest river in North America"
+            },
+            {
+              "category": "🍁",
+              "hint": "3-time Canadian Prime Minister, William Lyon ___ King"
+            }
+          ]
+        },
+        {
+          "answer": "Florence",
+          "aliases": [],
+          "clues": [
+            {
+              "category": "🧭",
+              "hint": "Capital of the Italian region of Tuscany"
+            },
+            {
+              "category": "🩺",
+              "hint": "Founder of modern nursing: ___ Nightingale"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
