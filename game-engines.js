@@ -1358,7 +1358,10 @@ class CountryOutlineQuiz extends StateMapQuiz{
       p.pts=[ring[0]]; let last=ring[0];
       for(const v of ring){ if(d3.geoDistance(last,v)>step){ p.pts.push(v); last=v; } }
     });
-    const gap=this.gapDeg*Math.PI/180;
+    // Countries made of widely separated main landmasses need a larger link distance
+    // (e.g. Malaysia: peninsula and Borneo are ~5.5° apart across the South China Sea).
+    const GAP_OVERRIDE={'Malaysia':12};
+    const gap=(GAP_OVERRIDE[name]||this.gapDeg)*Math.PI/180;
     const near=(a,b)=>a.pts.some(x=>b.pts.some(y=>d3.geoDistance(x,y)<gap));
     const kept=[polys[0]], rest=polys.slice(1); let frontier=[polys[0]];
     while(frontier.length&&rest.length){
