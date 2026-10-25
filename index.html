@@ -256,6 +256,7 @@
   .city-dot.target circle{ fill:var(--brass); stroke:var(--paper); stroke-width:2px; }
   .city-dot.wrong circle{ fill:var(--rust); }
   .find-city.answered .city-dot circle{ cursor:default; }
+  .map-question h3.event-clue{ font-size:clamp(16px,3.2vw,21px); line-height:1.5; font-weight:600; max-width:720px; margin:0 auto; }
   /* Zoom buttons sit in a toolbar below the map so they never cover cities */
   .map-zoom-wrap{ margin-bottom:8px; }
   .map-zoom-controls{ display:flex; justify-content:center; gap:8px; margin:0 0 12px; }
@@ -472,13 +473,19 @@
 
     <!-- ============ ANCIENT CIVILIZATIONS ============ -->
     <details class="section">
-      <summary class="section-summary"><span><span class="chevron">▸</span>Ancient Civilizations 🏛️</span><span class="quiz-count">3 quizzes</span></summary>
+      <summary class="section-summary"><span><span class="chevron">▸</span>Ancient Civilizations 🏛️</span><span class="quiz-count">4 quizzes</span></summary>
     <div class="card-grid">
       <div class="card">
         <div class="tag">Multiple choice &middot; 10 questions</div>
         <h3>Ancient Egypt</h3>
         <div class="meta" id="ancientegypt-meta"></div>
         <button class="btn-primary" onclick="showScreen('ancientegypt')">Play</button>
+      </div>
+      <div class="card">
+        <div class="tag">Map quiz &middot; 15 clues</div>
+        <h3>Ancient Greece: Where Did It Happen?</h3>
+        <div class="meta">click the site of each historic event on the map</div>
+        <button class="btn-primary" onclick="showScreen('ancientgreecemap')">Play</button>
       </div>
       <div class="card">
         <div class="tag">Multiple choice &middot; 10 questions</div>
@@ -654,7 +661,7 @@
    of ids. To add a new screen here, just add its id to this array —
    the actual game instance (in app-init.js) is what gives it content.
    ============================================================ */
-const SCREEN_IDS = ['countries', 'worldpopmine', 'flags', 'states', 'abbr', 'worldcap', 'statecap', 'popmine', 'statemap', 'canadamap', 'worldmap', 'worldoutline', 'findcountry', 'findcity', 'findstate', 'findstate-hard', 'provinces', 'provincecap', 'provabbr', 'provpopmine', 'mountaincont', 'rivermine', 'oceans', 'presidents', 'pms', 'monarchs', 'ancientegypt', 'romanemperors', 'chinesedynasties', 'nba', 'mlb', 'nhl', 'nfl', 'periodic', 'elements', 'elementguess', 'planets', 'moons', 'largestmoons'];
+const SCREEN_IDS = ['countries', 'worldpopmine', 'flags', 'states', 'abbr', 'worldcap', 'statecap', 'popmine', 'statemap', 'canadamap', 'worldmap', 'worldoutline', 'findcountry', 'findcity', 'findstate', 'findstate-hard', 'provinces', 'provincecap', 'provabbr', 'provpopmine', 'mountaincont', 'rivermine', 'oceans', 'presidents', 'pms', 'monarchs', 'ancientegypt', 'ancientgreecemap', 'romanemperors', 'chinesedynasties', 'nba', 'mlb', 'nhl', 'nfl', 'periodic', 'elements', 'elementguess', 'planets', 'moons', 'largestmoons'];
 
 const screenHost = document.getElementById('dynamic-screens');
 SCREEN_IDS.forEach(id => {
