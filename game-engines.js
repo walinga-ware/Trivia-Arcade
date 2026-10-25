@@ -1792,7 +1792,7 @@ function findEventHTML(id, N){
   return findCityHTML(id, N)
     .replace(/cities appear one at a time in random order/, 'historical clues appear one at a time in random order')
     .replace(/You're given a city's name — click its dot on the map/, 'Each clue describes an event — click the dot where it happened (a city, island, region or site)')
-    .replace(/One click per city; the correct location is revealed either way/, 'One click per clue; the correct location is revealed either way')
+    .replace(/One click per city; the correct location is revealed either way/, 'Only 4 labeled places are shown for each clue — one of them is the answer<br>\n          &middot; One click per clue; the correct location is revealed either way')
     .replace(/click this city on the map/, 'where did this happen?')
     .replace(/Map of southern Canada — click the dot for the named city/, 'Map of Greece and the Aegean — click the dot where the event happened')
     .replace(/viewBox="0 0 975 400"/, 'viewBox="0 0 975 700"')
@@ -1870,8 +1870,10 @@ class FindEventQuiz{
   start(){
     this.el('intro').style.display='none'; this.el('results').style.display='none'; this.el('game').style.display='block';
     // N random places, each with one randomly-chosen clue
+    // plus 3 random distractor places, so each clue shows only 4 labeled dots
     this.queue=shuffled(this.places).slice(0,this.N).map(p=>({
-      place:p, clue:p.clues[Math.floor(Math.random()*p.clues.length)]
+      place:p, clue:p.clues[Math.floor(Math.random()*p.clues.length)],
+      options:new Set([p.name, ...shuffled(this.places.filter(q=>q.name!==p.name)).slice(0,3).map(q=>q.name)])
     }));
     this.idx=0; this.score=0; this.answers=[]; this.el('scoreValue').textContent='0';
     this.resetZoom(false);
@@ -1894,8 +1896,12 @@ class FindEventQuiz{
 
   renderDots(){
     if(!this.mapReady || !this.queue.length) return;
-    this.dots.classed('target',false).classed('wrong',false).classed('labeled',false)
-      .classed('correct',d=>this.isFound(d.name));
+    // Show only this clue's 4 options (the answer + 3 distractors), each labeled with its name.
+    const opts=this.queue[this.idx].options;
+    this.dots.classed('target',false).classed('wrong',false)
+      .classed('labeled',d=>opts.has(d.name))
+      .classed('correct',d=>this.isFound(d.name))
+      .style('display',d=>opts.has(d.name) ? null : 'none');
   }
 
   handleClick(place){
@@ -1914,7 +1920,6 @@ class FindEventQuiz{
       .classed('wrong',d=>!isCorrect && d.name===place.name)
       .classed('target',d=>!isCorrect && d.name===target.name)
       .classed('correct',d=>this.isFound(d.name))
-      .classed('labeled',d=>d.name===target.name || d.name===place.name)
       .filter(d=>d.name===target.name || d.name===place.name).raise();
     if(isCorrect){
       // Correct guess: go straight to the next clue (no Continue button).
