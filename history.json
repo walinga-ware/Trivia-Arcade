@@ -2064,5 +2064,263 @@
     "qing dynasty": [
       "Qing"
     ]
-  }
+  },
+  "ANCIENT_GREECE_MAP": [
+    {
+      "name": "Athens",
+      "kind": "city",
+      "lon": 23.7275,
+      "lat": 37.9838,
+      "clues": [
+        "In 508 BC, Cleisthenes' reforms laid the foundations of the world's first democracy in this city.",
+        "In 399 BC, a jury of citizens in this city sentenced the philosopher Socrates to death by hemlock.",
+        "Work began in 447 BC on the Parthenon, atop the Acropolis of this city, under the statesman Pericles."
+      ]
+    },
+    {
+      "name": "Sparta",
+      "kind": "city",
+      "lon": 22.43,
+      "lat": 37.074,
+      "clues": [
+        "In 464 BC, a massive earthquake devastated this city, triggering a major uprising of its enslaved helots."
+      ]
+    },
+    {
+      "name": "Corinth",
+      "kind": "city",
+      "lon": 22.88,
+      "lat": 37.906,
+      "clues": [
+        "In 146 BC, Roman forces under Mummius destroyed this wealthy isthmus city at the end of the Achaean War.",
+        "In 337 BC, Philip II of Macedon convened a congress in this city that united most Greek states under his leadership."
+      ]
+    },
+    {
+      "name": "Thebes",
+      "kind": "city",
+      "lon": 23.319,
+      "lat": 38.322,
+      "clues": [
+        "In 335 BC, Alexander the Great razed this city after it rebelled, sparing only the house of the poet Pindar."
+      ]
+    },
+    {
+      "name": "Delphi",
+      "kind": "sanctuary",
+      "lon": 22.501,
+      "lat": 38.4824,
+      "clues": [
+        "Around 547 BC, King Croesus of Lydia consulted the oracle at this sanctuary before attacking Persia and was told a great empire would fall."
+      ]
+    },
+    {
+      "name": "Olympia",
+      "kind": "sanctuary",
+      "lon": 21.63,
+      "lat": 37.638,
+      "clues": [
+        "In 776 BC, the first recorded Olympic Games were held at this sanctuary of Zeus.",
+        "Around 435 BC, Phidias completed a giant gold-and-ivory statue of Zeus here, later counted among the Seven Wonders."
+      ]
+    },
+    {
+      "name": "Mycenae",
+      "kind": "archaeological site",
+      "lon": 22.7564,
+      "lat": 37.7308,
+      "clues": [
+        "Around 1250 BC, the Lion Gate was raised at the entrance to this Bronze Age citadel, legendary seat of King Agamemnon."
+      ]
+    },
+    {
+      "name": "Troy",
+      "kind": "city",
+      "lon": 26.239,
+      "lat": 39.957,
+      "clues": [
+        "Around 1180 BC, according to Homer, a ten-year siege ended here when Greek warriors emerged from a wooden horse."
+      ]
+    },
+    {
+      "name": "Knossos",
+      "kind": "archaeological site",
+      "lon": 25.163,
+      "lat": 35.298,
+      "clues": [
+        "Around 1900 BC, Minoan rulers began building a vast palace here; legend placed the Minotaur's labyrinth beneath it."
+      ]
+    },
+    {
+      "name": "Pella",
+      "kind": "city",
+      "lon": 22.523,
+      "lat": 40.761,
+      "clues": [
+        "In 356 BC, Alexander the Great was born in this Macedonian capital."
+      ]
+    },
+    {
+      "name": "Ephesus",
+      "kind": "city",
+      "lon": 27.341,
+      "lat": 37.949,
+      "clues": [
+        "In 356 BC, a man named Herostratus burned the Temple of Artemis, one of the Seven Wonders, in this city."
+      ]
+    },
+    {
+      "name": "Miletus",
+      "kind": "city",
+      "lon": 27.278,
+      "lat": 37.53,
+      "clues": [
+        "In 494 BC, Persian forces sacked this city after crushing the Greek rebel fleet at sea, ending the Ionian Revolt."
+      ]
+    },
+    {
+      "name": "Halicarnassus",
+      "kind": "city",
+      "lon": 27.424,
+      "lat": 37.038,
+      "clues": [
+        "Around 350 BC, Queen Artemisia built a monumental tomb here for her husband Mausolus, giving us the word 'mausoleum'."
+      ]
+    },
+    {
+      "name": "Marathon",
+      "kind": "battlefield",
+      "lon": 23.964,
+      "lat": 38.155,
+      "clues": [
+        "In 490 BC, the Athenians and Plataeans defeated a Persian invasion force on this coastal plain."
+      ]
+    },
+    {
+      "name": "Thermopylae",
+      "kind": "mountain pass",
+      "lon": 22.536,
+      "lat": 38.796,
+      "clues": [
+        "In 480 BC, King Leonidas and his Spartans held a narrow coastal pass against Xerxes' enormous army for three days."
+      ]
+    },
+    {
+      "name": "Chaeronea",
+      "kind": "battlefield",
+      "lon": 22.842,
+      "lat": 38.493,
+      "clues": [
+        "In 338 BC, Philip II and his teenage son Alexander crushed the Athenian-Theban alliance here, ending the independence of the Greek city-states."
+      ]
+    },
+    {
+      "name": "Amphipolis",
+      "kind": "city",
+      "lon": 23.84,
+      "lat": 40.82,
+      "clues": [
+        "In 422 BC, both the Athenian general Cleon and the Spartan general Brasidas were killed in a battle outside this northern colony."
+      ]
+    },
+    {
+      "name": "Pylos",
+      "kind": "bay",
+      "lon": 21.7,
+      "lat": 36.91,
+      "clues": [
+        "In 425 BC, the Athenian general Demosthenes fortified a bay here, leading to the capture of Spartan soldiers that shocked the Greek world."
+      ]
+    },
+    {
+      "name": "Salamis",
+      "kind": "island",
+      "lon": 23.49,
+      "lat": 37.95,
+      "clues": [
+        "In 480 BC, Themistocles lured Xerxes' fleet into the narrow straits off this island and destroyed much of it."
+      ]
+    },
+    {
+      "name": "Delos",
+      "kind": "island",
+      "lon": 25.267,
+      "lat": 37.396,
+      "clues": [
+        "In 478 BC, Athens and its allies founded a league whose treasury was first kept on this sacred island."
+      ]
+    },
+    {
+      "name": "Lesbos",
+      "kind": "island",
+      "lon": 26.556,
+      "lat": 39.11,
+      "clues": [
+        "Around 600 BC, the poet Sappho composed her celebrated lyric poetry on this island."
+      ]
+    },
+    {
+      "name": "Samos",
+      "kind": "island",
+      "lon": 26.98,
+      "lat": 37.75,
+      "clues": [
+        "Around 570 BC, the mathematician and philosopher Pythagoras was born on this Aegean island."
+      ]
+    },
+    {
+      "name": "Rhodes",
+      "kind": "island",
+      "lon": 28.227,
+      "lat": 36.435,
+      "clues": [
+        "Around 280 BC, the Colossus, a giant bronze statue of the sun god Helios, was completed on this island."
+      ]
+    },
+    {
+      "name": "Santorini (Thera)",
+      "kind": "island",
+      "lon": 25.43,
+      "lat": 36.39,
+      "clues": [
+        "Around 1600 BC, a colossal volcanic eruption devastated this island and buried the Bronze Age town of Akrotiri."
+      ]
+    },
+    {
+      "name": "Corfu (Corcyra)",
+      "kind": "island",
+      "lon": 19.92,
+      "lat": 39.62,
+      "clues": [
+        "In 433 BC, a naval clash between this island and Corinth at Sybota helped set off the Peloponnesian War."
+      ]
+    },
+    {
+      "name": "Epirus",
+      "kind": "region",
+      "lon": 20.7,
+      "lat": 39.6,
+      "clues": [
+        "In 280 BC, King Pyrrhus led an army from this northwestern region to Italy; his costly victories over Rome gave us the phrase 'Pyrrhic victory'."
+      ]
+    },
+    {
+      "name": "Thessaly",
+      "kind": "region",
+      "lon": 22.1,
+      "lat": 39.5,
+      "clues": [
+        "In 352 BC, Philip II won the Battle of the Crocus Field and took control of this fertile, horse-rich region."
+      ]
+    },
+    {
+      "name": "Ionia",
+      "kind": "region",
+      "lon": 27.05,
+      "lat": 38.45,
+      "clues": [
+        "In 499 BC, Greek cities in this Anatolian coastal region revolted against Persian rule, sparking the Persian Wars."
+      ]
+    }
+  ]
 }

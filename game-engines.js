@@ -1777,6 +1777,186 @@ class FindCityQuiz{
 }
 
 /* ============================================================
+   FIND THE EVENT QUIZ  (history + geography)
+   Shows a clue describing a historical event; the player clicks the
+   dot for the place where it happened. Same map mechanics as
+   "Find the Canadian City" (zoom/pan, only dots are clickable, correct
+   answers advance automatically, wrong answers reveal the right dot).
+   Differences: the map is drawn from the 50m world-atlas (Aegean region),
+   each place has one or more clues, and a round asks for `rounds` random
+   places (one randomly-chosen clue each) so replays differ.
+   opts.places: [{ name, kind, lon, lat, clues:[string, ...] }, ...]
+   ============================================================ */
+
+function findEventHTML(id, N){
+  return findCityHTML(id, N)
+    .replace(/cities appear one at a time in random order/, 'historical clues appear one at a time in random order')
+    .replace(/You're given a city's name — click its dot on the map/, 'Each clue describes an event — click the dot where it happened (a city, island, region or site)')
+    .replace(/One click per city; the correct location is revealed either way/, 'Only 4 labeled places are shown for each clue — one of them is the answer<br>\n          &middot; One click per clue; the correct location is revealed either way')
+    .replace(/click this city on the map/, 'where did this happen?')
+    .replace(/Map of southern Canada — click the dot for the named city/, 'Map of Greece and the Aegean — click the dot where the event happened')
+    .replace(/viewBox="0 0 975 400"/, 'viewBox="0 0 975 700"')
+    .replace(/<h3 id="([^"]*)-promptValue"><\/h3>/, '<h3 class="event-clue" id="$1-promptValue"></h3>')
+    .replace(/Next city &rarr;/, 'Next clue &rarr;')
+    .replace(/All \d+ cities/, `All ${N} clues`);
+}
+
+class FindEventQuiz{
+  constructor(opts){
+    this.id=opts.id; this.places=opts.places.map(p=>({...p}));
+    this.N=Math.min(opts.rounds||15, this.places.length);
+    this.W=975; this.H=700; this.k=1;
+    this.queue=[]; this.idx=0; this.score=0; this.answers=[]; this.answered=false; this.mapReady=false;
+    document.getElementById(`${this.id}-mount`).innerHTML=findEventHTML(this.id, this.N);
+    this.el=key=>document.getElementById(`${this.id}-${key}`);
+    this.el('startBtn').addEventListener('click',()=>this.start());
+    this.el('nextBtn').addEventListener('click',()=>this.next());
+    this.el('resetBtn').addEventListener('click',()=>this.reset());
+    document.addEventListener('keydown',e=>{
+      const screen=document.getElementById(`screen-${this.id}`);
+      if(e.key==='Enter' && this.answered && screen && screen.classList.contains('active') && this.el('game').style.display!=='none') this.next();
+    });
+    this.loadMap();
+  }
+
+  async loadMap(){
+    try{
+      const world=await d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json');
+      const near=new Set(['Greece','Turkey','Albania','North Macedonia','Bulgaria','Kosovo','Montenegro','Italy','Libya','Cyprus']);
+      const land=topojson.feature(world,world.objects.countries).features.filter(f=>near.has(f.properties.name));
+      const pts={ type:'MultiPoint', coordinates:this.places.map(p=>[p.lon,p.lat]) };
+      const projection=d3.geoMercator().fitExtent([[45,35],[this.W-45,this.H-35]], pts);
+      const path=d3.geoPath(projection);
+      this.places.forEach(p=>{ [p.x,p.y]=projection([p.lon,p.lat]); });
+
+      const svg=d3.select(this.el('map'));
+      const layer=svg.append('g');
+      layer.append('g').selectAll('path').data(land).join('path').attr('class','state').attr('d',path);
+      this.dots=layer.append('g').selectAll('g').data(this.places).join('g').attr('class','city-dot')
+        .attr('transform',d=>`translate(${d.x},${d.y})`)
+        .on('click',(event,d)=>this.handleClick(d));
+      this.dots.append('circle').attr('r',5);
+      this.dots.append('text').attr('x',d=>d.x>this.W-170?-9:9).attr('y',4)
+        .attr('text-anchor',d=>d.x>this.W-170?'end':'start').text(d=>d.name);
+
+      this.zoom=d3.zoom().scaleExtent([1,20])
+        .extent([[0,0],[this.W,this.H]]).translateExtent([[0,0],[this.W,this.H]])
+        .filter(e=>e.type==='wheel' ? (e.ctrlKey||e.metaKey) : !e.button)
+        .on('zoom',e=>{
+          this.k=e.transform.k; layer.attr('transform',e.transform);
+          // keep dots and labels a constant on-screen size while zooming
+          this.dots.attr('transform',d=>`translate(${d.x},${d.y}) scale(${1/this.k})`);
+        });
+      svg.call(this.zoom).on('dblclick.zoom',null);
+      this.el('zoomIn').addEventListener('click',()=>svg.transition().duration(200).call(this.zoom.scaleBy,1.8));
+      this.el('zoomOut').addEventListener('click',()=>svg.transition().duration(200).call(this.zoom.scaleBy,1/1.8));
+      this.el('zoomReset').addEventListener('click',()=>this.resetZoom(true));
+
+      this.mapReady=true;
+      if(this.queue.length) this.renderDots();
+    }catch(err){
+      this.el('feedback').textContent='The map could not be loaded. Please refresh and try again.';
+      this.el('feedback').className='map-feedback bad';
+      console.error(err);
+    }
+  }
+
+  resetZoom(animate){
+    if(!this.mapReady) return;
+    const svg=d3.select(this.el('map'));
+    (animate ? svg.transition().duration(250) : svg).call(this.zoom.transform,d3.zoomIdentity);
+  }
+
+  start(){
+    this.el('intro').style.display='none'; this.el('results').style.display='none'; this.el('game').style.display='block';
+    // N random places, each with one randomly-chosen clue
+    // plus 3 random distractor places, so each clue shows only 4 labeled dots
+    this.queue=shuffled(this.places).slice(0,this.N).map(p=>({
+      place:p, clue:p.clues[Math.floor(Math.random()*p.clues.length)],
+      options:new Set([p.name, ...shuffled(this.places.filter(q=>q.name!==p.name)).slice(0,3).map(q=>q.name)])
+    }));
+    this.idx=0; this.score=0; this.answers=[]; this.el('scoreValue').textContent='0';
+    this.resetZoom(false);
+    this.showQuestion();
+  }
+
+  isFound(name){ return this.answers.some(a=>a.isCorrect && a.place===name); }
+  label(p){ return p.kind ? `${p.name} (${p.kind})` : p.name; }
+
+  showQuestion(){
+    this.answered=false;
+    this.el('map').classList.remove('answered');
+    this.el('progressValue').textContent=`${this.idx} / ${this.N}`;
+    this.el('progressText').textContent=`Clue ${this.idx+1} of ${this.N}`;
+    this.el('promptValue').textContent=this.queue[this.idx].clue;
+    this.el('feedback').textContent=''; this.el('feedback').className='map-feedback';
+    this.el('nextBtn').style.display='none';
+    this.renderDots();
+  }
+
+  renderDots(){
+    if(!this.mapReady || !this.queue.length) return;
+    // Show only this clue's 4 options (the answer + 3 distractors), each labeled with its name.
+    const opts=this.queue[this.idx].options;
+    this.dots.classed('target',false).classed('wrong',false)
+      .classed('labeled',d=>opts.has(d.name))
+      .classed('correct',d=>this.isFound(d.name))
+      .style('display',d=>opts.has(d.name) ? null : 'none');
+  }
+
+  handleClick(place){
+    // Only dots are clickable. Ignore if already answered, or if this place was already found.
+    if(this.answered || !this.mapReady || !this.queue.length) return;
+    if(this.isFound(place.name)) return;
+    const target=this.queue[this.idx].place; const isCorrect=place.name===target.name;
+    this.answered=true; if(isCorrect) this.score++;
+    this.answers.push({place:target.name,yourClick:place.name,isCorrect});
+    this.el('scoreValue').textContent=this.score;
+    this.el('map').classList.add('answered');
+    const good=`Correct — that's ${this.label(target)}.`;
+    this.el('feedback').textContent=isCorrect ? good : `Not quite — you clicked ${place.name}. The answer is ${this.label(target)}, highlighted on the map.`;
+    this.el('feedback').className=`map-feedback ${isCorrect?'good':'bad'}`;
+    this.dots
+      .classed('wrong',d=>!isCorrect && d.name===place.name)
+      .classed('target',d=>!isCorrect && d.name===target.name)
+      .classed('correct',d=>this.isFound(d.name))
+      .filter(d=>d.name===target.name || d.name===place.name).raise();
+    if(isCorrect){
+      // Correct guess: go straight to the next clue (no Continue button).
+      this.idx++;
+      if(this.idx>=this.queue.length){ this.end(); return; }
+      this.showQuestion();
+      this.el('feedback').textContent=good;
+      this.el('feedback').className='map-feedback good';
+      return;
+    }
+    this.el('nextBtn').textContent=this.idx===this.N-1 ? 'See results →' : 'Next clue →';
+    this.el('nextBtn').style.display='inline-block'; this.el('nextBtn').focus();
+  }
+
+  next(){
+    if(!this.answered) return;
+    this.idx++;
+    if(this.idx>=this.queue.length){ this.end(); return; }
+    this.showQuestion();
+  }
+
+  end(){
+    this.el('game').style.display='none'; this.el('results').style.display='block';
+    this.el('finalScoreLine').textContent=`You located ${this.score} of ${this.N} events (${Math.round(this.score/this.N*100)}%).`;
+    this.el('finalGrid').innerHTML=this.answers.map(a=>
+      `<div class="item ${a.isCorrect?'hit':'miss'}"><span>${a.place}</span><span>${a.isCorrect?'✓':'—'}</span></div>`
+    ).join('');
+  }
+
+  reset(){
+    this.el('results').style.display='none'; this.el('intro').style.display='block'; this.el('game').style.display='none';
+    this.queue=[]; this.idx=0; this.score=0; this.answers=[];
+    if(this.mapReady){ this.renderDots(); this.dots.classed('correct',false); this.resetZoom(false); }
+  }
+}
+
+/* ============================================================
    FIND THE COUNTRY QUIZ
    Given a country's name, click it on a zoomable world map. Every country
    passed in opts.countries is quizzed (the app passes the full COUNTRIES

@@ -28,6 +28,7 @@ const {
   ROMAN_EMPEROR_TERMS,
   ROMAN_EMPEROR_CLUES,
   ANCIENT_EGYPT_QUIZ,
+  ANCIENT_GREECE_MAP,
   CHINESE_DYNASTY_TERMS,
   CHINESE_DYNASTY_ALIASES,
   ALASKA_TRIVIA,
@@ -864,6 +865,10 @@ const CANADA_CITY_DOTS = [
   { name:'Regina',       lon:-104.6189, lat:50.4452, target:true },
 ];
 const findCityQuiz = new FindCityQuiz({ id:'findcity', cities:CANADA_CITY_DOTS });
+
+// Ancient Greece: Where Did It Happen? — clue = historical event, answer = its location dot.
+// Places and clues live in history.json (ANCIENT_GREECE_MAP); each round asks 15 random places.
+const ancientGreeceMapQuiz = new FindEventQuiz({ id:'ancientgreecemap', places:ANCIENT_GREECE_MAP, rounds:15 });
 
 // On the Map: World — 20 random countries per round. World-atlas names differ
 // from our canonical names for a handful of countries, so map those explicitly;
