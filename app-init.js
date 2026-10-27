@@ -19,6 +19,7 @@ const {
   RIVER_ALIASES,
   OCEANS,
   OCEAN_ALIASES,
+  FAMOUS_WATERFALLS,
   PRESIDENTS_TERMS,
   PRESIDENT_ALIASES,
   PM_TERMS,
@@ -865,6 +866,10 @@ const CANADA_CITY_DOTS = [
   { name:'Regina',       lon:-104.6189, lat:50.4452, target:true },
 ];
 const findCityQuiz = new FindCityQuiz({ id:'findcity', cities:CANADA_CITY_DOTS });
+
+// On the Map: Famous Waterfalls — click the named waterfall on a world map; the country is revealed after each guess.
+// Waterfalls (with their countries) live in geography.json (FAMOUS_WATERFALLS).
+const waterfallMapQuiz = new FindWaterfallQuiz({ id:'waterfallmap', waterfalls:FAMOUS_WATERFALLS });
 
 // Ancient Greece: Where Did It Happen? — clue = historical event, answer = its location dot.
 // Places and clues live in history.json (ANCIENT_GREECE_MAP); each round asks 15 random places.

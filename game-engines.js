@@ -1957,6 +1957,192 @@ class FindEventQuiz{
 }
 
 /* ============================================================
+   FIND THE WATERFALL QUIZ  (geographical features)
+   Same mechanics as "Find the Canadian City" (zoom/pan, only dots are
+   clickable, correct answers advance automatically, wrong answers reveal
+   the right dot), but on a world map. After every guess the country (or
+   countries, for border falls) the waterfall is in is revealed.
+   opts.waterfalls: [{ name, lon, lat, countries:[string, ...] }, ...]
+   ============================================================ */
+
+function findWaterfallHTML(id, N){
+  return findCityHTML(id, N)
+    .replace(/cities appear one at a time in random order/, 'waterfalls appear one at a time in random order')
+    .replace(/You're given a city's name — click its dot on the map/, "You're given a waterfall's name — click its dot on the world map")
+    .replace(/One click per city; the correct location is revealed either way/, 'One click per waterfall; the correct location — and its country — is revealed either way')
+    .replace(/click this city on the map/, 'click this waterfall on the map')
+    .replace(/Map of southern Canada — click the dot for the named city/, 'World map — click the dot for the named waterfall')
+    .replace(/viewBox="0 0 975 400"/, 'viewBox="0 0 975 480"')
+    .replace(/Next city &rarr;/, 'Next waterfall &rarr;')
+    .replace(/All \d+ cities/, `All ${N} waterfalls`);
+}
+
+class FindWaterfallQuiz{
+  constructor(opts){
+    this.id=opts.id; this.falls=opts.waterfalls.map(w=>({...w}));
+    this.N=this.falls.length;
+    this.W=975; this.H=480; this.k=1;
+    this.queue=[]; this.idx=0; this.score=0; this.answers=[]; this.answered=false; this.mapReady=false;
+    document.getElementById(`${this.id}-mount`).innerHTML=findWaterfallHTML(this.id, this.N);
+    this.el=key=>document.getElementById(`${this.id}-${key}`);
+    this.el('startBtn').addEventListener('click',()=>this.start());
+    this.el('nextBtn').addEventListener('click',()=>this.next());
+    this.el('resetBtn').addEventListener('click',()=>this.reset());
+    document.addEventListener('keydown',e=>{
+      const screen=document.getElementById(`screen-${this.id}`);
+      if(e.key==='Enter' && this.answered && screen && screen.classList.contains('active') && this.el('game').style.display!=='none') this.next();
+    });
+    this.loadMap();
+  }
+
+  async loadMap(){
+    try{
+      const world=await d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json');
+      const land=topojson.feature(world,world.objects.countries).features
+        .filter(f=>f.properties.name!=='Antarctica' && f.properties.name!=='Fr. S. Antarctic Lands');
+      const pts={ type:'MultiPoint', coordinates:this.falls.map(w=>[w.lon,w.lat]) };
+      const projection=d3.geoNaturalEarth1().fitExtent([[40,30],[this.W-40,this.H-30]], pts);
+      const path=d3.geoPath(projection);
+      this.falls.forEach(w=>{ [w.x,w.y]=projection([w.lon,w.lat]); });
+
+      const svg=d3.select(this.el('map'));
+      const layer=svg.append('g');
+      layer.append('g').selectAll('path').data(land).join('path').attr('class','state').attr('d',path);
+      this.dots=layer.append('g').selectAll('g').data(this.falls).join('g').attr('class','city-dot')
+        .attr('transform',d=>`translate(${d.x},${d.y})`)
+        .on('click',(event,d)=>this.handleClick(d));
+      this.dots.append('circle').attr('r',5);
+      this.dots.append('text').attr('x',d=>d.x>this.W-200?-9:9).attr('y',4)
+        .attr('text-anchor',d=>d.x>this.W-200?'end':'start').text(d=>d.name);
+
+      this.zoom=d3.zoom().scaleExtent([1,40])
+        .extent([[0,0],[this.W,this.H]]).translateExtent([[0,0],[this.W,this.H]])
+        .filter(e=>e.type==='wheel' ? (e.ctrlKey||e.metaKey) : !e.button)
+        .on('zoom',e=>{
+          this.k=e.transform.k; layer.attr('transform',e.transform);
+          // keep dots and labels a constant on-screen size while zooming
+          this.dots.attr('transform',d=>`translate(${d.x},${d.y}) scale(${1/this.k})`);
+        });
+      svg.call(this.zoom).on('dblclick.zoom',null);
+      this.el('zoomIn').addEventListener('click',()=>svg.transition().duration(200).call(this.zoom.scaleBy,1.8));
+      this.el('zoomOut').addEventListener('click',()=>svg.transition().duration(200).call(this.zoom.scaleBy,1/1.8));
+      this.el('zoomReset').addEventListener('click',()=>this.resetZoom(true));
+
+      this.mapReady=true;
+      if(this.queue.length) this.renderDots();
+    }catch(err){
+      this.el('feedback').textContent='The map could not be loaded. Please refresh and try again.';
+      this.el('feedback').className='map-feedback bad';
+      console.error(err);
+    }
+  }
+
+  resetZoom(animate){
+    if(!this.mapReady) return;
+    const svg=d3.select(this.el('map'));
+    (animate ? svg.transition().duration(250) : svg).call(this.zoom.transform,d3.zoomIdentity);
+  }
+
+  // After a wrong answer the correct dot gets highlighted; if the player is
+  // zoomed in somewhere else, zoom back out so they can actually see it.
+  ensureVisible(name){
+    const w=this.falls.find(f=>f.name===name); if(!w) return;
+    const [tx,ty]=d3.zoomTransform(this.el('map')).apply([w.x,w.y]);
+    if(tx<0||tx>this.W||ty<0||ty>this.H) this.resetZoom(true);
+  }
+
+  start(){
+    this.el('intro').style.display='none'; this.el('results').style.display='none'; this.el('game').style.display='block';
+    this.queue=shuffled(this.falls.map(w=>w.name)); this.idx=0; this.score=0; this.answers=[]; this.el('scoreValue').textContent='0';
+    this.resetZoom(false);
+    this.showQuestion();
+  }
+
+  isFound(name){ return this.answers.some(a=>a.isCorrect && a.fall===name); }
+  fallByName(name){ return this.falls.find(f=>f.name===name); }
+
+  // "in Canada" / "on the border of Zambia and Zimbabwe"
+  where(w){
+    const c=w.countries;
+    return c.length>1 ? `on the border of ${c.slice(0,-1).join(', ')} and ${c[c.length-1]}` : `in ${c[0]}`;
+  }
+
+  showQuestion(){
+    this.answered=false;
+    this.el('map').classList.remove('answered');
+    this.el('progressValue').textContent=`${this.idx} / ${this.N}`;
+    this.el('progressText').textContent=`Waterfall ${this.idx+1} of ${this.N}`;
+    this.el('promptValue').textContent=this.queue[this.idx];
+    this.el('feedback').textContent=''; this.el('feedback').className='map-feedback';
+    this.el('nextBtn').style.display='none';
+    this.renderDots();
+  }
+
+  renderDots(){
+    if(!this.mapReady || !this.queue.length) return;
+    this.dots.classed('target',false).classed('wrong',false).classed('labeled',false)
+      .classed('correct',d=>this.isFound(d.name));
+  }
+
+  handleClick(fall){
+    // Only dots are clickable. Ignore if already answered, or if this waterfall was already found.
+    if(this.answered || !this.mapReady || !this.queue.length) return;
+    if(this.isFound(fall.name)) return;
+    const target=this.queue[this.idx]; const isCorrect=fall.name===target;
+    const t=this.fallByName(target);
+    this.answered=true; if(isCorrect) this.score++;
+    this.answers.push({fall:target,yourClick:fall.name,isCorrect});
+    this.el('scoreValue').textContent=this.score;
+    this.el('map').classList.add('answered');
+    const good=`Correct — that's ${target}, ${this.where(t)}.`;
+    this.el('feedback').textContent=isCorrect ? good
+      : `Not quite — you clicked ${fall.name} (${this.where(fall)}). ${target} is highlighted on the map — it's ${this.where(t)}.`;
+    this.el('feedback').className=`map-feedback ${isCorrect?'good':'bad'}`;
+    this.dots
+      .classed('wrong',d=>!isCorrect && d.name===fall.name)
+      .classed('target',d=>!isCorrect && d.name===target)
+      .classed('correct',d=>this.isFound(d.name))
+      .classed('labeled',d=>d.name===target || d.name===fall.name)
+      .filter(d=>d.name===target || d.name===fall.name).raise();
+    if(isCorrect){
+      // Correct guess: go straight to the next waterfall (no Continue button).
+      this.idx++;
+      if(this.idx>=this.queue.length){ this.end(); return; }
+      this.showQuestion();
+      this.el('feedback').textContent=good;
+      this.el('feedback').className='map-feedback good';
+      return;
+    }
+    this.ensureVisible(target);
+    this.el('nextBtn').textContent=this.idx===this.N-1 ? 'See results →' : 'Next waterfall →';
+    this.el('nextBtn').style.display='inline-block'; this.el('nextBtn').focus();
+  }
+
+  next(){
+    if(!this.answered) return;
+    this.idx++;
+    if(this.idx>=this.queue.length){ this.end(); return; }
+    this.showQuestion();
+  }
+
+  end(){
+    this.el('game').style.display='none'; this.el('results').style.display='block';
+    this.el('finalScoreLine').textContent=`You found ${this.score} of ${this.N} waterfalls (${Math.round(this.score/this.N*100)}%).`;
+    const byFall=new Map(this.answers.map(a=>[a.fall,a]));
+    this.el('finalGrid').innerHTML=this.falls.slice().sort((a,b)=>a.name.localeCompare(b.name)).map(w=>{
+      const hit=byFall.get(w.name)?.isCorrect;
+      return `<div class="item ${hit?'hit':'miss'}"><span>${w.name}<br><small style="opacity:.75">${w.countries.join(' / ')}</small></span><span>${hit?'✓':'—'}</span></div>`;
+    }).join('');
+  }
+
+  reset(){
+    this.el('results').style.display='none'; this.el('intro').style.display='block'; this.el('game').style.display='none';
+    this.queue=[]; this.idx=0; this.score=0; this.answers=[];
+    if(this.mapReady){ this.renderDots(); this.dots.classed('correct',false); this.resetZoom(false); }
+  }
+}
+
+/* ============================================================
    FIND THE COUNTRY QUIZ
    Given a country's name, click it on a zoomable world map. Every country
    passed in opts.countries is quizzed (the app passes the full COUNTRIES
