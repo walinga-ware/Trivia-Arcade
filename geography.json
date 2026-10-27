@@ -2552,6 +2552,28 @@
     "Southern Ocean",
     "Arctic Ocean"
   ],
+  "FAMOUS_WATERFALLS": [
+    { "name": "Niagara Falls", "lat": 43.0962, "lon": -79.0377, "countries": ["Canada", "United States"] },
+    { "name": "Victoria Falls", "lat": -17.9243, "lon": 25.8572, "countries": ["Zambia", "Zimbabwe"] },
+    { "name": "Angel Falls", "lat": 5.9676, "lon": -62.5357, "countries": ["Venezuela"] },
+    { "name": "James Bruce Falls", "lat": 50.19, "lon": -123.85, "countries": ["Canada"] },
+    { "name": "Iguazu Falls", "lat": -25.6953, "lon": -54.4367, "countries": ["Argentina", "Brazil"] },
+    { "name": "Yosemite Falls", "lat": 37.7566, "lon": -119.5966, "countries": ["United States"] },
+    { "name": "Gullfoss", "lat": 64.3271, "lon": -20.1199, "countries": ["Iceland"] },
+    { "name": "Kaieteur Falls", "lat": 5.1753, "lon": -59.4811, "countries": ["Guyana"] },
+    { "name": "Jog Falls", "lat": 14.2294, "lon": 74.8125, "countries": ["India"] },
+    { "name": "Sutherland Falls", "lat": -44.7706, "lon": 167.7369, "countries": ["New Zealand"] },
+    { "name": "Tugela Falls", "lat": -28.7515, "lon": 28.8889, "countries": ["South Africa"] },
+    { "name": "Ban Gioc–Detian Falls", "lat": 22.8553, "lon": 106.7215, "countries": ["Vietnam", "China"] },
+    { "name": "Kegon Falls", "lat": 36.7389, "lon": 139.5047, "countries": ["Japan"] },
+    { "name": "Rhine Falls", "lat": 47.6779, "lon": 8.6154, "countries": ["Switzerland"] },
+    { "name": "Krimml Falls", "lat": 47.2133, "lon": 12.1739, "countries": ["Austria"] },
+    { "name": "Vøringfossen", "lat": 60.4278, "lon": 7.2561, "countries": ["Norway"] },
+    { "name": "Khone Falls", "lat": 13.9486, "lon": 105.9733, "countries": ["Laos"] },
+    { "name": "Blue Nile Falls", "lat": 11.4872, "lon": 37.5876, "countries": ["Ethiopia"] },
+    { "name": "Murchison Falls", "lat": 2.2761, "lon": 31.6869, "countries": ["Uganda"] },
+    { "name": "Huangguoshu Falls", "lat": 25.9922, "lon": 105.667, "countries": ["China"] }
+  ],
   "OCEAN_ALIASES": {
     "pacific": "Pacific Ocean",
     "atlantic": "Atlantic Ocean",
