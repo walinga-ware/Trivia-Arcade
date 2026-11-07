@@ -1960,20 +1960,24 @@ class FindEventQuiz{
    FIND THE WATERFALL QUIZ  (geographical features)
    Same mechanics as "Find the Canadian City" (zoom/pan, only dots are
    clickable, correct answers advance automatically, wrong answers reveal
-   the right dot), but on a world map. After every guess the country (or
-   countries, for border falls) the waterfall is in is revealed.
-   opts.waterfalls: [{ name, lon, lat, countries:[string, ...] }, ...]
+   the right dot), but on a world map. Instead of the waterfall's name, the
+   player gets a hint about what makes it special or famous (like the
+   Ancient Greece quiz); each hint shows only 4 labeled dots — the answer
+   plus 3 distractors. After every guess the country (or countries, for
+   border falls) the waterfall is in is revealed.
+   opts.waterfalls: [{ name, lon, lat, countries:[string, ...], clues:[string, ...] }, ...]
    ============================================================ */
 
 function findWaterfallHTML(id, N){
   return findCityHTML(id, N)
-    .replace(/cities appear one at a time in random order/, 'waterfalls appear one at a time in random order')
-    .replace(/You're given a city's name — click its dot on the map/, "You're given a waterfall's name — click its dot on the world map")
-    .replace(/One click per city; the correct location is revealed either way/, 'One click per waterfall; the correct location — and its country — is revealed either way')
-    .replace(/click this city on the map/, 'click this waterfall on the map')
-    .replace(/Map of southern Canada — click the dot for the named city/, 'World map — click the dot for the named waterfall')
+    .replace(/cities appear one at a time in random order/, 'waterfall hints appear one at a time in random order')
+    .replace(/You're given a city's name — click its dot on the map/, "Each hint describes a famous waterfall — click its dot on the world map")
+    .replace(/One click per city; the correct location is revealed either way/, 'Only 4 labeled waterfalls are shown for each hint — one of them is the answer<br>\n          &middot; One click per hint; the correct location — and its country — is revealed either way')
+    .replace(/click this city on the map/, 'which waterfall is this?')
+    .replace(/Map of southern Canada — click the dot for the named city/, 'World map — click the dot for the waterfall that matches the hint')
     .replace(/viewBox="0 0 975 400"/, 'viewBox="0 0 975 480"')
-    .replace(/Next city &rarr;/, 'Next waterfall &rarr;')
+    .replace(/<h3 id="([^"]*)-promptValue"><\/h3>/, '<h3 class="event-clue" id="$1-promptValue"></h3>')
+    .replace(/Next city &rarr;/, 'Next hint &rarr;')
     .replace(/All \d+ cities/, `All ${N} waterfalls`);
 }
 
@@ -2053,7 +2057,13 @@ class FindWaterfallQuiz{
 
   start(){
     this.el('intro').style.display='none'; this.el('results').style.display='none'; this.el('game').style.display='block';
-    this.queue=shuffled(this.falls.map(w=>w.name)); this.idx=0; this.score=0; this.answers=[]; this.el('scoreValue').textContent='0';
+    // Every waterfall once, in random order, each with one randomly-chosen hint
+    // plus 3 random distractor waterfalls, so each hint shows only 4 labeled dots.
+    this.queue=shuffled(this.falls).map(w=>({
+      fall:w, clue:w.clues[Math.floor(Math.random()*w.clues.length)],
+      options:new Set([w.name, ...shuffled(this.falls.filter(q=>q.name!==w.name)).slice(0,3).map(q=>q.name)])
+    }));
+    this.idx=0; this.score=0; this.answers=[]; this.el('scoreValue').textContent='0';
     this.resetZoom(false);
     this.showQuestion();
   }
@@ -2071,8 +2081,8 @@ class FindWaterfallQuiz{
     this.answered=false;
     this.el('map').classList.remove('answered');
     this.el('progressValue').textContent=`${this.idx} / ${this.N}`;
-    this.el('progressText').textContent=`Waterfall ${this.idx+1} of ${this.N}`;
-    this.el('promptValue').textContent=this.queue[this.idx];
+    this.el('progressText').textContent=`Hint ${this.idx+1} of ${this.N}`;
+    this.el('promptValue').textContent=this.queue[this.idx].clue;
     this.el('feedback').textContent=''; this.el('feedback').className='map-feedback';
     this.el('nextBtn').style.display='none';
     this.renderDots();
@@ -2080,15 +2090,19 @@ class FindWaterfallQuiz{
 
   renderDots(){
     if(!this.mapReady || !this.queue.length) return;
-    this.dots.classed('target',false).classed('wrong',false).classed('labeled',false)
-      .classed('correct',d=>this.isFound(d.name));
+    // Show only this hint's 4 options (the answer + 3 distractors), each labeled with its name.
+    const opts=this.queue[this.idx].options;
+    this.dots.classed('target',false).classed('wrong',false)
+      .classed('labeled',d=>opts.has(d.name))
+      .classed('correct',d=>this.isFound(d.name))
+      .style('display',d=>opts.has(d.name) ? null : 'none');
   }
 
   handleClick(fall){
     // Only dots are clickable. Ignore if already answered, or if this waterfall was already found.
     if(this.answered || !this.mapReady || !this.queue.length) return;
     if(this.isFound(fall.name)) return;
-    const target=this.queue[this.idx]; const isCorrect=fall.name===target;
+    const target=this.queue[this.idx].fall.name; const isCorrect=fall.name===target;
     const t=this.fallByName(target);
     this.answered=true; if(isCorrect) this.score++;
     this.answers.push({fall:target,yourClick:fall.name,isCorrect});
@@ -2102,10 +2116,9 @@ class FindWaterfallQuiz{
       .classed('wrong',d=>!isCorrect && d.name===fall.name)
       .classed('target',d=>!isCorrect && d.name===target)
       .classed('correct',d=>this.isFound(d.name))
-      .classed('labeled',d=>d.name===target || d.name===fall.name)
       .filter(d=>d.name===target || d.name===fall.name).raise();
     if(isCorrect){
-      // Correct guess: go straight to the next waterfall (no Continue button).
+      // Correct guess: go straight to the next hint (no Continue button).
       this.idx++;
       if(this.idx>=this.queue.length){ this.end(); return; }
       this.showQuestion();
@@ -2114,7 +2127,7 @@ class FindWaterfallQuiz{
       return;
     }
     this.ensureVisible(target);
-    this.el('nextBtn').textContent=this.idx===this.N-1 ? 'See results →' : 'Next waterfall →';
+    this.el('nextBtn').textContent=this.idx===this.N-1 ? 'See results →' : 'Next hint →';
     this.el('nextBtn').style.display='inline-block'; this.el('nextBtn').focus();
   }
 
