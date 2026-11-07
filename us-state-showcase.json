@@ -58,6 +58,72 @@
       "display": "Skagway"
     }
   ],
+  "ARIZONA_TRIVIA": [
+    {
+      "q": "Prized by Native American artisans for jewelry, what blue-green stone is Arizona's official state gem?",
+      "accepted": [
+        "turquoise"
+      ],
+      "display": "Turquoise"
+    },
+    {
+      "q": "What desert songbird, famous for nesting in spiny cacti, is Arizona's official state bird?",
+      "accepted": [
+        "cactus wren",
+        "wren"
+      ],
+      "display": "Cactus Wren"
+    },
+    {
+      "q": "What gaping natural wonder gives Arizona its well-known state nickname?",
+      "accepted": [
+        "grand canyon state",
+        "grand canyon"
+      ],
+      "display": "The Grand Canyon State"
+    },
+    {
+      "q": "What white, springtime bloom from Arizona's tallest cactus is the state's official flower?",
+      "accepted": [
+        "saguaro blossom",
+        "saguaro flower",
+        "saguaro cactus blossom",
+        "saguaro cactus flower",
+        "saguaro"
+      ],
+      "display": "Saguaro cactus blossom"
+    },
+    {
+      "q": "What vehicles are stored in a vast storage facility, called the Boneyard, in Tucson, Arizona?",
+      "accepted": [
+        "planes",
+        "plane",
+        "aircraft",
+        "airplane",
+        "airplanes"
+      ],
+      "display": "Military Aircraft"
+    },
+    {
+      "q": "While most of America springs forward and falls back, most of Arizona skips what yearly clock-changing practice?",
+      "accepted": [
+        "daylight saving time",
+        "daylight savings time",
+        "daylight saving",
+        "daylight savings",
+        "dst"
+      ],
+      "display": "Daylight saving time \u2014 most of Arizona stays on standard time year-round (the Navajo Nation is the exception)"
+    },
+    {
+      "q": "In the 1960s, what famous British bridge was bought, dismantled stone by stone, and rebuilt in Lake Havasu City?",
+      "accepted": [
+        "london bridge",
+        "the london bridge"
+      ],
+      "display": "London Bridge"
+    }
+  ],
   "CALIFORNIA_TRIVIA": [
     {
       "q": "California boasts two official state trees \u2014 can you name either one?",
