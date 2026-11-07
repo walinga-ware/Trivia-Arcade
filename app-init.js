@@ -406,7 +406,7 @@ const nflGame = new FreeRecallGame({
    ============================================================ */
 const STATE_SHOWCASE_QUIZZES = [
   { id: 'alaska',     state: 'Alaska',     subtitle: 'Frontier Facts',      questions: ALASKA_TRIVIA },
-  { id: 'arizona',    state: 'Arizona',    subtitle: 'Desert Dazzler',      questions: ARIZONA_TRIVIA },
+  { id: 'arizona',    state: 'Arizona',    subtitle: 'Desert Discoveries',      questions: ARIZONA_TRIVIA },
   { id: 'california', state: 'California', subtitle: 'Golden Genius',      questions: CALIFORNIA_TRIVIA },
   { id: 'connecticut', state: 'Connecticut', subtitle: 'Nutmeg Knowledge',  questions: CONNECTICUT_TRIVIA },
   { id: 'delaware',  state: 'Delaware',  subtitle: 'First State Facts',    questions: DELAWARE_TRIVIA },
