@@ -285,6 +285,7 @@
   @media (max-width: 640px){
     .random-quiz{ flex-direction:column; align-items:stretch; gap:14px; padding:18px 16px; margin-bottom:28px; text-align:center; }
     .random-quiz button{ width:100%; min-height:52px; font-size:16px; }
+    .random-quiz-text{ display:none; }
   }
 
   /* ---- quiz name shown above the rules ---- */
@@ -309,10 +310,10 @@
     <!-- ============ RANDOM QUIZ ============ -->
     <aside class="random-quiz">
       <div class="random-quiz-text">
-        <h2 class="random-quiz-title"><span class="dice" aria-hidden="true">🎲</span>Random quiz</h2>
+        <h2 class="random-quiz-title"><span class="dice" aria-hidden="true">🎲</span>Roll the dice</h2>
         <p class="random-quiz-sub">Can't decide? We'll pick one for you.</p>
       </div>
-      <button type="button" class="btn-primary" id="random-quiz-btn">Surprise me</button>
+      <button type="button" class="btn-primary" id="random-quiz-btn">Random quiz</button>
     </aside>
 
     <!-- ============ GEOGRAPHY ============ -->
