@@ -266,6 +266,37 @@
   .country-pt:not(.marker){ pointer-events:none; }
   .country-pt:not(.marker) circle{ display:none; }
   @media(max-width:600px){ .map-answer-row{ flex-direction:column; } .map-answer-row button{ width:100%; } .state-map-wrap{ padding:5px; } }
+
+  /* ---- random quiz banner ---- */
+  .random-quiz{
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    background:linear-gradient(135deg, rgba(201,154,82,0.16), rgba(201,154,82,0.04));
+    border:1px solid var(--brass); border-radius:8px;
+    padding:18px 22px; margin:0 0 36px;
+  }
+  .random-quiz-text{ min-width:0; }
+  .random-quiz-title{
+    font-family:'IBM Plex Sans', sans-serif; font-weight:700; font-size:clamp(18px,4vw,22px);
+    color:var(--paper); margin:0 0 4px;
+  }
+  .random-quiz-sub{ font-size:12.5px; color:var(--paper-dim); line-height:1.5; margin:0; }
+  .random-quiz button{ white-space:nowrap; flex-shrink:0; }
+  .random-quiz .dice{ display:inline-block; margin-right:6px; }
+  @media (max-width: 640px){
+    .random-quiz{ flex-direction:column; align-items:stretch; gap:14px; padding:18px 16px; margin-bottom:28px; text-align:center; }
+    .random-quiz button{ width:100%; min-height:52px; font-size:16px; }
+    .random-quiz-text{ display:none; }
+  }
+
+  /* ---- quiz name shown above the rules ---- */
+  .quiz-screen-title{
+    font-family:'IBM Plex Sans', sans-serif; font-weight:600; font-size:clamp(22px,5vw,32px);
+    line-height:1.25; margin:0 0 6px; color:var(--paper); overflow-wrap:anywhere;
+  }
+  .quiz-screen-mode{
+    display:inline-block; font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:.5px;
+    text-transform:uppercase; color:var(--brass); margin:0 0 14px;
+  }
 </style>
 </head>
 <body>
@@ -275,6 +306,15 @@
   <div class="screen active" id="screen-home">
     <h1>Walinga Trivia Arcade</h1>
     <p class="subtitle">Quick-fire recall games. See how much you know.</p>
+
+    <!-- ============ RANDOM QUIZ ============ -->
+    <aside class="random-quiz">
+      <div class="random-quiz-text">
+        <h2 class="random-quiz-title"><span class="dice" aria-hidden="true">🎲</span>Roll the dice</h2>
+        <p class="random-quiz-sub">Can't decide? We'll pick one for you.</p>
+      </div>
+      <button type="button" class="btn-primary" id="random-quiz-btn">Random quiz</button>
+    </aside>
 
     <!-- ============ GEOGRAPHY ============ -->
     <div class="category">
@@ -744,6 +784,70 @@ function initConnectorsShowcase(quizDefs) {
 
   return instances;
 }
+
+/* ============================================================
+   Quiz name above the rules + Random quiz
+   Works from the home-page cards themselves (including the cards that
+   are generated later by app-init.js), so no per-quiz wiring is needed.
+   ============================================================ */
+function playTarget(btn) {
+  const m = /showScreen\('([^']+)'\)/.exec(btn.getAttribute('onclick') || '');
+  if (!m || m[1] === 'home') return null;
+  const card = btn.closest('.card');
+  const h3 = card && card.querySelector('h3');
+  if (!h3) return null;
+  return { id: m[1], title: h3.textContent.trim(), mode: btn.getAttribute('aria-label') || '' };
+}
+
+function setQuizTitle(id, title, mode) {
+  const screen = document.getElementById('screen-' + id);
+  if (!screen) return;
+  let el = screen.querySelector(':scope > .quiz-screen-title, .quiz-screen-title');
+  if (!el) {
+    el = document.createElement('h2');
+    el.className = 'quiz-screen-title';
+    const mount = document.getElementById(id + '-mount');
+    if (mount && mount.parentNode) mount.parentNode.insertBefore(el, mount);
+    else screen.appendChild(el);
+    const tag = document.createElement('div');
+    tag.className = 'quiz-screen-mode';
+    tag.hidden = true;
+    el.after(tag);
+  }
+  el.textContent = title;
+  const tag = el.nextElementSibling;
+  if (tag && tag.classList.contains('quiz-screen-mode')) {
+    tag.textContent = mode || '';
+    tag.hidden = !mode;
+  }
+}
+
+// Any "Play" button on the home page: stamp the quiz name on its screen
+// (capture phase, so it runs before the button's own showScreen call).
+document.addEventListener('click', e => {
+  const btn = e.target.closest('button[onclick*="showScreen("]');
+  if (!btn) return;
+  const t = playTarget(btn);
+  if (t) setQuizTitle(t.id, t.title, t.mode);
+}, true);
+
+let lastRandomQuiz = null;
+document.addEventListener('DOMContentLoaded', () => {
+  const rndBtn = document.getElementById('random-quiz-btn');
+  if (!rndBtn) return;
+  rndBtn.addEventListener('click', () => {
+    // Main "Play" button of every card currently on the home page.
+    const targets = [...document.querySelectorAll('#screen-home .card .btn-primary[onclick*="showScreen("]')]
+      .map(playTarget)
+      .filter(t => t && !t.mode);
+    if (!targets.length) return;
+    const pool = targets.length > 1 ? targets.filter(t => t.id !== lastRandomQuiz) : targets;
+    const pick = pool[Math.floor(Math.random() * pool.length)];
+    lastRandomQuiz = pick.id;
+    setQuizTitle(pick.id, pick.title);
+    showScreen(pick.id);
+  });
+});
 
 /* ============================================================
    Data + wiring

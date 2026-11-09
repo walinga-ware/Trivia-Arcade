@@ -80,7 +80,6 @@ function freeRecallHTML(id, title){
     </div>
 
     <div class="game" id="${id}-game" style="display:none;">
-      <h3>${title}</h3>
       <div class="top-row">
         <div class="plate timer" id="${id}-timerPlate">
           <div class="label">time remaining</div>
