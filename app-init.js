@@ -45,6 +45,7 @@ const {
   ONTARIO_TRIVIA,
   NEW_BRUNSWICK_TRIVIA,
   YUKON_TRIVIA,
+  QUEBEC_TRIVIA,
   NBA_TEAMS,
   NBA_TEAM_ALIASES,
   NFL_TEAMS,
@@ -446,6 +447,7 @@ const CANADA_SHOWCASE_QUIZZES = [
   { id: 'alberta',      state: 'Alberta',       subtitle: 'Wild Rose Wisdom',          questions: ALBERTA_TRIVIA },
   { id: 'newbrunswick', state: 'New Brunswick', subtitle: 'Fundy Facts', questions: NEW_BRUNSWICK_TRIVIA },
   { id: 'ontario',      state: 'Ontario',       subtitle: 'Trillium Trivia',           questions: ONTARIO_TRIVIA },
+  { id: 'quebec',       state: 'Quebec',        subtitle: 'Je Me Souviens',            questions: QUEBEC_TRIVIA },
   { id: 'yukon',        state: 'Yukon',         subtitle: 'North of 60',               questions: YUKON_TRIVIA },
 ];
 
