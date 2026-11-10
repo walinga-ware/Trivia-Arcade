@@ -211,5 +211,67 @@
       ],
       "display": "Mount Logan"
     }
+  ],
+  "QUEBEC_TRIVIA": [
+    {
+      "q": "What purple-blue wildflower, found near the province's marshes and rivers, is Quebec's official flower?",
+      "accepted": [
+        "blue flag iris",
+        "blue flag",
+        "iris",
+        "blue iris"
+      ],
+      "display": "Blue Flag Iris"
+    },
+    {
+      "q": "What large, white Arctic bird, a winter visitor to Quebec's fields and shorelines, is the province's official bird?",
+      "accepted": [
+        "owl",
+        "snowy owl",
+        "snow owl"
+      ],
+      "display": "Snowy Owl"
+    },
+    {
+      "q": "What golden-barked hardwood, whose wood is used for furniture and flooring, is Quebec's official tree?",
+      "accepted": [
+        "yellow birch",
+        "birch"
+      ],
+      "display": "Yellow Birch"
+    },
+    {
+      "q": "What three-word French motto, meaning \u201cI remember,\u201d appears on Quebec's coat of arms and license plates?",
+      "accepted": [
+        "je me souviens"
+      ],
+      "display": "Je me souviens"
+    },
+    {
+      "q": "What mighty river runs past both Montreal and Quebec City before widening into a gulf?",
+      "accepted": [
+        "st lawrence",
+        "st lawrence river",
+        "saint lawrence",
+        "saint lawrence river"
+      ],
+      "display": "St. Lawrence River"
+    },
+    {
+      "q": "What snowman mascot, wearing a red toque and a ceinture fl\u00e9ch\u00e9e sash, presides over Quebec City's Winter Carnival?",
+      "accepted": [
+        "bonhomme",
+        "bonhomme carnaval",
+        "bonhomme de neige"
+      ],
+      "display": "Bonhomme Carnaval"
+    },
+    {
+      "q": "What comfort-food classic of fries, cheese curds and gravy is said to have been invented in rural Quebec in the 1950s?",
+      "accepted": [
+        "poutine"
+      ],
+      "display": "Poutine"
+    }
   ]
 }
