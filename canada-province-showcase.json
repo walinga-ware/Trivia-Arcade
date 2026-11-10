@@ -214,7 +214,7 @@
   ],
   "QUEBEC_TRIVIA": [
     {
-      "q": "What flag-like purple-blue wildflower, found in the province's marshes and along the St. Lawrence, is Quebec's official flower?",
+      "q": "What purple-blue wildflower, found near the province's marshes and rivers, is Quebec's official flower?",
       "accepted": [
         "blue flag iris",
         "blue flag",
@@ -224,8 +224,9 @@
       "display": "Blue Flag Iris"
     },
     {
-      "q": "What large, white Arctic owl, a winter visitor to Quebec's fields and shorelines, is the province's official bird?",
+      "q": "What large, white Arctic bird, a winter visitor to Quebec's fields and shorelines, is the province's official bird?",
       "accepted": [
+        "owl",
         "snowy owl",
         "snow owl"
       ],
@@ -242,8 +243,7 @@
     {
       "q": "What three-word French motto, meaning \u201cI remember,\u201d appears on Quebec's coat of arms and license plates?",
       "accepted": [
-        "je me souviens",
-        "i remember"
+        "je me souviens"
       ],
       "display": "Je me souviens"
     },
