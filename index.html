@@ -870,14 +870,14 @@ document.addEventListener('DOMContentLoaded', () => {
    data (and the screen shells above) are ready.
    ============================================================ */
 Promise.all([
-  fetch('geography.json').then(r => r.json()),
-  fetch('history.json').then(r => r.json()),
-  fetch('us-state-showcase.json').then(r => r.json()),
-  fetch('canada-province-showcase.json').then(r => r.json()),
-  fetch('sports.json').then(r => r.json()),
-  fetch('science.json').then(r => r.json()),
-  fetch('connectors.json').then(r => r.json()),
-  fetch('general-knowledge.json').then(r => r.json())
+  fetch('quizData/geography.json').then(r => r.json()),
+  fetch('quizData/history.json').then(r => r.json()),
+  fetch('quizData/us-state-showcase.json').then(r => r.json()),
+  fetch('quizData/canada-province-showcase.json').then(r => r.json()),
+  fetch('quizData/sports.json').then(r => r.json()),
+  fetch('quizData/science.json').then(r => r.json()),
+  fetch('quizData/connectors.json').then(r => r.json()),
+  fetch('quizData/general-knowledge.json').then(r => r.json())
 ])
   .then(([geography, history, stateShowcase, canadaShowcase, sports, science, connectors, generalKnowledge]) => {
     window.QUIZ_DATA = { ...geography, ...history, ...stateShowcase, ...canadaShowcase, ...sports, ...science, ...connectors, ...generalKnowledge };
