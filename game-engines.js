@@ -689,11 +689,13 @@ class PresidentsRecallGame{
 function quizHTML(id, promptLabel, mode){
   const inputAttrs = mode === 'short' ? 'maxlength="2"' : '';
   const rowClass = mode === 'short' ? 'quiz-input-row short' : 'quiz-input-row text';
-  const placeholder = mode === 'flag' ? 'placeholder="Type the country…"' : '';
-  const promptBlock = mode === 'flag'
-    ? `<div class="quiz-prompt flag-prompt">
+  const isImage = mode === 'flag' || mode === 'image';
+  const placeholder = mode === 'flag' ? 'placeholder="Type the country…"'
+    : mode === 'image' ? 'placeholder="Type the name…"' : '';
+  const promptBlock = isImage
+    ? `<div class="quiz-prompt flag-prompt${mode === 'image' ? ' image-prompt' : ''}">
         <div class="prompt-label">${promptLabel}</div>
-        <img class="flag-image" id="${id}-promptValue" alt="Flag to identify" src="">
+        <img class="flag-image" id="${id}-promptValue" alt="${mode === 'image' ? 'Picture to identify' : 'Flag to identify'}" src="">
       </div>`
     : `<div class="quiz-prompt">
         <div class="prompt-label">${promptLabel}</div>
@@ -826,7 +828,7 @@ class PromptQuiz{
   showPrompt(){
     if (this.queue.length === 0){ this.end(); return; }
     const { prompt } = this.currentPair();
-    if (this.mode === 'flag'){
+    if (this.mode === 'flag' || this.mode === 'image'){
       this.el('promptValue').src = prompt;
     } else {
       this.el('promptValue').textContent = prompt;
@@ -880,12 +882,15 @@ class PromptQuiz{
     const pct = Math.round((this.score / this.pairs.length) * 100);
     this.el('finalScoreLine').textContent = `You got ${this.score} of ${this.pairs.length} correct (${pct}%).`;
 
-    const sortKey = this.mode === 'flag' ? 'answer' : 'prompt';
+    const isImage = this.mode === 'flag' || this.mode === 'image';
+    const sortKey = isImage ? 'answer' : 'prompt';
     const sorted = [...this.pairs].sort((a,b)=>a[sortKey].localeCompare(b[sortKey]));
     this.el('finalGrid').innerHTML = sorted.map(({prompt, answer}) => {
       const hit = this.results[prompt] === true;
       const label = this.mode === 'flag'
         ? `<img class="flag-thumb" src="${prompt}" alt="${answer} flag">`
+        : this.mode === 'image'
+        ? `<img class="flag-thumb image-thumb" src="${prompt}" alt="${answer}">`
         : prompt;
       return `<div class="item ${hit ? 'hit' : 'miss'}"><span>${label}</span><span>${answer} ${hit ? '✓' : '—'}</span></div>`;
     }).join('');

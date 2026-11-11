@@ -696,5 +696,83 @@
     "Og": {
       "answer": "Oganesson"
     }
-  }
+  },
+  "CACTI": [
+    {
+      "name": "Saguaro",
+      "image": "images/cacti/saguaro.svg",
+      "aliases": [
+        "Saguaro Cactus",
+        "Sahuaro",
+        "Giant Saguaro",
+        "Carnegiea gigantea"
+      ]
+    },
+    {
+      "name": "Prickly Pear",
+      "image": "images/cacti/prickly-pear.svg",
+      "aliases": [
+        "Prickly Pear Cactus",
+        "Opuntia",
+        "Nopal",
+        "Nopales"
+      ]
+    },
+    {
+      "name": "Jumping Cactus",
+      "image": "images/cacti/jumping-cholla.svg",
+      "aliases": [
+        "Jumping Cholla",
+        "Teddy Bear Cholla",
+        "Teddy Bear Cactus",
+        "Cholla",
+        "Jumping Cholla Cactus"
+      ]
+    },
+    {
+      "name": "Barrel Cactus",
+      "image": "images/cacti/barrel-cactus.svg",
+      "aliases": [
+        "Barrel",
+        "Golden Barrel",
+        "Golden Barrel Cactus"
+      ]
+    },
+    {
+      "name": "Organ Pipe Cactus",
+      "image": "images/cacti/organ-pipe-cactus.svg",
+      "aliases": [
+        "Organ Pipe",
+        "Organ-Pipe Cactus"
+      ]
+    },
+    {
+      "name": "Christmas Cactus",
+      "image": "images/cacti/christmas-cactus.svg",
+      "aliases": [
+        "Holiday Cactus",
+        "Thanksgiving Cactus",
+        "Schlumbergera"
+      ]
+    },
+    {
+      "name": "Old Man Cactus",
+      "image": "images/cacti/old-man-cactus.svg",
+      "aliases": [
+        "Old Man",
+        "Old Man of Peru",
+        "Cephalocereus senilis"
+      ]
+    },
+    {
+      "name": "Pincushion Cactus",
+      "image": "images/cacti/pincushion-cactus.svg",
+      "aliases": [
+        "Pincushion",
+        "Pin Cushion",
+        "Pin Cushion Cactus",
+        "Mammillaria"
+      ]
+    }
+  ]
 }
