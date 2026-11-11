@@ -116,12 +116,23 @@ describe('population/measurement formatters', () => {
 /* ============================================================
    Shared DOM fixture helpers for the class-based engines
    ============================================================ */
+function addScreenDiv() {
+  const div = document.createElement('div');
+  div.id = 'dynamic-screens';
+  document.body.appendChild(div);
+  return div;
+}
+
 function mountDiv(id) {
   const div = document.createElement('div');
   div.id = `${id}-mount`;
   document.body.appendChild(div);
   return div;
 }
+
+beforeEach(() => {
+  addScreenDiv();
+});
 
 afterEach(() => {
   document.body.innerHTML = '';
@@ -422,6 +433,7 @@ describe('CountryOutlineQuiz', () => {
   });
 
   async function makeQuiz(overrides = {}) {
+    addScreenDiv();
     mountDiv('outline');
     const quiz = new CountryOutlineQuiz({
       id: 'outline',
