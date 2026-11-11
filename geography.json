@@ -2820,16 +2820,6 @@
       "display": "Sahara Desert"
     },
     {
-      "q": "What waterfall in Venezuela plunges approximately 979 metres, making it the tallest uninterrupted waterfall on Earth?",
-      "accepted": [
-        "angel falls",
-        "salto angel",
-        "kerekupai meru",
-        "kerepakupai meru"
-      ],
-      "display": "Angel Falls"
-    },
-    {
       "q": "What Siberian lake is the deepest in the world, reaching approximately 1,642 metres below its surface?",
       "accepted": [
         "lake baikal",
@@ -2856,29 +2846,24 @@
     {
       "q": "What deep-sea trench in the western Pacific contains Challenger Deep, the deepest known point in Earth's oceans?",
       "accepted": [
+        "mariana",
+        "marianas",
         "mariana trench",
         "marianas trench"
       ],
       "display": "Mariana Trench"
     },
     {
-      "q": "What enormous island between the Arctic and Atlantic Oceans is the world's largest island that isn't considered a continent?",
+      "q": "What enormous island between the Arctic and Atlantic Oceans is the world's largest island that isn't a continental landmass?",
       "accepted": [
         "greenland"
       ],
       "display": "Greenland"
     },
     {
-      "q": "What South American river carries more water by volume than any other river on Earth?",
+      "q": "What vast elevated region of Central Asia is nicknamed the Roof of the World, and contains the sources of several major Asian rivers?",
       "accepted": [
-        "amazon",
-        "amazon river"
-      ],
-      "display": "Amazon River"
-    },
-    {
-      "q": "What enormous elevated region of Central Asia is nicknamed the Roof of the World and contains the sources of several major Asian rivers?",
-      "accepted": [
+        "tibet",
         "tibetan plateau",
         "tibet plateau",
         "qinghai tibet plateau"
@@ -2886,37 +2871,10 @@
       "display": "Tibetan Plateau"
     },
     {
-      "q": "What salt flat in Bolivia becomes an enormous natural mirror during the rainy season and is the largest of its kind in the world?",
-      "accepted": [
-        "salar de uyuni",
-        "uyuni salt flats",
-        "uyuni salt flat",
-        "uyuni"
-      ],
-      "display": "Salar de Uyuni"
-    },
-    {
-      "q": "What mountain on the border of Nepal and China is the highest point on Earth's surface above sea level?",
-      "accepted": [
-        "mount everest",
-        "everest",
-        "sagarmatha",
-        "chomolungma",
-        "qomolangma"
-      ],
-      "display": "Mount Everest"
-    },
-    {
-      "q": "What volcano on the border of Chile and Argentina is the highest active volcano in the world?",
-      "accepted": [
-        "ojos del salado",
-        "nevado ojos del salado"
-      ],
-      "display": "Ojos del Salado"
-    },
-    {
       "q": "What is the world's largest coral reef system, stretching over 2,300 kilometres along Australia's northeastern coast?",
       "accepted": [
+        "barrier",
+        "great barrier",
         "great barrier reef"
       ],
       "display": "Great Barrier Reef"
@@ -2933,7 +2891,8 @@
       "q": "What is the world's largest peninsula, occupying much of the southwestern corner of Asia?",
       "accepted": [
         "arabian peninsula",
-        "arabia"
+        "arabia",
+        "arabian"
       ],
       "display": "Arabian Peninsula"
     },
@@ -2941,7 +2900,8 @@
       "q": "What bay between New Brunswick and Nova Scotia in Canada is famous for having some of the highest tides on Earth?",
       "accepted": [
         "bay of fundy",
-        "fundy bay"
+        "fundy bay",
+        "fundy"
       ],
       "display": "Bay of Fundy"
     },
@@ -2954,30 +2914,11 @@
       "display": "Lake Titicaca"
     },
     {
-      "q": "What is the world's largest continuous mountain range, stretching approximately 65,000 kilometres along the ocean floor?",
-      "accepted": [
-        "mid ocean ridge",
-        "mid-ocean ridge",
-        "mid atlantic ridge system",
-        "mid ocean ridge system"
-      ],
-      "display": "Mid-Ocean Ridge"
-    },
-    {
       "q": "What African country contains the Danakil Depression, one of the hottest and lowest-lying places on Earth?",
       "accepted": [
         "ethiopia"
       ],
       "display": "Ethiopia"
-    },
-    {
-      "q": "What mountain range contains K2, the world's second-highest mountain, and some of the largest non-polar glaciers on Earth?",
-      "accepted": [
-        "karakoram",
-        "karakoram mountains",
-        "karakoram range"
-      ],
-      "display": "Karakoram Range"
     }
   ]
 }
