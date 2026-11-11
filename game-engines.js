@@ -4,6 +4,16 @@ function showScreen(id){
   window.scrollTo({top:0, behavior:'instant'});
 }
 
+function initScreen(id){
+  const screenHost = document.getElementById('dynamic-screens');
+  screenHost.insertAdjacentHTML('beforeend', `
+    <div class="screen" id="screen-${id}">
+      <button class="back-link" onclick="showScreen('home')">&larr; back to arcade</button>
+      <div id="${id}-mount"></div>
+    </div>
+  `);
+}
+
 /* ============================================================
    Shared helpers
    ============================================================ */
@@ -143,6 +153,7 @@ class FreeRecallGame{
     this.timerId = null;
     this.running = false;
 
+    initScreen(this.id);
     document.getElementById(`${this.id}-mount`).innerHTML = freeRecallHTML(this.id, this.title);
     document.getElementById(`${this.id}-rules`).innerHTML = `
       &middot; ${minutesLabel(this.duration)} on the clock, starting when you hit begin<br>
@@ -375,6 +386,7 @@ class HintedFreeRecallGame{
     this.running = false;
     this.currentHintItem = null;
 
+    initScreen(this.id);
     document.getElementById(`${this.id}-mount`).innerHTML = hintedFreeRecallHTML(this.id, this.title);
     document.getElementById(`${this.id}-rules`).innerHTML = `
       &middot; ${minutesLabel(this.duration)} on the clock, starting when you hit begin<br>
@@ -551,6 +563,7 @@ class PresidentsRecallGame{
     this.timerId = null;
     this.running = false;
 
+    initScreen(this.id);
     document.getElementById(`${this.id}-mount`).innerHTML = freeRecallHTML(this.id, this.title);
     document.getElementById(`${this.id}-rules`).innerHTML = `
       &middot; ${minutesLabel(this.duration)} on the clock, starting when you hit begin<br>
@@ -764,6 +777,7 @@ class PromptQuiz{
     this.timerId = null;
     this.running = false;
 
+    initScreen(this.id);
     document.getElementById(`${this.id}-mount`).innerHTML = quizHTML(this.id, this.promptLabel, this.mode);
     document.getElementById(`${this.id}-rules`).innerHTML = `
       &middot; ${minutesLabel(this.duration)} on the clock, starting when you hit begin<br>
@@ -997,6 +1011,7 @@ class MultipleChoiceQuiz{
     this.timerId = null;
     this.running = false;
 
+    initScreen(this.id);
     document.getElementById(`${this.id}-mount`).innerHTML = multipleChoiceHTML(this.id, this.promptLabel);
     document.getElementById(`${this.id}-rules`).innerHTML = `
       &middot; ${minutesLabel(this.duration)} on the clock, starting when you hit begin<br>
@@ -1190,6 +1205,7 @@ class StateMapQuiz{
     this.id=opts.id; this.states=opts.states; this.cfg=opts.cfg||{}; this.sampleSize=opts.sampleSize||null; this.roundStates=this.states; this.N=this.sampleSize||this.states.length; this.noun=this.cfg.noun||'state'; this.nounPl=this.cfg.nounPlural||'states';
     this.lookup=opts.lookup||null; this.loader=opts.loader||null; this.mapNames=null; this.path=null;
     this.queue=[]; this.idx=0; this.score=0; this.answers=[]; this.answered=false; this.mapReady=false;
+    initScreen(this.id);
     document.getElementById(`${this.id}-mount`).innerHTML=stateMapHTML(this.id,{...this.cfg,count:this.N});
     this.el=key=>document.getElementById(`${this.id}-${key}`);
     this.el('startBtn').addEventListener('click',()=>this.start());
@@ -1457,6 +1473,7 @@ class FindStateQuiz{
     this.id=opts.id; this.states=opts.states; this.cfg=opts.cfg||{}; this.N=this.states.length; this.noun=this.cfg.noun||'state'; this.nounPl=this.cfg.nounPlural||'states';
     this.lookup=opts.lookup||null; this.loader=opts.loader||null; this.hardMode=!!opts.hardMode;
     this.queue=[]; this.idx=0; this.score=0; this.answers=[]; this.answered=false; this.mapReady=false;
+    initScreen(this.id);
     document.getElementById(`${this.id}-mount`).innerHTML=findStateHTML(this.id, this.hardMode);
     this.el=key=>document.getElementById(`${this.id}-${key}`);
     this.el('startBtn').addEventListener('click',()=>this.start());
@@ -1641,6 +1658,7 @@ class FindCityQuiz{
     this.targets=this.cities.filter(c=>c.target).map(c=>c.name); this.N=this.targets.length;
     this.W=975; this.H=400; this.k=1;
     this.queue=[]; this.idx=0; this.score=0; this.answers=[]; this.answered=false; this.mapReady=false;
+    initScreen(this.id);
     document.getElementById(`${this.id}-mount`).innerHTML=findCityHTML(this.id, this.N);
     this.el=key=>document.getElementById(`${this.id}-${key}`);
     this.el('startBtn').addEventListener('click',()=>this.start());
@@ -1811,6 +1829,7 @@ class FindEventQuiz{
     this.N=Math.min(opts.rounds||15, this.places.length);
     this.W=975; this.H=700; this.k=1;
     this.queue=[]; this.idx=0; this.score=0; this.answers=[]; this.answered=false; this.mapReady=false;
+    initScreen(this.id);
     document.getElementById(`${this.id}-mount`).innerHTML=findEventHTML(this.id, this.N);
     this.el=key=>document.getElementById(`${this.id}-${key}`);
     this.el('startBtn').addEventListener('click',()=>this.start());
@@ -1991,6 +2010,7 @@ class FindWaterfallQuiz{
     this.N=this.falls.length;
     this.W=975; this.H=480; this.k=1;
     this.queue=[]; this.idx=0; this.score=0; this.answers=[]; this.answered=false; this.mapReady=false;
+    initScreen(this.id);
     document.getElementById(`${this.id}-mount`).innerHTML=findWaterfallHTML(this.id, this.N);
     this.el=key=>document.getElementById(`${this.id}-${key}`);
     this.el('startBtn').addEventListener('click',()=>this.start());
@@ -2248,6 +2268,7 @@ class FindCountryQuiz{
     this.points=opts.points||{}; this.markerArea=opts.markerArea||15;
     this.N=this.countries.length; this.W=975; this.H=440; this.k=1;
     this.queue=[]; this.idx=0; this.score=0; this.answers=[]; this.answered=false; this.mapReady=false;
+    initScreen(this.id);
     document.getElementById(`${this.id}-mount`).innerHTML=findCountryHTML(this.id, this.N);
     this.el=key=>document.getElementById(`${this.id}-${key}`);
     this.el('startBtn').addEventListener('click',()=>this.start());
@@ -2480,6 +2501,7 @@ class TriviaQuiz{
     this.answers = []; // { q, yourAnswer, correct, display }
     this.answered = false;
 
+    initScreen(this.id);
     document.getElementById(`${this.id}-mount`).innerHTML = triviaHTML(this.id);
     document.getElementById(`${this.id}-rules`).innerHTML = this.rulesHTML;
 
@@ -2745,6 +2767,7 @@ class MinefieldQuiz{
     this.guessedSoFar = []; // [{name, population}]
     this.running = false;
 
+    initScreen(this.id);
     document.getElementById(`${this.id}-mount`).innerHTML = minefieldHTML(this.id, {
       itemNoun: this.itemNoun,
       itemNounPlural: this.itemNounPlural,
