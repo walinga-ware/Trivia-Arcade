@@ -992,7 +992,6 @@ const flightTimeQuiz = new MultipleChoiceQuiz({
   `
 });
 
-console.log('JSON data', EXTREME_REGIONS)
 const extremeRegionsQuiz = new TriviaQuiz({
   id: 'extremeregions',
   questions: EXTREME_REGIONS,
