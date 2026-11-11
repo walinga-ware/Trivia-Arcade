@@ -62,7 +62,8 @@ const {
   JUPITER_MOONS,
   JUPITER_MOON_HINTS,
   LARGEST_MOONS,
-  CONNECTORS_QUIZZES
+  CONNECTORS_QUIZZES,
+  AIR_TRAVEL_QUIZ
 } = QUIZ_DATA;
 
 const RIVER_LOOKUP = {};
@@ -947,4 +948,20 @@ const worldOutlineQuiz = new CountryOutlineQuiz({
     questionLabel:'which country has this outline?',
     ariaLabel:'Outline of a single country, scaled to fill the frame'
   }
+});
+
+const flightTimeQuiz = new MultipleChoiceQuiz({
+  id: 'airtravel',
+  pairs: AIR_TRAVEL_QUIZ,
+  questionCount: 7,
+  optionCount: 4,
+  duration: 5*60,
+  promptLabel: "How long would it take to fly between these two cities?",
+  finalRollLabel: 'Full roll — the 7 city pairs in this round',
+  rulesHTML: `
+    &middot; Two cities are shown, you must determine the flight time between them<br>
+    &middot; Pick the closest flight time from 4 options<br>
+    &middot; No skipping: keep picking until you find the right one, but only first-try answers score<br>
+    &middot; The round ends when you finish all 10 or time runs out
+  `
 });

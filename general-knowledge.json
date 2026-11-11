@@ -1,7 +1,7 @@
 {
   "AIR_TRAVEL_QUIZ": [
     {
-      "prompt": "New nonstop flight: New York, USA → London, UK",
+      "prompt": " New York, USA → London, UK",
       "answer": "7h 00m",
       "distractors": [
         "5h 30m",
@@ -10,7 +10,7 @@
       ]
     },
     {
-      "prompt": "New nonstop flight: New York, USA → Los Angeles, USA",
+      "prompt": " New York, USA → Los Angeles, USA",
       "answer": "6h 00m",
       "distractors": [
         "4h 30m",
@@ -19,7 +19,7 @@
       ]
     },
     {
-      "prompt": "New nonstop flight: New York, USA → Miami, USA",
+      "prompt": " New York, USA → Miami, USA",
       "answer": "3h 15m",
       "distractors": [
         "2h 00m",
@@ -28,7 +28,7 @@
       ]
     },
     {
-      "prompt": "New nonstop flight: New York, USA → Paris, France",
+      "prompt": " New York, USA → Paris, France",
       "answer": "7h 15m",
       "distractors": [
         "5h 45m",
@@ -37,7 +37,7 @@
       ]
     },
     {
-      "prompt": "New nonstop flight: New York, USA → Tokyo, Japan",
+      "prompt": " New York, USA → Tokyo, Japan",
       "answer": "14h 00m",
       "distractors": [
         "11h 30m",
@@ -46,7 +46,7 @@
       ]
     },
     {
-      "prompt": "New nonstop flight: Los Angeles, USA → Honolulu, USA",
+      "prompt": " Los Angeles, USA → Honolulu, USA",
       "answer": "5h 45m",
       "distractors": [
         "4h 00m",
@@ -55,7 +55,7 @@
       ]
     },
     {
-      "prompt": "New nonstop flight: Los Angeles, USA → Sydney, Australia",
+      "prompt": " Los Angeles, USA → Sydney, Australia",
       "answer": "15h 00m",
       "distractors": [
         "11h 00m",
@@ -64,7 +64,7 @@
       ]
     },
     {
-      "prompt": "New nonstop flight: Chicago, USA → San Francisco, USA",
+      "prompt": " Chicago, USA → San Francisco, USA",
       "answer": "4h 45m",
       "distractors": [
         "3h 15m",
@@ -73,7 +73,7 @@
       ]
     },
     {
-      "prompt": "New nonstop flight: Toronto, Canada → Vancouver, Canada",
+      "prompt": " Toronto, Canada → Vancouver, Canada",
       "answer": "5h 00m",
       "distractors": [
         "3h 30m",
@@ -82,7 +82,7 @@
       ]
     },
     {
-      "prompt": "New nonstop flight: London, UK → Dubai, UAE",
+      "prompt": " London, UK → Dubai, UAE",
       "answer": "7h 00m",
       "distractors": [
         "4h 45m",
@@ -91,7 +91,7 @@
       ]
     },
     {
-      "prompt": "New nonstop flight: London, UK → Rome, Italy",
+      "prompt": " London, UK → Rome, Italy",
       "answer": "2h 40m",
       "distractors": [
         "1h 30m",
@@ -100,7 +100,7 @@
       ]
     },
     {
-      "prompt": "New nonstop flight: Paris, France → New Delhi, India",
+      "prompt": " Paris, France → New Delhi, India",
       "answer": "8h 30m",
       "distractors": [
         "6h 00m",
@@ -109,7 +109,7 @@
       ]
     },
     {
-      "prompt": "New nonstop flight: Singapore → Bangkok, Thailand",
+      "prompt": " Singapore → Bangkok, Thailand",
       "answer": "2h 30m",
       "distractors": [
         "1h 15m",
@@ -118,7 +118,7 @@
       ]
     },
     {
-      "prompt": "New nonstop flight: Tokyo, Japan → Seoul, South Korea",
+      "prompt": " Tokyo, Japan → Seoul, South Korea",
       "answer": "2h 30m",
       "distractors": [
         "1h 15m",
@@ -127,7 +127,7 @@
       ]
     },
     {
-      "prompt": "New nonstop flight: Dubai, UAE → Singapore",
+      "prompt": " Dubai, UAE → Singapore",
       "answer": "7h 30m",
       "distractors": [
         "5h 00m",
@@ -136,7 +136,7 @@
       ]
     },
     {
-      "prompt": "New nonstop flight: Sydney, Australia → Auckland, New Zealand",
+      "prompt": " Sydney, Australia → Auckland, New Zealand",
       "answer": "3h 10m",
       "distractors": [
         "1h 45m",
@@ -145,7 +145,7 @@
       ]
     },
     {
-      "prompt": "New nonstop flight: Cape Town, South Africa → Johannesburg, South Africa",
+      "prompt": " Cape Town, South Africa → Johannesburg, South Africa",
       "answer": "2h 10m",
       "distractors": [
         "1h 00m",
@@ -154,7 +154,7 @@
       ]
     },
     {
-      "prompt": "New nonstop flight: São Paulo, Brazil → Buenos Aires, Argentina",
+      "prompt": " São Paulo, Brazil → Buenos Aires, Argentina",
       "answer": "3h 00m",
       "distractors": [
         "1h 30m",
@@ -163,7 +163,7 @@
       ]
     },
     {
-      "prompt": "New nonstop flight: Mexico City, Mexico → New York, USA",
+      "prompt": " Mexico City, Mexico → New York, USA",
       "answer": "5h 00m",
       "distractors": [
         "3h 30m",
@@ -172,7 +172,7 @@
       ]
     },
     {
-      "prompt": "New nonstop flight: Istanbul, Türkiye → Cairo, Egypt",
+      "prompt": " Istanbul, Türkiye → Cairo, Egypt",
       "answer": "2h 15m",
       "distractors": [
         "1h 00m",
@@ -181,7 +181,7 @@
       ]
     },
     {
-      "prompt": "New nonstop flight: Frankfurt, Germany → New York, USA",
+      "prompt": " Frankfurt, Germany → New York, USA",
       "answer": "8h 30m",
       "distractors": [
         "6h 00m",
@@ -190,7 +190,7 @@
       ]
     },
     {
-      "prompt": "New nonstop flight: Vancouver, Canada → Tokyo, Japan",
+      "prompt": " Vancouver, Canada → Tokyo, Japan",
       "answer": "10h 00m",
       "distractors": [
         "7h 30m",
@@ -199,7 +199,7 @@
       ]
     },
     {
-      "prompt": "New nonstop flight: Madrid, Spain → Lisbon, Portugal",
+      "prompt": " Madrid, Spain → Lisbon, Portugal",
       "answer": "1h 20m",
       "distractors": [
         "0h 45m",
@@ -208,7 +208,7 @@
       ]
     },
     {
-      "prompt": "New nonstop flight: Hong Kong → London, UK",
+      "prompt": " Hong Kong → London, UK",
       "answer": "13h 00m",
       "distractors": [
         "9h 30m",
