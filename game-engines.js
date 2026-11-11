@@ -102,12 +102,14 @@ function freeRecallHTML(id, title){
       </div>
       <div class="entry">
         <input type="text" id="${id}-guess" placeholder="Type an answer…" autocomplete="off">
-        <button id="${id}-endBtn" title="End the round now">End round</button>
       </div>
       <div class="feedback" id="${id}-feedback"></div>
       <div class="section-title"><span>Guessed so far</span><span id="${id}-guessedCount">0</span></div>
       <div id="${id}-guessedList" class="guessed-grid">
         <div class="empty-note">Nothing yet — start typing.</div>
+      </div>
+      <div style="margin-top:16px;">
+        <button id="${id}-giveupBtn">Give up</button>
       </div>
     </div>
 
@@ -165,7 +167,7 @@ class FreeRecallGame{
 
     this.el = key => document.getElementById(`${this.id}-${key}`);
     this.el('startBtn').addEventListener('click', () => this.start());
-    this.el('endBtn').addEventListener('click', () => this.end());
+    this.el('giveupBtn').addEventListener('click', () => this.end());
     this.el('resetBtn').addEventListener('click', () => this.reset());
     this.el('guess').addEventListener('keydown', e => { if (e.key === 'Enter') this.submit(); });
     this.el('guess').addEventListener('input', () => {
@@ -272,7 +274,7 @@ class FreeRecallGame{
     this.running = false;
     clearInterval(this.timerId);
     this.el('guess').disabled = true;
-    this.el('endBtn').disabled = true;
+    this.el('giveupBtn').disabled = true;
     this.el('game').style.display = 'none';
     this.el('results').style.display = 'block';
 
@@ -302,7 +304,7 @@ class FreeRecallGame{
     this.timeLeft = this.duration;
     this.running = false;
     this.el('guess').disabled = false;
-    this.el('endBtn').disabled = false;
+    this.el('giveupBtn').disabled = false;
     this.el('guess').value = '';
     this.el('feedback').textContent = '';
     this.el('feedback').className = 'feedback';
@@ -575,7 +577,7 @@ class PresidentsRecallGame{
 
     this.el = key => document.getElementById(`${this.id}-${key}`);
     this.el('startBtn').addEventListener('click', () => this.start());
-    this.el('endBtn').addEventListener('click', () => this.end());
+    this.el('giveupBtn').addEventListener('click', () => this.end());
     this.el('resetBtn').addEventListener('click', () => this.reset());
     this.el('guess').addEventListener('keydown', e => { if (e.key === 'Enter') this.submit(); });
     this.el('guess').addEventListener('input', () => {
@@ -665,7 +667,7 @@ class PresidentsRecallGame{
     this.running = false;
     clearInterval(this.timerId);
     this.el('guess').disabled = true;
-    this.el('endBtn').disabled = true;
+    this.el('giveupBtn').disabled = true;
     this.el('game').style.display = 'none';
     this.el('results').style.display = 'block';
 
@@ -684,7 +686,7 @@ class PresidentsRecallGame{
     this.timeLeft = this.duration;
     this.running = false;
     this.el('guess').disabled = false;
-    this.el('endBtn').disabled = false;
+    this.el('giveupBtn').disabled = false;
     this.el('guess').value = '';
     this.el('feedback').textContent = '';
     this.el('feedback').className = 'feedback';
