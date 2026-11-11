@@ -62,6 +62,7 @@ const {
   JUPITER_MOONS,
   JUPITER_MOON_HINTS,
   LARGEST_MOONS,
+  CACTI,
   CONNECTORS_QUIZZES,
   AIR_TRAVEL_QUIZ
 } = QUIZ_DATA;
@@ -809,6 +810,30 @@ const largestMoonsGame = new FreeRecallGame({
   rulesHTML: `
     &middot; Name the 25 largest moons in the solar system — order doesn't matter while you play, 25 total<br>
     &middot; When time expires, the full roll is revealed largest to smallest, with each moon's diameter and the planet it orbits
+  `
+});
+
+/* ============================================================
+   SCIENCE — BOTANY: NAME THE CACTUS
+   Picture-prompted quiz: each item shows an illustration (image path
+   from CACTI in science.json) and the player types the cactus's name.
+   To add a cactus, append { name, image, aliases } to CACTI.
+   ============================================================ */
+const cactiQuiz = new PromptQuiz({
+  id: 'cacti',
+  pairs: CACTI.map(c => ({
+    prompt: c.image,
+    answer: c.name,
+    aliases: c.aliases || []
+  })),
+  duration: 5*60,
+  mode: 'image',
+  promptLabel: "name this cactus",
+  finalRollLabel: `Full roll — all ${CACTI.length} cacti`,
+  rulesHTML: `
+    &middot; A picture of a cactus appears one at a time in random order — ${CACTI.length} total<br>
+    &middot; Type the cactus's name — common alternate names are accepted<br>
+    &middot; Use Skip if you're stuck; the round ends when time runs out
   `
 });
 

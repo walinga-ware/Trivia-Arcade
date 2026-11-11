@@ -172,6 +172,8 @@
     background:var(--ink);
   }
   .final-grid .flag-thumb{ width:28px; height:auto; vertical-align:middle; border-radius:2px; border:1px solid var(--line); }
+  .image-prompt .flag-image{ max-width:360px; border-radius:6px; }
+  .final-grid .image-thumb{ width:44px; }
   .quiz-input-row{ display:flex; gap:10px; justify-content:center; margin-bottom:8px; }
   .quiz-input-row.short input{
     text-align:center; text-transform:uppercase; max-width:140px; font-size:22px; letter-spacing:4px;
@@ -638,6 +640,20 @@
     </div>
     </details>
     <!-- ============ /OUTER SPACE ============ -->
+
+    <!-- ============ BOTANY ============ -->
+    <details class="section">
+      <summary class="section-summary"><span><span class="chevron">▸</span>Botany 🌵</span><span class="quiz-count">1 quiz</span></summary>
+    <div class="card-grid">
+      <div class="card">
+        <div class="tag">Prompted quiz &middot; picture &middot; 8 items</div>
+        <h3>Name the Cactus</h3>
+        <div class="meta" id="cacti-meta"></div>
+        <button class="btn-primary" onclick="showScreen('cacti')">Play</button>
+      </div>
+    </div>
+    </details>
+    <!-- ============ /BOTANY ============ -->
     </div>
     <!-- ============ /SCIENCE ============ -->
 
@@ -717,7 +733,7 @@
    of ids. To add a new screen here, just add its id to this array —
    the actual game instance (in app-init.js) is what gives it content.
    ============================================================ */
-const SCREEN_IDS = ['countries', 'worldpopmine', 'flags', 'states', 'abbr', 'worldcap', 'statecap', 'popmine', 'statemap', 'canadamap', 'worldmap', 'worldoutline', 'findcountry', 'findcity', 'findstate', 'findstate-hard', 'provinces', 'provincecap', 'provabbr', 'provpopmine', 'mountaincont', 'rivermine', 'oceans', 'waterfallmap', 'presidents', 'pms', 'monarchs', 'ancientegypt', 'ancientgreecemap', 'romanemperors', 'chinesedynasties', 'nba', 'mlb', 'nhl', 'nfl', 'periodic', 'elements', 'elementguess', 'planets', 'moons', 'largestmoons', 'airtravel'];
+const SCREEN_IDS = ['countries', 'worldpopmine', 'flags', 'states', 'abbr', 'worldcap', 'statecap', 'popmine', 'statemap', 'canadamap', 'worldmap', 'worldoutline', 'findcountry', 'findcity', 'findstate', 'findstate-hard', 'provinces', 'provincecap', 'provabbr', 'provpopmine', 'mountaincont', 'rivermine', 'oceans', 'waterfallmap', 'presidents', 'pms', 'monarchs', 'ancientegypt', 'ancientgreecemap', 'romanemperors', 'chinesedynasties', 'nba', 'mlb', 'nhl', 'nfl', 'periodic', 'elements', 'elementguess', 'planets', 'moons', 'largestmoons', 'cacti', 'airtravel'];
 
 const screenHost = document.getElementById('dynamic-screens');
 SCREEN_IDS.forEach(id => {
