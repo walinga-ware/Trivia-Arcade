@@ -393,6 +393,12 @@
         <div class="meta">click the waterfall each hint describes</div>
         <button class="btn-primary" onclick="showScreen('waterfallmap')">Play</button>
       </div>
+      <div class="card">
+        <div class="tag">Trivia quiz &middot; 17 questions</div>
+        <h3>Extreme Regions</h3>
+        <div class="meta">~8 minutes</div>
+        <button class="btn-primary" onclick="showScreen('extremeregions')">Play</button>
+      </div>
     </div>
     </details>
 
@@ -733,7 +739,7 @@
    of ids. To add a new screen here, just add its id to this array —
    the actual game instance (in app-init.js) is what gives it content.
    ============================================================ */
-const SCREEN_IDS = ['countries', 'worldpopmine', 'flags', 'states', 'abbr', 'worldcap', 'statecap', 'popmine', 'statemap', 'canadamap', 'worldmap', 'worldoutline', 'findcountry', 'findcity', 'findstate', 'findstate-hard', 'provinces', 'provincecap', 'provabbr', 'provpopmine', 'mountaincont', 'rivermine', 'oceans', 'waterfallmap', 'presidents', 'pms', 'monarchs', 'ancientegypt', 'ancientgreecemap', 'romanemperors', 'chinesedynasties', 'nba', 'mlb', 'nhl', 'nfl', 'periodic', 'elements', 'elementguess', 'planets', 'moons', 'largestmoons', 'cacti', 'airtravel'];
+const SCREEN_IDS = ['countries', 'worldpopmine', 'flags', 'states', 'abbr', 'worldcap', 'statecap', 'popmine', 'statemap', 'canadamap', 'worldmap', 'worldoutline', 'findcountry', 'findcity', 'findstate', 'findstate-hard', 'provinces', 'provincecap', 'provabbr', 'provpopmine', 'mountaincont', 'rivermine', 'oceans', 'waterfallmap', 'presidents', 'pms', 'monarchs', 'ancientegypt', 'ancientgreecemap', 'romanemperors', 'chinesedynasties', 'nba', 'mlb', 'nhl', 'nfl', 'periodic', 'elements', 'elementguess', 'planets', 'moons', 'largestmoons', 'cacti', 'airtravel', 'extremeregions'];
 
 const screenHost = document.getElementById('dynamic-screens');
 SCREEN_IDS.forEach(id => {

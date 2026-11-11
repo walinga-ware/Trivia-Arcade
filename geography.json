@@ -2775,5 +2775,150 @@
     "Yemen": "ye",
     "Zambia": "zm",
     "Zimbabwe": "zw"
-  }
+  },
+  "EXTREME_REGIONS": [
+    {
+      "q": "What desert stretching along the Pacific coast of South America is considered the driest non-polar desert on Earth?",
+      "accepted": [
+        "atacama",
+        "atacama desert"
+      ],
+      "display": "Atacama Desert"
+    },
+    {
+      "q": "What rainforest region along the Pacific coast of Colombia is considered the rainiest tropical region on Earth?",
+      "accepted": [
+        "choco",
+        "choco rainforest",
+        "choco region",
+        "choco biogeographic region",
+        "choco jungle"
+      ],
+      "display": "Chocó Rainforest"
+    },
+    {
+      "q": "Which island nation in Southeast Asia has more volcanoes that have erupted since 1800 than any other country?",
+      "accepted": [
+        "indonesia"
+      ],
+      "display": "Indonesia"
+    },
+    {
+      "q": "What is the largest desert on Earth, covering an entire continent and receiving very little precipitation?",
+      "accepted": [
+        "antarctica",
+        "antarctic desert"
+      ],
+      "display": "Antarctic Desert"
+    },
+    {
+      "q": "What is the world's largest hot desert, stretching across much of northern Africa?",
+      "accepted": [
+        "sahara",
+        "sahara desert"
+      ],
+      "display": "Sahara Desert"
+    },
+    {
+      "q": "What Siberian lake is the deepest in the world, reaching approximately 1,642 metres below its surface?",
+      "accepted": [
+        "lake baikal",
+        "baikal"
+      ],
+      "display": "Lake Baikal"
+    },
+    {
+      "q": "What hypersaline body of water between Jordan and Israel occupies the lowest exposed land elevation on Earth?",
+      "accepted": [
+        "dead sea"
+      ],
+      "display": "Dead Sea"
+    },
+    {
+      "q": "What mountain range running along the western edge of South America is the longest continental mountain range in the world?",
+      "accepted": [
+        "andes",
+        "andes mountains",
+        "andes mountain range"
+      ],
+      "display": "The Andes"
+    },
+    {
+      "q": "What deep-sea trench in the western Pacific contains Challenger Deep, the deepest known point in Earth's oceans?",
+      "accepted": [
+        "mariana",
+        "marianas",
+        "mariana trench",
+        "marianas trench"
+      ],
+      "display": "Mariana Trench"
+    },
+    {
+      "q": "What enormous island between the Arctic and Atlantic Oceans is the world's largest island that isn't a continental landmass?",
+      "accepted": [
+        "greenland"
+      ],
+      "display": "Greenland"
+    },
+    {
+      "q": "What vast elevated region of Central Asia is nicknamed the Roof of the World, and contains the sources of several major Asian rivers?",
+      "accepted": [
+        "tibet",
+        "tibetan plateau",
+        "tibet plateau",
+        "qinghai tibet plateau"
+      ],
+      "display": "Tibetan Plateau"
+    },
+    {
+      "q": "What is the world's largest coral reef system, stretching over 2,300 kilometres along Australia's northeastern coast?",
+      "accepted": [
+        "barrier",
+        "great barrier",
+        "great barrier reef"
+      ],
+      "display": "Great Barrier Reef"
+    },
+    {
+      "q": "What is the world's largest inland body of water, bordered by five countries including Russia, Iran and Kazakhstan?",
+      "accepted": [
+        "caspian sea",
+        "caspian"
+      ],
+      "display": "Caspian Sea"
+    },
+    {
+      "q": "What is the world's largest peninsula, occupying much of the southwestern corner of Asia?",
+      "accepted": [
+        "arabian peninsula",
+        "arabia",
+        "arabian"
+      ],
+      "display": "Arabian Peninsula"
+    },
+    {
+      "q": "What bay between New Brunswick and Nova Scotia in Canada is famous for having some of the highest tides on Earth?",
+      "accepted": [
+        "bay of fundy",
+        "fundy bay",
+        "fundy"
+      ],
+      "display": "Bay of Fundy"
+    },
+    {
+      "q": "What is the world's highest navigable lake, situated in the Andes between Peru and Bolivia?",
+      "accepted": [
+        "lake titicaca",
+        "titicaca"
+      ],
+      "display": "Lake Titicaca"
+    },
+    {
+      "q": "What African country contains the Danakil Depression, one of the hottest and lowest-lying places on Earth?",
+      "accepted": [
+        "ethiopia"
+      ],
+      "display": "Ethiopia"
+    }
+  ]
 }

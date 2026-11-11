@@ -64,7 +64,8 @@ const {
   LARGEST_MOONS,
   CACTI,
   CONNECTORS_QUIZZES,
-  AIR_TRAVEL_QUIZ
+  AIR_TRAVEL_QUIZ,
+  EXTREME_REGIONS
 } = QUIZ_DATA;
 
 const RIVER_LOOKUP = {};
@@ -988,5 +989,16 @@ const flightTimeQuiz = new MultipleChoiceQuiz({
     &middot; Pick the closest flight time from 4 options<br>
     &middot; No skipping: keep picking until you find the right one, but only first-try answers score<br>
     &middot; The round ends when you finish all 10 or time runs out
+  `
+});
+
+const extremeRegionsQuiz = new TriviaQuiz({
+  id: 'extremeregions',
+  questions: EXTREME_REGIONS,
+  rulesHTML: `
+    &middot; ${EXTREME_REGIONS.length} questions, one at a time — no clock, just recall<br>
+    &middot; Type your answer and hit enter or submit<br>
+    &middot; You'll see the correct answer immediately after each question<br>
+    &middot; At the end, review your full scorecard
   `
 });
