@@ -645,6 +645,19 @@
     <div class="category">
     <h2 class="category-title">General Knowledge</h2>
 
+    <!-- ============ AIR TRAVEL ============ -->
+    <details class="section">
+      <summary class="section-summary"><span><span class="chevron">▸</span>Air Travel ✈️</span><span class="quiz-count">1 quiz</span></summary>
+      <div class="card-grid">
+        <div class="card">
+          <div class="tag">Multiple choice &middot; 10 questions</div>
+          <h3>Guess the Flight Time</h3>
+          <div class="meta" id="airtravel-meta">estimate nonstop flight durations between world cities</div>
+          <button class="btn-primary" onclick="showScreen('airtravel')">Play</button>
+        </div>
+      </div>
+    </details>
+
     <!-- ============ CATEGORY CONNECTORS ============ -->
     <!-- Cards + screens below are generated automatically from the
          CONNECTORS_QUIZZES array in connectors.json — see
@@ -704,7 +717,7 @@
    of ids. To add a new screen here, just add its id to this array —
    the actual game instance (in app-init.js) is what gives it content.
    ============================================================ */
-const SCREEN_IDS = ['countries', 'worldpopmine', 'flags', 'states', 'abbr', 'worldcap', 'statecap', 'popmine', 'statemap', 'canadamap', 'worldmap', 'worldoutline', 'findcountry', 'findcity', 'findstate', 'findstate-hard', 'provinces', 'provincecap', 'provabbr', 'provpopmine', 'mountaincont', 'rivermine', 'oceans', 'waterfallmap', 'presidents', 'pms', 'monarchs', 'ancientegypt', 'ancientgreecemap', 'romanemperors', 'chinesedynasties', 'nba', 'mlb', 'nhl', 'nfl', 'periodic', 'elements', 'elementguess', 'planets', 'moons', 'largestmoons'];
+const SCREEN_IDS = ['countries', 'worldpopmine', 'flags', 'states', 'abbr', 'worldcap', 'statecap', 'popmine', 'statemap', 'canadamap', 'worldmap', 'worldoutline', 'findcountry', 'findcity', 'findstate', 'findstate-hard', 'provinces', 'provincecap', 'provabbr', 'provpopmine', 'mountaincont', 'rivermine', 'oceans', 'waterfallmap', 'presidents', 'pms', 'monarchs', 'ancientegypt', 'ancientgreecemap', 'romanemperors', 'chinesedynasties', 'nba', 'mlb', 'nhl', 'nfl', 'periodic', 'elements', 'elementguess', 'planets', 'moons', 'largestmoons', 'airtravel'];
 
 const screenHost = document.getElementById('dynamic-screens');
 SCREEN_IDS.forEach(id => {
@@ -860,10 +873,11 @@ Promise.all([
   fetch('canada-province-showcase.json').then(r => r.json()),
   fetch('sports.json').then(r => r.json()),
   fetch('science.json').then(r => r.json()),
-  fetch('connectors.json').then(r => r.json())
+  fetch('connectors.json').then(r => r.json()),
+  fetch('general-knowledge.json').then(r => r.json())
 ])
-  .then(([geography, history, generalKnowledge, canadaShowcase, sports, science, connectors]) => {
-    window.QUIZ_DATA = { ...geography, ...history, ...generalKnowledge, ...canadaShowcase, ...sports, ...science, ...connectors };
+  .then(([geography, history, stateShowcase, canadaShowcase, sports, science, connectors, generalKnowledge]) => {
+    window.QUIZ_DATA = { ...geography, ...history, ...stateShowcase, ...canadaShowcase, ...sports, ...science, ...connectors, ...generalKnowledge };
     const s = document.createElement('script');
     s.src = 'app-init.js';
     document.body.appendChild(s);
