@@ -38,11 +38,11 @@
     },
     {
       "prompt": " New York, USA → Tokyo, Japan",
-      "answer": "14h 00m",
+      "answer": "14h 30m",
       "distractors": [
         "10h 15m",
         "12h 45m",
-        "15h 15m"
+        "15h 30m"
       ]
     },
     {
