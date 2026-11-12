@@ -1,0 +1,220 @@
+{
+  "AIR_TRAVEL_QUIZ": [
+    {
+      "prompt": " New York, USA → London, UK",
+      "answer": "7h 00m",
+      "distractors": [
+        "6h 15m",
+        "7h 45m",
+        "8h 30m"
+      ]
+    },
+    {
+      "prompt": " New York, USA → Los Angeles, USA",
+      "answer": "6h 00m",
+      "distractors": [
+        "4h 30m",
+        "5h 00m",
+        "5h 30m"
+      ]
+    },
+    {
+      "prompt": " New York, USA → Miami, USA",
+      "answer": "3h 15m",
+      "distractors": [
+        "3h 30m",
+        "4h 00m",
+        "4h 15m"
+      ]
+    },
+    {
+      "prompt": " New York, USA → Paris, France",
+      "answer": "7h 15m",
+      "distractors": [
+        "5h 00m",
+        "5h 45m",
+        "6h 30m"
+      ]
+    },
+    {
+      "prompt": " New York, USA → Tokyo, Japan",
+      "answer": "14h 00m",
+      "distractors": [
+        "10h 15m",
+        "12h 45m",
+        "15h 15m"
+      ]
+    },
+    {
+      "prompt": " Los Angeles, USA → Honolulu, USA",
+      "answer": "5h 45m",
+      "distractors": [
+        "6h 15m",
+        "6h 45m",
+        "7h 45m"
+      ]
+    },
+    {
+      "prompt": " Los Angeles, USA → Sydney, Australia",
+      "answer": "15h 00m",
+      "distractors": [
+        "16h 15m",
+        "17h 30m",
+        "18h 45m"
+      ]
+    },
+    {
+      "prompt": " Chicago, USA → San Francisco, USA",
+      "answer": "4h 45m",
+      "distractors": [
+        "3h 15m",
+        "3h 45m",
+        "4h 15m"
+      ]
+    },
+    {
+      "prompt": " Toronto, Canada → Vancouver, Canada",
+      "answer": "5h 00m",
+      "distractors": [
+        "6h 00m",
+        "6h 30m",
+        "7h 00m"
+      ]
+    },
+    {
+      "prompt": " London, UK → Dubai, UAE",
+      "answer": "7h 00m",
+      "distractors": [
+        "4h 45m",
+        "5h 30m",
+        "6h 15m"
+      ]
+    },
+    {
+      "prompt": " London, UK → Rome, Italy",
+      "answer": "2h 40m",
+      "distractors": [
+        "1h 55m",
+        "2h 55m",
+        "3h 25m"
+      ]
+    },
+    {
+      "prompt": " Paris, France → New Delhi, India",
+      "answer": "8h 30m",
+      "distractors": [
+        "5h 30m",
+        "7h 45m",
+        "10h 00m"
+      ]
+    },
+    {
+      "prompt": " Singapore → Bangkok, Thailand",
+      "answer": "2h 30m",
+      "distractors": [
+        "2h 45m",
+        "3h 00m",
+        "3h 15m"
+      ]
+    },
+    {
+      "prompt": " Tokyo, Japan → Seoul, South Korea",
+      "answer": "2h 30m",
+      "distractors": [
+        "2h 15m",
+        "2h 45m",
+        "3h 00m"
+      ]
+    },
+    {
+      "prompt": " Dubai, UAE → Singapore",
+      "answer": "7h 30m",
+      "distractors": [
+        "4h 30m",
+        "6h 45m",
+        "9h 00m"
+      ]
+    },
+    {
+      "prompt": " Sydney, Australia → Auckland, New Zealand",
+      "answer": "3h 10m",
+      "distractors": [
+        "2h 10m",
+        "2h 25m",
+        "2h 55m"
+      ]
+    },
+    {
+      "prompt": " Cape Town, South Africa → Johannesburg, South Africa",
+      "answer": "2h 10m",
+      "distractors": [
+        "1h 25m",
+        "2h 25m",
+        "2h 55m"
+      ]
+    },
+    {
+      "prompt": " São Paulo, Brazil → Buenos Aires, Argentina",
+      "answer": "3h 00m",
+      "distractors": [
+        "2h 30m",
+        "2h 45m",
+        "4h 00m"
+      ]
+    },
+    {
+      "prompt": " Mexico City, Mexico → New York, USA",
+      "answer": "5h 00m",
+      "distractors": [
+        "3h 00m",
+        "4h 30m",
+        "6h 00m"
+      ]
+    },
+    {
+      "prompt": " Istanbul, Türkiye → Cairo, Egypt",
+      "answer": "2h 15m",
+      "distractors": [
+        "2h 30m",
+        "2h 45m",
+        "3h 00m"
+      ]
+    },
+    {
+      "prompt": " Frankfurt, Germany → New York, USA",
+      "answer": "8h 30m",
+      "distractors": [
+        "6h 15m",
+        "9h 15m",
+        "11h 30m"
+      ]
+    },
+    {
+      "prompt": " Vancouver, Canada → Tokyo, Japan",
+      "answer": "10h 00m",
+      "distractors": [
+        "6h 00m",
+        "7h 00m",
+        "9h 00m"
+      ]
+    },
+    {
+      "prompt": " Madrid, Spain → Lisbon, Portugal",
+      "answer": "1h 20m",
+      "distractors": [
+        "0h 50m",
+        "1h 35m",
+        "1h 50m"
+      ]
+    },
+    {
+      "prompt": " Hong Kong → London, UK",
+      "answer": "13h 00m",
+      "distractors": [
+        "8h 00m",
+        "10h 30m",
+        "16h 45m"
+      ]
+    }
+  ]
+}
