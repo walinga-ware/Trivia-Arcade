@@ -19,6 +19,9 @@ const {
   RIVER_ALIASES,
   OCEANS,
   OCEAN_ALIASES,
+  ISLAND_RANKING,
+  ISLAND_CONTINENTS,
+  ISLAND_ALIASES,
   FAMOUS_WATERFALLS,
   PRESIDENTS_TERMS,
   PRESIDENT_ALIASES,
@@ -551,6 +554,29 @@ const oceansGame = new FreeRecallGame({
     &middot; Every ocean counts once — 5 total<br>
     &middot; Common short forms are accepted<br>
     &middot; When time expires, the full roll is revealed with your hits marked
+  `
+});
+
+const ISLAND_LOOKUP = {};
+const ISLAND_NAMES = ISLAND_RANKING.map(([name]) => name);
+const ISLAND_AREAS = Object.fromEntries(ISLAND_RANKING);
+ISLAND_NAMES.forEach(name => { ISLAND_LOOKUP[normalize(name)] = name; });
+Object.keys(ISLAND_ALIASES).forEach(k => { ISLAND_LOOKUP[normalize(k)] = ISLAND_ALIASES[k]; });
+
+const islandGame = new FreeRecallGame({
+  id: 'islandmine',
+  title: 'Name the Largest Islands',
+  items: ISLAND_NAMES,
+  lookup: ISLAND_LOOKUP,
+  duration: 5*60,
+  preserveOrder: true,
+  itemDetail: name => `${ISLAND_CONTINENTS[name]} &middot; ${ISLAND_AREAS[name].toLocaleString('en-US')} km&sup2;`,
+  finalTitle: 'Full ranking — the 15 largest islands, by area',
+  rulesHTML: `
+    &middot; Name the world's 15 largest islands — any order<br>
+    &middot; Australia and Antarctica don't count — they're continental landmasses<br>
+    &middot; Common alternate names are accepted<br>
+    &middot; When time expires, the full ranking is revealed with each island's continent and area
   `
 });
 
