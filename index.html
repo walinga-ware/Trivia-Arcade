@@ -251,8 +251,9 @@
   .state-map.find-city:active{ cursor:grabbing; }
   .state-map.find-city .state{ vector-effect:non-scaling-stroke; }
   .city-dot circle{ fill:var(--paper); stroke:var(--ink); stroke-width:1.5px; cursor:pointer; transition:fill 120ms ease; }
-  .city-dot text{ display:none; font-family:'IBM Plex Sans', sans-serif; font-size:13px; font-weight:600; fill:var(--paper); stroke:var(--ink); stroke-width:3px; paint-order:stroke; pointer-events:none; }
+  .city-dot text{ display:none; font-family:'IBM Plex Sans', sans-serif; font-size:13px; font-weight:600; fill:var(--paper); stroke:var(--ink); stroke-width:3px; paint-order:stroke; pointer-events:auto; cursor:pointer; }
   .city-dot.labeled text{ display:block; }
+  .find-city.answered .city-dot text, .city-dot.correct text{ cursor:default; }
   .find-city:not(.answered) .city-dot:not(.correct):hover circle{ fill:var(--brass); }
   .city-dot.correct circle{ fill:var(--sage); cursor:default; }
   .city-dot.target circle{ fill:var(--brass); stroke:var(--paper); stroke-width:2px; }
@@ -265,7 +266,7 @@
   .map-zoom-controls button{ width:44px; height:40px; padding:0; font-size:20px; line-height:1; background:var(--ink-2); display:flex; align-items:center; justify-content:center; }
   /* Find the Country: dimmed non-quiz territories, and label-only anchors for countries that don't need a dot */
   .state-map .territory{ fill:rgba(234,230,218,0.12); stroke:var(--ink); stroke-width:1.15px; stroke-linejoin:round; pointer-events:none; vector-effect:non-scaling-stroke; }
-  .country-pt:not(.marker){ pointer-events:none; }
+  .country-pt:not(.marker), .country-pt:not(.marker) text{ pointer-events:none; }
   .country-pt:not(.marker) circle{ display:none; }
   @media(max-width:600px){ .map-answer-row{ flex-direction:column; } .map-answer-row button{ width:100%; } .state-map-wrap{ padding:5px; } }
 
