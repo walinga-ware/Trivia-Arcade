@@ -1,0 +1,112 @@
+{
+  "FRUIT_TREE_QUIZ": [
+    {
+      "prompt": "In spring I wear a cloud of pale pink and white; in autumn my branches bow beneath crisp snacks. Pick me before the first frost, and I may become a pie. What tree am I?",
+      "answer": "Apple tree",
+      "distractors": [
+        "Pear tree",
+        "Peach tree",
+        "Cherry tree"
+      ]
+    },
+    {
+      "prompt": "My fragrant pink blossoms arrive early, and my fuzzy-skinned summer jewels hide a single hard stone. What tree am I?",
+      "answer": "Peach tree",
+      "distractors": [
+        "Plum tree",
+        "Apricot tree",
+        "Nectarine tree"
+      ]
+    },
+    {
+      "prompt": "I offer little golden-green bells that ripen from firm to juicy. My fruit has a narrow neck and a rounded base. What tree am I?",
+      "answer": "Pear tree",
+      "distractors": [
+        "Quince tree",
+        "Apple tree",
+        "Fig tree"
+      ]
+    },
+    {
+      "prompt": "I dress my branches in a froth of blossoms, then hang pairs of red or dark jewels that birds and bakers both adore. What tree am I?",
+      "answer": "Cherry tree",
+      "distractors": [
+        "Plum tree",
+        "Pomegranate tree",
+        "Mulberry tree"
+      ]
+    },
+    {
+      "prompt": "My fruit wears a soft coat of fuzz, while a large pit guards its sweet orange flesh. I often bloom before my leaves fully appear. What tree am I?",
+      "answer": "Apricot tree",
+      "distractors": [
+        "Peach tree",
+        "Persimmon tree",
+        "Mango tree"
+      ]
+    },
+    {
+      "prompt": "I grow glossy, often evergreen leaves and fragrant white flowers. My bright orange fruit is easy to peel and arrives in winter. What tree am I?",
+      "answer": "Mandarin orange tree",
+      "distractors": [
+        "Lemon tree",
+        "Grapefruit tree",
+        "Olive tree"
+      ]
+    },
+    {
+      "prompt": "My branches carry leathery leaves and fragrant blossoms; my yellow fruit is tart enough to make your mouth pucker, but zest makes kitchens sing. What tree am I?",
+      "answer": "Lemon tree",
+      "distractors": [
+        "Lime tree",
+        "Orange tree",
+        "Grapefruit tree"
+      ]
+    },
+    {
+      "prompt": "I can thrive in warm, dry places, with broad leaves that look like a hand and fruit that hides many tiny seeds inside a sweet, soft flesh. What tree am I?",
+      "answer": "Fig tree",
+      "distractors": [
+        "Date palm",
+        "Guava tree",
+        "Avocado tree"
+      ]
+    },
+    {
+      "prompt": "My fruit is a green or purple globe with a crown, and inside are hundreds of ruby-like seeds packed with juice. What tree am I?",
+      "answer": "Pomegranate tree",
+      "distractors": [
+        "Persimmon tree",
+        "Plum tree",
+        "Cranberry tree"
+      ]
+    },
+    {
+      "prompt": "I am a tropical giant with a spreading crown. My golden-orange fruit is famously sweet, with one large, flat stone at its center. What tree am I?",
+      "answer": "Mango tree",
+      "distractors": [
+        "Papaya tree",
+        "Avocado tree",
+        "Jackfruit tree"
+      ]
+    },
+    {
+      "prompt": "My fruit is often mistaken for a vegetable, but inside its smooth green or dark skin is creamy flesh and one oversized seed. What tree am I?",
+      "answer": "Avocado tree",
+      "distractors": [
+        "Olive tree",
+        "Guava tree",
+        "Breadfruit tree"
+      ]
+    },
+    {
+      "prompt": "I grow in warm climates and produce large, round fruits with a tough rind. Inside, juicy segments form a refreshing pink or red feast. What tree am I?",
+      "answer": "Grapefruit tree",
+      "distractors": [
+        "Orange tree",
+        "Lemon tree",
+        "Pomelo tree"
+      ]
+    }
+  ]
+}

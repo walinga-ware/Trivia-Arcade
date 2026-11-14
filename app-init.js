@@ -68,7 +68,8 @@ const {
   CACTI,
   CONNECTORS_QUIZZES,
   AIR_TRAVEL_QUIZ,
-  EXTREME_REGIONS
+  EXTREME_REGIONS,
+  FRUIT_TREE_QUIZ
 } = QUIZ_DATA;
 
 const RIVER_LOOKUP = {};
@@ -1014,7 +1015,7 @@ const flightTimeQuiz = new MultipleChoiceQuiz({
     &middot; Two cities are shown, you must determine the flight time between them<br>
     &middot; Pick the closest flight time from 4 options<br>
     &middot; No skipping: keep picking until you find the right one, but only first-try answers score<br>
-    &middot; The round ends when you finish all 10 or time runs out
+    &middot; The round ends when you finish all 7 or time runs out
   `
 });
 
@@ -1026,5 +1027,20 @@ const extremeRegionsQuiz = new TriviaQuiz({
     &middot; Type your answer and hit enter or submit<br>
     &middot; You'll see the correct answer immediately after each question<br>
     &middot; At the end, review your full scorecard
+  `
+});
+
+const fruitTreeQuiz = new MultipleChoiceQuiz({
+  id: 'fruittree',
+  pairs: FRUIT_TREE_QUIZ,
+  questionCount: 7,
+  optionCount: 4,
+  duration: 5*60,
+  promptLabel: "Which fruit does this clue describe?",
+  finalRollLabel: 'Full roll — the 7 fruit trees in this round',
+  rulesHTML: `
+    &middot; Determine which fruit tree each clue describes<br>
+    &middot; No skipping: keep picking until you find the right one, but only first-try answers score<br>
+    &middot; The round ends when you finish all 7 or time runs out
   `
 });
