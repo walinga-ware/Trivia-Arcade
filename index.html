@@ -655,13 +655,19 @@
 
     <!-- ============ PLANTS ============ -->
     <details class="section">
-      <summary class="section-summary"><span><span class="chevron">▸</span>Plant life 🌵</span><span class="quiz-count">1 quiz</span></summary>
+      <summary class="section-summary"><span><span class="chevron">▸</span>Plant life 🌵</span><span class="quiz-count">2 quizzes</span></summary>
     <div class="card-grid">
       <div class="card">
         <div class="tag">Prompted quiz &middot; picture &middot; 8 items</div>
         <h3>Name the Cactus</h3>
         <div class="meta" id="cacti-meta"></div>
         <button class="btn-primary" onclick="showScreen('cacti')">Play</button>
+      </div>
+      <div class="card">
+        <div class="tag">Multiple choice &middot; 10 questions</div>
+        <h3>Guess the Fruit Tree</h3>
+        <div class="meta" id="fruittrees-meta">solve each fruit-tree riddle from 4 options</div>
+        <button class="btn-primary" onclick="showScreen('fruittrees')">Play</button>
       </div>
     </div>
     </details>
@@ -882,11 +888,12 @@ Promise.all([
   fetch('quizData/canada-province-showcase.json').then(r => r.json()),
   fetch('quizData/sports.json').then(r => r.json()),
   fetch('quizData/science.json').then(r => r.json()),
+  fetch('quizData/fruit-trees.json').then(r => r.json()),
   fetch('quizData/connectors.json').then(r => r.json()),
   fetch('quizData/general-knowledge.json').then(r => r.json())
 ])
-  .then(([geography, history, stateShowcase, canadaShowcase, sports, science, connectors, generalKnowledge]) => {
-    window.QUIZ_DATA = { ...geography, ...history, ...stateShowcase, ...canadaShowcase, ...sports, ...science, ...connectors, ...generalKnowledge };
+  .then(([geography, history, stateShowcase, canadaShowcase, sports, science, fruitTrees, connectors, generalKnowledge]) => {
+    window.QUIZ_DATA = { ...geography, ...history, ...stateShowcase, ...canadaShowcase, ...sports, ...science, ...fruitTrees, ...connectors, ...generalKnowledge };
     const s = document.createElement('script');
     s.src = 'app-init.js';
     document.body.appendChild(s);
