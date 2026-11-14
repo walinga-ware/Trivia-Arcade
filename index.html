@@ -228,7 +228,7 @@
   .map-quiz{ margin-top:4px; }
   .state-map-wrap{ background:#0a131b; border:1px solid var(--line); border-radius:6px; padding:12px; margin:18px 0 16px; }
   .state-map{ display:block; width:100%; height:auto; overflow:visible; }
-  .state-map .state{ fill:rgba(234,230,218,0.24); stroke:rgba(234,230,218,0.85); stroke-width:1.15px; stroke-linejoin:round; transition:fill 120ms ease, opacity 120ms ease; }
+  .state-map .state{ fill:rgba(234,230,218,0.24); stroke:var(--ink); stroke-width:1.15px; stroke-linejoin:round; transition:fill 120ms ease, opacity 120ms ease; }
   .state-map.hard-mode .state{ stroke:transparent; stroke-width:0; }
   .state-map.hard-mode .state.guessed{ stroke:var(--paper); stroke-width:1.5px; }
   .state-map .state.target{ fill:var(--brass); stroke:var(--paper); stroke-width:1.5px; }
@@ -264,7 +264,7 @@
   .map-zoom-controls{ display:flex; justify-content:center; gap:8px; margin:0 0 12px; }
   .map-zoom-controls button{ width:44px; height:40px; padding:0; font-size:20px; line-height:1; background:var(--ink-2); display:flex; align-items:center; justify-content:center; }
   /* Find the Country: dimmed non-quiz territories, and label-only anchors for countries that don't need a dot */
-  .state-map .territory{ fill:rgba(234,230,218,0.12); stroke:rgba(234,230,218,0.5); stroke-width:1.15px; stroke-linejoin:round; pointer-events:none; vector-effect:non-scaling-stroke; }
+  .state-map .territory{ fill:rgba(234,230,218,0.12); stroke:var(--ink); stroke-width:1.15px; stroke-linejoin:round; pointer-events:none; vector-effect:non-scaling-stroke; }
   .country-pt:not(.marker){ pointer-events:none; }
   .country-pt:not(.marker) circle{ display:none; }
   @media(max-width:600px){ .map-answer-row{ flex-direction:column; } .map-answer-row button{ width:100%; } .state-map-wrap{ padding:5px; } }
