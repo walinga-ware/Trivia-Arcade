@@ -114,8 +114,8 @@ function freeRecallHTML(id, title){
     </div>
 
     <div class="results" id="${id}-results" style="display:none;">
-      <button id="${id}-resetBtn" class="play-again-top">Play again</button>
       <div class="final-score" id="${id}-finalScoreLine"></div>
+      <button id="${id}-resetBtn" class="play-again-top">Play again</button>
       <div class="section-title"><span id="${id}-finalTitle"></span><span>Your hits in green</span></div>
       <div id="${id}-finalGrid" class="final-grid"></div>
     </div>
@@ -362,8 +362,8 @@ function hintedFreeRecallHTML(id, title){
     </div>
 
     <div class="results" id="${id}-results" style="display:none;">
-      <button id="${id}-resetBtn" class="play-again-top">Play again</button>
       <div class="final-score" id="${id}-finalScoreLine"></div>
+      <button id="${id}-resetBtn" class="play-again-top">Play again</button>
       <div class="section-title"><span id="${id}-finalTitle"></span><span>Your hits in green</span></div>
       <div id="${id}-finalGrid" class="final-grid"></div>
     </div>
@@ -753,8 +753,8 @@ function quizHTML(id, promptLabel, mode){
     </div>
 
     <div class="results" id="${id}-results" style="display:none;">
-      <button id="${id}-resetBtn" class="play-again-top">Play again</button>
       <div class="final-score" id="${id}-finalScoreLine"></div>
+      <button id="${id}-resetBtn" class="play-again-top">Play again</button>
       <div class="section-title"><span id="${id}-finalRollLabel"></span><span>Your hits in green</span></div>
       <div id="${id}-finalGrid" class="final-grid"></div>
     </div>
@@ -980,8 +980,8 @@ function multipleChoiceHTML(id, promptLabel){
     </div>
 
     <div class="results" id="${id}-results" style="display:none;">
-      <button id="${id}-resetBtn" class="play-again-top">Play again</button>
       <div class="final-score" id="${id}-finalScoreLine"></div>
+      <button id="${id}-resetBtn" class="play-again-top">Play again</button>
       <div class="section-title"><span id="${id}-finalRollLabel"></span><span>Correct on first try in green</span></div>
       <div id="${id}-finalGrid" class="final-grid"></div>
     </div>
@@ -1193,8 +1193,8 @@ function stateMapHTML(id, cfg={}){
     </div>
 
     <div class="results" id="${id}-results" style="display:none;">
-      <button id="${id}-resetBtn" class="play-again-top">Play again</button>
       <div class="final-score" id="${id}-finalScoreLine"></div>
+      <button id="${id}-resetBtn" class="play-again-top">Play again</button>
       <div class="section-title"><span>${allLabel}</span><span>Your hits in green</span></div>
       <div id="${id}-finalGrid" class="final-grid"></div>
     </div>
@@ -1462,8 +1462,8 @@ function findStateHTML(id, hardMode=false){
     </div>
 
     <div class="results" id="${id}-results" style="display:none;">
-      <button id="${id}-resetBtn" class="play-again-top">Play again</button>
       <div class="final-score" id="${id}-finalScoreLine"></div>
+      <button id="${id}-resetBtn" class="play-again-top">Play again</button>
       <div class="section-title"><span>All 50 states</span><span>Your hits in green</span></div>
       <div id="${id}-finalGrid" class="final-grid"></div>
     </div>
@@ -1645,8 +1645,8 @@ function findCityHTML(id, N){
     </div>
 
     <div class="results" id="${id}-results" style="display:none;">
-      <button id="${id}-resetBtn" class="play-again-top">Play again</button>
       <div class="final-score" id="${id}-finalScoreLine"></div>
+      <button id="${id}-resetBtn" class="play-again-top">Play again</button>
       <div class="section-title"><span>All ${N} cities</span><span>Your hits in green</span></div>
       <div id="${id}-finalGrid" class="final-grid"></div>
     </div>
@@ -2251,8 +2251,8 @@ function findCountryHTML(id, N){
     </div>
 
     <div class="results" id="${id}-results" style="display:none;">
-      <button id="${id}-resetBtn" class="play-again-top">Play again</button>
       <div class="final-score" id="${id}-finalScoreLine"></div>
+      <button id="${id}-resetBtn" class="play-again-top">Play again</button>
       <div class="section-title"><span>All ${N} countries</span><span>Your hits in green</span></div>
       <div id="${id}-finalGrid" class="final-grid"></div>
     </div>
@@ -2485,8 +2485,8 @@ function triviaHTML(id){
     </div>
 
     <div class="results" id="${id}-results" style="display:none;">
-      <button id="${id}-resetBtn" class="play-again-top">Play again</button>
       <div class="final-score" id="${id}-finalScoreLine"></div>
+      <button id="${id}-resetBtn" class="play-again-top">Play again</button>
       <div id="${id}-review"></div>
     </div>
   `;
@@ -2744,8 +2744,8 @@ function minefieldHTML(id, opts){
     </div>
 
     <div class="results" id="${id}-results" style="display:none;">
-      <button id="${id}-resetBtn" class="play-again-top">Play again</button>
       <div class="final-score" id="${id}-finalScoreLine"></div>
+      <button id="${id}-resetBtn" class="play-again-top">Play again</button>
       <div class="section-title"><span>Full ranking — all ${total} ${itemNounPlural} by ${metricLabel}</span><span>Your hits in green</span></div>
       <div id="${id}-finalGrid" class="final-grid"></div>
     </div>
