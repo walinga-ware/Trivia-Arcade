@@ -1,0 +1,193 @@
+"ANCIENT_AMERICAS_TRIVIA": [
+    {
+      "q": "Perched on a mountain ridge about 2,430 metres above sea level, which Inca citadel was built around 1450 for the emperor Pachacuti, abandoned within a century, and never found by the Spanish — remaining hidden until Hiram Bingham brought it to world attention in 1911?",
+      "accepted": [
+        "machu picchu",
+        "machu pichu",
+        "macchu picchu",
+        "macchu pichu",
+        "machupicchu"
+      ],
+      "display": "Machu Picchu"
+    },
+    {
+      "q": "At the spring and autumn equinoxes, the late-afternoon sun casts a zigzag shadow that appears to slither down the staircase of El Castillo, creating the illusion of the feathered serpent god Kukulkan descending. At which Maya city on Mexico's Yucatán Peninsula can you see this?",
+      "accepted": [
+        "chichen itza",
+        "chichen",
+        "chichenitza",
+        "chichen-itza"
+      ],
+      "display": "Chichén Itzá"
+    },
+    {
+      "q": "Its name was given by the Aztecs centuries after it was abandoned and is often translated as 'birthplace of the gods.' With its Pyramids of the Sun and Moon and the Avenue of the Dead, which city near modern Mexico City was one of the largest in the world around 450 CE?",
+      "accepted": [
+        "teotihuacan",
+        "teotihuacan city",
+        "teotihuacán"
+      ],
+      "display": "Teotihuacan"
+    },
+    {
+      "q": "Doomsday predictions flared in 2012 when a great cycle of the ancient Maya Long Count ended on December 21 — but nothing happened, and the Maya simply started the next cycle. What ancient timekeeping system, which also meshed a 260-day ritual cycle with a 365-day solar year, was misunderstood as predicting the end of the world?",
+      "accepted": [
+        "maya calendar",
+        "mayan calendar",
+        "the maya calendar",
+        "the mayan calendar",
+        "long count",
+        "maya long count",
+        "mayan long count",
+        "calendar",
+        "calendar round"
+      ],
+      "display": "The Maya Calendar"
+    },
+    {
+      "q": "Without the wheel, iron tools, or a written language, which Andean empire ruled roughly 10 million people from its capital of Cusco, linking them with tens of thousands of kilometres of mountain roads before falling to Francisco Pizarro's conquistadors in the 1530s?",
+      "accepted": [
+        "inca",
+        "incas",
+        "inca empire",
+        "the inca",
+        "the incas",
+        "incan",
+        "incan empire",
+        "tawantinsuyu"
+      ],
+      "display": "The Inca Empire"
+    },
+    {
+      "q": "According to legend, wandering people founded their capital where they saw an eagle perched on a prickly-pear cactus devouring a snake — an image that still appears on Mexico's flag today. Which empire, also known as the Mexica, rose from this legend to dominate central Mexico until Cortés arrived in 1519?",
+      "accepted": [
+        "aztec",
+        "aztecs",
+        "aztec empire",
+        "the aztecs",
+        "the aztec empire",
+        "mexica",
+        "the mexica"
+      ],
+      "display": "The Aztec Empire"
+    },
+    {
+      "q": "Home to the towering temples of Tikal — which rise above the jungle canopy and doubled as the rebel base on Yavin 4 in the original Star Wars film — which Central American country holds some of the most spectacular Maya ruins?",
+      "accepted": [
+        "guatemala",
+        "republic of guatemala"
+      ],
+      "display": "Guatemala"
+    },
+    {
+      "q": "Built on an island in Lake Texcoco and connected to the shore by causeways, which Aztec capital of roughly 200,000 people astonished Cortés and his men in 1519, and now lies buried beneath modern Mexico City?",
+      "accepted": [
+        "tenochtitlan",
+        "tenochtitlán",
+        "tenochtitlan city"
+      ],
+      "display": "Tenochtitlan"
+    },
+    {
+      "q": "Often called the 'mother culture' of Mesoamerica, which civilization of Mexico's Gulf Coast carved colossal basalt heads up to about 3.4 metres tall, some weighing as much as 40 tons, and was flourishing as early as 1200 BCE?",
+      "accepted": [
+        "olmec",
+        "olmecs",
+        "the olmec",
+        "the olmecs",
+        "olmec civilization"
+      ],
+      "display": "The Olmec"
+    },
+    {
+      "q": "Etched into the dry plains of southern Peru more than 1,500 years ago, giant figures of a hummingbird, a spider, and a monkey are so large that they are best seen from the air. What are these mysterious geoglyphs called?",
+      "accepted": [
+        "nazca lines",
+        "nasca lines",
+        "nazca",
+        "nasca",
+        "nazca geoglyphs",
+        "nazca line",
+        "nazca culture"
+      ],
+      "display": "The Nazca Lines"
+    },
+    {
+      "q": "Near modern-day St. Louis, which Native American city, home to perhaps 10,000 to 20,000 people around 1100 CE, was centred on Monks Mound — the largest earthen pyramid in the Americas north of Mexico?",
+      "accepted": [
+        "cahokia",
+        "cahokia mounds"
+      ],
+      "display": "Cahokia"
+    },
+    {
+      "q": "Bundles of colored cords tied with intricate knots were used by Inca officials to keep track of taxes, census counts, and possibly even stories. What are these knotted-string record-keeping devices called?",
+      "accepted": [
+        "quipu",
+        "khipu",
+        "quipus",
+        "khipus",
+        "quipo",
+        "quipu cords"
+      ],
+      "display": "Quipu"
+    },
+    {
+      "q": "Aztec and Maya traders used the beans of this tree as a form of currency — in one Aztec record, a turkey hen was worth 100 of them — and also ground them into a bitter, frothy drink reserved for nobles and warriors. What was this valuable crop?",
+      "accepted": [
+        "cacao",
+        "cocoa",
+        "chocolate",
+        "cacao beans",
+        "cacao bean",
+        "cocoa beans",
+        "cocoa bean"
+      ],
+      "display": "Cacao (Chocolate)"
+    },
+    {
+      "q": "Played on stone I-shaped courts with a solid rubber ball that players could only hit with their hips, forearms, or thighs, what sport was played across Mesoamerica for over 3,000 years, sometimes with life-or-death stakes?",
+      "accepted": [
+        "mesoamerican ballgame",
+        "mesoamerican ball game",
+        "ballgame",
+        "ball game",
+        "pok ta pok",
+        "pok-ta-pok",
+        "pokta pok",
+        "ullamaliztli",
+        "tlachtli",
+        "pitz",
+        "maya ballgame",
+        "mayan ballgame",
+        "aztec ballgame"
+      ],
+      "display": "The Mesoamerican Ballgame"
+    },
+    {
+      "q": "Dating back to roughly 3000 BCE — around the time Egypt's first pyramids were rising — which city in Peru's Supe Valley, with its large stepped pyramids, is considered the oldest known city in the Americas?",
+      "accepted": [
+        "caral",
+        "caral supe",
+        "caral-supe",
+        "norte chico",
+        "caral city"
+      ],
+      "display": "Caral"
+    },
+    {
+      "q": "Building multi-storey 'great houses' in Chaco Canyon and tucking cliff dwellings into the canyon walls of Mesa Verde, which people of the American Southwest were the ancestors of today's Pueblo nations?",
+      "accepted": [
+        "ancestral puebloans",
+        "ancestral puebloan",
+        "ancestral pueblo",
+        "ancestral pueblo people",
+        "ancestral pueblo peoples",
+        "anasazi",
+        "puebloans",
+        "pueblo",
+        "pueblo people"
+      ],
+      "display": "Ancestral Puebloans"
+    }
+  ]
