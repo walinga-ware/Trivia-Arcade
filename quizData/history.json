@@ -2487,5 +2487,42 @@
       ],
       "display": "Corn (Maize)"
     }
+  ],
+  "ANCIENT_WONDERS": [
+    {
+      "name": "Great Pyramid of Giza",
+      "image": "images/wonders/great-pyramid-of-giza.svg",
+      "aliases": ["Great Pyramid", "Pyramid of Giza", "Pyramids of Giza", "Giza Pyramid", "Giza Pyramids", "Pyramid of Khufu", "Pyramid of Cheops", "Giza", "Pyramids", "Pyramid"]
+    },
+    {
+      "name": "Hanging Gardens of Babylon",
+      "image": "images/wonders/hanging-gardens-of-babylon.svg",
+      "aliases": ["Hanging Gardens", "Gardens of Babylon", "Babylon Hanging Gardens", "Babylonian Hanging Gardens", "Hanging Garden", "Hanging Gardens of Semiramis"]
+    },
+    {
+      "name": "Statue of Zeus at Olympia",
+      "image": "images/wonders/statue-of-zeus-at-olympia.svg",
+      "aliases": ["Statue of Zeus", "Zeus at Olympia", "Zeus Statue", "Olympian Zeus", "Zeus of Olympia", "Statue of Olympian Zeus", "Zeus"]
+    },
+    {
+      "name": "Temple of Artemis at Ephesus",
+      "image": "images/wonders/temple-of-artemis-at-ephesus.svg",
+      "aliases": ["Temple of Artemis", "Artemis at Ephesus", "Temple of Diana", "Artemision", "Temple of Diana at Ephesus", "Artemis Temple", "Ephesus Temple", "Temple at Ephesus"]
+    },
+    {
+      "name": "Mausoleum at Halicarnassus",
+      "image": "images/wonders/mausoleum-at-halicarnassus.svg",
+      "aliases": ["Mausoleum of Halicarnassus", "Mausoleum of Mausolus", "Tomb of Mausolus", "Mausoleum of Maussollos", "Halicarnassus Mausoleum", "Halicarnassus", "Mausoleum"]
+    },
+    {
+      "name": "Colossus of Rhodes",
+      "image": "images/wonders/colossus-of-rhodes.svg",
+      "aliases": ["Colossus", "Rhodes Colossus", "Statue of Helios", "Helios Statue", "Statue of Rhodes", "Rhodes"]
+    },
+    {
+      "name": "Lighthouse of Alexandria",
+      "image": "images/wonders/lighthouse-of-alexandria.svg",
+      "aliases": ["Pharos of Alexandria", "Pharos Lighthouse", "Alexandria Lighthouse", "Pharos", "Great Lighthouse of Alexandria", "Alexandria Light House", "Lighthouse"]
+    }
   ]
 }
