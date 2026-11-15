@@ -3,14 +3,15 @@
  * check-data.js
  *
  * Pre-deploy sanity check for this quiz app. It re-does exactly what
- * index.html does at runtime (fetch each JSON file, merge into one
- * QUIZ_DATA object) and then checks that every constant app-init.js
- * destructures out of QUIZ_DATA actually exists.
+ * index.html does at runtime (load every .json file in quizData/, in
+ * alphabetical order, and merge into one QUIZ_DATA object) and then checks
+ * that every constant app-init.js destructures out of QUIZ_DATA exists.
  *
  * This catches, before you ever open a browser:
- *   1. A JSON filename referenced in index.html that doesn't exist on disk
- *      (typo, renamed file, forgot to commit it).
- *   2. A destructured constant name in app-init.js that doesn't match any
+ *   1. A JSON file in quizData/ that isn't valid JSON.
+ *   2. Two JSON files defining the same top-level key (one would silently
+ *      overwrite the other).
+ *   3. A destructured constant name in app-init.js that doesn't match any
  *      key across the JSON files (renamed a key in the JSON but forgot to
  *      update app-init.js, or vice versa).
  *
@@ -23,7 +24,8 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = __dirname;
-const INDEX_HTML = path.join(ROOT, 'index.html');
+const DATA_DIR_NAME = 'quizData';
+const DATA_DIR = path.join(ROOT, DATA_DIR_NAME);
 const APP_INIT = path.join(ROOT, 'app-init.js');
 
 function fail(msg) {
@@ -35,33 +37,42 @@ function ok(msg) {
   console.log(`\u2705  ${msg}`);
 }
 
-// 1. Find every fetch('something.json') call in index.html.
-const indexSrc = fs.readFileSync(INDEX_HTML, 'utf8');
-const jsonFiles = [...indexSrc.matchAll(/fetch\(['"]([^'"]+\.json)['"]\)/g)].map(m => m[1]);
-
-if (jsonFiles.length === 0) {
-  fail(`No fetch('*.json') calls found in ${path.basename(INDEX_HTML)} — did the loading code change shape?`);
+// 1. Find every .json file in quizData/ (same discovery rule and same
+//    alphabetical order as index.html's loadQuizData()).
+if (!fs.existsSync(DATA_DIR) || !fs.statSync(DATA_DIR).isDirectory()) {
+  fail(`Data directory not found: ${DATA_DIR}`);
   process.exit(1);
 }
-ok(`Found ${jsonFiles.length} JSON file(s) referenced in index.html: ${jsonFiles.join(', ')}`);
 
-// 2. Make sure each referenced file actually exists and is valid JSON,
-//    then merge them the same way index.html does (spread in order).
+const jsonFiles = fs
+  .readdirSync(DATA_DIR)
+  .filter(f => f.toLowerCase().endsWith('.json'))
+  .sort()
+  .map(f => path.posix.join(DATA_DIR_NAME, f));
+
+if (jsonFiles.length === 0) {
+  fail(`No .json files found in ${DATA_DIR_NAME}/`);
+  process.exit(1);
+}
+ok(`Found ${jsonFiles.length} JSON file(s) in ${DATA_DIR_NAME}/: ${jsonFiles.map(f => path.posix.basename(f)).join(', ')}`);
+
+// 2. Make sure each file is valid JSON, then merge them the same way
+//    index.html does (spread in alphabetical order).
 let merged = {};
 let hadFileError = false;
 
 for (const file of jsonFiles) {
   const fullPath = path.join(ROOT, file);
-  if (!fs.existsSync(fullPath)) {
-    fail(`index.html references '${file}' but no such file exists at ${fullPath}`);
-    hadFileError = true;
-    continue;
-  }
   let parsed;
   try {
     parsed = JSON.parse(fs.readFileSync(fullPath, 'utf8'));
   } catch (e) {
-    fail(`'${file}' exists but isn't valid JSON: ${e.message}`);
+    fail(`'${file}' isn't valid JSON: ${e.message}`);
+    hadFileError = true;
+    continue;
+  }
+  if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) {
+    fail(`'${file}' must contain a top-level JSON object (got ${Array.isArray(parsed) ? 'an array' : typeof parsed}).`);
     hadFileError = true;
     continue;
   }
@@ -77,7 +88,7 @@ if (hadFileError) {
   process.exit(1);
 }
 
-ok(`All ${jsonFiles.length} JSON files exist and parse correctly (${Object.keys(merged).length} total keys).`);
+ok(`All ${jsonFiles.length} JSON files parse correctly (${Object.keys(merged).length} total keys).`);
 
 // 3. Find the `const { A, B, C, ... } = QUIZ_DATA;` block in app-init.js
 //    and check every name against the merged JSON keys.
