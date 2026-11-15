@@ -2453,23 +2453,13 @@
       "display": "The Nazca Lines"
     },
     {
-      "q": "Near modern-day St. Louis, an enormous Native American settlement once featured a massive earthen mound larger than any pyramid north of Mexico. In which present-day US state can you find the remains of this ancient city, known as Cahokia?",
+      "q": "Cahokia, an enormous Native American settlement once featured a massive earthen mound larger than any pyramid north of Mexico. In which present-day US state can you find the remains of this ancient city?",
       "accepted": [
         "illinois",
         "ill.",
         "il"
       ],
       "display": "Illinois"
-    },
-    {
-      "q": "The Inca built an extraordinary network of roads stretching tens of thousands of kilometres through mountains, deserts, and valleys, helping them govern a vast empire. What South American mountain range did much of this road network cross?",
-      "accepted": [
-        "andes",
-        "the andes",
-        "andes mountains",
-        "andean mountains"
-      ],
-      "display": "The Andes"
     },
     {
       "q": "Aztec and Maya civilizations played a sport using a heavy rubber ball, which players struck with their hips rather than their hands. What material, harvested from trees native to the Americas, made this ancient ball possible?",
@@ -2480,20 +2470,6 @@
         "tree rubber"
       ],
       "display": "Rubber"
-    },
-    {
-      "q": "Building enormous multi-storey settlements in Chaco Canyon and cliffside homes in Mesa Verde, the ancestors of today's Pueblo communities created some of the most remarkable ancient architecture in North America. What are these communities commonly called?",
-      "accepted": [
-        "pueblo people",
-        "puebloans",
-        "pueblo",
-        "ancestral puebloans",
-        "ancestral puebloan",
-        "ancestral pueblo",
-        "anasazi",
-        "ancestral pueblo people"
-      ],
-      "display": "The Pueblo People"
     },
     {
       "q": "Long before European explorers arrived, one ancient civilization in Peru built enormous stepped pyramids and developed some of the earliest cities in the Americas, around the same time the first Egyptian pyramids were being built. In which modern-day country did this civilization emerge?",
@@ -2507,7 +2483,7 @@
       "q": "Corn, beans, and squash were so important to many ancient Mesoamerican civilizations that they were sometimes called the 'Three Sisters.' Which of these three crops was also the foundation of tortillas, tamales, and much of the region's traditional cuisine?",
       "accepted": [
         "corn",
-        "maize",
+        "maize"
       ],
       "display": "Corn (Maize)"
     }
