@@ -876,18 +876,38 @@ document.addEventListener('DOMContentLoaded', () => {
    which builds lookups and instantiates every game — only after the
    data (and the screen shells above) are ready.
    ============================================================ */
-Promise.all([
-  fetch('quizData/geography.json').then(r => r.json()),
-  fetch('quizData/history.json').then(r => r.json()),
-  fetch('quizData/us-state-showcase.json').then(r => r.json()),
-  fetch('quizData/canada-province-showcase.json').then(r => r.json()),
-  fetch('quizData/sports.json').then(r => r.json()),
-  fetch('quizData/science.json').then(r => r.json()),
-  fetch('quizData/connectors.json').then(r => r.json()),
-  fetch('quizData/general-knowledge.json').then(r => r.json())
-])
-  .then(([geography, history, stateShowcase, canadaShowcase, sports, science, connectors, generalKnowledge]) => {
-    window.QUIZ_DATA = { ...geography, ...history, ...stateShowcase, ...canadaShowcase, ...sports, ...science, ...connectors, ...generalKnowledge };
+/* Discover every .json file in quizData/ by reading the server's directory
+   listing (python http.server, nginx autoindex, Apache, etc. all emit links
+   to each file), then fetch and merge them. Drop a new JSON file into
+   quizData/ and it is picked up automatically. Files are merged in
+   alphabetical order, so on a duplicate top-level key the later file wins. */
+async function loadQuizData() {
+  const dirUrl = new URL('quizData/', document.baseURI);
+  const listing = await fetch(dirUrl);
+  if (!listing.ok) throw new Error(`quizData/ listing failed (HTTP ${listing.status})`);
+
+  const doc = new DOMParser().parseFromString(await listing.text(), 'text/html');
+  const files = [...doc.querySelectorAll('a[href]')]
+    .map(a => new URL(a.getAttribute('href'), dirUrl))
+    .filter(u => u.origin === dirUrl.origin
+              && u.pathname.startsWith(dirUrl.pathname)
+              && u.pathname.toLowerCase().endsWith('.json'))
+    .map(u => u.href)
+    .sort();
+
+  if (!files.length) throw new Error('no .json files found in quizData/');
+
+  const datasets = await Promise.all(files.map(async url => {
+    const r = await fetch(url);
+    if (!r.ok) throw new Error(`${url} (HTTP ${r.status})`);
+    return r.json();
+  }));
+  return Object.assign({}, ...datasets);
+}
+
+loadQuizData()
+  .then(data => {
+    window.QUIZ_DATA = data;
     const s = document.createElement('script');
     s.src = 'app-init.js';
     document.body.appendChild(s);
@@ -896,7 +916,8 @@ Promise.all([
     document.body.insertAdjacentHTML('afterbegin',
       `<div style="background:#b5624a;color:#fff;padding:16px;font-family:sans-serif;">
         Couldn't load quiz data (${err.message}). If you opened this file
-        directly (file://), serve the folder with a local server instead, e.g.
+        directly (file://), serve the folder with a local server that exposes
+        directory listings instead, e.g.
         <code>python3 -m http.server</code>, then open it via http://localhost.
       </div>`);
   });
