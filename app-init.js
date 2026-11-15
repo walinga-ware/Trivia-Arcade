@@ -1031,7 +1031,7 @@ const extremeRegionsQuiz = new TriviaQuiz({
 });
 
 const fruitTreeQuiz = new MultipleChoiceQuiz({
-  id: 'fruittree',
+  id: 'fruittrees',
   pairs: FRUIT_TREE_QUIZ,
   questionCount: 7,
   optionCount: 4,
