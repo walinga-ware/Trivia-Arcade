@@ -2322,5 +2322,170 @@
         "In 499 BC, Greek cities in this Anatolian coastal region revolted against Persian rule, sparking the Persian Wars."
       ]
     }
+  ],
+  "ANCIENT_AMERICAS_TRIVIA": [
+    {
+      "q": "Perched on a mountain ridge about 2,430 metres above sea level, which Inca citadel was built around 1450 for the emperor Pachacuti, abandoned within a century, and never found by the Spanish — remaining hidden until Hiram Bingham brought it to world attention in 1911?",
+      "accepted": [
+        "machu picchu",
+        "machu pichu",
+        "macchu picchu",
+        "macchu pichu",
+        "machupicchu"
+      ],
+      "display": "Machu Picchu"
+    },
+    {
+      "q": "At the spring and autumn equinoxes, the late-afternoon sun casts a zigzag shadow that appears to slither down the staircase of El Castillo, creating the illusion of the feathered serpent god Kukulkan descending. At which Maya city on Mexico's Yucatán Peninsula can you see this?",
+      "accepted": [
+        "chichen itza",
+        "chichen",
+        "chichenitza",
+        "chichen-itza"
+      ],
+      "display": "Chichén Itzá"
+    },
+    {
+      "q": "Its name was given by the Aztecs centuries after it was abandoned and is often translated as 'birthplace of the gods.' With its Pyramids of the Sun and Moon and the Avenue of the Dead, which city near modern Mexico City was one of the largest in the world around 450 CE?",
+      "accepted": [
+        "teotihuacan",
+        "teotihuacan city",
+        "teotihuacán"
+      ],
+      "display": "Teotihuacan"
+    },
+    {
+      "q": "Doomsday predictions flared in 2012 when a great cycle of the ancient Maya Long Count ended on December 21 — but nothing happened, and the Maya simply started the next cycle. What ancient timekeeping system, which also meshed a 260-day ritual cycle with a 365-day solar year, was misunderstood as predicting the end of the world?",
+      "accepted": [
+        "maya calendar",
+        "mayan calendar",
+        "the maya calendar",
+        "the mayan calendar",
+        "long count",
+        "maya long count",
+        "mayan long count",
+        "calendar",
+        "calendar round"
+      ],
+      "display": "The Maya Calendar"
+    },
+    {
+      "q": "Without the wheel, iron tools, or a written language, which Andean empire ruled roughly 10 million people from its capital of Cusco, linking them with tens of thousands of kilometres of mountain roads before falling to Francisco Pizarro's conquistadors in the 1530s?",
+      "accepted": [
+        "inca",
+        "incas",
+        "inca empire",
+        "the inca",
+        "the incas",
+        "incan",
+        "incan empire",
+        "tawantinsuyu"
+      ],
+      "display": "The Inca Empire"
+    },
+    {
+      "q": "According to legend, wandering people founded their capital where they saw an eagle perched on a prickly-pear cactus devouring a snake — an image that still appears on Mexico's flag today. Which empire, also known as the Mexica, rose from this legend to dominate central Mexico until Cortés arrived in 1519?",
+      "accepted": [
+        "aztec",
+        "aztecs",
+        "aztec empire",
+        "the aztecs",
+        "the aztec empire",
+        "mexica",
+        "the mexica"
+      ],
+      "display": "The Aztec Empire"
+    },
+    {
+      "q": "Home to the towering temples of Tikal — which rise above the jungle canopy and doubled as the rebel base on Yavin 4 in the original Star Wars film — which Central American country holds some of the most spectacular Maya ruins?",
+      "accepted": [
+        "guatemala",
+        "republic of guatemala"
+      ],
+      "display": "Guatemala"
+    },
+    {
+      "q": "The ancient Aztec capital was built on an island in Lake Texcoco, with canals and causeways connecting it to the mainland. Today, the ruins of this once-great city lie beneath which modern-day capital, one of the world's largest cities?",
+      "accepted": [
+        "mexico city",
+        "mexico",
+        "ciudad de mexico",
+        "ciudad de méxico",
+        "cdmx"
+      ],
+      "display": "Mexico City"
+    },
+    {
+      "q": "Often called the 'mother culture' of Mesoamerica, which civilization of Mexico's Gulf Coast carved colossal basalt heads up to about 3.4 metres tall, some weighing as much as 40 tons, and was flourishing as early as 1200 BCE?",
+      "accepted": [
+        "olmec",
+        "olmecs",
+        "the olmec",
+        "the olmecs",
+        "olmec civilization"
+      ],
+      "display": "The Olmec"
+    },
+    {
+      "q": "Aztec and Maya traders used the beans of this tree as a form of currency — in one Aztec record, a turkey hen was worth 100 of them — and also ground them into a bitter, frothy drink reserved for nobles and warriors. What was this valuable crop?",
+      "accepted": [
+        "cacao",
+        "cocoa",
+        "chocolate",
+        "cacao beans",
+        "cacao bean",
+        "cocoa beans",
+        "cocoa bean"
+      ],
+      "display": "Cacao (Chocolate)"
+    },
+    {
+      "q": "Etched into the dry plains of southern Peru more than 1,500 years ago, giant figures of a hummingbird, a spider, and a monkey are so large that they are best seen from the air. What are these mysterious geoglyphs called?",
+      "accepted": [
+        "nazca lines",
+        "nasca lines",
+        "nazca",
+        "nasca",
+        "nazca geoglyphs",
+        "nazca line",
+        "nazca culture"
+      ],
+      "display": "The Nazca Lines"
+    },
+    {
+      "q": "Cahokia, an enormous Native American settlement once featured a massive earthen mound larger than any pyramid north of Mexico. In which present-day US state can you find the remains of this ancient city?",
+      "accepted": [
+        "illinois",
+        "ill.",
+        "il"
+      ],
+      "display": "Illinois"
+    },
+    {
+      "q": "Aztec and Maya civilizations played a sport using a heavy rubber ball, which players struck with their hips rather than their hands. What material, harvested from trees native to the Americas, made this ancient ball possible?",
+      "accepted": [
+        "rubber",
+        "natural rubber",
+        "latex",
+        "tree rubber"
+      ],
+      "display": "Rubber"
+    },
+    {
+      "q": "Long before European explorers arrived, one ancient civilization in Peru built enormous stepped pyramids and developed some of the earliest cities in the Americas, around the same time the first Egyptian pyramids were being built. In which modern-day country did this civilization emerge?",
+      "accepted": [
+        "peru",
+        "republic of peru"
+      ],
+      "display": "Peru"
+    },
+    {
+      "q": "Corn, beans, and squash were so important to many ancient Mesoamerican civilizations that they were sometimes called the 'Three Sisters.' Which of these three crops was also the foundation of tortillas, tamales, and much of the region's traditional cuisine?",
+      "accepted": [
+        "corn",
+        "maize"
+      ],
+      "display": "Corn (Maize)"
+    }
   ]
 }

@@ -68,7 +68,8 @@ const {
   CACTI,
   CONNECTORS_QUIZZES,
   AIR_TRAVEL_QUIZ,
-  EXTREME_REGIONS
+  EXTREME_REGIONS,
+  ANCIENT_AMERICAS_TRIVIA
 } = QUIZ_DATA;
 
 const RIVER_LOOKUP = {};
@@ -1023,6 +1024,20 @@ const extremeRegionsQuiz = new TriviaQuiz({
   questions: EXTREME_REGIONS,
   rulesHTML: `
     &middot; ${EXTREME_REGIONS.length} questions, one at a time — no clock, just recall<br>
+    &middot; Type your answer and hit enter or submit<br>
+    &middot; You'll see the correct answer immediately after each question<br>
+    &middot; At the end, review your full scorecard
+  `
+});
+
+// Ancient Civilizations: Lost Worlds of the Americas — Maya, Aztec, Inca & beyond.
+// Questions live in history.json (ANCIENT_AMERICAS_TRIVIA).
+const ancientAmericasQuiz = new TriviaQuiz({
+  id: 'ancientamericas',
+  questions: ANCIENT_AMERICAS_TRIVIA,
+  rulesHTML: `
+    &middot; ${ANCIENT_AMERICAS_TRIVIA.length} questions on the Maya, Aztec, Inca and other ancient peoples of the Americas<br>
+    &middot; One question at a time — no clock, just recall<br>
     &middot; Type your answer and hit enter or submit<br>
     &middot; You'll see the correct answer immediately after each question<br>
     &middot; At the end, review your full scorecard
