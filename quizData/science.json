@@ -774,5 +774,126 @@
         "Mammillaria"
       ]
     }
-  ]
+  ],
+
+  "ANIMAL_RANKING": [
+    [
+      "Blue whale",
+      150000
+    ],
+    [
+      "Bowhead whale",
+      100000
+    ],
+    [
+      "North Pacific right whale",
+      80000
+    ],
+    [
+      "Fin whale",
+      74000
+    ],
+    [
+      "North Atlantic right whale",
+      70000
+    ],
+    [
+      "Southern right whale",
+      60000
+    ],
+    [
+      "Sperm whale",
+      57000
+    ],
+    [
+      "Humpback whale",
+      40000
+    ],
+    [
+      "Gray whale",
+      36000
+    ],
+    [
+      "Sei whale",
+      28000
+    ],
+    [
+      "Bryde's whale",
+      25000
+    ],
+    [
+      "Whale shark",
+      21000
+    ],
+    [
+      "Killer whale",
+      10000
+    ],
+    [
+      "African bush elephant",
+      6000
+    ],
+    [
+      "Basking shark",
+      5200
+    ]
+  ],
+  "ANIMAL_HABITATS": {
+    "Blue whale": "Ocean",
+    "Bowhead whale": "Ocean",
+    "North Pacific right whale": "Ocean",
+    "Fin whale": "Ocean",
+    "North Atlantic right whale": "Ocean",
+    "Southern right whale": "Ocean",
+    "Sperm whale": "Ocean",
+    "Humpback whale": "Ocean",
+    "Gray whale": "Ocean",
+    "Sei whale": "Ocean",
+    "Bryde's whale": "Ocean",
+    "Whale shark": "Ocean",
+    "Killer whale": "Ocean",
+    "African bush elephant": "Land",
+    "Basking shark": "Ocean"
+  },
+  "ANIMAL_ALIASES": {
+    "blue whale": "Blue whale",
+    "blue": "Blue whale",
+    "bowhead whale": "Bowhead whale",
+    "bowhead": "Bowhead whale",
+    "greenland right whale": "Bowhead whale",
+    "north pacific right whale": "North Pacific right whale",
+    "pacific right whale": "North Pacific right whale",
+    "fin whale": "Fin whale",
+    "fin": "Fin whale",
+    "finback whale": "Fin whale",
+    "finback": "Fin whale",
+    "razorback": "Fin whale",
+    "north atlantic right whale": "North Atlantic right whale",
+    "atlantic right whale": "North Atlantic right whale",
+    "southern right whale": "Southern right whale",
+    "sperm whale": "Sperm whale",
+    "sperm": "Sperm whale",
+    "cachalot": "Sperm whale",
+    "humpback whale": "Humpback whale",
+    "humpback": "Humpback whale",
+    "gray whale": "Gray whale",
+    "grey whale": "Gray whale",
+    "gray": "Gray whale",
+    "grey": "Gray whale",
+    "sei whale": "Sei whale",
+    "sei": "Sei whale",
+    "brydes whale": "Bryde's whale",
+    "bryde's whale": "Bryde's whale",
+    "brydes": "Bryde's whale",
+    "whale shark": "Whale shark",
+    "killer whale": "Killer whale",
+    "orca": "Killer whale",
+    "orcinus orca": "Killer whale",
+    "african bush elephant": "African bush elephant",
+    "african elephant": "African bush elephant",
+    "bush elephant": "African bush elephant",
+    "african savanna elephant": "African bush elephant",
+    "elephant": "African bush elephant",
+    "basking shark": "Basking shark"
+  }
 }

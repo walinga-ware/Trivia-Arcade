@@ -66,6 +66,9 @@ const {
   JUPITER_MOON_HINTS,
   LARGEST_MOONS,
   CACTI,
+  ANIMAL_RANKING,
+  ANIMAL_HABITATS,
+  ANIMAL_ALIASES,
   CONNECTORS_QUIZZES,
   AIR_TRAVEL_QUIZ,
   EXTREME_REGIONS,
@@ -863,6 +866,34 @@ const cactiQuiz = new PromptQuiz({
     &middot; A picture of a cactus appears one at a time in random order — ${CACTI.length} total<br>
     &middot; Type the cactus's name — common alternate names are accepted<br>
     &middot; Use Skip if you're stuck; the round ends when time runs out
+  `
+});
+
+/* ============================================================
+   SCIENCE — ANIMALS: LARGEST LIVING ANIMALS
+   Free recall of the 15 heaviest living animal species (ANIMAL_RANKING in
+   science.json, ordered heaviest -> lightest, mass in kg).
+   ============================================================ */
+const ANIMAL_LOOKUP = {};
+const ANIMAL_NAMES = ANIMAL_RANKING.map(([name]) => name);
+const ANIMAL_MASSES = Object.fromEntries(ANIMAL_RANKING);
+ANIMAL_NAMES.forEach(name => { ANIMAL_LOOKUP[normalize(name)] = name; });
+Object.keys(ANIMAL_ALIASES).forEach(k => { ANIMAL_LOOKUP[normalize(k)] = ANIMAL_ALIASES[k]; });
+
+const largestAnimalsGame = new FreeRecallGame({
+  id: 'largestanimals',
+  title: 'Largest Living Animals',
+  items: ANIMAL_NAMES,
+  lookup: ANIMAL_LOOKUP,
+  duration: 5*60,
+  preserveOrder: true,
+  itemDetail: name => `${ANIMAL_HABITATS[name]} &middot; ${(ANIMAL_MASSES[name] / 1000).toLocaleString('en-US')} tonnes`,
+  finalTitle: 'Full ranking — the 15 heaviest living animals, by mass',
+  rulesHTML: `
+    &middot; Name the 15 heaviest living animal species — any order<br>
+    &middot; Ranked by maximum typical body mass; whales count as separate species<br>
+    &middot; Common alternate names are accepted<br>
+    &middot; When time expires, the full ranking is revealed with each animal's habitat and mass
   `
 });
 
