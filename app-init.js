@@ -870,9 +870,14 @@ const cactiQuiz = new PromptQuiz({
 });
 
 /* ============================================================
-   SCIENCE — ANIMALS: LARGEST LIVING ANIMALS
-   Free recall of the 15 heaviest living animal species (ANIMAL_RANKING in
-   science.json, ordered heaviest -> lightest, mass in kg).
+   SCIENCE — ANIMALS: LARGEST LIVING LAND ANIMALS
+   Free recall of the 20 heaviest living land animal species (ANIMAL_RANKING
+   in science.json, ordered heaviest -> lightest, approximate heavy-end adult
+   mass in kg; ANIMAL_HABITATS holds a short range/habitat label). Marine
+   animals are excluded; semi-aquatic species that live and breed on land
+   (hippo, saltwater crocodile, polar bear) are included. Bare "elephant"
+   resolves to the African bush elephant; the Asian and African forest
+   elephants need their own names.
    ============================================================ */
 const ANIMAL_LOOKUP = {};
 const ANIMAL_NAMES = ANIMAL_RANKING.map(([name]) => name);
@@ -882,18 +887,18 @@ Object.keys(ANIMAL_ALIASES).forEach(k => { ANIMAL_LOOKUP[normalize(k)] = ANIMAL_
 
 const largestAnimalsGame = new FreeRecallGame({
   id: 'largestanimals',
-  title: 'Largest Living Animals',
+  title: 'Largest Living Land Animals',
   items: ANIMAL_NAMES,
   lookup: ANIMAL_LOOKUP,
   duration: 5*60,
   preserveOrder: true,
   itemDetail: name => `${ANIMAL_HABITATS[name]} &middot; ${(ANIMAL_MASSES[name] / 1000).toLocaleString('en-US')} tonnes`,
-  finalTitle: 'Full ranking — the 15 heaviest living animals, by mass',
+  finalTitle: 'Full ranking — the 20 heaviest living land animals, by mass',
   rulesHTML: `
-    &middot; Name the 15 heaviest living animal species — any order<br>
-    &middot; Ranked by maximum typical body mass; whales count as separate species<br>
-    &middot; Common alternate names are accepted<br>
-    &middot; When time expires, the full ranking is revealed with each animal's habitat and mass
+    &middot; Name the 20 heaviest living land animal species — any order<br>
+    &middot; Ranked by approximate adult body mass (heavy end of the typical range); ocean animals don't count<br>
+    &middot; The three elephant species and the rhino species each count separately; common alternate names are accepted<br>
+    &middot; When time expires, the full ranking is revealed with each animal's range and mass
   `
 });
 

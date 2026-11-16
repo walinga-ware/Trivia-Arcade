@@ -778,122 +778,223 @@
 
   "ANIMAL_RANKING": [
     [
-      "Blue whale",
-      150000
-    ],
-    [
-      "Bowhead whale",
-      100000
-    ],
-    [
-      "North Pacific right whale",
-      80000
-    ],
-    [
-      "Fin whale",
-      74000
-    ],
-    [
-      "North Atlantic right whale",
-      70000
-    ],
-    [
-      "Southern right whale",
-      60000
-    ],
-    [
-      "Sperm whale",
-      57000
-    ],
-    [
-      "Humpback whale",
-      40000
-    ],
-    [
-      "Gray whale",
-      36000
-    ],
-    [
-      "Sei whale",
-      28000
-    ],
-    [
-      "Bryde's whale",
-      25000
-    ],
-    [
-      "Whale shark",
-      21000
-    ],
-    [
-      "Killer whale",
-      10000
-    ],
-    [
       "African bush elephant",
       6000
     ],
     [
-      "Basking shark",
-      5200
+      "Asian elephant",
+      4000
+    ],
+    [
+      "African forest elephant",
+      2700
+    ],
+    [
+      "White rhinoceros",
+      2300
+    ],
+    [
+      "Indian rhinoceros",
+      2000
+    ],
+    [
+      "Hippopotamus",
+      1800
+    ],
+    [
+      "Javan rhinoceros",
+      1500
+    ],
+    [
+      "Gaur",
+      1500
+    ],
+    [
+      "Black rhinoceros",
+      1400
+    ],
+    [
+      "Giraffe",
+      1200
+    ],
+    [
+      "Wild water buffalo",
+      1200
+    ],
+    [
+      "Saltwater crocodile",
+      1000
+    ],
+    [
+      "Wild yak",
+      1000
+    ],
+    [
+      "European bison",
+      900
+    ],
+    [
+      "American bison",
+      900
+    ],
+    [
+      "Giant eland",
+      900
+    ],
+    [
+      "Cape buffalo",
+      900
+    ],
+    [
+      "Banteng",
+      800
+    ],
+    [
+      "Moose",
+      750
+    ],
+    [
+      "Polar bear",
+      700
     ]
   ],
   "ANIMAL_HABITATS": {
-    "Blue whale": "Ocean",
-    "Bowhead whale": "Ocean",
-    "North Pacific right whale": "Ocean",
-    "Fin whale": "Ocean",
-    "North Atlantic right whale": "Ocean",
-    "Southern right whale": "Ocean",
-    "Sperm whale": "Ocean",
-    "Humpback whale": "Ocean",
-    "Gray whale": "Ocean",
-    "Sei whale": "Ocean",
-    "Bryde's whale": "Ocean",
-    "Whale shark": "Ocean",
-    "Killer whale": "Ocean",
-    "African bush elephant": "Land",
-    "Basking shark": "Ocean"
+    "African bush elephant": "African savanna",
+    "Asian elephant": "Asian forests & grasslands",
+    "African forest elephant": "Central & West African rainforest",
+    "White rhinoceros": "African savanna",
+    "Indian rhinoceros": "Himalayan foothills grasslands",
+    "Hippopotamus": "Sub-Saharan rivers & grasslands",
+    "Javan rhinoceros": "Indonesian rainforest",
+    "Gaur": "South & Southeast Asian forests",
+    "Black rhinoceros": "African savanna & scrub",
+    "Giraffe": "African savanna",
+    "Wild water buffalo": "South Asian wetlands",
+    "Saltwater crocodile": "Coasts & rivers, Southeast Asia & Australia",
+    "Wild yak": "Tibetan Plateau",
+    "European bison": "European forests",
+    "American bison": "North American plains",
+    "Giant eland": "West & Central African savanna",
+    "Cape buffalo": "African savanna",
+    "Banteng": "Southeast Asian forests",
+    "Moose": "Northern forests",
+    "Polar bear": "Arctic sea ice & coasts"
   },
   "ANIMAL_ALIASES": {
-    "blue whale": "Blue whale",
-    "blue": "Blue whale",
-    "bowhead whale": "Bowhead whale",
-    "bowhead": "Bowhead whale",
-    "greenland right whale": "Bowhead whale",
-    "north pacific right whale": "North Pacific right whale",
-    "pacific right whale": "North Pacific right whale",
-    "fin whale": "Fin whale",
-    "fin": "Fin whale",
-    "finback whale": "Fin whale",
-    "finback": "Fin whale",
-    "razorback": "Fin whale",
-    "north atlantic right whale": "North Atlantic right whale",
-    "atlantic right whale": "North Atlantic right whale",
-    "southern right whale": "Southern right whale",
-    "sperm whale": "Sperm whale",
-    "sperm": "Sperm whale",
-    "cachalot": "Sperm whale",
-    "humpback whale": "Humpback whale",
-    "humpback": "Humpback whale",
-    "gray whale": "Gray whale",
-    "grey whale": "Gray whale",
-    "gray": "Gray whale",
-    "grey": "Gray whale",
-    "sei whale": "Sei whale",
-    "sei": "Sei whale",
-    "brydes whale": "Bryde's whale",
-    "bryde's whale": "Bryde's whale",
-    "brydes": "Bryde's whale",
-    "whale shark": "Whale shark",
-    "killer whale": "Killer whale",
-    "orca": "Killer whale",
-    "orcinus orca": "Killer whale",
     "african bush elephant": "African bush elephant",
     "african elephant": "African bush elephant",
     "bush elephant": "African bush elephant",
     "african savanna elephant": "African bush elephant",
+    "african savannah elephant": "African bush elephant",
+    "savanna elephant": "African bush elephant",
+    "savannah elephant": "African bush elephant",
     "elephant": "African bush elephant",
-    "basking shark": "Basking shark"
+    "elephants": "African bush elephant",
+    "asian elephant": "Asian elephant",
+    "indian elephant": "Asian elephant",
+    "asiatic elephant": "Asian elephant",
+    "elephas maximus": "Asian elephant",
+    "african forest elephant": "African forest elephant",
+    "forest elephant": "African forest elephant",
+    "white rhinoceros": "White rhinoceros",
+    "white rhino": "White rhinoceros",
+    "square-lipped rhinoceros": "White rhinoceros",
+    "square lipped rhino": "White rhinoceros",
+    "square-lipped rhino": "White rhinoceros",
+    "rhino": "White rhinoceros",
+    "rhinoceros": "White rhinoceros",
+    "indian rhinoceros": "Indian rhinoceros",
+    "indian rhino": "Indian rhinoceros",
+    "greater one-horned rhinoceros": "Indian rhinoceros",
+    "greater one horned rhinoceros": "Indian rhinoceros",
+    "greater one-horned rhino": "Indian rhinoceros",
+    "one-horned rhinoceros": "Indian rhinoceros",
+    "one horned rhino": "Indian rhinoceros",
+    "one-horned rhino": "Indian rhinoceros",
+    "asian one-horned rhinoceros": "Indian rhinoceros",
+    "hippopotamus": "Hippopotamus",
+    "hippo": "Hippopotamus",
+    "hippos": "Hippopotamus",
+    "common hippopotamus": "Hippopotamus",
+    "river horse": "Hippopotamus",
+    "javan rhinoceros": "Javan rhinoceros",
+    "javan rhino": "Javan rhinoceros",
+    "lesser one-horned rhinoceros": "Javan rhinoceros",
+    "lesser one horned rhinoceros": "Javan rhinoceros",
+    "sunda rhinoceros": "Javan rhinoceros",
+    "sunda rhino": "Javan rhinoceros",
+    "gaur": "Gaur",
+    "indian bison": "Gaur",
+    "gaurs": "Gaur",
+    "black rhinoceros": "Black rhinoceros",
+    "black rhino": "Black rhinoceros",
+    "hook-lipped rhinoceros": "Black rhinoceros",
+    "hook lipped rhino": "Black rhinoceros",
+    "hook-lipped rhino": "Black rhinoceros",
+    "giraffe": "Giraffe",
+    "giraffes": "Giraffe",
+    "northern giraffe": "Giraffe",
+    "southern giraffe": "Giraffe",
+    "masai giraffe": "Giraffe",
+    "reticulated giraffe": "Giraffe",
+    "wild water buffalo": "Wild water buffalo",
+    "water buffalo": "Wild water buffalo",
+    "asian water buffalo": "Wild water buffalo",
+    "asiatic water buffalo": "Wild water buffalo",
+    "wild asian water buffalo": "Wild water buffalo",
+    "arni": "Wild water buffalo",
+    "saltwater crocodile": "Saltwater crocodile",
+    "saltie": "Saltwater crocodile",
+    "salty": "Saltwater crocodile",
+    "estuarine crocodile": "Saltwater crocodile",
+    "indo-pacific crocodile": "Saltwater crocodile",
+    "indo pacific crocodile": "Saltwater crocodile",
+    "marine crocodile": "Saltwater crocodile",
+    "saltwater croc": "Saltwater crocodile",
+    "salt water crocodile": "Saltwater crocodile",
+    "salt water croc": "Saltwater crocodile",
+    "crocodile": "Saltwater crocodile",
+    "crocodiles": "Saltwater crocodile",
+    "croc": "Saltwater crocodile",
+    "wild yak": "Wild yak",
+    "yak": "Wild yak",
+    "yaks": "Wild yak",
+    "wild yaks": "Wild yak",
+    "european bison": "European bison",
+    "wisent": "European bison",
+    "wisents": "European bison",
+    "european buffalo": "European bison",
+    "american bison": "American bison",
+    "bison": "American bison",
+    "plains bison": "American bison",
+    "wood bison": "American bison",
+    "american buffalo": "American bison",
+    "north american bison": "American bison",
+    "giant eland": "Giant eland",
+    "eland": "Giant eland",
+    "derby eland": "Giant eland",
+    "lord derby's eland": "Giant eland",
+    "lord derbys eland": "Giant eland",
+    "giant eland antelope": "Giant eland",
+    "cape buffalo": "Cape buffalo",
+    "african buffalo": "Cape buffalo",
+    "african cape buffalo": "Cape buffalo",
+    "syncerus caffer": "Cape buffalo",
+    "banteng": "Banteng",
+    "tembadau": "Banteng",
+    "bos javanicus": "Banteng",
+    "javan ox": "Banteng",
+    "bali cattle": "Banteng",
+    "moose": "Moose",
+    "eurasian elk": "Moose",
+    "alces": "Moose",
+    "american moose": "Moose",
+    "alaskan moose": "Moose",
+    "alaska moose": "Moose",
+    "polar bear": "Polar bear",
+    "polar": "Polar bear",
+    "ice bear": "Polar bear",
+    "white bear": "Polar bear",
+    "ursus maritimus": "Polar bear"
   }
 }
