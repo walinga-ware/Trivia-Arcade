@@ -69,7 +69,8 @@ const {
   CONNECTORS_QUIZZES,
   AIR_TRAVEL_QUIZ,
   EXTREME_REGIONS,
-  ANCIENT_AMERICAS_TRIVIA
+  ANCIENT_AMERICAS_TRIVIA,
+  ANCIENT_WONDERS
 } = QUIZ_DATA;
 
 const RIVER_LOOKUP = {};
@@ -861,6 +862,30 @@ const cactiQuiz = new PromptQuiz({
   rulesHTML: `
     &middot; A picture of a cactus appears one at a time in random order — ${CACTI.length} total<br>
     &middot; Type the cactus's name — common alternate names are accepted<br>
+    &middot; Use Skip if you're stuck; the round ends when time runs out
+  `
+});
+
+/* ============================================================
+   HISTORY — ANCIENT CIVILIZATIONS: 7 WONDERS OF THE ANCIENT WORLD
+   Picture-prompted quiz: each item shows an illustration (image path
+   from ANCIENT_WONDERS in history.json) and the player types the
+   wonder's name. To add a wonder, append { name, image, aliases }.
+   ============================================================ */
+const ancientWondersQuiz = new PromptQuiz({
+  id: 'ancientwonders',
+  pairs: ANCIENT_WONDERS.map(w => ({
+    prompt: w.image,
+    answer: w.name,
+    aliases: w.aliases || []
+  })),
+  duration: 3*60,
+  mode: 'image',
+  promptLabel: "name this wonder",
+  finalRollLabel: `Full roll — all ${ANCIENT_WONDERS.length} wonders`,
+  rulesHTML: `
+    &middot; A picture of an ancient wonder appears one at a time in random order — ${ANCIENT_WONDERS.length} total<br>
+    &middot; Type the wonder's name — common alternate names are accepted<br>
     &middot; Use Skip if you're stuck; the round ends when time runs out
   `
 });
