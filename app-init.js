@@ -66,9 +66,7 @@ const {
   JUPITER_MOON_HINTS,
   LARGEST_MOONS,
   CACTI,
-  ANIMAL_RANKING,
-  ANIMAL_HABITATS,
-  ANIMAL_ALIASES,
+  LARGEST_ANIMALS_TRIVIA,
   CONNECTORS_QUIZZES,
   AIR_TRAVEL_QUIZ,
   EXTREME_REGIONS,
@@ -870,35 +868,22 @@ const cactiQuiz = new PromptQuiz({
 });
 
 /* ============================================================
-   SCIENCE — ANIMALS: LARGEST LIVING LAND ANIMALS
-   Free recall of the 20 heaviest living land animal species (ANIMAL_RANKING
-   in science.json, ordered heaviest -> lightest, approximate heavy-end adult
-   mass in kg; ANIMAL_HABITATS holds a short range/habitat label). Marine
-   animals are excluded; semi-aquatic species that live and breed on land
-   (hippo, saltwater crocodile, polar bear) are included. Bare "elephant"
-   resolves to the African bush elephant; the Asian and African forest
-   elephants need their own names.
+   SCIENCE — ANIMALS: LARGEST LIVING ANIMALS
+   Trivia quiz with one question per animal (LARGEST_ANIMALS_TRIVIA in
+   science.json): whale, elephant, giraffe, rhino, hippo, ostrich, gaur,
+   crocodile, polar bear, anaconda, gorilla and kangaroo. Each entry is
+   { q, accepted, display } like the other trivia quizzes. To add an
+   animal, append one more entry to that array.
    ============================================================ */
-const ANIMAL_LOOKUP = {};
-const ANIMAL_NAMES = ANIMAL_RANKING.map(([name]) => name);
-const ANIMAL_MASSES = Object.fromEntries(ANIMAL_RANKING);
-ANIMAL_NAMES.forEach(name => { ANIMAL_LOOKUP[normalize(name)] = name; });
-Object.keys(ANIMAL_ALIASES).forEach(k => { ANIMAL_LOOKUP[normalize(k)] = ANIMAL_ALIASES[k]; });
-
-const largestAnimalsGame = new FreeRecallGame({
+const largestAnimalsQuiz = new TriviaQuiz({
   id: 'largestanimals',
-  title: 'Largest Living Land Animals',
-  items: ANIMAL_NAMES,
-  lookup: ANIMAL_LOOKUP,
-  duration: 5*60,
-  preserveOrder: true,
-  itemDetail: name => `${ANIMAL_HABITATS[name]} &middot; ${(ANIMAL_MASSES[name] / 1000).toLocaleString('en-US')} tonnes`,
-  finalTitle: 'Full ranking — the 20 heaviest living land animals, by mass',
+  questions: LARGEST_ANIMALS_TRIVIA,
   rulesHTML: `
-    &middot; Name the 20 heaviest living land animal species — any order<br>
-    &middot; Ranked by approximate adult body mass (heavy end of the typical range); ocean animals don't count<br>
-    &middot; The three elephant species and the rhino species each count separately; common alternate names are accepted<br>
-    &middot; When time expires, the full ranking is revealed with each animal's range and mass
+    &middot; ${LARGEST_ANIMALS_TRIVIA.length} questions, each a clue about one of the world's record-breaking animals<br>
+    &middot; One question at a time — no clock, just recall<br>
+    &middot; Type the animal's name and hit enter or submit — common alternate names are accepted<br>
+    &middot; You'll see the correct answer immediately after each question<br>
+    &middot; At the end, review your full scorecard
   `
 });
 
