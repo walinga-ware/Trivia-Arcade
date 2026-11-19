@@ -66,6 +66,9 @@ const {
   JUPITER_MOON_HINTS,
   LARGEST_MOONS,
   CACTI,
+  TALLEST_TREE_RANKING,
+  TALLEST_TREE_CONTINENTS,
+  TALLEST_TREE_ALIASES,
   LARGEST_ANIMALS_TRIVIA,
   CONNECTORS_QUIZZES,
   AIR_TRAVEL_QUIZ,
@@ -864,6 +867,38 @@ const cactiQuiz = new PromptQuiz({
     &middot; A picture of a cactus appears one at a time in random order — ${CACTI.length} total<br>
     &middot; Type the cactus's name — common alternate names are accepted<br>
     &middot; Use Skip if you're stuck; the round ends when time runs out
+  `
+});
+
+/* ============================================================
+   SCIENCE — BOTANY: TALLEST TREES
+   Free recall of the 20 tallest tree species, ranked by the tallest
+   reliably-measured living individual of each species. Data lives in
+   science.json: TALLEST_TREE_RANKING is [name, heightMetres] sorted
+   tallest -> shortest, TALLEST_TREE_CONTINENTS maps name -> continent,
+   and TALLEST_TREE_ALIASES maps alternate names to the canonical name.
+   To extend the list, append to all three (keep the ranking sorted).
+   ============================================================ */
+const TREE_LOOKUP = {};
+const TREE_NAMES = TALLEST_TREE_RANKING.map(([name]) => name);
+const TREE_HEIGHTS = Object.fromEntries(TALLEST_TREE_RANKING);
+TREE_NAMES.forEach(name => { TREE_LOOKUP[normalize(name)] = name; });
+Object.keys(TALLEST_TREE_ALIASES).forEach(k => { TREE_LOOKUP[normalize(k)] = TALLEST_TREE_ALIASES[k]; });
+
+const tallestTreesGame = new FreeRecallGame({
+  id: 'tallesttrees',
+  title: 'Name the Tallest Trees',
+  items: TREE_NAMES,             // already sorted tallest -> shortest
+  lookup: TREE_LOOKUP,
+  duration: 8*60,
+  preserveOrder: true,           // keep results sorted by height
+  itemDetail: name => `${TALLEST_TREE_CONTINENTS[name]} &middot; ${TREE_HEIGHTS[name].toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 2 })} m`,
+  finalTitle: `Full ranking — the ${TREE_NAMES.length} tallest tree species, by height`,
+  rulesHTML: `
+    &middot; Name the world's ${TREE_NAMES.length} tallest tree species — any order<br>
+    &middot; Common names are accepted, along with the usual scientific and alternate names<br>
+    &middot; Ranked by the tallest reliably-measured living individual of each species<br>
+    &middot; When time expires, the full ranking is revealed with each species' continent and record height
   `
 });
 
