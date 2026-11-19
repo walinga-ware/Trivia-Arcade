@@ -775,226 +775,166 @@
       ]
     }
   ],
-
-  "ANIMAL_RANKING": [
-    [
-      "African bush elephant",
-      6000
-    ],
-    [
-      "Asian elephant",
-      4000
-    ],
-    [
-      "African forest elephant",
-      2700
-    ],
-    [
-      "White rhinoceros",
-      2300
-    ],
-    [
-      "Indian rhinoceros",
-      2000
-    ],
-    [
-      "Hippopotamus",
-      1800
-    ],
-    [
-      "Javan rhinoceros",
-      1500
-    ],
-    [
-      "Gaur",
-      1500
-    ],
-    [
-      "Black rhinoceros",
-      1400
-    ],
-    [
-      "Giraffe",
-      1200
-    ],
-    [
-      "Wild water buffalo",
-      1200
-    ],
-    [
-      "Saltwater crocodile",
-      1000
-    ],
-    [
-      "Wild yak",
-      1000
-    ],
-    [
-      "European bison",
-      900
-    ],
-    [
-      "American bison",
-      900
-    ],
-    [
-      "Giant eland",
-      900
-    ],
-    [
-      "Cape buffalo",
-      900
-    ],
-    [
-      "Banteng",
-      800
-    ],
-    [
-      "Moose",
-      750
-    ],
-    [
-      "Polar bear",
-      700
-    ]
-  ],
-  "ANIMAL_HABITATS": {
-    "African bush elephant": "African savanna",
-    "Asian elephant": "Asian forests & grasslands",
-    "African forest elephant": "Central & West African rainforest",
-    "White rhinoceros": "African savanna",
-    "Indian rhinoceros": "Himalayan foothills grasslands",
-    "Hippopotamus": "Sub-Saharan rivers & grasslands",
-    "Javan rhinoceros": "Indonesian rainforest",
-    "Gaur": "South & Southeast Asian forests",
-    "Black rhinoceros": "African savanna & scrub",
-    "Giraffe": "African savanna",
-    "Wild water buffalo": "South Asian wetlands",
-    "Saltwater crocodile": "Coasts & rivers, Southeast Asia & Australia",
-    "Wild yak": "Tibetan Plateau",
-    "European bison": "European forests",
-    "American bison": "North American plains",
-    "Giant eland": "West & Central African savanna",
-    "Cape buffalo": "African savanna",
-    "Banteng": "Southeast Asian forests",
-    "Moose": "Northern forests",
-    "Polar bear": "Arctic sea ice & coasts"
-  },
-  "ANIMAL_ALIASES": {
-    "african bush elephant": "African bush elephant",
-    "african elephant": "African bush elephant",
-    "bush elephant": "African bush elephant",
-    "african savanna elephant": "African bush elephant",
-    "african savannah elephant": "African bush elephant",
-    "savanna elephant": "African bush elephant",
-    "savannah elephant": "African bush elephant",
-    "elephant": "African bush elephant",
-    "elephants": "African bush elephant",
-    "asian elephant": "Asian elephant",
-    "indian elephant": "Asian elephant",
-    "asiatic elephant": "Asian elephant",
-    "elephas maximus": "Asian elephant",
-    "african forest elephant": "African forest elephant",
-    "forest elephant": "African forest elephant",
-    "white rhinoceros": "White rhinoceros",
-    "white rhino": "White rhinoceros",
-    "square-lipped rhinoceros": "White rhinoceros",
-    "square lipped rhino": "White rhinoceros",
-    "square-lipped rhino": "White rhinoceros",
-    "rhino": "White rhinoceros",
-    "rhinoceros": "White rhinoceros",
-    "indian rhinoceros": "Indian rhinoceros",
-    "indian rhino": "Indian rhinoceros",
-    "greater one-horned rhinoceros": "Indian rhinoceros",
-    "greater one horned rhinoceros": "Indian rhinoceros",
-    "greater one-horned rhino": "Indian rhinoceros",
-    "one-horned rhinoceros": "Indian rhinoceros",
-    "one horned rhino": "Indian rhinoceros",
-    "one-horned rhino": "Indian rhinoceros",
-    "asian one-horned rhinoceros": "Indian rhinoceros",
-    "hippopotamus": "Hippopotamus",
-    "hippo": "Hippopotamus",
-    "hippos": "Hippopotamus",
-    "common hippopotamus": "Hippopotamus",
-    "river horse": "Hippopotamus",
-    "javan rhinoceros": "Javan rhinoceros",
-    "javan rhino": "Javan rhinoceros",
-    "lesser one-horned rhinoceros": "Javan rhinoceros",
-    "lesser one horned rhinoceros": "Javan rhinoceros",
-    "sunda rhinoceros": "Javan rhinoceros",
-    "sunda rhino": "Javan rhinoceros",
-    "gaur": "Gaur",
-    "indian bison": "Gaur",
-    "gaurs": "Gaur",
-    "black rhinoceros": "Black rhinoceros",
-    "black rhino": "Black rhinoceros",
-    "hook-lipped rhinoceros": "Black rhinoceros",
-    "hook lipped rhino": "Black rhinoceros",
-    "hook-lipped rhino": "Black rhinoceros",
-    "giraffe": "Giraffe",
-    "giraffes": "Giraffe",
-    "northern giraffe": "Giraffe",
-    "southern giraffe": "Giraffe",
-    "masai giraffe": "Giraffe",
-    "reticulated giraffe": "Giraffe",
-    "wild water buffalo": "Wild water buffalo",
-    "water buffalo": "Wild water buffalo",
-    "asian water buffalo": "Wild water buffalo",
-    "asiatic water buffalo": "Wild water buffalo",
-    "wild asian water buffalo": "Wild water buffalo",
-    "arni": "Wild water buffalo",
-    "saltwater crocodile": "Saltwater crocodile",
-    "saltie": "Saltwater crocodile",
-    "salty": "Saltwater crocodile",
-    "estuarine crocodile": "Saltwater crocodile",
-    "indo-pacific crocodile": "Saltwater crocodile",
-    "indo pacific crocodile": "Saltwater crocodile",
-    "marine crocodile": "Saltwater crocodile",
-    "saltwater croc": "Saltwater crocodile",
-    "salt water crocodile": "Saltwater crocodile",
-    "salt water croc": "Saltwater crocodile",
-    "crocodile": "Saltwater crocodile",
-    "crocodiles": "Saltwater crocodile",
-    "croc": "Saltwater crocodile",
-    "wild yak": "Wild yak",
-    "yak": "Wild yak",
-    "yaks": "Wild yak",
-    "wild yaks": "Wild yak",
-    "european bison": "European bison",
-    "wisent": "European bison",
-    "wisents": "European bison",
-    "european buffalo": "European bison",
-    "american bison": "American bison",
-    "bison": "American bison",
-    "plains bison": "American bison",
-    "wood bison": "American bison",
-    "american buffalo": "American bison",
-    "north american bison": "American bison",
-    "giant eland": "Giant eland",
-    "eland": "Giant eland",
-    "derby eland": "Giant eland",
-    "lord derby's eland": "Giant eland",
-    "lord derbys eland": "Giant eland",
-    "giant eland antelope": "Giant eland",
-    "cape buffalo": "Cape buffalo",
-    "african buffalo": "Cape buffalo",
-    "african cape buffalo": "Cape buffalo",
-    "syncerus caffer": "Cape buffalo",
-    "banteng": "Banteng",
-    "tembadau": "Banteng",
-    "bos javanicus": "Banteng",
-    "javan ox": "Banteng",
-    "bali cattle": "Banteng",
-    "moose": "Moose",
-    "eurasian elk": "Moose",
-    "alces": "Moose",
-    "american moose": "Moose",
-    "alaskan moose": "Moose",
-    "alaska moose": "Moose",
-    "polar bear": "Polar bear",
-    "polar": "Polar bear",
-    "ice bear": "Polar bear",
-    "white bear": "Polar bear",
-    "ursus maritimus": "Polar bear"
-  }
+  "LARGEST_ANIMALS_TRIVIA": [
+    {
+      "q": "It can grow to about 30 metres long and weigh around 150 tonnes, and its calls rank among the loudest of any animal, carrying hundreds of kilometres underwater. What is the largest animal ever to have lived on Earth?",
+      "accepted": [
+        "blue whale",
+        "whale",
+        "the blue whale",
+        "blue whales",
+        "balaenoptera musculus"
+      ],
+      "display": "Blue whale"
+    },
+    {
+      "q": "The largest living land animal has a trunk with no bones and tens of thousands of muscle units, yet it can pluck a single peanut off the ground. Which animal is it?",
+      "accepted": [
+        "elephant",
+        "elephants",
+        "african elephant",
+        "african bush elephant",
+        "bush elephant",
+        "savanna elephant",
+        "savannah elephant",
+        "asian elephant",
+        "the elephant"
+      ],
+      "display": "Elephant (African bush elephant)"
+    },
+    {
+      "q": "Its neck can reach about 2 metres in length, yet it has exactly the same number of neck vertebrae as you do: seven. Which animal is it?",
+      "accepted": [
+        "giraffe",
+        "giraffes",
+        "the giraffe"
+      ],
+      "display": "Giraffe"
+    },
+    {
+      "q": "A group of these animals is called a “crash,” and the horn they are famous for has no bone inside: it is made of keratin, the same material as human fingernails. Which animal?",
+      "accepted": [
+        "rhino",
+        "rhinoceros",
+        "rhinos",
+        "rhinoceroses",
+        "white rhino",
+        "white rhinoceros",
+        "black rhino",
+        "black rhinoceros",
+        "indian rhino",
+        "indian rhinoceros",
+        "the rhino"
+      ],
+      "display": "Rhinoceros"
+    },
+    {
+      "q": "Its skin secretes a reddish, oily fluid nicknamed “blood sweat” that works as a sunscreen and germ-fighter. Despite spending its days in water, it can’t truly swim and instead walks or bounces along the riverbed. Which animal?",
+      "accepted": [
+        "hippo",
+        "hippos",
+        "hippopotamus",
+        "hippopotamuses",
+        "hippopotami",
+        "common hippopotamus",
+        "river horse",
+        "the hippo"
+      ],
+      "display": "Hippopotamus"
+    },
+    {
+      "q": "The largest bird alive lays the biggest egg of any bird, can sprint at around 70 km/h, and has eyes larger than its own brain. Which bird?",
+      "accepted": [
+        "ostrich",
+        "ostriches",
+        "common ostrich",
+        "the ostrich"
+      ],
+      "display": "Ostrich"
+    },
+    {
+      "q": "Sometimes called the “Indian bison” even though it isn’t a bison, this muscular, white-stockinged forest dweller of South and Southeast Asia is the largest species of wild cattle on Earth. Which animal?",
+      "accepted": [
+        "gaur",
+        "gaurs",
+        "indian bison",
+        "seladang",
+        "bos gaurus",
+        "the gaur"
+      ],
+      "display": "Gaur"
+    },
+    {
+      "q": "Researchers measured a bite of roughly 16,000 newtons from one of these in a record-setting study, the strongest bite ever recorded for a living animal. It is also the largest living reptile. Which animal?",
+      "accepted": [
+        "crocodile",
+        "crocodiles",
+        "saltwater crocodile",
+        "saltwater croc",
+        "salt water crocodile",
+        "saltie",
+        "salty",
+        "croc",
+        "crocs",
+        "estuarine crocodile",
+        "indo-pacific crocodile",
+        "indo pacific crocodile",
+        "the saltwater crocodile"
+      ],
+      "display": "Saltwater crocodile"
+    },
+    {
+      "q": "Its fur isn’t really white: each hair is transparent and hollow, and the skin underneath is black to soak up warmth. It is also the largest living land carnivore. Which animal?",
+      "accepted": [
+        "polar bear",
+        "polar bears",
+        "polar",
+        "ice bear",
+        "white bear",
+        "the polar bear",
+        "ursus maritimus"
+      ],
+      "display": "Polar bear"
+    },
+    {
+      "q": "This South American swamp-dweller is the heaviest snake in the world, though not the longest, and unusually for a snake it gives birth to live young instead of laying eggs. Which snake?",
+      "accepted": [
+        "anaconda",
+        "anacondas",
+        "green anaconda",
+        "giant anaconda",
+        "common anaconda",
+        "the anaconda",
+        "eunectes murinus"
+      ],
+      "display": "Green anaconda"
+    },
+    {
+      "q": "The largest living primate builds a fresh nest of branches and leaves to sleep in almost every night, and its dominant adult males are named for a patch of silver hair on their backs. Which animal?",
+      "accepted": [
+        "gorilla",
+        "gorillas",
+        "the gorilla",
+        "silverback",
+        "silverback gorilla",
+        "western gorilla",
+        "eastern gorilla",
+        "mountain gorilla"
+      ],
+      "display": "Gorilla"
+    },
+    {
+      "q": "Legend has it that this animal and the emu were chosen for Australia’s coat of arms because neither can easily move backwards. It is also the largest living marsupial. Which animal?",
+      "accepted": [
+        "kangaroo",
+        "kangaroos",
+        "red kangaroo",
+        "roo",
+        "roos",
+        "the kangaroo",
+        "the red kangaroo"
+      ],
+      "display": "Kangaroo (red kangaroo)"
+    }
+  ]
 }
