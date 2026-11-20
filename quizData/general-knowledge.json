@@ -216,5 +216,147 @@
         "16h 45m"
       ]
     }
+  ],
+  "AIRPORT_CODES_QUIZ": [
+    {
+      "prompt": "John F. Kennedy International Airport\nNew York, USA",
+      "label": "John F. Kennedy International Airport (New York, USA)",
+      "answer": "JFK"
+    },
+    {
+      "prompt": "Los Angeles International Airport\nLos Angeles, USA",
+      "label": "Los Angeles International Airport (Los Angeles, USA)",
+      "answer": "LAX"
+    },
+    {
+      "prompt": "O'Hare International Airport\nChicago, USA",
+      "label": "O'Hare International Airport (Chicago, USA)",
+      "answer": "ORD"
+    },
+    {
+      "prompt": "Hartsfield–Jackson Atlanta International Airport\nAtlanta, USA",
+      "label": "Hartsfield–Jackson Atlanta International Airport (Atlanta, USA)",
+      "answer": "ATL"
+    },
+    {
+      "prompt": "San Francisco International Airport\nSan Francisco, USA",
+      "label": "San Francisco International Airport (San Francisco, USA)",
+      "answer": "SFO"
+    },
+    {
+      "prompt": "Miami International Airport\nMiami, USA",
+      "label": "Miami International Airport (Miami, USA)",
+      "answer": "MIA"
+    },
+    {
+      "prompt": "Toronto Pearson International Airport\nToronto, Canada",
+      "label": "Toronto Pearson International Airport (Toronto, Canada)",
+      "answer": "YYZ"
+    },
+    {
+      "prompt": "Vancouver International Airport\nVancouver, Canada",
+      "label": "Vancouver International Airport (Vancouver, Canada)",
+      "answer": "YVR"
+    },
+    {
+      "prompt": "Benito Juárez International Airport\nMexico City, Mexico",
+      "label": "Benito Juárez International Airport (Mexico City, Mexico)",
+      "answer": "MEX"
+    },
+    {
+      "prompt": "São Paulo–Guarulhos International Airport\nSão Paulo, Brazil",
+      "label": "São Paulo–Guarulhos International Airport (São Paulo, Brazil)",
+      "answer": "GRU"
+    },
+    {
+      "prompt": "Heathrow Airport\nLondon, UK",
+      "label": "Heathrow Airport (London, UK)",
+      "answer": "LHR"
+    },
+    {
+      "prompt": "Charles de Gaulle Airport\nParis, France",
+      "label": "Charles de Gaulle Airport (Paris, France)",
+      "answer": "CDG"
+    },
+    {
+      "prompt": "Amsterdam Airport Schiphol\nAmsterdam, Netherlands",
+      "label": "Amsterdam Airport Schiphol (Amsterdam, Netherlands)",
+      "answer": "AMS"
+    },
+    {
+      "prompt": "Frankfurt Airport\nFrankfurt, Germany",
+      "label": "Frankfurt Airport (Frankfurt, Germany)",
+      "answer": "FRA"
+    },
+    {
+      "prompt": "Adolfo Suárez Madrid–Barajas Airport\nMadrid, Spain",
+      "label": "Adolfo Suárez Madrid–Barajas Airport (Madrid, Spain)",
+      "answer": "MAD"
+    },
+    {
+      "prompt": "Leonardo da Vinci–Fiumicino Airport\nRome, Italy",
+      "label": "Leonardo da Vinci–Fiumicino Airport (Rome, Italy)",
+      "answer": "FCO"
+    },
+    {
+      "prompt": "Istanbul Airport\nIstanbul, Türkiye",
+      "label": "Istanbul Airport (Istanbul, Türkiye)",
+      "answer": "IST"
+    },
+    {
+      "prompt": "Dubai International Airport\nDubai, UAE",
+      "label": "Dubai International Airport (Dubai, UAE)",
+      "answer": "DXB"
+    },
+    {
+      "prompt": "Hamad International Airport\nDoha, Qatar",
+      "label": "Hamad International Airport (Doha, Qatar)",
+      "answer": "DOH"
+    },
+    {
+      "prompt": "Indira Gandhi International Airport\nNew Delhi, India",
+      "label": "Indira Gandhi International Airport (New Delhi, India)",
+      "answer": "DEL"
+    },
+    {
+      "prompt": "Singapore Changi Airport\nSingapore",
+      "label": "Singapore Changi Airport (Singapore)",
+      "answer": "SIN"
+    },
+    {
+      "prompt": "Hong Kong International Airport\nHong Kong",
+      "label": "Hong Kong International Airport (Hong Kong)",
+      "answer": "HKG"
+    },
+    {
+      "prompt": "Narita International Airport\nTokyo, Japan",
+      "label": "Narita International Airport (Tokyo, Japan)",
+      "answer": "NRT"
+    },
+    {
+      "prompt": "Incheon International Airport\nSeoul, South Korea",
+      "label": "Incheon International Airport (Seoul, South Korea)",
+      "answer": "ICN"
+    },
+    {
+      "prompt": "Beijing Capital International Airport\nBeijing, China",
+      "label": "Beijing Capital International Airport (Beijing, China)",
+      "answer": "PEK"
+    },
+    {
+      "prompt": "Suvarnabhumi Airport\nBangkok, Thailand",
+      "label": "Suvarnabhumi Airport (Bangkok, Thailand)",
+      "answer": "BKK"
+    },
+    {
+      "prompt": "Sydney Kingsford Smith Airport\nSydney, Australia",
+      "label": "Sydney Kingsford Smith Airport (Sydney, Australia)",
+      "answer": "SYD"
+    },
+    {
+      "prompt": "O. R. Tambo International Airport\nJohannesburg, South Africa",
+      "label": "O. R. Tambo International Airport (Johannesburg, South Africa)",
+      "answer": "JNB"
+    }
   ]
 }

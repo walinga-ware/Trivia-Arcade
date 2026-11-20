@@ -701,8 +701,8 @@ class PresidentsRecallGame{
    PROMPTED QUIZ ENGINE (generic: state->abbreviation, country->capital, etc.)
    ============================================================ */
 
-function quizHTML(id, promptLabel, mode){
-  const inputAttrs = mode === 'short' ? 'maxlength="2"' : '';
+function quizHTML(id, promptLabel, mode, maxLength=2){
+  const inputAttrs = mode === 'short' ? `maxlength="${maxLength}"` : '';
   const rowClass = mode === 'short' ? 'quiz-input-row short' : 'quiz-input-row text';
   const isImage = mode === 'flag' || mode === 'image';
   const placeholder = mode === 'flag' ? 'placeholder="Type the country…"'
@@ -771,8 +771,12 @@ class PromptQuiz{
     this.finalRollLabel = opts.finalRollLabel;
     this.mode = opts.mode || 'text'; // 'short' (fixed-length codes) or 'text' (free text)
     this.maxLength = opts.maxLength || 2;
+    // Optional: ask only this many items per round, drawn at random from `pairs`
+    // (so a big pool stays fresh across plays). Omit to ask every pair, as before.
+    this.sampleSize = opts.sampleSize || null;
 
     this.queue = [];    // remaining pair-indices still to answer correctly
+    this.roundIdx = []; // indices into `pairs` used in the current round
     this.score = 0;
     this.results = {}; // prompt -> true (only set once answered correctly)
     this.timeLeft = this.duration;
@@ -780,7 +784,7 @@ class PromptQuiz{
     this.running = false;
 
     initScreen(this.id);
-    document.getElementById(`${this.id}-mount`).innerHTML = quizHTML(this.id, this.promptLabel, this.mode);
+    document.getElementById(`${this.id}-mount`).innerHTML = quizHTML(this.id, this.promptLabel, this.mode, this.maxLength);
     document.getElementById(`${this.id}-rules`).innerHTML = `
       &middot; ${minutesLabel(this.duration)} on the clock, starting when you hit begin<br>
       ${this.rulesHTML}
@@ -816,7 +820,9 @@ class PromptQuiz{
     this.timeLeft = this.duration;
     this.score = 0;
     this.results = {};
-    this.queue = shuffled(this.pairs.map((_,i)=>i));
+    const all = shuffled(this.pairs.map((_,i)=>i));
+    this.roundIdx = this.sampleSize ? all.slice(0, this.sampleSize) : all;
+    this.queue = this.roundIdx.slice();
     this.updateTimerDisplay();
     this.showPrompt();
     this.el('guess').disabled = false;
@@ -895,29 +901,32 @@ class PromptQuiz{
     this.el('game').style.display = 'none';
     this.el('results').style.display = 'block';
 
-    const pct = Math.round((this.score / this.pairs.length) * 100);
-    this.el('finalScoreLine').textContent = `You got ${this.score} of ${this.pairs.length} correct (${pct}%).`;
+    const roundPairs = this.roundIdx.map(i => this.pairs[i]);
+    const pct = Math.round((this.score / roundPairs.length) * 100);
+    this.el('finalScoreLine').textContent = `You got ${this.score} of ${roundPairs.length} correct (${pct}%).`;
 
     const isImage = this.mode === 'flag' || this.mode === 'image';
-    const sortKey = isImage ? 'answer' : 'prompt';
-    const sorted = [...this.pairs].sort((a,b)=>a[sortKey].localeCompare(b[sortKey]));
-    this.el('finalGrid').innerHTML = sorted.map(({prompt, answer}) => {
+    const sortOf = p => isImage ? p.answer : (p.label || p.prompt);
+    const sorted = [...roundPairs].sort((a,b)=>sortOf(a).localeCompare(sortOf(b)));
+    this.el('finalGrid').innerHTML = sorted.map(({prompt, answer, label: label_}) => {
       const hit = this.results[prompt] === true;
       const label = this.mode === 'flag'
         ? `<img class="flag-thumb" src="${prompt}" alt="${answer} flag">`
         : this.mode === 'image'
         ? `<img class="flag-thumb image-thumb" src="${prompt}" alt="${answer}">`
-        : prompt;
+        : (label_ || prompt);
       return `<div class="item ${hit ? 'hit' : 'miss'}"><span>${label}</span><span>${answer} ${hit ? '✓' : '—'}</span></div>`;
     }).join('');
   }
 
   reset(){
     this.running = false;
+    clearInterval(this.timerId);
     this.timeLeft = this.duration;
     this.score = 0;
     this.results = {};
     this.queue = [];
+    this.roundIdx = [];
     this.el('guess').disabled = false;
     this.el('endBtn').disabled = false;
     this.el('skipBtn').disabled = false;

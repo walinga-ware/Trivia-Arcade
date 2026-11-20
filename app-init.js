@@ -69,6 +69,7 @@ const {
   LARGEST_ANIMALS_TRIVIA,
   CONNECTORS_QUIZZES,
   AIR_TRAVEL_QUIZ,
+  AIRPORT_CODES_QUIZ,
   EXTREME_REGIONS,
   ANCIENT_AMERICAS_TRIVIA,
   ANCIENT_WONDERS
@@ -1062,6 +1063,24 @@ const flightTimeQuiz = new MultipleChoiceQuiz({
     &middot; Pick the closest flight time from 4 options<br>
     &middot; No skipping: keep picking until you find the right one, but only first-try answers score<br>
     &middot; The round ends when you finish all 10 or time runs out
+  `
+});
+
+// Airport Codes: a pool of 28 well-known airports (general-knowledge.json), 7 picked at random
+// each round. The airport name + city/country is shown; type the 3-letter IATA code.
+const airportCodesQuiz = new PromptQuiz({
+  id: 'airportcodes',
+  pairs: AIRPORT_CODES_QUIZ,
+  sampleSize: 7,
+  duration: 3*60,
+  mode: 'short',
+  maxLength: 3,
+  promptLabel: "what's the 3-letter code for",
+  finalRollLabel: 'Full roll — the 7 airports in this round',
+  rulesHTML: `
+    &middot; 7 airports, picked at random from a pool of ${AIRPORT_CODES_QUIZ.length}, appear one at a time<br>
+    &middot; Type the 3-letter IATA airport code for each (the code on a luggage tag)<br>
+    &middot; Use Skip if you're stuck; the round ends when you finish all 7 or time runs out
   `
 });
 
