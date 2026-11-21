@@ -411,9 +411,9 @@ const big4MapQuiz = new Big4MapQuiz({
   regions: BIG4_TEAM_REGIONS,
   bonus: BIG4_BONUS_REGIONS,
   notes: BIG4_REGION_NOTES,
-  canadaShown: ['British Columbia','Alberta','Saskatchewan','Manitoba','Ontario','Quebec','New Brunswick','Nova Scotia','Prince Edward Island'],
+  canadaShown: ['British Columbia','Alberta','Saskatchewan','Manitoba','Ontario','Quebec','New Brunswick','Prince Edward Island'],
   rulesHTML: `
-    &middot; The map shows the 50 US states plus nine southern Canadian provinces<br>
+    &middot; The map shows the lower 48 US states plus eight southern Canadian provinces<br>
     &middot; Click every state or province where at least one NBA, NFL, MLB or NHL team plays — ${Object.keys(BIG4_TEAM_REGIONS).length} in all<br>
     &middot; A team counts where it plays its home games (the New York Giants and Jets play in New Jersey)<br>
     &middot; Minefield: one wrong click ends the game immediately<br>

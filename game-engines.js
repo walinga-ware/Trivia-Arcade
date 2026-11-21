@@ -2905,7 +2905,7 @@ class MinefieldQuiz{
      Washington, DC isn't a state), BIG4_REGION_NOTES (trivia shown on
      the results screen).
    - A team counts where it plays its home games.
-   - Alaska and Hawaii are drawn as insets in the lower left.
+   - Alaska and Hawaii are not drawn (no big 4 team plays there, and they'd just add clutter).
    - Zoom/pan works like Find the Canadian City: +/− buttons beneath
      the map, drag to pan, pinch or Ctrl/Cmd+scroll to zoom.
    ============================================================ */
@@ -2936,14 +2936,14 @@ function big4MapHTML(id, total){
       <div class="map-hover" id="${id}-hover">&nbsp;</div>
       <div class="map-feedback" id="${id}-feedback"></div>
       <div class="map-next-row"><button id="${id}-giveupBtn">Give up</button></div>
+    </div>
 
-      <div class="results big4-results" id="${id}-results" style="display:none;">
-        <button id="${id}-resetBtn" class="play-again-top">Play again</button>
-        <div class="final-score" id="${id}-finalScoreLine"></div>
-        <div class="big4-wrong-note" id="${id}-wrongNote" style="display:none;"></div>
-        <div class="section-title"><span>Every state &amp; province with a big 4 team</span><span>Your hits in green</span></div>
-        <div id="${id}-finalGrid" class="final-grid big4-grid"></div>
-      </div>
+    <div class="results big4-results" id="${id}-results" style="display:none;">
+      <button id="${id}-resetBtn" class="play-again-top">Play again</button>
+      <div class="final-score" id="${id}-finalScoreLine"></div>
+      <div class="big4-wrong-note" id="${id}-wrongNote" style="display:none;"></div>
+      <div class="section-title"><span>Every state &amp; province with a big 4 team</span><span>Your hits in green</span></div>
+      <div id="${id}-finalGrid" class="final-grid big4-grid"></div>
     </div>
   `;
 }
@@ -2981,8 +2981,9 @@ class Big4MapQuiz{
         d3.json('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json'),
         d3.json('https://cdn.jsdelivr.net/gh/codeforgermany/click_that_hood@main/public/data/canada.geojson')
       ]);
-      // us-atlas also contains territories; only the 50 states + DC belong on this map.
-      const DROP = new Set(['American Samoa','Guam','Commonwealth of the Northern Mariana Islands','United States Virgin Islands','Puerto Rico']);
+      // us-atlas also contains territories; only the lower 48 + DC belong on this map
+      // (Alaska and Hawaii are intentionally left off).
+      const DROP = new Set(['Alaska','Hawaii','American Samoa','Guam','Commonwealth of the Northern Mariana Islands','United States Virgin Islands','Puerto Rico']);
       const usF = topojson.feature(us, us.objects.states).features
         .filter(f => !DROP.has(f.properties.name))
         .map(f => ({ ...f, properties:{ name:f.properties.name, country:'US' } }));
@@ -2996,17 +2997,13 @@ class Big4MapQuiz{
         .fitExtent([[8,8],[W-8,H-8]], { type:'MultiPoint', coordinates:[
           [-125,49],[-118,32.5],[-66,47],[-80.5,25],[-96,57],[-122,57],[-60,46],[-82,55]
         ]});
-      // Insets in the lower left, like the Albers-USA layout.
-      const ak = d3.geoConicEqualArea().parallels([55,65]).rotate([154,0]).center([0,62]).scale(300).translate([115,H-85]);
-      const hi = d3.geoConicEqualArea().parallels([8,18]).rotate([157,0]).center([0,20.5]).scale(1000).translate([260,H-40]);
-      const paths = { main:d3.geoPath(main), ak:d3.geoPath(ak), hi:d3.geoPath(hi) };
-      const pathFor = n => n==='Alaska' ? paths.ak : n==='Hawaii' ? paths.hi : paths.main;
+      const path = d3.geoPath(main);
 
       const svg = d3.select(this.el('map'));
       this.layer = svg.append('g');
       this.shapes = this.layer.selectAll('path').data([...caF, ...usF]).join('path')
         .attr('class', d => `state${d.properties.country==='CA' ? ' canada' : ''}`)
-        .attr('d', d => pathFor(d.properties.name)(d))
+        .attr('d', d => path(d))
         .attr('data-name', d => d.properties.name)
         .on('click', (event, d) => this.handleClick(d.properties.name))
         .on('mouseenter', (event, d) => { if (this.running) this.el('hover').textContent = d.properties.name; })
@@ -3093,29 +3090,18 @@ class Big4MapQuiz{
   end(reason, clicked){
     if (!this.running) return;
     this.running = false;
-    this.el('map').classList.add('answered');
     this.el('hover').innerHTML = '&nbsp;';
     this.el('giveupBtn').style.display = 'none';
-
-    // Reveal: found = green, the mine you stepped on = red, everything you missed = gold.
-    const missed = d => !!this.regions[d.properties.name] && !this.found.has(d.properties.name);
-    this.shapes.classed('correct', d => this.isFound(d.properties.name))
-      .classed('wrong', d => reason==='wrong' && d.properties.name===clicked)
-      .classed('target', missed)
-      .filter(d => missed(d) || d.properties.name===clicked).raise();
 
     const n = this.found.size;
     let line, noteText = '';
     if (reason === 'complete'){
       line = `Perfect run — you found all ${this.N} states and provinces with a big 4 team!`;
-      this.setFeedback('Every mine avoided.', 'good');
     } else if (reason === 'wrong'){
       line = `Game over — you found ${n} of ${this.N}. No big 4 team plays in ${clicked}.`;
       noteText = this.notes[clicked] || '';
-      this.setFeedback(`Boom — ${clicked} has no NBA, NFL, MLB or NHL team. Missed regions are highlighted in gold.`, 'bad');
     } else {
       line = `You stopped after finding ${n} of ${this.N}.`;
-      this.setFeedback('Missed regions are highlighted in gold.', '');
     }
     this.el('finalScoreLine').textContent = line;
     const noteEl = this.el('wrongNote');
@@ -3127,9 +3113,11 @@ class Big4MapQuiz{
     };
     const rows = this.targets.slice().sort((a,b) => a.localeCompare(b))
       .map(name => row(name, this.regions[name], this.found.has(name)));
-    Object.keys(this.bonus).forEach(name =>
-      rows.push(row(name, this.bonus[name], this.bonusFound.has(name), `${name} <em>(bonus — not a state)</em>`)));
+    // Bonus regions only appear in the answers if the player actually clicked them.
+    Object.keys(this.bonus).filter(name => this.bonusFound.has(name)).forEach(name =>
+      rows.push(row(name, this.bonus[name], true, `${name} <em>(bonus — not a state)</em>`)));
     this.el('finalGrid').innerHTML = rows.join('');
+    this.el('game').style.display = 'none';
     this.el('results').style.display = 'block';
   }
 
