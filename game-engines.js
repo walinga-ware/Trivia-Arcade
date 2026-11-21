@@ -2895,6 +2895,257 @@ class MinefieldQuiz{
 }
 
 /* ============================================================
+   BIG 4 ON THE MAP — MINEFIELD
+   A map of the 50 US states plus the southern Canadian provinces.
+   The player clicks every state/province that has at least one NBA,
+   NFL, MLB or NHL team. One wrong click ends the game.
+
+   - Data comes from sports.json: BIG4_TEAM_REGIONS (required regions,
+     name -> teams), BIG4_BONUS_REGIONS (safe to click, not required —
+     Washington, DC isn't a state), BIG4_REGION_NOTES (trivia shown on
+     the results screen).
+   - A team counts where it plays its home games.
+   - Alaska and Hawaii are drawn as insets in the lower left.
+   - Zoom/pan works like Find the Canadian City: +/− buttons beneath
+     the map, drag to pan, pinch or Ctrl/Cmd+scroll to zoom.
+   ============================================================ */
+
+function big4MapHTML(id, total){
+  return `
+    <div id="${id}-intro">
+      <div class="plate" style="margin-bottom:18px;">
+        <div class="label">rules</div>
+        <div style="font-size:14px; line-height:1.7; color:var(--paper);" id="${id}-rules"></div>
+      </div>
+      <button class="btn-primary" id="${id}-startBtn">Begin</button>
+    </div>
+
+    <div class="game map-quiz" id="${id}-game" style="display:none;">
+      <div class="top-row">
+        <div class="plate"><div class="label">found</div><div class="value" id="${id}-scoreValue">0</div></div>
+        <div class="plate"><div class="label">still hidden</div><div class="value" id="${id}-remainingValue">${total}</div></div>
+      </div>
+      <div class="map-question">
+        <div class="label">minefield — one wrong click ends the game</div>
+        <h3 class="event-clue">Click every state or province with at least one NBA, NFL, MLB or NHL team</h3>
+      </div>
+      <div class="state-map-wrap map-zoom-wrap">
+        <svg class="state-map big4-map clickable" id="${id}-map" viewBox="0 0 900 600" role="img" aria-label="Map of the United States and southern Canada — click each state or province that has a major pro team"></svg>
+      </div>
+      ${zoomControlsHTML(id)}
+      <div class="map-hover" id="${id}-hover">&nbsp;</div>
+      <div class="map-feedback" id="${id}-feedback"></div>
+      <div class="map-next-row"><button id="${id}-giveupBtn">Give up</button></div>
+
+      <div class="results big4-results" id="${id}-results" style="display:none;">
+        <button id="${id}-resetBtn" class="play-again-top">Play again</button>
+        <div class="final-score" id="${id}-finalScoreLine"></div>
+        <div class="big4-wrong-note" id="${id}-wrongNote" style="display:none;"></div>
+        <div class="section-title"><span>Every state &amp; province with a big 4 team</span><span>Your hits in green</span></div>
+        <div id="${id}-finalGrid" class="final-grid big4-grid"></div>
+      </div>
+    </div>
+  `;
+}
+
+class Big4MapQuiz{
+  // opts.regions:     { "Arizona": ["Arizona Cardinals", ...], ... }  (required)
+  // opts.bonus:       same shape; safe to click but not required (e.g. Washington, DC)
+  // opts.notes:       { regionName: "trivia" }  shown on the results screen
+  // opts.canadaShown: names of the Canadian provinces to draw
+  constructor(opts){
+    this.id = opts.id;
+    this.regions = opts.regions;
+    this.bonus = opts.bonus || {};
+    this.notes = opts.notes || {};
+    this.canadaShown = opts.canadaShown || [];
+    this.targets = Object.keys(this.regions);
+    this.N = this.targets.length;
+    this.W = 900; this.H = 600; this.k = 1;
+    this.found = new Set(); this.bonusFound = new Set();
+    this.running = false; this.mapReady = false;
+
+    initScreen(this.id);
+    document.getElementById(`${this.id}-mount`).innerHTML = big4MapHTML(this.id, this.N);
+    this.el = key => document.getElementById(`${this.id}-${key}`);
+    if (opts.rulesHTML) this.el('rules').innerHTML = opts.rulesHTML;
+    this.el('startBtn').addEventListener('click', () => this.start());
+    this.el('giveupBtn').addEventListener('click', () => this.end('gaveup'));
+    this.el('resetBtn').addEventListener('click', () => this.reset());
+    this.loadMap();
+  }
+
+  async loadMap(){
+    try{
+      const [us, ca] = await Promise.all([
+        d3.json('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json'),
+        d3.json('https://cdn.jsdelivr.net/gh/codeforgermany/click_that_hood@main/public/data/canada.geojson')
+      ]);
+      // us-atlas also contains territories; only the 50 states + DC belong on this map.
+      const DROP = new Set(['American Samoa','Guam','Commonwealth of the Northern Mariana Islands','United States Virgin Islands','Puerto Rico']);
+      const usF = topojson.feature(us, us.objects.states).features
+        .filter(f => !DROP.has(f.properties.name))
+        .map(f => ({ ...f, properties:{ name:f.properties.name, country:'US' } }));
+      const caF = ca.features
+        .filter(f => this.canadaShown.includes(f.properties.name))
+        .map(f => ({ ...f, properties:{ name:f.properties.name, country:'CA' } }));
+
+      const W = this.W, H = this.H;
+      // Main view: one conic projection framing the lower 48 plus the southern provinces.
+      const main = d3.geoConicConformal().parallels([33,55]).rotate([96,0])
+        .fitExtent([[8,8],[W-8,H-8]], { type:'MultiPoint', coordinates:[
+          [-125,49],[-118,32.5],[-66,47],[-80.5,25],[-96,57],[-122,57],[-60,46],[-82,55]
+        ]});
+      // Insets in the lower left, like the Albers-USA layout.
+      const ak = d3.geoConicEqualArea().parallels([55,65]).rotate([154,0]).center([0,62]).scale(300).translate([115,H-85]);
+      const hi = d3.geoConicEqualArea().parallels([8,18]).rotate([157,0]).center([0,20.5]).scale(1000).translate([260,H-40]);
+      const paths = { main:d3.geoPath(main), ak:d3.geoPath(ak), hi:d3.geoPath(hi) };
+      const pathFor = n => n==='Alaska' ? paths.ak : n==='Hawaii' ? paths.hi : paths.main;
+
+      const svg = d3.select(this.el('map'));
+      this.layer = svg.append('g');
+      this.shapes = this.layer.selectAll('path').data([...caF, ...usF]).join('path')
+        .attr('class', d => `state${d.properties.country==='CA' ? ' canada' : ''}`)
+        .attr('d', d => pathFor(d.properties.name)(d))
+        .attr('data-name', d => d.properties.name)
+        .on('click', (event, d) => this.handleClick(d.properties.name))
+        .on('mouseenter', (event, d) => { if (this.running) this.el('hover').textContent = d.properties.name; })
+        .on('mouseleave', () => { this.el('hover').innerHTML = '&nbsp;'; });
+
+      this.zoom = d3.zoom().scaleExtent([1,12])
+        .extent([[0,0],[W,H]]).translateExtent([[0,0],[W,H]])
+        .filter(e => e.type==='wheel' ? (e.ctrlKey||e.metaKey) : !e.button)
+        .on('zoom', e => {
+          this.k = e.transform.k;
+          this.layer.attr('transform', e.transform);
+          svg.classed('zoomed', this.k > 1.001);   // only block page scrolling on touch while zoomed in
+        });
+      svg.call(this.zoom).on('dblclick.zoom', null);
+      this.el('zoomIn').addEventListener('click', () => svg.transition().duration(200).call(this.zoom.scaleBy, 1.8));
+      this.el('zoomOut').addEventListener('click', () => svg.transition().duration(200).call(this.zoom.scaleBy, 1/1.8));
+      this.el('zoomReset').addEventListener('click', () => this.resetZoom(true));
+
+      this.mapReady = true;
+    }catch(err){
+      this.el('feedback').textContent = 'The map could not be loaded. Please refresh and try again.';
+      this.el('feedback').className = 'map-feedback bad';
+      console.error(err);
+    }
+  }
+
+  resetZoom(animate){
+    if (!this.mapReady) return;
+    const svg = d3.select(this.el('map'));
+    (animate ? svg.transition().duration(250) : svg).call(this.zoom.transform, d3.zoomIdentity);
+  }
+
+  isFound(name){ return this.found.has(name) || this.bonusFound.has(name); }
+
+  paint(){
+    if (!this.mapReady) return;
+    this.shapes.classed('correct', d => this.isFound(d.properties.name))
+      .classed('wrong', false).classed('target', false);
+  }
+
+  updateHeader(){
+    this.el('scoreValue').textContent = this.found.size;
+    this.el('remainingValue').textContent = this.N - this.found.size;
+  }
+
+  setFeedback(text, cls){
+    this.el('feedback').textContent = text;
+    this.el('feedback').className = `map-feedback ${cls || ''}`;
+  }
+
+  start(){
+    this.el('intro').style.display = 'none';
+    this.el('game').style.display = 'block';
+    this.el('results').style.display = 'none';
+    this.el('giveupBtn').style.display = 'inline-block';
+    this.found.clear(); this.bonusFound.clear();
+    this.running = true;
+    this.el('map').classList.remove('answered');
+    this.resetZoom(false);
+    this.paint(); this.updateHeader();
+    this.setFeedback('Click a state or province you think has a big 4 team.', '');
+  }
+
+  handleClick(name){
+    if (!this.running || !this.mapReady) return;
+    if (this.isFound(name)) return;               // already found: treat like clicking the ocean
+
+    if (this.bonus[name]){                        // Washington, DC: safe, not required
+      this.bonusFound.add(name); this.paint();
+      this.setFeedback(`${name} — safe! It isn't a state, so it's a free bonus (not required).`, 'good');
+      return;
+    }
+    if (this.regions[name]){
+      this.found.add(name); this.paint(); this.updateHeader();
+      const teams = this.regions[name];
+      const detail = teams.length <= 3 ? teams.join(', ') : `${teams.length} teams`;
+      this.setFeedback(`${name} — correct! (${detail})`, 'good');
+      if (this.found.size === this.N) this.end('complete');
+      return;
+    }
+    this.end('wrong', name);                      // mine!
+  }
+
+  end(reason, clicked){
+    if (!this.running) return;
+    this.running = false;
+    this.el('map').classList.add('answered');
+    this.el('hover').innerHTML = '&nbsp;';
+    this.el('giveupBtn').style.display = 'none';
+
+    // Reveal: found = green, the mine you stepped on = red, everything you missed = gold.
+    const missed = d => !!this.regions[d.properties.name] && !this.found.has(d.properties.name);
+    this.shapes.classed('correct', d => this.isFound(d.properties.name))
+      .classed('wrong', d => reason==='wrong' && d.properties.name===clicked)
+      .classed('target', missed)
+      .filter(d => missed(d) || d.properties.name===clicked).raise();
+
+    const n = this.found.size;
+    let line, noteText = '';
+    if (reason === 'complete'){
+      line = `Perfect run — you found all ${this.N} states and provinces with a big 4 team!`;
+      this.setFeedback('Every mine avoided.', 'good');
+    } else if (reason === 'wrong'){
+      line = `Game over — you found ${n} of ${this.N}. No big 4 team plays in ${clicked}.`;
+      noteText = this.notes[clicked] || '';
+      this.setFeedback(`Boom — ${clicked} has no NBA, NFL, MLB or NHL team. Missed regions are highlighted in gold.`, 'bad');
+    } else {
+      line = `You stopped after finding ${n} of ${this.N}.`;
+      this.setFeedback('Missed regions are highlighted in gold.', '');
+    }
+    this.el('finalScoreLine').textContent = line;
+    const noteEl = this.el('wrongNote');
+    noteEl.textContent = noteText; noteEl.style.display = noteText ? 'block' : 'none';
+
+    const row = (name, teams, hit, label) => {
+      const note = this.notes[name] ? `<div class="big4-note">${this.notes[name]}</div>` : '';
+      return `<div class="item big4-item ${hit?'hit':'miss'}"><div><div class="big4-name">${label||name}</div><div class="big4-teams">${teams.join(', ')}</div>${note}</div><span>${hit?'✓':'—'}</span></div>`;
+    };
+    const rows = this.targets.slice().sort((a,b) => a.localeCompare(b))
+      .map(name => row(name, this.regions[name], this.found.has(name)));
+    Object.keys(this.bonus).forEach(name =>
+      rows.push(row(name, this.bonus[name], this.bonusFound.has(name), `${name} <em>(bonus — not a state)</em>`)));
+    this.el('finalGrid').innerHTML = rows.join('');
+    this.el('results').style.display = 'block';
+  }
+
+  reset(){
+    this.running = false;
+    this.found.clear(); this.bonusFound.clear();
+    this.el('results').style.display = 'none';
+    this.el('game').style.display = 'none';
+    this.el('intro').style.display = 'block';
+    this.el('map').classList.remove('answered');
+    this.resetZoom(false);
+    this.paint(); this.updateHeader();
+  }
+}
+
+/* ============================================================
    Node/CommonJS export shim — enables unit testing with Jest.
    Has no effect in the browser (module is undefined there), so
    the app's normal <script> loading is unaffected.
@@ -2917,5 +3168,6 @@ if (typeof module !== 'undefined' && module.exports) {
     PromptQuiz,
     StateMapQuiz,
     CountryOutlineQuiz,
+    Big4MapQuiz,
   };
 }
