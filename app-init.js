@@ -57,6 +57,9 @@ const {
   NHL_TEAM_ALIASES,
   MLB_TEAMS,
   MLB_TEAM_ALIASES,
+  BIG4_TEAM_REGIONS,
+  BIG4_BONUS_REGIONS,
+  BIG4_REGION_NOTES,
   ELEMENTS,
   ELEMENT_NAMES,
   ELEMENT_HINTS,
@@ -393,6 +396,28 @@ const nflGame = new FreeRecallGame({
     &middot; Every NFL team counts once — 32 total<br>
     &middot; Nickname, city + nickname, or a common abbreviation are accepted — city alone doesn't count<br>
     &middot; When time expires, the full roll is revealed with your hits marked
+  `
+});
+
+/* ============================================================
+   SPORTS — BIG 4 ON THE MAP (MINEFIELD)
+   Click every US state / Canadian province with at least one NBA, NFL,
+   MLB or NHL team; one wrong click ends the game. Team locations live in
+   sports.json (BIG4_TEAM_REGIONS; DC is a safe bonus in BIG4_BONUS_REGIONS).
+   If a team relocates, move it between regions there — nothing else to edit.
+   ============================================================ */
+const big4MapQuiz = new Big4MapQuiz({
+  id: 'big4map',
+  regions: BIG4_TEAM_REGIONS,
+  bonus: BIG4_BONUS_REGIONS,
+  notes: BIG4_REGION_NOTES,
+  canadaShown: ['British Columbia','Alberta','Saskatchewan','Manitoba','Ontario','Quebec','New Brunswick','Prince Edward Island'],
+  rulesHTML: `
+    &middot; The map shows the lower 48 US states plus eight southern Canadian provinces<br>
+    &middot; Click every state or province where at least one NBA, NFL, MLB or NHL team plays — ${Object.keys(BIG4_TEAM_REGIONS).length} in all<br>
+    &middot; A team counts where it plays its home games (the New York Giants and Jets play in New Jersey)<br>
+    &middot; Minefield: one wrong click ends the game immediately<br>
+    &middot; Zoom with + / − (or pinch/scroll) and drag to pan; no clock, but you can give up to see what you missed
   `
 });
 

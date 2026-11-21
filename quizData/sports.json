@@ -334,5 +334,211 @@
     "jays": "Toronto Blue Jays",
     "nationals": "Washington Nationals",
     "nats": "Washington Nationals"
+  },
+  "BIG4_TEAM_REGIONS": {
+    "Alberta": [
+      "Calgary Flames",
+      "Edmonton Oilers"
+    ],
+    "Arizona": [
+      "Arizona Cardinals",
+      "Phoenix Suns",
+      "Arizona Diamondbacks"
+    ],
+    "British Columbia": [
+      "Vancouver Canucks"
+    ],
+    "California": [
+      "Golden State Warriors",
+      "LA Clippers",
+      "Los Angeles Lakers",
+      "Sacramento Kings",
+      "Los Angeles Rams",
+      "Los Angeles Chargers",
+      "San Francisco 49ers",
+      "Athletics",
+      "Los Angeles Angels",
+      "Los Angeles Dodgers",
+      "San Diego Padres",
+      "San Francisco Giants",
+      "Anaheim Ducks",
+      "Los Angeles Kings",
+      "San Jose Sharks"
+    ],
+    "Colorado": [
+      "Denver Nuggets",
+      "Denver Broncos",
+      "Colorado Rockies",
+      "Colorado Avalanche"
+    ],
+    "Florida": [
+      "Miami Heat",
+      "Orlando Magic",
+      "Miami Dolphins",
+      "Jacksonville Jaguars",
+      "Tampa Bay Buccaneers",
+      "Miami Marlins",
+      "Tampa Bay Rays",
+      "Florida Panthers",
+      "Tampa Bay Lightning"
+    ],
+    "Georgia": [
+      "Atlanta Hawks",
+      "Atlanta Falcons",
+      "Atlanta Braves"
+    ],
+    "Illinois": [
+      "Chicago Bulls",
+      "Chicago Bears",
+      "Chicago Cubs",
+      "Chicago White Sox",
+      "Chicago Blackhawks"
+    ],
+    "Indiana": [
+      "Indiana Pacers",
+      "Indianapolis Colts"
+    ],
+    "Louisiana": [
+      "New Orleans Pelicans",
+      "New Orleans Saints"
+    ],
+    "Manitoba": [
+      "Winnipeg Jets"
+    ],
+    "Maryland": [
+      "Baltimore Ravens",
+      "Washington Commanders",
+      "Baltimore Orioles"
+    ],
+    "Massachusetts": [
+      "Boston Celtics",
+      "New England Patriots",
+      "Boston Red Sox",
+      "Boston Bruins"
+    ],
+    "Michigan": [
+      "Detroit Pistons",
+      "Detroit Lions",
+      "Detroit Tigers",
+      "Detroit Red Wings"
+    ],
+    "Minnesota": [
+      "Minnesota Timberwolves",
+      "Minnesota Vikings",
+      "Minnesota Twins",
+      "Minnesota Wild"
+    ],
+    "Missouri": [
+      "Kansas City Chiefs",
+      "Kansas City Royals",
+      "St. Louis Cardinals",
+      "St. Louis Blues"
+    ],
+    "Nevada": [
+      "Las Vegas Raiders",
+      "Vegas Golden Knights"
+    ],
+    "New Jersey": [
+      "New York Giants",
+      "New York Jets",
+      "New Jersey Devils"
+    ],
+    "New York": [
+      "Brooklyn Nets",
+      "New York Knicks",
+      "Buffalo Bills",
+      "New York Mets",
+      "New York Yankees",
+      "Buffalo Sabres",
+      "New York Islanders",
+      "New York Rangers"
+    ],
+    "North Carolina": [
+      "Charlotte Hornets",
+      "Carolina Panthers",
+      "Carolina Hurricanes"
+    ],
+    "Ohio": [
+      "Cleveland Cavaliers",
+      "Cleveland Browns",
+      "Cincinnati Bengals",
+      "Cincinnati Reds",
+      "Cleveland Guardians",
+      "Columbus Blue Jackets"
+    ],
+    "Oklahoma": [
+      "Oklahoma City Thunder"
+    ],
+    "Ontario": [
+      "Toronto Raptors",
+      "Toronto Maple Leafs",
+      "Toronto Blue Jays",
+      "Ottawa Senators"
+    ],
+    "Oregon": [
+      "Portland Trail Blazers"
+    ],
+    "Pennsylvania": [
+      "Philadelphia 76ers",
+      "Philadelphia Eagles",
+      "Pittsburgh Steelers",
+      "Philadelphia Phillies",
+      "Pittsburgh Pirates",
+      "Philadelphia Flyers",
+      "Pittsburgh Penguins"
+    ],
+    "Quebec": [
+      "Montreal Canadiens"
+    ],
+    "Tennessee": [
+      "Memphis Grizzlies",
+      "Tennessee Titans",
+      "Nashville Predators"
+    ],
+    "Texas": [
+      "Dallas Mavericks",
+      "Houston Rockets",
+      "San Antonio Spurs",
+      "Dallas Cowboys",
+      "Houston Texans",
+      "Houston Astros",
+      "Texas Rangers",
+      "Dallas Stars"
+    ],
+    "Utah": [
+      "Utah Jazz",
+      "Utah Mammoth"
+    ],
+    "Washington": [
+      "Seattle Seahawks",
+      "Seattle Mariners",
+      "Seattle Kraken"
+    ],
+    "Wisconsin": [
+      "Milwaukee Bucks",
+      "Green Bay Packers",
+      "Milwaukee Brewers"
+    ]
+  },
+  "BIG4_BONUS_REGIONS": {
+    "District of Columbia": [
+      "Washington Wizards",
+      "Washington Capitals",
+      "Washington Nationals"
+    ]
+  },
+  "BIG4_REGION_NOTES": {
+    "California": "The Athletics currently play in West Sacramento while their Las Vegas ballpark is built.",
+    "Maryland": "The Washington Commanders play their home games in Landover, Maryland.",
+    "Massachusetts": "The \"New England\" Patriots play in Foxborough, Massachusetts.",
+    "Missouri": "Kansas City's Chiefs and Royals play on the Missouri side of the state line.",
+    "New Jersey": "The \"New York\" Giants and Jets play at MetLife Stadium in East Rutherford, New Jersey.",
+    "Virginia": "The Commanders train in Ashburn and the Capitals practice in Arlington, but both teams play their games elsewhere (Maryland and Washington, DC).",
+    "Kansas": "Kansas City's Chiefs and Royals both play in Kansas City, Missouri.",
+    "Connecticut": "The \"New England\" Patriots play in Foxborough, Massachusetts.",
+    "Rhode Island": "The \"New England\" Patriots play in Foxborough, Massachusetts.",
+    "New Hampshire": "The \"New England\" Patriots play in Foxborough, Massachusetts.",
+    "Vermont": "The \"New England\" Patriots play in Foxborough, Massachusetts.",
+    "Maine": "The \"New England\" Patriots play in Foxborough, Massachusetts."
   }
 }
