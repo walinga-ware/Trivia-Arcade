@@ -417,7 +417,6 @@ const big4MapQuiz = new Big4MapQuiz({
     &middot; Click every state or province where at least one NBA, NFL, MLB or NHL team plays — ${Object.keys(BIG4_TEAM_REGIONS).length} in all<br>
     &middot; A team counts where it plays its home games (the New York Giants and Jets play in New Jersey)<br>
     &middot; Minefield: one wrong click ends the game immediately<br>
-    &middot; Washington, DC isn't a state — clicking it is safe, but it isn't required<br>
     &middot; Zoom with + / − (or pinch/scroll) and drag to pan; no clock, but you can give up to see what you missed
   `
 });
