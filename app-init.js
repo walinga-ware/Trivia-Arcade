@@ -70,6 +70,7 @@ const {
   LARGEST_MOONS,
   CACTI,
   LARGEST_ANIMALS_TRIVIA,
+  FASTEST_LAND_ANIMALS,
   CONNECTORS_QUIZZES,
   AIR_TRAVEL_QUIZ,
   AIRPORT_CODES_QUIZ,
@@ -910,6 +911,39 @@ const largestAnimalsQuiz = new TriviaQuiz({
     &middot; Type the animal's name and hit enter or submit — common alternate names are accepted<br>
     &middot; You'll see the correct answer immediately after each question<br>
     &middot; At the end, review your full scorecard
+  `
+});
+
+/* ============================================================
+   SCIENCE — ANIMALS: FASTEST LAND ANIMALS
+   Free-recall quiz (FASTEST_LAND_ANIMALS in science.json): the 17
+   fastest living land animals, ranked by approximate top speed.
+   Extinct species are excluded, and similar species are grouped under
+   one name (all hares, all gazelles, etc.) with the species listed as
+   aliases. To add an animal, append { name, speedKmh, aliases } to the
+   array (keep it sorted fastest -> slowest).
+   ============================================================ */
+const FASTEST_ANIMAL_NAMES = FASTEST_LAND_ANIMALS.map(a => a.name);
+const FASTEST_ANIMAL_SPEEDS = Object.fromEntries(FASTEST_LAND_ANIMALS.map(a => [a.name, a.speedKmh]));
+const FASTEST_ANIMAL_LOOKUP = {};
+FASTEST_LAND_ANIMALS.forEach(a => {
+  FASTEST_ANIMAL_LOOKUP[normalize(a.name)] = a.name;
+  (a.aliases || []).forEach(al => { FASTEST_ANIMAL_LOOKUP[normalize(al)] = a.name; });
+});
+
+const fastestLandGame = new FreeRecallGame({
+  id: 'fastestland',
+  title: 'Name the Fastest Land Animals',
+  items: FASTEST_ANIMAL_NAMES,   // already sorted fastest -> slowest
+  lookup: FASTEST_ANIMAL_LOOKUP,
+  duration: 5*60,
+  preserveOrder: true,           // keep results sorted by speed
+  itemDetail: name => `~${FASTEST_ANIMAL_SPEEDS[name]} km/h (${Math.round(FASTEST_ANIMAL_SPEEDS[name] * 0.621371)} mph)`,
+  finalTitle: `Full ranking — the ${FASTEST_LAND_ANIMALS.length} fastest land animals, by top speed`,
+  rulesHTML: `
+    &middot; Name the ${FASTEST_LAND_ANIMALS.length} fastest living land animals — any order<br>
+    &middot; Extinct animals don't count, and similar species are grouped (e.g. any hare or any gazelle)<br>
+    &middot; When time expires, the full ranking is revealed with each animal's approximate top speed
   `
 });
 

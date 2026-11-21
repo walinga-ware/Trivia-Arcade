@@ -936,5 +936,182 @@
       ],
       "display": "Kangaroo (red kangaroo)"
     }
+  ],
+  "FASTEST_LAND_ANIMALS": [
+    {
+      "name": "Cheetah",
+      "speedKmh": 104,
+      "aliases": [
+        "Acinonyx jubatus"
+      ]
+    },
+    {
+      "name": "Pronghorn",
+      "speedKmh": 88,
+      "aliases": [
+        "Pronghorn Antelope",
+        "American Antelope",
+        "Antilocapra americana"
+      ]
+    },
+    {
+      "name": "Springbok",
+      "speedKmh": 88,
+      "aliases": [
+        "Springbuck",
+        "Antidorcas marsupialis"
+      ]
+    },
+    {
+      "name": "Wildebeest",
+      "speedKmh": 80,
+      "aliases": [
+        "Gnu",
+        "Blue Wildebeest",
+        "Black Wildebeest",
+        "White-tailed Gnu",
+        "Brindled Gnu"
+      ]
+    },
+    {
+      "name": "Lion",
+      "speedKmh": 80,
+      "aliases": [
+        "African Lion",
+        "Panthera leo"
+      ]
+    },
+    {
+      "name": "Blackbuck",
+      "speedKmh": 80,
+      "aliases": [
+        "Black Buck",
+        "Indian Antelope",
+        "Antilope cervicapra"
+      ]
+    },
+    {
+      "name": "Gazelle",
+      "speedKmh": 80,
+      "aliases": [
+        "Thomson's Gazelle",
+        "Thomsons Gazelle",
+        "Thompson's Gazelle",
+        "Grant's Gazelle",
+        "Grants Gazelle",
+        "Gazelles",
+        "Tommie"
+      ]
+    },
+    {
+      "name": "Hare",
+      "speedKmh": 72,
+      "aliases": [
+        "Hares",
+        "Brown Hare",
+        "European Hare",
+        "Jackrabbit",
+        "Jack Rabbit",
+        "Jackrabbits",
+        "Snowshoe Hare",
+        "Arctic Hare",
+        "Rabbit"
+      ]
+    },
+    {
+      "name": "Elk",
+      "speedKmh": 72,
+      "aliases": [
+        "Wapiti",
+        "Red Deer",
+        "Cervus canadensis"
+      ]
+    },
+    {
+      "name": "African Wild Dog",
+      "speedKmh": 71,
+      "aliases": [
+        "Wild Dog",
+        "African Hunting Dog",
+        "Painted Dog",
+        "Painted Wolf",
+        "Cape Hunting Dog",
+        "Hunting Dog",
+        "Lycaon pictus"
+      ]
+    },
+    {
+      "name": "Ostrich",
+      "speedKmh": 70,
+      "aliases": [
+        "Common Ostrich",
+        "Struthio camelus"
+      ]
+    },
+    {
+      "name": "Kangaroo",
+      "speedKmh": 70,
+      "aliases": [
+        "Red Kangaroo",
+        "Grey Kangaroo",
+        "Gray Kangaroo",
+        "Eastern Grey Kangaroo",
+        "Western Grey Kangaroo",
+        "Kangaroos",
+        "Antilopine Kangaroo"
+      ]
+    },
+    {
+      "name": "Hartebeest",
+      "speedKmh": 70,
+      "aliases": [
+        "Harte Beest",
+        "Hartebeast",
+        "Kongoni",
+        "Red Hartebeest",
+        "Lichtenstein's Hartebeest",
+        "Alcelaphus buselaphus"
+      ]
+    },
+    {
+      "name": "Coyote",
+      "speedKmh": 69,
+      "aliases": [
+        "Coyotes",
+        "Canis latrans"
+      ]
+    },
+    {
+      "name": "Zebra",
+      "speedKmh": 65,
+      "aliases": [
+        "Plains Zebra",
+        "Grevy's Zebra",
+        "Grevys Zebra",
+        "Mountain Zebra",
+        "Zebras",
+        "Burchell's Zebra"
+      ]
+    },
+    {
+      "name": "Giraffe",
+      "speedKmh": 60,
+      "aliases": [
+        "Giraffes",
+        "Giraffa"
+      ]
+    },
+    {
+      "name": "Hyena",
+      "speedKmh": 60,
+      "aliases": [
+        "Spotted Hyena",
+        "Striped Hyena",
+        "Brown Hyena",
+        "Hyaena",
+        "Hyenas",
+        "Laughing Hyena"
+      ]
+    }
   ]
 }
