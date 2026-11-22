@@ -1000,22 +1000,12 @@
     },
     {
       "label": "America's speedster",
-      "prompt": "Sometimes called the 'American antelope' even though it isn't a true one, this North American mammal can sustain 55 km/h for kilometres, a speed thought to be a legacy of the extinct American cheetah. Which animal?",
-      "answer": "Pronghorn (American antelope)",
+      "prompt": "This fastest North American mammal can sustain 55 km/h for kilometres, a speed thought to be a legacy of the extinct American cheetah. Which animal?",
+      "answer": "Pronghorn antelope",
       "distractors": [
         "Elk",
         "Bison",
         "Mule deer"
-      ]
-    },
-    {
-      "label": "Horsepower",
-      "prompt": "The 'power' unit used to rate car engines is named for this animal, and the best sprinters of its kind can gallop at about 70 km/h. Which animal?",
-      "answer": "Horse",
-      "distractors": [
-        "Camel",
-        "Donkey",
-        "Ox"
       ]
     },
     {
@@ -1046,46 +1036,6 @@
         "Egyptian fruit bat",
         "Little brown bat",
         "Flying fox"
-      ]
-    },
-    {
-      "label": "Months on the wing",
-      "prompt": "This bird eats, drinks, mates and even sleeps in flight, and can stay airborne for around ten months without landing. Which animal?",
-      "answer": "Common swift",
-      "distractors": [
-        "Barn swallow",
-        "Arctic tern",
-        "Great frigatebird"
-      ]
-    },
-    {
-      "label": "Fastest shark",
-      "prompt": "The fastest of all sharks, it can reach about 70 km/h and leap several metres clear of the water. Which animal?",
-      "answer": "Shortfin mako shark",
-      "distractors": [
-        "Great white shark",
-        "Tiger shark",
-        "Blue shark"
-      ]
-    },
-    {
-      "label": "Fastest insect runner",
-      "prompt": "Relative to its size, this Australian insect is the fastest runner in the world at about 120 body lengths per second, so quick it is briefly blind and must stop to relocate its prey. Which animal?",
-      "answer": "Tiger beetle",
-      "distractors": [
-        "Cockroach",
-        "Locust",
-        "Earwig"
-      ]
-    },
-    {
-      "label": "Fastest snake",
-      "prompt": "Named for the inside of its mouth, Africa's fastest snake can slither at up to about 20 km/h. Which animal?",
-      "answer": "Black mamba",
-      "distractors": [
-        "King cobra",
-        "Inland taipan",
-        "Green anaconda"
       ]
     }
   ]
