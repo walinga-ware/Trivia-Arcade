@@ -931,8 +931,8 @@ const fastestAnimalsQuiz = new MultipleChoiceQuiz({
   promptLabel: "fastest animals — which animal?",
   finalRollLabel: 'Full roll — the 10 questions in this round',
   rulesHTML: `
-    &middot; 10 questions per round, drawn from a pool of ${FASTEST_ANIMALS_QUIZ.length}<br>
-    &middot; Each question is a clue about one of the fastest animals on land, in the air or in the water<br>
+    &middot; 10 questions, each a clue about one of the fastest animals on land, in the air or in the water<br>
+    &middot; Pick the matching animal from 4 options<br>
     &middot; No skipping: keep picking until you find the right one, but only first-try answers score<br>
     &middot; The round ends when you finish all 10 or time runs out
   `
