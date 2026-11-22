@@ -70,6 +70,7 @@ const {
   LARGEST_MOONS,
   CACTI,
   LARGEST_ANIMALS_TRIVIA,
+  FASTEST_ANIMALS_QUIZ,
   CONNECTORS_QUIZZES,
   AIR_TRAVEL_QUIZ,
   AIRPORT_CODES_QUIZ,
@@ -910,6 +911,30 @@ const largestAnimalsQuiz = new TriviaQuiz({
     &middot; Type the animal's name and hit enter or submit — common alternate names are accepted<br>
     &middot; You'll see the correct answer immediately after each question<br>
     &middot; At the end, review your full scorecard
+  `
+});
+
+/* ============================================================
+   SCIENCE — ANIMALS: FASTEST ANIMALS
+   Multiple-choice quiz: 10 random questions per round, drawn from
+   FASTEST_ANIMALS_QUIZ in science.json. Each question is a clue about
+   one record-setting animal and carries its own hand-written
+   distractors, like the Ancient Egypt quiz. To add a question, append
+   { label, prompt, answer, distractors: [3] } to that array.
+   ============================================================ */
+const fastestAnimalsQuiz = new MultipleChoiceQuiz({
+  id: 'fastestanimals',
+  pairs: FASTEST_ANIMALS_QUIZ,   // [{ label, prompt, answer, distractors: [3] }, ...]
+  questionCount: 10,
+  optionCount: 4,
+  duration: 10*60,
+  promptLabel: "fastest animals — which animal?",
+  finalRollLabel: 'Full roll — the 10 questions in this round',
+  rulesHTML: `
+    &middot; 10 questions, each a clue about one of the fastest animals on land, in the air or in the water<br>
+    &middot; Pick the matching animal from 4 options<br>
+    &middot; No skipping: keep picking until you find the right one, but only first-try answers score<br>
+    &middot; The round ends when you finish all 10 or time runs out
   `
 });
 

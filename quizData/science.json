@@ -936,5 +936,107 @@
       ],
       "display": "Kangaroo (red kangaroo)"
     }
+  ],
+  "FASTEST_ANIMALS_QUIZ": [
+    {
+      "label": "Fastest animal alive",
+      "prompt": "In a hunting dive, this bird has been clocked at over 320 km/h, making it the fastest animal on Earth in any kind of motion. Which animal?",
+      "answer": "Peregrine falcon",
+      "distractors": [
+        "Golden eagle",
+        "Gyrfalcon",
+        "Harpy eagle"
+      ]
+    },
+    {
+      "label": "Eagle of the steppe",
+      "prompt": "Kazakh hunters on horseback train this powerful raptor to take foxes and even wolves, and its hunting dive has been estimated at 240 km/h or more. Which animal?",
+      "answer": "Golden eagle",
+      "distractors": [
+        "Bald eagle",
+        "Harpy eagle",
+        "Steller's sea eagle"
+      ]
+    },
+    {
+      "label": "Fastest on land",
+      "prompt": "It is the fastest land animal, reaching about 100 km/h in short bursts, and its claws only partly retract so they work like running spikes. Which animal?",
+      "answer": "Cheetah",
+      "distractors": [
+        "Leopard",
+        "Jaguar",
+        "Caracal"
+      ]
+    },
+    {
+      "label": "Fastest in the sea",
+      "prompt": "Named for its huge sail-like dorsal fin, this fish is usually ranked the fastest in the ocean, with estimates of up to about 100 km/h. Which animal?",
+      "answer": "Sailfish",
+      "distractors": [
+        "Bluefin tuna",
+        "Wahoo",
+        "Barracuda"
+      ]
+    },
+    {
+      "label": "Wings in a blur",
+      "prompt": "Its wings beat dozens of times a second, its heart can race past 1,000 beats a minute, and it is one of the few birds able to fly backwards. Which animal?",
+      "answer": "Hummingbird",
+      "distractors": [
+        "Swift",
+        "Kingfisher",
+        "Sunbird"
+      ]
+    },
+    {
+      "label": "Fastest runner on two legs",
+      "prompt": "This flightless bird can sprint at around 70 km/h and keep up 50 km/h for half an hour, covering about 5 metres in a single stride. Which animal?",
+      "answer": "Ostrich",
+      "distractors": [
+        "Emu",
+        "Rhea",
+        "Cassowary"
+      ]
+    },
+    {
+      "label": "America's speedster",
+      "prompt": "This fastest North American mammal can sustain 55 km/h for kilometres, a speed thought to be a legacy of the extinct American cheetah. Which animal?",
+      "answer": "Pronghorn antelope",
+      "distractors": [
+        "Elk",
+        "Bison",
+        "Mule deer"
+      ]
+    },
+    {
+      "label": "King of the sprint",
+      "prompt": "The only cat that lives in social groups called prides, it can sprint at about 80 km/h but tires within a few hundred metres. Which animal?",
+      "answer": "Lion",
+      "distractors": [
+        "Tiger",
+        "Leopard",
+        "Cougar"
+      ]
+    },
+    {
+      "label": "Fastest dog",
+      "prompt": "Bred for coursing and racing, this sighthound is the fastest dog breed, reaching about 70 km/h. Which animal?",
+      "answer": "Greyhound",
+      "distractors": [
+        "Whippet",
+        "Afghan hound",
+        "Border collie"
+      ]
+    },
+    {
+      "label": "Fastest flying mammal",
+      "prompt": "A 2016 study clocked this small mammal at nearly 160 km/h in level flight, the fastest horizontal flight speed ever recorded for an animal. Which animal?",
+      "answer": "Brazilian free-tailed bat",
+      "distractors": [
+        "Egyptian fruit bat",
+        "Little brown bat",
+        "Flying fox"
+      ]
+    }
   ]
 }
