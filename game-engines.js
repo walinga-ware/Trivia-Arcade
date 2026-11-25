@@ -3134,6 +3134,398 @@ class Big4MapQuiz{
 }
 
 /* ============================================================
+   SPORTS — SPOT THE REAL TEAM (timed minefield)
+   Four team names appear; exactly one is a real NBA / NFL / NHL / MLB
+   team. Click it. Any wrong pick ends the quiz; so does the clock.
+
+   FakeTeamFactory builds the three impostors for each question. It has
+   no DOM code, so it can be unit-tested on its own. Fakes come in five
+   difficulty tiers, and the quiz moves up a level every few questions:
+     1  absurd      real city + nonsense nickname      "Denver Spreadsheets"
+     2  invented    real city + believable-but-unused  "Memphis Herons"
+                    nickname
+     3  mashup      any real city + any real nickname  "Miami Seahawks"
+                    from the Big 4 (never a real team)
+     4  lookalike   city AND nickname both come from   "San Antonio Heat"
+                    the same league as the real team
+     5  near-miss   same league, and it keeps either   "Boston Knicks",
+                    the real team's city or nickname,  "Dallas Rockets"
+                    or swaps two teams from one region
+   Every fake is checked against all current teams plus a blacklist of
+   defunct/renamed Big 4 teams and MLS/WNBA/CFL teams (otherRealTeams in
+   sports.json), so a "fake" can never secretly be a real team.
+   ============================================================ */
+class FakeTeamFactory{
+  // d: { leagues:{NBA:[names]...}, regions, bonus, multiWordNicknames, cityAliases,
+  //      extraCities, absurdNicknames, plausibleNicknames, otherRealTeams }
+  constructor(d){
+    this.cityAlias = d.cityAliases || {};
+    const multi = d.multiWordNicknames || [];
+
+    const regionOf = {};
+    [d.regions, d.bonus].forEach(map => Object.entries(map || {}).forEach(([region, names]) => {
+      names.forEach(n => { regionOf[n] = region; });
+    }));
+
+    // Split every team name into { city, nick }. Teams without a city (the Athletics) get city ''.
+    this.teams = [];
+    Object.entries(d.leagues).forEach(([league, names]) => names.forEach(full => {
+      const nick = multi.find(m => full === m || full.endsWith(' ' + m)) || full.split(' ').pop();
+      const city = full === nick ? '' : full.slice(0, full.length - nick.length).trim();
+      this.teams.push({ full, league, city, nick, region: regionOf[full] || null });
+    }));
+    this.byLeague = {};
+    this.teams.forEach(t => { (this.byLeague[t.league] = this.byLeague[t.league] || []).push(t); });
+
+    // Anything in here is real, so a fake may never match it.
+    this.realKeys = new Set(this.teams.map(t => this.key(t.city, t.nick)));
+    (d.otherRealTeams || []).forEach(n => this.realKeys.add(normalize(n)));
+
+    const cityTeams = this.teams.filter(t => t.city);
+    this.cities = [...new Set([...cityTeams.map(t => this.canonCity(t.city)), ...(d.extraCities || [])])];
+    this.nicks = [...new Set(cityTeams.map(t => t.nick))];
+
+    // nickname -> regions where a real team uses it. "Texas Cowboys" or "Colorado Nuggets" would
+    // be a regional name for a real team, so those combinations are rejected.
+    this.nickRegions = {};
+    this.teams.forEach(t => {
+      if (!t.region) return;
+      (this.nickRegions[t.nick] = this.nickRegions[t.nick] || new Set()).add(normalize(t.region));
+    });
+
+    this.absurd = d.absurdNicknames;
+    this.plausible = d.plausibleNicknames;
+  }
+
+  canonCity(c){ return this.cityAlias[c] || c; }
+  key(city, nick){ return normalize(`${this.canonCity(city)} ${nick}`); }
+  pick(arr){ return arr[Math.floor(Math.random() * arr.length)]; }
+  label(city, nick){ return city ? `${city} ${nick}` : nick; }
+
+  // One raw candidate for a tier (not yet validated), or null if this roll can't produce one.
+  candidate(tier, ans){
+    const cityless = !ans.city;                 // real answer has no city, so fakes must have none either
+    if (cityless && tier > 2) tier = 2;
+    if (tier === 1) return { city: cityless ? '' : this.pick(this.cities), nick: this.pick(this.absurd) };
+    if (tier === 2) return { city: cityless ? '' : this.pick(this.cities), nick: this.pick(this.plausible) };
+    if (tier === 3) return { city: this.pick(this.cities), nick: this.pick(this.nicks) };
+
+    const league = (this.byLeague[ans.league] || []).filter(t => t.full !== ans.full && t.city);
+    if (!league.length) return null;
+
+    if (tier === 4){
+      const a = this.pick(league), b = this.pick(league);
+      if (a === b || (a.region && a.region === b.region)) return null;
+      return { city: this.canonCity(a.city), nick: b.nick };
+    }
+
+    // Tier 5. Prefer teams from the real answer's own region (Texas, Pennsylvania, California...).
+    const near = list => {
+      const same = list.filter(t => t.region && t.region === ans.region);
+      return same.length && Math.random() < 0.75 ? this.pick(same) : this.pick(list);
+    };
+    const strategy = this.pick(['keepCity', 'keepNick', 'swap']);
+    if (strategy === 'keepCity'){
+      return { city: ans.city, nick: near(league).nick };
+    }
+    if (strategy === 'keepNick'){
+      const others = league.filter(t => this.canonCity(t.city) !== this.canonCity(ans.city));
+      return others.length ? { city: this.canonCity(near(others).city), nick: ans.nick } : null;
+    }
+    // swap: the city of one team + the nickname of another team from the same region and league
+    const groups = {};
+    league.forEach(t => { if (t.region) (groups[t.region] = groups[t.region] || []).push(t); });
+    const usable = Object.entries(groups).filter(([, g]) => new Set(g.map(t => t.city)).size > 1);
+    if (!usable.length) return null;
+    const mine = usable.find(([r]) => r === ans.region);
+    const group = (mine && Math.random() < 0.75 ? mine : this.pick(usable))[1];
+    const a = this.pick(group), b = this.pick(group);
+    return a.city === b.city ? null : { city: this.canonCity(a.city), nick: b.nick };
+  }
+
+  valid(c, ans, ctx, tier, avoidRepeats){
+    const k = this.key(c.city, c.nick);
+    if (this.realKeys.has(k) || ctx.keys.has(k)) return false;
+    if (avoidRepeats && ctx.used.has(k)) return false;
+
+    const city = this.canonCity(c.city);
+    const regions = this.nickRegions[c.nick];
+    if (city && regions && regions.has(normalize(city))) return false;   // regional name for a real team
+
+    // Only tier-5 fakes may reuse the real team's city or nickname, and at most one of each.
+    const shareCity = city && city === this.canonCity(ans.city);
+    const shareNick = c.nick === ans.nick;
+    if (shareCity && (tier < 5 || ctx.sharedCity)) return false;
+    if (shareNick && (tier < 5 || ctx.sharedNick)) return false;
+
+    if (city && ctx.cities.has(city)) return false;    // the three fakes stay distinct from each other
+    if (ctx.nicks.has(c.nick)) return false;
+    return true;
+  }
+
+  accept(c, tier, ans, ctx){
+    const k = this.key(c.city, c.nick);
+    const city = this.canonCity(c.city);
+    ctx.keys.add(k); ctx.used.add(k);
+    if (city) ctx.cities.add(city);
+    ctx.nicks.add(c.nick);
+    if (city && city === this.canonCity(ans.city)) ctx.sharedCity = true;
+    if (c.nick === ans.nick) ctx.sharedNick = true;
+    return { name: this.label(c.city, c.nick), tier };
+  }
+
+  fake(tier, ans, ctx){
+    for (let i = 0; i < 80; i++){
+      const c = this.candidate(tier, ans);
+      // after 50 tries, stop insisting on fakes that haven't appeared earlier in the round
+      if (c && this.valid(c, ans, ctx, tier, i < 50)) return this.accept(c, tier, ans, ctx);
+    }
+    if (tier > 1) return this.fake(tier - 1, ans, ctx);     // couldn't find one at this tier: drop a tier
+    for (;;){                                                // tier 1 can't realistically fail; last-ditch guard
+      const c = this.candidate(1, ans);
+      if (!this.realKeys.has(this.key(c.city, c.nick)) && !ctx.keys.has(this.key(c.city, c.nick))) return this.accept(c, 1, ans, ctx);
+    }
+  }
+
+  // Three fakes for one question. At least one sits at `level`; the others are at `level` or one below.
+  // `used` is a Set of fake keys already shown this round (so fakes don't repeat).
+  fakes(level, ans, used){
+    const tiers = [level];
+    for (let i = 0; i < 2; i++) tiers.push(level > 1 && Math.random() < 0.3 ? level - 1 : level);
+    tiers.sort((a, b) => b - a);        // hardest first: they get first claim on the scarce "shared" slots
+    const ctx = { keys: new Set(), used: used || new Set(), cities: new Set(), nicks: new Set(), sharedCity: false, sharedNick: false };
+    return tiers.map(t => this.fake(t, ans, ctx));
+  }
+}
+
+function realTeamQuizHTML(id){
+  return `
+    <div id="${id}-intro">
+      <div class="plate" style="margin-bottom:18px;">
+        <div class="label">rules</div>
+        <div style="font-size:14px; line-height:1.7; color:var(--paper);" id="${id}-rules"></div>
+      </div>
+      <button class="btn-primary" id="${id}-startBtn">Begin — start the clock</button>
+    </div>
+
+    <div class="game" id="${id}-game" style="display:none;">
+      <div class="top-row">
+        <div class="plate timer" id="${id}-timerPlate">
+          <div class="label">time remaining</div>
+          <div class="value" id="${id}-timerValue">--:--</div>
+        </div>
+        <div class="plate">
+          <div class="label">score</div>
+          <div class="value" id="${id}-scoreValue">0</div>
+        </div>
+        <div class="plate">
+          <div class="label">level</div>
+          <div class="value" id="${id}-levelValue">1</div>
+        </div>
+      </div>
+
+      <div class="quiz-prompt">
+        <div class="prompt-label">one is a real NBA, NFL, NHL or MLB team — three are impostors</div>
+        <div class="prompt-value mc-clue">Which team is real?</div>
+      </div>
+      <div class="mc-options" id="${id}-options"></div>
+      <div class="feedback" id="${id}-feedback" style="text-align:center;"></div>
+      <div style="text-align:center;">
+        <button id="${id}-endBtn" title="End the quiz now">End quiz</button>
+      </div>
+    </div>
+
+    <div class="results" id="${id}-results" style="display:none;">
+      <button id="${id}-resetBtn" class="play-again-top">Play again</button>
+      <div class="final-score" id="${id}-finalScoreLine"></div>
+      <div class="rt-reason" id="${id}-reason"></div>
+      <div id="${id}-lastQ" style="display:none;">
+        <div class="section-title"><span>The question that ended it</span><span>The real team in green</span></div>
+        <div class="rt-opts" id="${id}-lastOpts"></div>
+      </div>
+      <div class="section-title"><span>Real teams you spotted, in order</span><span id="${id}-spottedCount"></span></div>
+      <div id="${id}-finalGrid" class="final-grid"></div>
+    </div>
+  `;
+}
+
+class RealTeamQuiz{
+  // opts: { id, duration, data (see FakeTeamFactory), rulesHTML, questionsPerLevel?, maxLevel? }
+  constructor(opts){
+    this.id = opts.id;
+    this.duration = opts.duration;
+    this.perLevel = opts.questionsPerLevel || 5;
+    this.maxLevel = opts.maxLevel || 5;
+    this.factory = new FakeTeamFactory(opts.data);
+
+    this.running = false;
+    this.locked = false;
+    this.timerId = null;
+    this.timeLeft = this.duration;
+    this.score = 0;
+    this.qNum = 0;
+    this.level = 1;
+    this.history = [];        // real teams spotted, in order
+    this.bag = [];            // shuffled real teams still to be asked (refilled when empty)
+    this.usedFakes = new Set();
+    this.current = null;
+
+    initScreen(this.id);
+    document.getElementById(`${this.id}-mount`).innerHTML = realTeamQuizHTML(this.id);
+    this.el = key => document.getElementById(`${this.id}-${key}`);
+    this.el('rules').innerHTML = `
+      &middot; ${minutesLabel(this.duration)} on the clock, starting when you hit begin<br>
+      ${opts.rulesHTML}
+    `;
+    const metaEl = document.getElementById(`${this.id}-meta`);
+    if (metaEl) metaEl.textContent = `${minutesLabel(this.duration)} · one wrong pick ends it`;
+
+    this.el('startBtn').addEventListener('click', () => this.start());
+    this.el('endBtn').addEventListener('click', () => this.end('quit'));
+    this.el('resetBtn').addEventListener('click', () => this.reset());
+
+    // Keys 1-4 pick the matching option (only while this quiz is on screen and running).
+    document.addEventListener('keydown', e => {
+      if (!this.running || this.locked || e.ctrlKey || e.metaKey || e.altKey) return;
+      const screen = document.getElementById(`screen-${this.id}`);
+      if (!screen || !screen.classList.contains('active')) return;
+      const n = parseInt(e.key, 10);
+      if (n >= 1 && n <= 4){
+        const btn = this.el('options').children[n - 1];
+        if (btn) btn.click();
+      }
+    });
+    this.updateTimerDisplay();
+  }
+
+  start(){
+    this.el('intro').style.display = 'none';
+    this.el('results').style.display = 'none';
+    this.el('game').style.display = 'block';
+    this.running = true;
+    this.locked = false;
+    this.timeLeft = this.duration;
+    this.score = 0;
+    this.qNum = 0;
+    this.level = 1;
+    this.history = [];
+    this.bag = shuffled(this.factory.teams);      // real answers: random draw from every team in all four leagues
+    this.usedFakes = new Set();
+    this.el('scoreValue').textContent = '0';
+    this.el('endBtn').disabled = false;
+    this.updateTimerDisplay();
+    this.showQuestion();
+    this.timerId = setInterval(() => this.tick(), 1000);
+  }
+
+  tick(){
+    this.timeLeft--;
+    this.updateTimerDisplay();
+    if (this.timeLeft <= 0) this.end('time');
+  }
+
+  updateTimerDisplay(){
+    this.el('timerValue').textContent = fmtTime(this.timeLeft);
+    this.el('timerPlate').classList.toggle('low', this.timeLeft <= 30);
+  }
+
+  levelFor(qNum){ return Math.min(this.maxLevel, 1 + Math.floor((qNum - 1) / this.perLevel)); }
+
+  showQuestion(){
+    this.qNum++;
+    this.level = this.levelFor(this.qNum);
+    if (!this.bag.length) this.bag = shuffled(this.factory.teams);
+    const answer = this.bag.pop();
+    const fakes = this.factory.fakes(this.level, answer, this.usedFakes);
+    const options = shuffled([
+      { name: answer.full, real: true },
+      ...fakes.map(f => ({ name: f.name, real: false }))
+    ]);
+    this.current = { answer, options, level: this.level };
+    this.locked = false;
+
+    this.el('levelValue').textContent = this.level;
+    this.el('feedback').textContent = '';
+    this.el('feedback').className = 'feedback';
+    const box = this.el('options');
+    box.innerHTML = '';
+    options.forEach((opt, i) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'mc-option';
+      const key = document.createElement('span');
+      key.className = 'rt-key';
+      key.textContent = i + 1;
+      btn.append(key, opt.name);
+      btn.addEventListener('click', () => this.choose(btn, opt));
+      box.appendChild(btn);
+    });
+  }
+
+  choose(btn, opt){
+    if (!this.running || this.locked) return;
+    this.locked = true;
+    if (!opt.real){ this.end('wrong', opt); return; }     // minefield: one wrong pick ends it
+    btn.classList.add('correct');
+    this.score++;
+    this.history.push({ name: this.current.answer.full, league: this.current.answer.league });
+    this.el('scoreValue').textContent = this.score;
+    setTimeout(() => { if (this.running) this.showQuestion(); }, 450);
+  }
+
+  end(reason, pickedOpt){
+    if (!this.running) return;
+    this.running = false;
+    clearInterval(this.timerId);
+    this.el('game').style.display = 'none';
+    this.el('results').style.display = 'block';
+
+    const n = this.score;
+    this.el('finalScoreLine').innerHTML =
+      `You spotted ${n} real team${n === 1 ? '' : 's'}. <span>Reached level ${this.level} of ${this.maxLevel}` +
+      (n ? ` &middot; ${n * 3} impostor${n * 3 === 1 ? '' : 's'} dodged` : '') + `</span>`;
+
+    const reasonEl = this.el('reason');
+    const lastQ = this.el('lastQ');
+    lastQ.style.display = 'none';
+    if (reason === 'wrong'){
+      reasonEl.textContent = `Wrong pick — "${pickedOpt.name}" isn't a real team. ${fmtTime(this.timeLeft)} was left on the clock.`;
+      this.el('lastOpts').innerHTML = this.current.options.map(o => {
+        const cls = o.real ? 'real' : (o === pickedOpt ? 'picked' : '');
+        const note = o.real ? `real · ${this.current.answer.league}` : (o === pickedOpt ? 'your pick — fake' : 'fake');
+        return `<div class="rt-opt ${cls}"><span class="rt-name">${o.name}</span><span class="rt-note">${note}</span></div>`;
+      }).join('');
+      lastQ.style.display = 'block';
+    } else if (reason === 'time'){
+      reasonEl.textContent = `Time's up — you made it through the full ${minutesLabel(this.duration)} without a wrong pick.`;
+    } else {
+      reasonEl.textContent = 'You ended the quiz early.';
+    }
+
+    this.el('spottedCount').textContent = this.history.length;
+    this.el('finalGrid').innerHTML = this.history.length
+      ? this.history.map(h => `<div class="item hit"><span>${h.name}</span><span>${h.league} ✓</span></div>`).join('')
+      : '<div class="empty-note">None this time — the first fake got you.</div>';
+  }
+
+  reset(){
+    this.running = false;
+    this.locked = false;
+    clearInterval(this.timerId);
+    this.timeLeft = this.duration;
+    this.score = 0;
+    this.qNum = 0;
+    this.level = 1;
+    this.history = [];
+    this.el('scoreValue').textContent = '0';
+    this.el('levelValue').textContent = '1';
+    this.el('results').style.display = 'none';
+    this.el('intro').style.display = 'block';
+    this.updateTimerDisplay();
+  }
+}
+
+/* ============================================================
    Node/CommonJS export shim — enables unit testing with Jest.
    Has no effect in the browser (module is undefined there), so
    the app's normal <script> loading is unaffected.
@@ -3157,5 +3549,7 @@ if (typeof module !== 'undefined' && module.exports) {
     StateMapQuiz,
     CountryOutlineQuiz,
     Big4MapQuiz,
+    FakeTeamFactory,
+    RealTeamQuiz,
   };
 }
