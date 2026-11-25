@@ -60,6 +60,7 @@ const {
   BIG4_TEAM_REGIONS,
   BIG4_BONUS_REGIONS,
   BIG4_REGION_NOTES,
+  REAL_TEAM_QUIZ,
   ELEMENTS,
   ELEMENT_NAMES,
   ELEMENT_HINTS,
@@ -419,6 +420,37 @@ const big4MapQuiz = new Big4MapQuiz({
     &middot; A team counts where it plays its home games (the New York Giants and Jets play in New Jersey)<br>
     &middot; Minefield: one wrong click ends the game immediately<br>
     &middot; Zoom with + / − (or pinch/scroll) and drag to pan; no clock, but you can give up to see what you missed
+  `
+});
+
+/* ============================================================
+   SPORTS — SPOT THE REAL TEAM (timed minefield)
+   Four team names per question: one real NBA/NFL/NHL/MLB team, three
+   invented ones. The real team is drawn at random from all teams in
+   NBA_TEAMS / NFL_TEAMS / NHL_TEAMS / MLB_TEAMS, so a new or relocated
+   team is picked up automatically. Fakes get harder every
+   `questionsPerLevel` questions (5 tiers — see FakeTeamFactory in
+   game-engines.js). All fake-name ingredients (nicknames, extra cities,
+   the blacklist of defunct/other-league teams) live in REAL_TEAM_QUIZ
+   in sports.json.
+   ============================================================ */
+const realTeamQuiz = new RealTeamQuiz({
+  id: 'realteam',
+  duration: 3*60,
+  questionsPerLevel: 5,
+  maxLevel: 5,
+  data: {
+    leagues: { NBA: NBA_TEAMS, NFL: NFL_TEAMS, NHL: NHL_TEAMS, MLB: MLB_TEAMS },
+    regions: BIG4_TEAM_REGIONS,
+    bonus: BIG4_BONUS_REGIONS,
+    ...REAL_TEAM_QUIZ
+  },
+  rulesHTML: `
+    &middot; Four team names appear — exactly one is a real NBA, NFL, NHL or MLB team, and the other three are fakes<br>
+    &middot; Click the real one (or press 1&ndash;4) — the real teams are drawn at random from all ${NBA_TEAMS.length + NFL_TEAMS.length + NHL_TEAMS.length + MLB_TEAMS.length} of them<br>
+    &middot; The fakes get harder every few questions: early ones are obvious, later ones are built from real cities and nicknames<br>
+    &middot; Minefield: one wrong pick ends the quiz immediately<br>
+    &middot; Otherwise the quiz ends when the clock runs out — answer as many as you can
   `
 });
 

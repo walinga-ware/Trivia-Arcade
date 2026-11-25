@@ -289,6 +289,26 @@
   .big4-note{ font-size:11.5px; line-height:1.5; margin-top:4px; font-style:italic; color:var(--paper-dim); }
   .final-grid .item.hit .big4-note{ color:var(--sage); opacity:.7; }
 
+  /* ---- spot the real team ---- */
+  .mc-option .rt-key{
+    display:inline-block; min-width:1.4em; margin-right:8px; font-size:12px; font-weight:500;
+    color:var(--paper-dim);
+  }
+  .mc-option:hover:not(:disabled) .rt-key, .mc-option.correct .rt-key{ color:var(--ink); opacity:.65; }
+  @media (hover:none){ .mc-option .rt-key{ display:none; } }
+  .rt-reason{ font-size:13px; color:var(--paper-dim); line-height:1.6; margin:0 0 8px; }
+  .rt-opts{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px; }
+  @media(max-width:600px){ .rt-opts{ grid-template-columns:1fr; } }
+  .rt-opt{
+    padding:14px 12px; border:1px solid var(--line); border-radius:4px; text-align:center;
+    font-size:15px; color:var(--paper-dim);
+  }
+  .rt-opt .rt-name{ display:block; }
+  .rt-opt .rt-note{ display:block; margin-top:3px; font-size:11px; letter-spacing:.3px; text-transform:uppercase; opacity:.85; }
+  .rt-opt.real{ background:var(--sage); border-color:var(--sage); color:var(--ink); font-weight:600; }
+  .rt-opt.picked{ border-color:var(--rust); color:var(--rust); }
+  .rt-opt.picked .rt-name{ text-decoration:line-through; }
+
   /* ---- random quiz banner ---- */
   .random-quiz{
     display:flex; align-items:center; justify-content:space-between; gap:16px;
@@ -599,7 +619,7 @@
 
     <!-- ============ PRO LEAGUE TEAMS ============ -->
     <details class="section">
-      <summary class="section-summary"><span><span class="chevron">▸</span>Pro League Teams 🏀</span><span class="quiz-count">5 quizzes</span></summary>
+      <summary class="section-summary"><span><span class="chevron">▸</span>Pro League Teams 🏀</span><span class="quiz-count">6 quizzes</span></summary>
     <div class="card-grid">
       <div class="card">
         <div class="tag">Free recall &middot; 30 items</div>
@@ -630,6 +650,12 @@
         <h3>On the Map: Big 4 Teams</h3>
         <div class="meta">click every state or province with an NBA, NFL, MLB or NHL team</div>
         <button class="btn-primary" onclick="showScreen('big4map')">Play</button>
+      </div>
+      <div class="card">
+        <div class="tag">Minefield &middot; multiple choice</div>
+        <h3>Spot the Real Team</h3>
+        <div class="meta" id="realteam-meta"></div>
+        <button class="btn-primary" onclick="showScreen('realteam')">Play</button>
       </div>
     </div>
     </details>
