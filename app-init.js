@@ -75,6 +75,7 @@ const {
   CONNECTORS_QUIZZES,
   AIR_TRAVEL_QUIZ,
   AIRPORT_CODES_QUIZ,
+  FAMOUS_AIRPORTS_QUIZ,
   EXTREME_REGIONS,
   ANCIENT_AMERICAS_TRIVIA,
   ANCIENT_WONDERS
@@ -1163,6 +1164,26 @@ const airportCodesQuiz = new PromptQuiz({
     &middot; 7 airports, picked at random from a pool of ${AIRPORT_CODES_QUIZ.length}, appear one at a time<br>
     &middot; Type the 3-letter IATA airport code for each (the code on a luggage tag)<br>
     &middot; Use Skip if you're stuck; the round ends when you finish all 7 or time runs out
+  `
+});
+
+// Famous Airports: multiple choice, 10 random questions per round from a pool of
+// FAMOUS_AIRPORTS_QUIZ (general-knowledge.json) — records, landmarks and historic events.
+// To add a question, append { label, prompt, answer, distractors: [3] } to that array
+// (prompts must be unique).
+const famousAirportsQuiz = new MultipleChoiceQuiz({
+  id: 'famousairports',
+  pairs: FAMOUS_AIRPORTS_QUIZ,
+  questionCount: 10,
+  optionCount: 4,
+  duration: 8*60,
+  promptLabel: "famous airports — which airport?",
+  finalRollLabel: 'Full roll — the 10 questions in this round',
+  rulesHTML: `
+    &middot; 10 questions, picked at random from a pool of ${FAMOUS_AIRPORTS_QUIZ.length}, on airport records, quirks and historic events<br>
+    &middot; Pick the matching airport from 4 options<br>
+    &middot; No skipping: keep picking until you find the right one, but only first-try answers score<br>
+    &middot; The round ends when you finish all 10 or time runs out
   `
 });
 
