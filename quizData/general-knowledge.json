@@ -358,5 +358,287 @@
       "label": "O. R. Tambo International Airport (Johannesburg, South Africa)",
       "answer": "JNB"
     }
+  ],
+  "FAMOUS_AIRPORTS_QUIZ": [
+    {
+      "label": "Busiest airport in the world",
+      "prompt": "Which airport is the busiest in the world by total passengers?",
+      "answer": "Hartsfield–Jackson Atlanta (ATL)",
+      "distractors": [
+        "Beijing Capital (PEK)",
+        "Dubai International (DXB)",
+        "London Heathrow (LHR)"
+      ]
+    },
+    {
+      "label": "Busiest airport for international travelers",
+      "prompt": "Which airport handles more international passengers than any other in the world?",
+      "answer": "Dubai International (DXB)",
+      "distractors": [
+        "London Heathrow (LHR)",
+        "Singapore Changi (SIN)",
+        "Hong Kong International (HKG)"
+      ]
+    },
+    {
+      "label": "Busiest airport in the US",
+      "prompt": "Which airport is the busiest in the United States by total passengers?",
+      "answer": "Hartsfield–Jackson Atlanta (ATL)",
+      "distractors": [
+        "Los Angeles International (LAX)",
+        "Chicago O'Hare (ORD)",
+        "Dallas/Fort Worth (DFW)"
+      ]
+    },
+    {
+      "label": "Busiest airport in Canada",
+      "prompt": "Which airport is the busiest in Canada by total passengers?",
+      "answer": "Toronto Pearson (YYZ)",
+      "distractors": [
+        "Vancouver International (YVR)",
+        "Montréal–Trudeau (YUL)",
+        "Calgary International (YYC)"
+      ]
+    },
+    {
+      "label": "Largest airport in the world",
+      "prompt": "Which airport covers the most land area of any in the world, at roughly 776 square kilometres?",
+      "answer": "King Fahd International Airport (Dammam, Saudi Arabia)",
+      "distractors": [
+        "Denver International Airport",
+        "Dallas/Fort Worth International Airport",
+        "Dubai International Airport"
+      ]
+    },
+    {
+      "label": "Largest airport in the US",
+      "prompt": "Which airport is the largest in the United States by land area?",
+      "answer": "Denver International Airport",
+      "distractors": [
+        "Dallas/Fort Worth International Airport",
+        "Orlando International Airport",
+        "George Bush Intercontinental (Houston)"
+      ]
+    },
+    {
+      "label": "Most runways",
+      "prompt": "Which U.S. commercial airport has the most runways, with eight?",
+      "answer": "Chicago O'Hare (ORD)",
+      "distractors": [
+        "Dallas/Fort Worth (DFW)",
+        "Denver International (DEN)",
+        "Hartsfield–Jackson Atlanta (ATL)"
+      ]
+    },
+    {
+      "label": "Longest public runway",
+      "prompt": "Which airport has the longest public-use runway in the world, at about 5,500 metres?",
+      "answer": "Qamdo Bamda Airport (Tibet, China)",
+      "distractors": [
+        "Ulyanovsk Vostochny Airport (Russia)",
+        "Denver International Airport",
+        "Dubai Al Maktoum International"
+      ]
+    },
+    {
+      "label": "Highest commercial airport",
+      "prompt": "Which commercial airport sits at the highest elevation in the world, at about 4,400 metres?",
+      "answer": "Daocheng Yading Airport (China)",
+      "distractors": [
+        "El Alto International (La Paz, Bolivia)",
+        "Cusco Alejandro Velasco Astete (Peru)",
+        "Leh Kushok Bakula Rimpochee (India)"
+      ]
+    },
+    {
+      "label": "Shortest commercial runway",
+      "prompt": "Which airport, on a tiny Caribbean island, is known for the world's shortest commercial runway, at about 400 metres?",
+      "answer": "Juancho E. Yrausquin Airport (Saba)",
+      "distractors": [
+        "Princess Juliana International (Sint Maarten)",
+        "Gustaf III Airport (St. Barthélemy)",
+        "Barra Airport (Scotland)"
+      ]
+    },
+    {
+      "label": "Landings over Maho Beach",
+      "prompt": "At which airport do jets pass just above Maho Beach as they land?",
+      "answer": "Princess Juliana International (Sint Maarten)",
+      "distractors": [
+        "Grantley Adams International (Barbados)",
+        "Juancho E. Yrausquin (Saba)",
+        "Queen Beatrix International (Aruba)"
+      ]
+    },
+    {
+      "label": "Everest gateway",
+      "prompt": "Which short, sloped Himalayan runway is the usual starting point for Mount Everest treks?",
+      "answer": "Tenzing–Hillary Airport (Lukla, Nepal)",
+      "distractors": [
+        "Paro International (Bhutan)",
+        "Tribhuvan International (Kathmandu)",
+        "Leh Kushok Bakula Rimpochee (India)"
+      ]
+    },
+    {
+      "label": "Road crosses the runway",
+      "prompt": "Which airport has a public road that crosses its runway and is closed to traffic whenever planes land?",
+      "answer": "Gibraltar International Airport",
+      "distractors": [
+        "Madeira Airport (Funchal)",
+        "Malta International Airport",
+        "Faro Airport (Portugal)"
+      ]
+    },
+    {
+      "label": "Artificial island airport",
+      "prompt": "Which airport opened in 1994 on a huge artificial island in Osaka Bay?",
+      "answer": "Kansai International Airport",
+      "distractors": [
+        "Osaka Itami Airport",
+        "Narita International Airport",
+        "Tokyo Haneda Airport"
+      ]
+    },
+    {
+      "label": "Replaced Kai Tak",
+      "prompt": "Which airport replaced the famously tricky Kai Tak Airport in 1998?",
+      "answer": "Hong Kong International (Chek Lap Kok)",
+      "distractors": [
+        "Macau International",
+        "Shenzhen Bao'an International",
+        "Guangzhou Baiyun International"
+      ]
+    },
+    {
+      "label": "Lindbergh's landing",
+      "prompt": "At which airport did Charles Lindbergh land after his 1927 solo flight across the Atlantic?",
+      "answer": "Paris–Le Bourget",
+      "distractors": [
+        "Paris–Orly",
+        "Paris Charles de Gaulle",
+        "London Croydon"
+      ]
+    },
+    {
+      "label": "Beatles arrive in America",
+      "prompt": "At which airport did the Beatles land when they arrived in the US in February 1964?",
+      "answer": "John F. Kennedy International (New York)",
+      "distractors": [
+        "Newark Liberty International",
+        "Los Angeles International",
+        "O'Hare International (Chicago)"
+      ]
+    },
+    {
+      "label": "Miracle on the Hudson",
+      "prompt": "Which airport did US Airways Flight 1549, the \"Miracle on the Hudson,\" take off from in 2009?",
+      "answer": "LaGuardia Airport (New York)",
+      "distractors": [
+        "John F. Kennedy International",
+        "Newark Liberty International",
+        "Teterboro Airport"
+      ]
+    },
+    {
+      "label": "Berlin Airlift",
+      "prompt": "Which airport, now a public park, was the best-known landing site of the 1948–49 Berlin Airlift?",
+      "answer": "Berlin Tempelhof",
+      "distractors": [
+        "Berlin Tegel",
+        "Berlin Schönefeld",
+        "Frankfurt Rhein-Main"
+      ]
+    },
+    {
+      "label": "Raid of 1976",
+      "prompt": "Israeli commandos staged their 1976 hostage rescue raid at which airport?",
+      "answer": "Entebbe International Airport (Uganda)",
+      "distractors": [
+        "Jomo Kenyatta International (Nairobi)",
+        "Julius Nyerere International (Dar es Salaam)",
+        "Bole International (Addis Ababa)"
+      ]
+    },
+    {
+      "label": "Inspiration for The Terminal",
+      "prompt": "Which airport was home for about 18 years to Mehran Karimi Nasseri, who inspired the film The Terminal?",
+      "answer": "Paris Charles de Gaulle",
+      "distractors": [
+        "John F. Kennedy International",
+        "London Heathrow",
+        "Amsterdam Schiphol"
+      ]
+    },
+    {
+      "label": "First duty-free shop",
+      "prompt": "Which airport opened the world's first duty-free shop, in 1947?",
+      "answer": "Shannon Airport (Ireland)",
+      "distractors": [
+        "London Heathrow",
+        "Amsterdam Schiphol",
+        "Dubai International"
+      ]
+    },
+    {
+      "label": "Oldest continuously operating airport",
+      "prompt": "Which airport is often cited as the world's oldest continuously operating airport, dating to 1909?",
+      "answer": "College Park Airport (Maryland, USA)",
+      "distractors": [
+        "London Croydon Airport",
+        "Le Bourget (Paris)",
+        "Teterboro Airport (New Jersey)"
+      ]
+    },
+    {
+      "label": "World's busiest during AirVenture",
+      "prompt": "Which airport briefly becomes the world's busiest each summer when the EAA AirVenture fly-in comes to town?",
+      "answer": "Wittman Regional Airport (Oshkosh, Wisconsin)",
+      "distractors": [
+        "Reno–Stead Airport (Nevada)",
+        "Lakeland Linder International (Florida)",
+        "Van Nuys Airport (California)"
+      ]
+    },
+    {
+      "label": "Home of the Boeing Everett factory",
+      "prompt": "Which airport sits beside Boeing's Everett factory, the largest building in the world by volume?",
+      "answer": "Paine Field (Everett, Washington)",
+      "distractors": [
+        "Boeing Field (Seattle)",
+        "Seattle–Tacoma International",
+        "Charleston International (South Carolina)"
+      ]
+    },
+    {
+      "label": "Named for a Navy hero",
+      "prompt": "Which airport is named for Butch O'Hare, a Medal of Honor–winning WWII Navy pilot?",
+      "answer": "Chicago O'Hare International",
+      "distractors": [
+        "Chicago Midway International",
+        "Hartsfield–Jackson Atlanta",
+        "LaGuardia Airport (New York)"
+      ]
+    },
+    {
+      "label": "Named for a Venetian explorer",
+      "prompt": "Which airport is named after the Venetian explorer who travelled to China?",
+      "answer": "Venice Marco Polo Airport",
+      "distractors": [
+        "Rome Fiumicino",
+        "Milan Malpensa",
+        "Naples Capodichino"
+      ]
+    },
+    {
+      "label": "ORD's original name",
+      "prompt": "Chicago O'Hare's code, ORD, comes from its earlier name. What was it?",
+      "answer": "Orchard Field",
+      "distractors": [
+        "Ogden Road",
+        "Orleans Depot",
+        "Old Reserve District"
+      ]
+    }
   ]
 }
