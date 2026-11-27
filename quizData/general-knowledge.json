@@ -381,16 +381,6 @@
       ]
     },
     {
-      "label": "Busiest airport in the US",
-      "prompt": "Which airport is the busiest in the United States by total passengers?",
-      "answer": "Hartsfield–Jackson Atlanta (ATL)",
-      "distractors": [
-        "Los Angeles International (LAX)",
-        "Chicago O'Hare (ORD)",
-        "Dallas/Fort Worth (DFW)"
-      ]
-    },
-    {
       "label": "Busiest airport in Canada",
       "prompt": "Which airport is the busiest in Canada by total passengers?",
       "answer": "Toronto Pearson (YYZ)",
@@ -457,7 +447,7 @@
       "distractors": [
         "Princess Juliana International (Sint Maarten)",
         "Gustaf III Airport (St. Barthélemy)",
-        "Barra Airport (Scotland)"
+        "F. D. Roosevelt Airport (Sint Eustatius)"
       ]
     },
     {
@@ -612,7 +602,7 @@
     },
     {
       "label": "Named for a Navy hero",
-      "prompt": "Which airport is named for Butch O'Hare, a Medal of Honor–winning WWII Navy pilot?",
+      "prompt": "Which major US airport is named after a Medal of Honor–winning WWII Navy fighter pilot?",
       "answer": "Chicago O'Hare International",
       "distractors": [
         "Chicago Midway International",
@@ -621,8 +611,8 @@
       ]
     },
     {
-      "label": "Named for a Venetian explorer",
-      "prompt": "Which airport is named after the Venetian explorer who travelled to China?",
+      "label": "Named for a medieval explorer",
+      "prompt": "Which Italian airport is named after the 13th-century merchant-explorer whose travels in Asia were recounted in a famous book?",
       "answer": "Venice Marco Polo Airport",
       "distractors": [
         "Rome Fiumicino",
