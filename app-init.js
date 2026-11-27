@@ -1145,7 +1145,7 @@ const flightTimeQuiz = new MultipleChoiceQuiz({
     &middot; Two cities are shown, you must determine the flight time between them<br>
     &middot; Pick the closest flight time from 4 options<br>
     &middot; No skipping: keep picking until you find the right one, but only first-try answers score<br>
-    &middot; The round ends when you finish all 10 or time runs out
+    &middot; The round ends when you finish all 7 or time runs out
   `
 });
 
@@ -1169,8 +1169,6 @@ const airportCodesQuiz = new PromptQuiz({
 
 // Famous Airports: multiple choice, 10 random questions per round from a pool of
 // FAMOUS_AIRPORTS_QUIZ (general-knowledge.json) — records, landmarks and historic events.
-// To add a question, append { label, prompt, answer, distractors: [3] } to that array
-// (prompts must be unique).
 const famousAirportsQuiz = new MultipleChoiceQuiz({
   id: 'famousairports',
   pairs: FAMOUS_AIRPORTS_QUIZ,
